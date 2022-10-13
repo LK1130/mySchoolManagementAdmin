@@ -1,6 +1,14 @@
-.customnavcolor{
-    background-color: #2B2B2B;
-}
 *{
     font-family:Helvetica;
 }
+.customnavcolor{
+    background-color: #2B2B2B;
+}
+.customblack{
+    background-color: #181818;
+}
+@media screen and (max-width: 640px) {
+    .customfsize{
+        font-size: 0.5em;
+      }
+    }

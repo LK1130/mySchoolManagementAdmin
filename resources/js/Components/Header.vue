@@ -2,9 +2,15 @@
 import { computed } from 'vue';
 import { Link } from '@inertiajs/inertia-vue3';
 
+
+
+
 const props = defineProps({
     href: String,
     active: Boolean,
+    headername: {
+        type: String,
+    },
 });
 
 const classes = computed(() => {
@@ -15,8 +21,20 @@ const classes = computed(() => {
 </script>
 
 <template>
-    <Link :href="href" :class="classes">
-        <slot />
-    </Link>
+<div class="fixed left-1/4 min-w-full h-32 customblack">
+<div class="grid grid-cols-2">
+<div class="ml-5 ">
+    <div class="text-white mt-3">2022/09/23 20:28:30 (FRI) </div>
+    <div class="text-white font-bold text-2xl mt-10">{{ headername }}</div>
+</div>
+<div class="flex flex-row text-white ml-48 mt-7">
+    <div class="mt-1.5 mr-3">
+        <div >Linn Ko Ko</div>
+        <div class="opacity-80 text-right">Admin</div>
+    </div>
+    <img src="../../../public/img/php-developer.jpg" alt="" class="w-16 h-16 rounded-full ">
+</div>
+</div>
+</div>
 
 </template>

@@ -1,6 +1,7 @@
 <script setup>
 import { Head, Link } from '@inertiajs/inertia-vue3';
-import NavLink from "../Components/NavLink.vue"
+import NavBar from "../Components/NavBar.vue"
+import Header from "../Components/Header.vue"
 
 defineProps({
     canLogin: Boolean,
@@ -11,5 +12,6 @@ defineProps({
 </script>
 
 <template>
-<NavLink/>
+<NavBar/>
+<Header headername="Student" />
 </template>
