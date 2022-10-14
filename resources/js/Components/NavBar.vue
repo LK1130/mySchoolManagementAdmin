@@ -17,14 +17,14 @@ const classes = computed(() => {
 <template>
 
          <!------------- Nav ---------->
-    <div class="customnavcolor w-1/4  min-h-full fixed ">
+    <div class="customnavcolor w-1/6 min-h-full fixed z-10">
     <!-------- Logo ---------->
     <div class="flex flex-row pt-5">
     <img src="../../../public/img/logo.png" alt="" class="sm:w-16 w-12 flex sm:ml-3.5 mx-auto">
     <img src="../../../public/img/icon1.png" alt=""  class="h-6 ml-auto mr-5 sm:block hidden">
     </div>
     <!--  -->
-    <div class=" lg:ml-16">
+    <div class=" lg:ml-8">
     <div class="flex flex-row ml-1 text-white mt-7 lg:justify-start justify-center">
         <img src="../../../public/img/dashboardicon.png" alt="" class="sm:w-10 w-7">
         <span class="text-lg ml-6 pt-1 opacity-70 lg:block hidden" >Dashboard</span>
@@ -45,7 +45,7 @@ const classes = computed(() => {
         <img src="../../../public/img/instructoricon.png" alt="" class="sm:w-10 w-7">
         <span class="text-lg ml-6 pt-1 opacity-70 lg:block hidden" >Instructor</span>
     </div>
-    <hr class="w-2/3 mt-12 lg:mx-0 mx-auto">
+    <hr class="w-3/4 mt-12 lg:mx-0 mx-auto">
     <div class="flex flex-row  text-white mt-10 lg:justify-start justify-center">
         <img src="../../../public/img/settingsicon.png" alt="" class="sm:w-10 w-7">
         <span class="text-lg ml-6 pt-1 opacity-70 lg:block hidden" >Setting</span>
@@ -56,7 +56,7 @@ const classes = computed(() => {
     </div>
     </div>
 
-    <div class="flex justify-center items-center md:flex-row flex-col md:space-x-4 space-y-2 sm:mt-10 md:mt-20 mt-24">
+    <div class="flex justify-center items-center md:flex-row flex-col md:space-x-4 space-y-2 sm:mt-10 md:mt-20 mt-28">
         <img src="../../../public/img/facebooklogo.png" alt="" class="w-8 h-8 md:mt-2">
         <img src="../../../public/img/youtubelogo.png" alt="" class="w-8">
         <img src="../../../public/img/messangerlogo.png" alt="" class="w-8">

@@ -7,8 +7,25 @@
 .customblack{
     background-color: #181818;
 }
+.headercustomleft{
+    left: 16.666667%;
+}
+.customtextcolor1{
+  color: #CAB2D6;
+}
+.customtextcolor2{
+    color: #4DEAFF;
+    opacity: 0.8;
+  }
+.customtextcolor3{
+    color: #FFC652;
+    
+  }
+.customtextcolor4{
+    color: #4183BF;
+  }
 @media screen and (max-width: 640px) {
     .customfsize{
-        font-size: 0.5em;
+        font-size: 0.3em;
       }
     }
