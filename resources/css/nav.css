@@ -7,6 +7,18 @@
 .customblack{
     background-color: #181818;
 }
+.custombackgroundcolor{
+  background-color: #333333;
+}
+.custombackgroundcolor1{
+  background: linear-gradient(to right,rgba(51, 51, 51, 1),rgba(51, 51, 51, 0));
+}
+.custombackgroundcolor2{
+  background-color: #33A02C;
+}
+.custombackgroundcolor3{
+  background-color: #FFC652;
+}
 .headercustomleft{
     left: 16.666667%;
 }
@@ -24,6 +36,21 @@
 .customtextcolor4{
     color: #4183BF;
   }
+  .customtextcolor5{
+    color:#33A02C ;
+  }
+  .customtextcolor6{
+    color: #FF6551;
+  }
+  .customtextcolor7{
+    color: #FFC652;
+  }
+
+.customborder{
+  border-style: solid;
+  border-bottom-width: 0.1em;
+  border-color: rgba(255, 255, 255, 0.2);
+}
 @media screen and (max-width: 640px) {
     .customfsize{
         font-size: 0.3em;

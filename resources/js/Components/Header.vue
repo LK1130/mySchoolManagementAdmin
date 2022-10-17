@@ -3,7 +3,11 @@
   <div class="fixed headercustomleft min-w-full h-32 customblack z-10">
 <div class="grid grid-cols-2">
 <div class="ml-5 ">
-    <div class="text-white mt-3  sm:text-base text-xs"> {{hour}}</div>
+    <div class="text-white mt-3  sm:text-base text-xs flex flex-row">
+      <span>{{year}}/{{month}}/{{date}}</span>
+      <span class="ml-1">{{hour}}:{{minute}}:{{seconds}}</span>
+      <span class="ml-1">({{day}})</span>
+    </div>
     <div class="text-white font-bold sm:text-2xl mt-10 text-base">{{ headername }}</div>
 </div>
 <div class="flex flex-row text-white 2xl:ml-80 xl:ml-60 lg:ml-40 md:ml-20 ml-0 sm:mt-7 mt-10">
@@ -23,25 +27,64 @@ export default {
 data() {
     return {
         condition:true,
-        hour:0
+        year:0,
+        month:0,
+        date:0,
+        day:"",
+        hour:0,
+        minute:0,
+        seconds:0,
     }
   },
   methods: {
-    calculate(second){
-        this.hour=second;
-    },
     gettime(){
+    setInterval(() => {
     var today = new Date()
-    var second =today.getSeconds();
+    this.seconds =today.getSeconds()+1;
+    this.minute=today.getMinutes()+1;
+    this.hour=today.getHours();
+    this.year=today.getFullYear();
+    this.month=today.getMonth()+1;
+    this.date=today.getDate();
+    var days=today.getDay();
+    switch (days) {
+      case 0:
+        this.day="SUN";
+      break;
 
+      case 1:
+        this.day="MON";
+      break;
+
+      case 2:
+        this.day="TUE";
+      break;
+
+      case 3:
+        this.day="WED";
+      break;
+
+      case 4:
+        this.day="THU";
+      break;
+
+      case 5:
+        this.day="FRI";
+      break;
+
+      case 6:
+        this.day="SAT";
+      break;
     }
+    }, 10);
+    },
   
   },
   props: {
     headername: String
   },
   mounted() {
-            this.gettime();
+    this.gettime();
   }
 }
 </script>
