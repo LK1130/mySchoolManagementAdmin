@@ -51,6 +51,7 @@
   border-bottom-width: 0.1em;
   border-color: rgba(255, 255, 255, 0.2);
 }
+
 @media screen and (max-width: 640px) {
     .customfsize{
         font-size: 0.3em;
