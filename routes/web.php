@@ -34,4 +34,3 @@ Route::middleware([
     })->name('dashboard');
 });
 
-Route::inertia('/nav', 'Welcome');
