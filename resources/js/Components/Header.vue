@@ -8,7 +8,15 @@
       <span class="ml-1">{{hour}}:{{minute}}:{{seconds}}</span>
       <span class="ml-1">({{day}})</span>
     </div>
-    <div class="text-white font-bold sm:text-2xl mt-10 text-base">{{ headername }}</div>
+    <div class="flex flex-row mt-10 " :class="{addclasscss:classaddmode}">
+    <div class="text-white  font-bold sm:text-2xl  text-base" :class="{dpnone:classaddmode}">{{ headername }}</div>
+    <button class="hidden mt-2 bg-blue-600 hover:bg-blue-700 active:bg-blue-900 text-white w-1/12 h-5 text-sm  rounded-md ml-7" :class="{btnblock:classviewmode}">
+    Edit
+    </button>
+    <input type="text" class="classnameinput hidden text-xl font-bold text-white" :class="{btnblock:classaddmode}" value="Web Developer Batch 9" >
+    <button class="hidden mt-2.5 w-6 h-6 border-2 text-sm rounded-full border-solid border-white text-white" :class="{btnblock:classaddmode}">+</button>
+    </div>
+    
 </div>
 <div class="flex flex-row text-white 2xl:ml-80 xl:ml-60 lg:ml-40 md:ml-20 ml-0 sm:mt-7 mt-10">
     <div class="mt-1.5 sm:mr-3 mr-1 sm:ml-5 ml-0">
@@ -34,6 +42,7 @@ data() {
         hour:0,
         minute:0,
         seconds:0,
+        message:"",
     }
   },
   methods: {
@@ -81,7 +90,9 @@ data() {
   
   },
   props: {
-    headername: String
+    headername: String,
+    classviewmode:Boolean,
+    classaddmode:Boolean,
   },
   mounted() {
     this.gettime();
@@ -89,6 +100,26 @@ data() {
 }
 </script>
 
-<style>
-
+<style scoped>
+.btnblock{
+  display: block !important;
+}
+.addclasscss{
+  background-color: #2B2B2B;
+  border: 1px solid white;
+  border-radius: 1em;
+  width: 52%;
+}
+.classnameinput{
+  background-color: #2B2B2B;
+  border-radius: 1em;
+  border: #2B2B2B;
+  width: 90%;
+}
+.classnameinput:focus{
+  border: #2B2B2B;
+}
+.dpnone{
+  display: none;
+}
 </style>

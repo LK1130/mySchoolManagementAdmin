@@ -1,6 +1,8 @@
 import './bootstrap';
 import '../css/app.css';
 import '../css/nav.css';
+import '../css/customcheckbox.css';
+
 
 
 
