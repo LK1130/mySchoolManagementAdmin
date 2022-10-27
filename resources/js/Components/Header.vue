@@ -8,13 +8,13 @@
       <span class="ml-1">{{hour}}:{{minute}}:{{seconds}}</span>
       <span class="ml-1">({{day}})</span>
     </div>
-    <div class="flex flex-row mt-10 " :class="{addclasscss:classaddmode}">
-    <div class="text-white  font-bold sm:text-2xl  text-base" :class="{dpnone:classaddmode}">{{ headername }}</div>
-    <button class="hidden mt-2 bg-blue-600 hover:bg-blue-700 active:bg-blue-900 text-white w-1/12 h-5 text-sm  rounded-md ml-7" :class="{btnblock:classviewmode}">
+    <div class="flex flex-row mt-10" :class="{addclasscss:classaddmode}">
+    <div class="text-white  font-bold sm:text-2xl  text-sm" :class="{dpnone:classaddmode}">{{ headername }}</div>
+    <button class="hidden mt-2 bg-blue-600 hover:bg-blue-700 active:bg-blue-900 text-white sm:w-1/12 w-14 h-5 text-sm  rounded-md ml-7" :class="{btnblock:classviewmode}">
     Edit
     </button>
-    <input type="text" class="classnameinput hidden text-xl font-bold text-white" :class="{btnblock:classaddmode}" value="Web Developer Batch 9" >
-    <button class="hidden mt-2.5 w-6 h-6 border-2 text-sm rounded-full border-solid border-white text-white" :class="{btnblock:classaddmode}">+</button>
+    <input type="text" class="classnameinput hidden sm:text-xl text-sm font-bold text-white" :class="{btnblock:classaddmode}" value="Web Developer Batch 9" >
+    <button class="hidden mt-2.5 sm:w-6 w-4 sm:h-6 h-4 border-2 sm:text-sm text-xs rounded-full border-solid border-white text-white " :class="{btnblock:classaddmode}">+</button>
     </div>
     
 </div>
@@ -122,4 +122,9 @@ data() {
 .dpnone{
   display: none;
 }
+@media screen and (max-width: 640px) {
+.addclasscss{
+  width: 90%;
+}
+    }
 </style>

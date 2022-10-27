@@ -2,7 +2,7 @@
  <div class="custombackgroundcolor h-48   rounded-lg ml-0.5 mt-3 px-3 py-4 overflow-y-scroll">
   <table  class="text-white w-full ">
     <thead class="">
-    <tr class="opacity-70 sm:text-sm customfontsize ">
+    <tr class="opacity-70 sm:text-sm  customfontsize ">
         <th class="text-start sm:pl-4 pl-0 ">NAME</th>
         <th class="">Join Date</th>
         <th >Rank</th>
@@ -79,6 +79,10 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+@media screen and (max-width: 640px) {
+    .customfontsize{
+        font-size: 0.6em;
+      }
+    }
 </style>

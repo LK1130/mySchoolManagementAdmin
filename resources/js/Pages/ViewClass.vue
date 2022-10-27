@@ -23,20 +23,16 @@ defineProps({
 <!---------------- body ----------------------->
 <div class="absolute w-5/6 headercustomleft  top-32 customblack px-5">
 <ClassInformationBox/>
-<div class="flex flex-row mt-5 justify-between">
-<div class="w-7/12">
+<div class="flex flex-wrap mt-5 sm:justify-between justify-center">
+<div class="sm:w-7/12 w-11/12">
     <h3 class="text-white">Student List</h3>
     <StudentListTableBox />
 </div>
-<div class="cuswidth">
+<div class="cuswidth sm:mt-0 mt-5">
     <h3 class="text-white">Recording Video List</h3>
     <RecordingVideoListTableBox />
 </div>
 </div>
-<button class="float-right pt-0.5 custommb w-1/6 h-7 mt-5  text-white rounded-lg flex justify-center bg-blue-600 hover:bg-blue-700 active:bg-blue-900 cusmargin">
-<img src="../../../public/img/addlogo.png" alt="" class="w-5 h-5 pt-0.5">
-<span class="ml-1">Add Video</span>
-</button>
 </div>
 </template>
 <style scoped>
@@ -46,7 +42,10 @@ defineProps({
 .cuswidth{
     width: 40%;
 }
-.custommb{
-    margin-bottom: 0.93em;
-}
+
+@media screen and (max-width: 640px) {
+    .cuswidth{
+        width:80% ;
+      }
+    }
 </style>

@@ -19,7 +19,7 @@ defineProps({
 <NavBar/>
 <Header headername="Class" />
 <!---------------- body ----------------------->
-<div class="absolute w-5/6 headercustomleft  top-32 customblack">
+<div class="absolute w-5/6  headercustomleft  top-32 customblack">
  <ClassTable/>
 
 </div>
