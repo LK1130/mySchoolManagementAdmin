@@ -21,6 +21,26 @@ defineProps({
     category: Object,
     student:Object,
 });
+// const form = ClassForm({
+//     _method : "POST",
+//     classname: String,
+//     classdetail: String,
+//     startdate:String ,
+//     enddate:String ,
+//     day :Number ,
+//     starttime :String ,
+//     endtime :String ,
+//     instructor:Number ,
+//     category:Number ,
+//     fees:Number ,
+    
+// });
+
+
+// const submit = () => {
+   
+//     form.post(route('class.add',form));
+// };
 
 </script>
 
@@ -31,7 +51,7 @@ defineProps({
 
 <!---------------- body ----------------------->
 <div class="absolute w-5/6 headercustomleft  top-32 customblack px-5">
-<form action="">
+<form >
 <div class="flex flex-row mt-10 addclasscss fixed sm:top-4 top-10 z-50" >
 <input type="text"  class="classnameinput  sm:text-xl text-sm font-bold text-white"  v-model="className">
 <button class=" mt-2.5 sm:w-6 w-4 sm:h-6 h-4 border-2 sm:text-sm text-xs rounded-full border-solid border-white text-white " :class="{btnblock:classaddmode}">+</button>
@@ -45,7 +65,7 @@ defineProps({
    <button class=" sm:w-20 w-14 bg-blue-600 hover:bg-blue-700 active:bg-blue-900 sm:text-base text-xs rounded-lg p-1 mt-4">Upload</button>
    </div>
    <div class="sm:text-2xl text-lg font-bold mt-2">{{className}}</div>
-   <textarea name="" id=""  class="text-white w-10/12 mt-2 sm:text-sm text-xs customnavcolor rounded-xl customborder1"></textarea>
+   <textarea name="" id=""   class="text-white w-10/12 mt-2 sm:text-sm text-xs customnavcolor rounded-xl customborder1"></textarea>
    <div class="flex sm:flex-row flex-col justify-between w-10/12 text-sm mt-3">
   
     <div>
@@ -145,7 +165,7 @@ defineProps({
   </table>
   </div>
 </div>
-<button class=" pt-0.5 float-right  mb-3  w-28 h-7 mt-5  text-white rounded-lg flex justify-center bg-blue-600 hover:bg-blue-700 active:bg-blue-900 cusmargin" @click="filter">
+<button type="submit" class=" pt-0.5 float-right  mb-3  w-28 h-7 mt-5  text-white rounded-lg flex justify-center bg-blue-600 hover:bg-blue-700 active:bg-blue-900 cusmargin">
 <img src="../../../public/img/bx_save.png" alt="" class="w-5 h-5 pt-0.5">
 <span class="ml-2 sm:text-base text-xs sm:pt-0 pt-1" >Save</span>
 </button>

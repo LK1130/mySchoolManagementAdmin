@@ -34,6 +34,7 @@ Route::get('/viewclass', function () {
 //     return Inertia::render('AddClass');
 // });
 Route::get('/addclass', [ClassesController::class, 'index'])->name('index');
+// Route::post('/AddClass',[ClassesController::class,'addclass'])->name("class.add");
 
 Route::middleware([
     'auth:sanctum',

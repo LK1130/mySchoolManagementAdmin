@@ -15,4 +15,9 @@ class ClassesController extends Controller
         $students= $class->get_student();
         return inertia("AddClass",['instructor' => $instructors,'category' => $categories,'student' => $students ]);
     }
+
+    // public function addclass()
+    // {
+
+    // }
 }
