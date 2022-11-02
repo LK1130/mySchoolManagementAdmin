@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\ClassController;
 use App\Http\Controllers\ClassesController;
+use App\Http\Controllers\ClasssController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -33,7 +35,10 @@ Route::get('/viewclass', function () {
 // Route::get('/addclass', function () {
 //     return Inertia::render('AddClass');
 // });
-Route::get('/addclass', [ClassesController::class, 'index'])->name('index');
+
+// Route::resource('/classes',[ClasssController::class]);
+Route::resource('/class',ClassController::class);
+// Route::get('/addclass', [ClassesController::class, 'index'])->name('index');
 // Route::post('/AddClass',[ClassesController::class,'addclass'])->name("class.add");
 
 Route::middleware([

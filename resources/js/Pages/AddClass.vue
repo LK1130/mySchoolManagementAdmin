@@ -1,5 +1,5 @@
 <script setup>
-import { Head, Link } from '@inertiajs/inertia-vue3';
+import { Head, Link, useForm } from '@inertiajs/inertia-vue3';
 import NavBar from "../Components/NavBar.vue";
 import Header from "../Components/Header.vue";
 import { ref } from '@vue/reactivity';
@@ -21,26 +21,27 @@ defineProps({
     category: Object,
     student:Object,
 });
-// const form = ClassForm({
+const form = useForm({
 //     _method : "POST",
-//     classname: String,
-//     classdetail: String,
-//     startdate:String ,
-//     enddate:String ,
-//     day :Number ,
-//     starttime :String ,
-//     endtime :String ,
-//     instructor:Number ,
-//     category:Number ,
-//     fees:Number ,
+    classnames: null,
+    classdetail: null,
+    startdate: null ,
+    enddate:null ,
+    day : null ,
+    starttime : null ,
+    endtime : null ,
+    teacher: null ,
+    categories:null ,
+    fees: null ,
     
-// });
+});
 
 
-// const submit = () => {
-   
-//     form.post(route('class.add',form));
-// };
+const submit = () => {
+
+  console.log(form);
+    form.post(route('class.store',form));
+};
 
 </script>
 
@@ -51,9 +52,9 @@ defineProps({
 
 <!---------------- body ----------------------->
 <div class="absolute w-5/6 headercustomleft  top-32 customblack px-5">
-<form >
+<form @submit.prevent="submit">
 <div class="flex flex-row mt-10 addclasscss fixed sm:top-4 top-10 z-50" >
-<input type="text"  class="classnameinput  sm:text-xl text-sm font-bold text-white"  v-model="className">
+<input type="text"  class="classnameinput  sm:text-xl text-sm font-bold text-white"  v-model="form.classnames">
 <button class=" mt-2.5 sm:w-6 w-4 sm:h-6 h-4 border-2 sm:text-sm text-xs rounded-full border-solid border-white text-white " :class="{btnblock:classaddmode}">+</button>
 </div>
 
@@ -64,42 +65,42 @@ defineProps({
    <img src="../../../public/img/php-developer.jpg" alt="" class="rounded-full sm:w-20 w-14 border-white border-2">
    <button class=" sm:w-20 w-14 bg-blue-600 hover:bg-blue-700 active:bg-blue-900 sm:text-base text-xs rounded-lg p-1 mt-4">Upload</button>
    </div>
-   <div class="sm:text-2xl text-lg font-bold mt-2">{{className}}</div>
-   <textarea name="" id=""   class="text-white w-10/12 mt-2 sm:text-sm text-xs customnavcolor rounded-xl customborder1"></textarea>
+   <div class="sm:text-2xl text-lg font-bold mt-2" >{{ form.classnames }}</div>
+   <textarea name="" id=""  v-model="form.classdetail"  class="text-white w-10/12 mt-2 sm:text-sm text-xs customnavcolor rounded-xl customborder1"></textarea>
    <div class="flex sm:flex-row flex-col justify-between w-10/12 text-sm mt-3">
   
     <div>
         <div>Date :
             
             <span>
-            <input type="text" class="customnavcolor text-white sm:text-sm text-xs rounded-lg sm:w-1/4 w-16 customborder1">
+            <input type="text" v-model="form.startdate" class="customnavcolor text-white sm:text-sm text-xs rounded-lg sm:w-1/4 w-16 customborder1">
             </span>
             -
             <span>
-            <input type="text" class="customnavcolor text-white sm:text-sm text-xs rounded-lg sm:w-1/4 w-16 customborder1">
+            <input type="text" v-model="form.enddate" class="customnavcolor text-white sm:text-sm text-xs rounded-lg sm:w-1/4 w-16 customborder1">
         </span> 
         </div>
       <div class="mt-3  flex flex-row ">Day: 
        <span class="flex flex-wrap mt-0.5 sm:text-sm text-xs">  
-       <input type="checkbox" name="checkbox" class="daycheckbox mt-0.5 ml-3"/>
+       <input type="checkbox" name="checkbox" v-model="form.day" class="daycheckbox mt-0.5 ml-3"/>
        <label for="" class="ml-2">SUN</label>
        
-       <input type="checkbox" name="checkbox" class="daycheckbox mt-0.5 ml-3"/>
+       <input type="checkbox" name="checkbox" v-model="form.day" class="daycheckbox mt-0.5 ml-3"/>
        <label for="" class="ml-2">Mon</label>
 
-       <input type="checkbox" name="checkbox" class="daycheckbox mt-0.5 ml-3"/>
+       <input type="checkbox" name="checkbox" v-model="form.day" class="daycheckbox mt-0.5 ml-3"/>
        <label for="" class="ml-2">TUE</label>
 
-       <input type="checkbox" name="checkbox" class="daycheckbox mt-0.5 ml-3"/>
+       <input type="checkbox" name="checkbox" v-model="form.day" class="daycheckbox mt-0.5 ml-3"/>
        <label for="" class="ml-2">WED</label>
 
-       <input type="checkbox" name="checkbox" class="daycheckbox mt-0.5 ml-3"/>
+       <input type="checkbox" name="checkbox" v-model="form.day" class="daycheckbox mt-0.5 ml-3"/>
        <label for="" class="ml-2">THU</label>
 
-     <input type="checkbox" name="checkbox" class="daycheckbox mt-0.5 ml-3"/>
+     <input type="checkbox" name="checkbox" v-model="form.day" class="daycheckbox mt-0.5 ml-3"/>
        <label for="" class="ml-2">FRI</label>
 
-       <input type="checkbox" name="checkbox" class="daycheckbox mt-0.5 ml-3"/>
+       <input type="checkbox" name="checkbox" v-model="form.day" class="daycheckbox mt-0.5 ml-3"/>
        <label for="" class="ml-2">SAT</label>
 
        </span>
@@ -107,11 +108,11 @@ defineProps({
         </div>
         <div class="mt-3">Time : 
            <span>
-            <input type="text" class="customnavcolor text-white sm:text-sm text-xs rounded-lg sm:w-1/4 w-16 customborder1">
+            <input type="text" v-model="form.starttime" class="customnavcolor text-white sm:text-sm text-xs rounded-lg sm:w-1/4 w-16 customborder1">
             </span>
             -
             <span>
-            <input type="text" class="customnavcolor text-white sm:text-sm text-xs rounded-lg sm:w-1/4 w-16 customborder1">
+            <input type="text" v-model="form.endtime" class="customnavcolor text-white sm:text-sm text-xs rounded-lg sm:w-1/4 w-16 customborder1">
             </span>
         </div>
         <div class="mt-3">Person : <span>20</span></div>
@@ -119,19 +120,19 @@ defineProps({
     <div>
         <div class="sm:mt-0 mt-3">Instructor : 
         <span class="" >
-        <select id="sorttype"  name="status" class="customnavcolor sm:text-sm text-xs sm:w-52 w-32 text-white border-white rounded-xl">
+        <select id="sorttype"  v-model="form.teacher" name="status" class="customnavcolor sm:text-sm text-xs sm:w-52 w-32 text-white border-white rounded-xl">
         <option v-for="item in instructor" :value="item.id" class="sm:text-sm text-xs">{{item.i_name}}</option>
         </select>
         </span>
         </div>
         <div class="mt-3">Category :
         <span class="">
-        <select id="sorttype" name="status" class="customnavcolor sm:text-sm text-xs text-white border-white rounded-xl sm:w-52 w-32">
+        <select id="sorttype" name="status" v-model="form.categories" class="customnavcolor sm:text-sm text-xs text-white border-white rounded-xl sm:w-52 w-32">
         <option v-for="data in category" :value="data.id" class="sm:text-sm text-xs">{{data.c_name}}</option>
         </select>
         </span>
         </div>
-        <div class="mt-3">Fees : <span class="pl-7"><input type="text" class="customnavcolor text-white sm:text-sm text-xs rounded-lg sm:w-52 w-32 customborder1"></span></div>
+        <div class="mt-3">Fees : <span class="pl-7"><input type="text" v-model="form.fees" class="customnavcolor text-white sm:text-sm text-xs rounded-lg sm:w-52 w-32 customborder1"></span></div>
     </div>
    </div>
   </div>
