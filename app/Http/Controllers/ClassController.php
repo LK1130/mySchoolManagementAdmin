@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\MClass;
 use Illuminate\Http\Request;
+use Nette\Utils\Strings;
+use PhpParser\Node\Expr\Cast\String_;
 
 class ClassController extends Controller
 {
@@ -14,12 +16,9 @@ class ClassController extends Controller
      */
     public function index()
     {
-        $class = new MClass();
-        $instructors= $class->get_instructors();
-        $categories= $class->get_category();
-        $students= $class->get_student();
-    
-        return inertia("AddClass",['instructor' => $instructors,'category' => $categories,'student' => $students ]);
+       $class=new MClass();
+       $classdata=$class->get_class();
+       return inertia("Class",['dclass' => $classdata]);
     }
 
     /**
@@ -29,7 +28,12 @@ class ClassController extends Controller
      */
     public function create()
     {
-        //
+        $class = new MClass();
+        $instructors= $class->get_instructors();
+        $categories= $class->get_category();
+        $students= $class->get_student();
+    
+        return inertia("AddClass",['instructor' => $instructors,'category' => $categories,'student' => $students ]);
     }
 
     /**
@@ -40,7 +44,24 @@ class ClassController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
+        $class = new MClass();
+        $date1=$request->input('day1');
+        $date2=$request->input('day2');
+        $date3=$request->input('day3');
+        $date4=$request->input('day4');
+        $date5=$request->input('day5');
+        $date6=$request->input('day6');
+        $date7=$request->input('day7');
+        settype($date1, "string");
+        settype($date2, "string");
+        settype($date3, "string");
+        settype($date4, "string");
+        settype($date5, "string");
+        settype($date6, "string");
+        settype($date7, "string");
+        $date=$date1.$date2.$date3.$date4.$date5.$date6.$date7;
+        $addclass=$class->addclass($request,$date);
+        return redirect('class');
     }
 
     /**

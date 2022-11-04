@@ -11,7 +11,7 @@ import { ref } from '@vue/reactivity';
 //   }
 // })
 
-var className = ref("Web Developer Batch 9");
+// var className = ref("Web Developer Batch 9");
 defineProps({
     canLogin: Boolean,
     canRegister: Boolean,
@@ -27,7 +27,13 @@ const form = useForm({
     classdetail: null,
     startdate: null ,
     enddate:null ,
-    day : null ,
+    day1 : 0 ,
+    day2 : 0 ,
+    day3 : 0 ,
+    day4 :0 ,
+    day5 : 0 ,
+    day6 : 0 ,
+    day7 : 0 ,
     starttime : null ,
     endtime : null ,
     teacher: null ,
@@ -55,7 +61,7 @@ const submit = () => {
 <form @submit.prevent="submit">
 <div class="flex flex-row mt-10 addclasscss fixed sm:top-4 top-10 z-50" >
 <input type="text"  class="classnameinput  sm:text-xl text-sm font-bold text-white"  v-model="form.classnames">
-<button class=" mt-2.5 sm:w-6 w-4 sm:h-6 h-4 border-2 sm:text-sm text-xs rounded-full border-solid border-white text-white " :class="{btnblock:classaddmode}">+</button>
+<button class="mt-2.5 sm:w-6 w-4 sm:h-6 h-4 border-2 sm:text-sm text-xs rounded-full border-solid border-white text-white " :class="{btnblock:classaddmode}">+</button>
 </div>
 
 <div class="my-5">
@@ -82,25 +88,25 @@ const submit = () => {
         </div>
       <div class="mt-3  flex flex-row ">Day: 
        <span class="flex flex-wrap mt-0.5 sm:text-sm text-xs">  
-       <input type="checkbox" name="checkbox" v-model="form.day" class="daycheckbox mt-0.5 ml-3"/>
+       <input type="checkbox" name="checkbox" v-model="form.day1" value="1" class="daycheckbox mt-0.5 ml-3"/>
        <label for="" class="ml-2">SUN</label>
        
-       <input type="checkbox" name="checkbox" v-model="form.day" class="daycheckbox mt-0.5 ml-3"/>
+       <input type="checkbox" name="checkbox" v-model="form.day2" value="1" class="daycheckbox mt-0.5 ml-3"/>
        <label for="" class="ml-2">Mon</label>
 
-       <input type="checkbox" name="checkbox" v-model="form.day" class="daycheckbox mt-0.5 ml-3"/>
+       <input type="checkbox" name="checkbox" v-model="form.day3" value="1" class="daycheckbox mt-0.5 ml-3"/>
        <label for="" class="ml-2">TUE</label>
 
-       <input type="checkbox" name="checkbox" v-model="form.day" class="daycheckbox mt-0.5 ml-3"/>
+       <input type="checkbox" name="checkbox" v-model="form.day4" value="1" class="daycheckbox mt-0.5 ml-3"/>
        <label for="" class="ml-2">WED</label>
 
-       <input type="checkbox" name="checkbox" v-model="form.day" class="daycheckbox mt-0.5 ml-3"/>
+       <input type="checkbox" name="checkbox" v-model="form.day5" value="1" class="daycheckbox mt-0.5 ml-3"/>
        <label for="" class="ml-2">THU</label>
 
-     <input type="checkbox" name="checkbox" v-model="form.day" class="daycheckbox mt-0.5 ml-3"/>
+     <input type="checkbox" name="checkbox" v-model="form.day6" value="1" class="daycheckbox mt-0.5 ml-3"/>
        <label for="" class="ml-2">FRI</label>
 
-       <input type="checkbox" name="checkbox" v-model="form.day" class="daycheckbox mt-0.5 ml-3"/>
+       <input type="checkbox" name="checkbox" v-model="form.day7" value="1" class="daycheckbox mt-0.5 ml-3"/>
        <label for="" class="ml-2">SAT</label>
 
        </span>

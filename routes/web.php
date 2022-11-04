@@ -26,20 +26,12 @@ Route::get('/', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 });
-Route::get('/homeclass', function () {
-    return Inertia::render('Class');
-});
+
 Route::get('/viewclass', function () {
     return Inertia::render('ViewClass');
 });
-// Route::get('/addclass', function () {
-//     return Inertia::render('AddClass');
-// });
 
-// Route::resource('/classes',[ClasssController::class]);
 Route::resource('/class',ClassController::class);
-// Route::get('/addclass', [ClassesController::class, 'index'])->name('index');
-// Route::post('/AddClass',[ClassesController::class,'addclass'])->name("class.add");
 
 Route::middleware([
     'auth:sanctum',
