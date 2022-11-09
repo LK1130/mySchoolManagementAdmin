@@ -59,11 +59,30 @@ const dateshow = (data,count) =>{
         case 6:
         if (data==1) {
             return "Sat"
-        }    
+        }   
         break;
     }
 };
-// datesplit();
+
+const beforeaftercalculate = (starttime,endtime) => {
+    var today = new Date()
+    var hour= today.getHours();
+    var starthour= starttime.slice(0,2);
+    var endhour= endtime.slice(0,2)
+    if (hour<starthour) {
+        if (starthour-hour<=3) {
+            return "Before "+(starthour-hour)+" hours";
+        }
+    }
+    if (hour>=starthour && hour<=endhour) {
+        return "Live";
+    }
+    if (hour>endhour) {
+        if (hour-endhour<=3) {
+            return "After "+(hour-endhour)+" hours";
+        }
+    }
+};
 </script>
 
 <template >
@@ -119,9 +138,9 @@ const dateshow = (data,count) =>{
         <td class="text-center" >{{datesplit(data.c_date)}}</td>
         <td class="text-center">{{data.c_start_time}} - {{data.c_end_time}} </td>
         <td class="text-center">25</td>
-        <td class="text-center customtextcolor6">After 3 hours</td>
+        <td class="text-center" :class="bafcolor">{{beforeaftercalculate(data.c_start_time,data.c_end_time)}}</td>
         <td class="text-center">{{ Number(data.c_fees).toLocaleString() }} Ks</td>
-        <td class="text-center customtextcolor7 underline">Edit</td>
+        <td class="text-center customtextcolor7 underline"> <a :href="route('class.view',data.id)">Edit</a></td>
     </tr>
     </tbody>
 </table>
@@ -149,6 +168,15 @@ const dateshow = (data,count) =>{
 }
 .cusmargin{
     margin-bottom: 5.63em;
+}
+.beforecolor{
+    color: #FFC652;
+}
+.livecolor{
+    color:#33A02C
+}
+.aftercolor{
+    color: #FF6551;
 }
 @media screen and (max-width: 640px) {
     .customfontsize{

@@ -83,7 +83,9 @@ class ClassController extends Controller
      */
     public function edit($id)
     {
-        //
+        $class = new MClass();
+        // $classdetail=$class->get_classdetail($id);
+        return inertia("ViewClass",['classdata' => $id]);
     }
 
     /**

@@ -33,6 +33,16 @@ class MClass extends Model
     {
        return DB::table('m_classes')
         ->join('m_instructors','m_classes.instructor_id','=','m_instructors.id')
+        ->select('m_classes.id', 'm_classes.c_name', 'm_classes.c_date', 'm_classes.c_start_time', 'm_classes.c_end_time', 'm_classes.c_fees','m_instructors.i_name')
+        ->get();
+    }
+    public function get_classdetail($id)
+    {
+       return DB::table('m_classes')
+        ->join('m_instructors','m_classes.instructor_id','=','m_instructors.id')
+        ->join('m_categories','m_classes.category_id','=','m_categories.id')
+        ->select('m_classes.id', 'm_classes.c_name', 'm_classes.c_date', 'm_classes.c_start_time', 'm_classes.c_end_time', 'm_classes.c_fees','m_instructors.i_name')
+        ->where('m_classes.id',$id)
         ->get();
     }
 

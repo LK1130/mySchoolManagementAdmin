@@ -69,6 +69,10 @@ const submit = () => {
    <h3 class="sm:text-lg text-base">Class Information</h3>
    <div class="float-right">
    <img src="../../../public/img/php-developer.jpg" alt="" class="rounded-full sm:w-20 w-14 border-white border-2">
+   <!-- <div class="imginputdiv sm:w-20 w-14 h-8 pt-2"> -->
+   <!-- <label for="upload-photo">Browse...</label> -->
+   <!-- <input type="file" name="photo" id="upload-photo" />
+   </div> -->
    <button class=" sm:w-20 w-14 bg-blue-600 hover:bg-blue-700 active:bg-blue-900 sm:text-base text-xs rounded-lg p-1 mt-4">Upload</button>
    </div>
    <div class="sm:text-2xl text-lg font-bold mt-2" >{{ form.classnames }}</div>
@@ -231,6 +235,13 @@ input[type="checkbox"].cuscheckbox {
   border-radius: 1em;
   border: #2B2B2B;
   width: 90%;
+}
+.imginput{
+  visibility: hidden;
+}
+.imginputdiv{
+  background-color: #304BFC;
+  overflow: hidden;
 }
 @media screen and (max-width: 640px) {
     .customfontsize{
