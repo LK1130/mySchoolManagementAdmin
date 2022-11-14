@@ -10,9 +10,6 @@
     </div>
     <div class="flex flex-row mt-10">
     <div class="text-white  font-bold sm:text-2xl  text-sm" :class="{dpnone:classaddmode}">{{ headername }}</div>
-    <button class="hidden mt-2 bg-blue-600 hover:bg-blue-700 active:bg-blue-900 text-white sm:w-1/12 w-14 h-5 text-sm  rounded-md ml-7" :class="{btnblock:classviewmode}">
-    Edit
-    </button>
     </div>
     
 </div>
@@ -91,6 +88,7 @@ data() {
   
   },
   props: {
+    classid: Number,
     headername: String,
     classviewmode:Boolean,
     classaddmode:Boolean,
