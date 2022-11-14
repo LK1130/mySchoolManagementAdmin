@@ -41,15 +41,15 @@ class MClass extends Model
        return DB::table('m_classes')
         ->join('m_instructors','m_classes.instructor_id','=','m_instructors.id')
         ->join('m_categories','m_classes.category_id','=','m_categories.id')
-        ->select('m_classes.id', 'm_classes.c_name', 'm_classes.c_date', 'm_classes.c_start_time', 'm_classes.c_end_time', 'm_classes.c_fees','m_instructors.i_name')
+        ->select('m_classes.id','m_classes.c_name as cname','m_categories.c_name','m_classes.c_profile','m_classes.c_description', 'm_classes.c_date', 'm_classes.c_start_time', 'm_classes.c_end_time', 'm_classes.c_fees', 'm_classes.c_start_date', 'm_classes.c_end_date','m_instructors.i_name')
         ->where('m_classes.id',$id)
         ->get();
     }
 
-    public function addclass(Request $request,$date)
+    public function addclass(Request $request,$date,$img,$studentids)
     {
-        DB::table('m_classes')
-        ->insert([
+        $id=DB::table('m_classes')
+        ->insertGetId([
             'c_name' => $request->input('classnames'),
             'c_description' => $request->input('classdetail'),
             'c_start_date' =>$request->input('startdate'),
@@ -59,10 +59,23 @@ class MClass extends Model
             'c_end_time' =>$request->input('endtime'),
             'c_fees' =>$request->input('fees'),
             'instructor_id' =>$request->input('teacher') ,
-            'c_profile' =>"10111",
+            'c_profile' =>$img,
             'category_id' =>$request->input('categories'),
             'created_at'=>Date('Y-m-d h:i:s'),
             'created_by'=>"0"
         ]);
+        
+        foreach ($studentids as $ids) {
+            DB::table('t_student_classes')
+            ->insert([
+                'id' => $id,
+                'user_id' => $ids,
+                'paid_fees' => 00,
+                'remain_fees' => 00,
+                'created_at'=>Date('Y-m-d h:i:s'),
+                'created_by'=>"0"
+            ]);
+        };
+
     }
 }

@@ -11,7 +11,6 @@ defineProps({
     phpVersion: String,
     dclass:Object,
 });
-
 const datesplit = (data) => {
     const fullday=[];
     var arrycount=0;
@@ -63,7 +62,6 @@ const dateshow = (data,count) =>{
         break;
     }
 };
-
 const beforeaftercalculate = (starttime,endtime) => {
     var today = new Date()
     var hour= today.getHours();
@@ -72,6 +70,7 @@ const beforeaftercalculate = (starttime,endtime) => {
     if (hour<starthour) {
         if (starthour-hour<=3) {
             return "Before "+(starthour-hour)+" hours";
+            
         }
     }
     if (hour>=starthour && hour<=endhour) {
@@ -83,6 +82,27 @@ const beforeaftercalculate = (starttime,endtime) => {
         }
     }
 };
+
+const bafcolor = (start,end) => {
+    var bafcd=beforeaftercalculate(start,end);
+    if(bafcd!=null){
+        var bafcondintion=bafcd.slice(0,1)
+        switch (bafcondintion) {
+            case "B":
+                return "beforecolor"
+                break;
+        
+            case "L":
+                return "livecolor"
+                break;
+
+            case "A":
+                return "aftercolor"
+                break;
+        }
+    }
+
+}
 </script>
 
 <template >
@@ -132,13 +152,13 @@ const beforeaftercalculate = (starttime,endtime) => {
         <th class="pt-4">Setting</th>
     </tr>
     <tbody class="text-sm customfontsize">
-    <tr class="cusborder" v-for="data in dclass">
+    <tr class="cusborder" v-for="data in dclass" :key="data.id">
         <td class="text-start pl-4 py-2">{{data.c_name}}</td>
         <td class="text-center">{{data.i_name}}</td>
         <td class="text-center" >{{datesplit(data.c_date)}}</td>
         <td class="text-center">{{data.c_start_time}} - {{data.c_end_time}} </td>
         <td class="text-center">25</td>
-        <td class="text-center" :class="bafcolor">{{beforeaftercalculate(data.c_start_time,data.c_end_time)}}</td>
+        <td class="text-center" :class="bafcolor(data.c_start_time,data.c_end_time)">{{beforeaftercalculate(data.c_start_time,data.c_end_time)}}</td>
         <td class="text-center">{{ Number(data.c_fees).toLocaleString() }} Ks</td>
         <td class="text-center customtextcolor7 underline"> <a :href="route('class.view',data.id)">Edit</a></td>
     </tr>

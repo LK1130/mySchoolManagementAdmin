@@ -6,7 +6,57 @@ import ClassInformationBox from "../Components/ClassInformationBox.vue";
 import StudentListTableBox from "../Components/StudentListTableBox.vue";
 import RecordingVideoListTableBox from "../Components/RecordingVideolistTablebox.vue";
 
-
+const datesplit = (data) => {
+    const fullday=[];
+    var arrycount=0;
+    for (let index = 0; index < 7; index++) {
+        var day = data.charAt(index)
+        var output=dateshow(day,index);
+        if (output!=null) {
+            fullday[arrycount++]=output;
+        }    
+    }
+    return fullday.toString();
+} ;
+const dateshow = (data,count) =>{
+    switch (count) {
+        case 0:
+        if (data==1) {
+            return "Sun"
+        }    
+        break;
+        case 1:
+        if (data==1) {
+            return "Mon"
+        }    
+        break;
+        case 2:
+        if (data==1) {
+            return "Tue"
+        }    
+        break;
+        case 3:
+        if (data==1) {
+            return "Wed"
+        }    
+        break;
+        case 4:
+        if (data==1) {
+            return "Thu"
+        }    
+        break;
+        case 5:
+        if (data==1) {
+            return "Fri"
+        }    
+        break;
+        case 6:
+        if (data==1) {
+            return "Sat"
+        }   
+        break;
+    }
+};
 
 defineProps({
     canLogin: Boolean,
@@ -20,25 +70,33 @@ defineProps({
 <template >
 <!-------------------- Navbar&header -------------------->
 <NavBar/>
-<Header headername="Web Developer Batch 9" classviewmode=true />
+<Header classaddmode=true />
+
 <!---------------- body ----------------------->
-<div class="absolute w-5/6 headercustomleft  top-32 customblack px-5">
+<div class="absolute w-5/6 headercustomleft  top-32 customblack px-5 max-h-full">
+<div class="flex flex-row mt-10 fixed sm:top-4 top-10 z-50 w-full">
+<div class="text-white  font-bold sm:text-2xl  text-sm">{{classdata[0].cname}}</div>
+ <a :href="route('class.edit',classdata[0].id)" class="mt-2 text-center bg-blue-600 hover:bg-blue-700 active:bg-blue-900 text-white sm:w-20 w-14 h-5 text-sm  rounded-md ml-7">
+     Edit
+</a>
+</div>
+
 <div class="custombackgroundcolor w-full text-white p-4 rounded-lg">
    <h3 class="sm:text-lg text-base">Class Information</h3>
-   <img src="../../../public/img/php-developer.jpg" alt="" class="rounded-full sm:w-20 w-14 float-right">
-   <div class="sm:text-2xl text-lg font-bold mt-2">{{classdata[0].c_name}}</div>
-   <p class="sm:text-sm text-xs opacity-80 mt-2 w-10/12">Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui ad adipisci officiis, exercitationem impedit, nemo quaerat sunt distinctio minus quis voluptates illum officia minima voluptas tenetur iste fugiat quae nihil. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Minima, perferendis minus vitae rerum ea aspernatur veniam distinctio repellendus harum at, quasi sed, magnam sequi eligendi! Adipisci esse sed enim eum.</p>
+   <img :src='"/storage/"+classdata[0].c_profile' alt="" class="rounded-full sm:w-20 w-14 sm:h-20 h-14 float-right">
+   <div class="sm:text-2xl text-lg font-bold mt-2">{{classdata[0].cname}}</div>
+   <p class="sm:text-sm text-xs opacity-80 mt-2 w-10/12">{{classdata[0].c_description }}</p>
    <div class="flex flex-row justify-between w-10/12 sm:text-sm text-xs mt-3">
     <div>
-        <div>Date : <br class="sm:hidden block"><span> 2022/12/01 - 2023/12/01</span></div>
-        <div class="mt-1">Day : <br class="sm:hidden block"><span> Mon,Tue,Fri</span></div>
-        <div class="mt-1">Time : <br class="sm:hidden block"><span>13:00 - 15:00</span></div>
+        <div>Date : <br class="sm:hidden block"><span>{{classdata[0].c_start_date }} - {{classdata[0].c_end_date  }}</span></div>
+        <div class="mt-1">Day : <br class="sm:hidden block"><span>{{datesplit(classdata[0].c_date)}}</span></div>
+        <div class="mt-1">Time : <br class="sm:hidden block"><span>{{classdata[0].c_start_time }} - {{classdata[0].c_end_time }}</span></div>
         <div class="mt-1">Person : <br class="sm:hidden block"><span>20</span></div>
     </div>
     <div>
-        <div>Instructor : <br class="sm:hidden block"><span class="customtextcolor7 underline">Linn Ko Ko</span></div>
-        <div class="mt-1">Category : <br class="sm:hidden block"><span class="customtextcolor7 underline"> WEB</span></div>
-        <div class="mt-1">Fees : <br class="sm:hidden block"><span>290,000 Ks</span></div>
+        <div>Instructor : <br class="sm:hidden block"><span class="customtextcolor7 underline">{{classdata[0].i_name }}</span></div>
+        <div class="mt-1">Category : <br class="sm:hidden block"><span class="customtextcolor7 underline">{{classdata[0].c_name}}</span></div>
+        <div class="mt-1">Fees : <br class="sm:hidden block"><span>{{ Number(classdata[0].c_fees).toLocaleString() }}  Ks</span></div>
     </div>
    </div>
   </div>

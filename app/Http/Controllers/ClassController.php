@@ -52,6 +52,9 @@ class ClassController extends Controller
         $date5=$request->input('day5');
         $date6=$request->input('day6');
         $date7=$request->input('day7');
+        $studentids=$request->input('students');
+        $img=$request->file('classimage');
+        $saveimg = $img->store('Classphoto');
         settype($date1, "string");
         settype($date2, "string");
         settype($date3, "string");
@@ -60,7 +63,7 @@ class ClassController extends Controller
         settype($date6, "string");
         settype($date7, "string");
         $date=$date1.$date2.$date3.$date4.$date5.$date6.$date7;
-        $addclass=$class->addclass($request,$date);
+        $addclass=$class->addclass($request,$date,$saveimg,$studentids);
         return redirect('class');
     }
 

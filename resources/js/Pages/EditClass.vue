@@ -4,7 +4,14 @@ import NavBar from "../Components/NavBar.vue";
 import Header from "../Components/Header.vue";
 import { ref } from '@vue/reactivity';
 
-var studentid = ref([]);
+
+// const classdata = defineProps({
+//   instructor:{
+//     type : Object
+//   }
+// })
+
+// var className = ref("Web Developer Batch 9");
 defineProps({
     canLogin: Boolean,
     canRegister: Boolean,
@@ -33,7 +40,6 @@ const form = useForm({
     teacher: null ,
     categories:null ,
     fees: null ,
-    students: null ,
     
 });
 const imgSrc = ref("");
@@ -56,9 +62,11 @@ const pfimgborder=()=>
  }
 }
 
+
 const submit = () => {
-  form.students=studentid;
-  form.post(route('class.store',form));
+
+  console.log(form);
+    form.post(route('class.store',form));
 };
 
 </script>
@@ -136,7 +144,7 @@ const submit = () => {
             <input type="text" v-model="form.endtime" class="customnavcolor text-white sm:text-sm text-xs rounded-lg sm:w-1/4 w-16 customborder1">
             </span>
         </div>
-        <div class="mt-3">Person : <span>{{studentid.length}}</span></div>
+        <div class="mt-3">Person : <span>20</span></div>
     </div>
     <div>
         <div class="sm:mt-0 mt-3">Instructor : 
@@ -177,7 +185,7 @@ const submit = () => {
     </thead>
     <tbody class="lg:text-sm text-xs customfontsize overflow-y-scroll">
     <tr class="customborder" v-for="user in student">
-        <td class="text-start  py-1"><input type="checkbox" name="checkbox" :value="user.id" v-model="studentid" class="cuscheckbox"/> {{user.name}}</td>
+        <td class="text-start  py-1"><input type="checkbox" name="checkbox" :value="user.id" class="cuscheckbox"/> {{user.name}}</td>
         <td  class="text-center ">{{user.phone}}</td>
         <td class="text-center ">{{user.address}}</td>
         <td  class="text-center">{{user.Age}}</td>
