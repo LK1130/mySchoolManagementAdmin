@@ -69,15 +69,6 @@ const onFile = (e) => {
     console.log(form.classimage)
 }
 
-const checkedcondition=(ids)=>{
-  console.log(studentid)
-for (const id of props.studentsid) {
-   if (id.id==ids) {
-    return true
-   }
-  
-}
-}
 const submit = () => {
   form.students=studentid;
   console.log(form);
@@ -201,7 +192,7 @@ const submit = () => {
     <tbody class="lg:text-sm text-xs customfontsize overflow-y-scroll">
     <tr class="customborder" v-for="user in student">
         <td class="text-start  py-1" >
-       <input  type="checkbox" v-model="studentid" name="checkbox" :value="user.id"  class="cuscheckbox" :checked="checkedcondition(user.id) "/>
+       <input  type="checkbox" v-model="studentid" name="checkbox" :value="user.id"  class="cuscheckbox"/>
        {{user.name}}</td>
         <td  class="text-center ">{{user.phone}}</td>
         <td class="text-center ">{{user.address}}</td>
