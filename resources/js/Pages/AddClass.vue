@@ -72,7 +72,7 @@ const submit = () => {
 <div class="absolute w-5/6 headercustomleft  top-32 customblack px-5">
 <form @submit.prevent="submit">
 <div class="flex flex-row mt-10 addclasscss fixed sm:top-4 top-10 z-50" >
-<input type="text"  class="classnameinput  sm:text-xl text-sm font-bold text-white"  v-model="form.classnames">
+<input type="text"  class="classnameinput  sm:text-xl text-sm font-bold text-white"  v-model="form.classnames" :old='form.classnames'>
 <button type="button" class="mt-2 sm:w-7 w-4 sm:h-7 h-4 border-2 sm:text-sm text-xs rounded-full border-solid border-white text-white " @click="form.classnames=''"> &#9587</button>
 </div>
 
@@ -158,11 +158,13 @@ const submit = () => {
    </div>
   </div>
 </div>
-<div class="flex flex-row mb-3">
+
+<form action="" class="flex flex-row mb-3">
 <h3 class="text-white pt-1 ">Student Name : </h3>
 <input type="text" class="customnavcolor sm:ml-3 ml-2  text-white sm:text-sm text-xs rounded-lg sm:w-1/4 w-24 customborder1" placeholder="name">
-<button type="button" class=" w-20 bg-blue-600 hover:bg-blue-700 active:bg-blue-900 rounded-lg p-1 ml-3 text-white sm:text-sm text-xs">Search</button>
-</div>
+<button type="submit" class=" w-20 bg-blue-600 hover:bg-blue-700 active:bg-blue-900 rounded-lg p-1 ml-3 text-white sm:text-sm text-xs">Search</button>
+</form>
+
 <div class="sm:w-2/4 w-4/4">
 <div class="custombackgroundcolor h-48   rounded-lg  mt-3 px-3 py-4 overflow-y-scroll my-5">
   <table  class="text-white w-full">

@@ -3,47 +3,60 @@ import { Head, Link, useForm } from '@inertiajs/inertia-vue3';
 import NavBar from "../Components/NavBar.vue";
 import Header from "../Components/Header.vue";
 import { ref } from '@vue/reactivity';
-
-
-// const classdata = defineProps({
-//   instructor:{
-//     type : Object
-//   }
-// })
-
-// var className = ref("Web Developer Batch 9");
-defineProps({
-    canLogin: Boolean,
-    canRegister: Boolean,
-    laravelVersion: String,
-    phpVersion: String,
-    instructor: Object,
-    category: Object,
-    student:Object,
-});
+import { Inertia } from '@inertiajs/inertia';
+var studentid = ref([1,3,4,5]);
+const props = defineProps({
+    classdata : {
+        type : Object
+    },
+    instructor : {
+        type : Object
+    },
+    category : {
+        type : Object
+    },
+    student : {
+        type : Object
+    },
+        day : {
+        type : Object
+    },
+    studentsid: {
+        type : Object
+    },
+})
 const form = useForm({
-//     _method : "POST",
-    classnames: null,
+    _method : "PUT",
+    classnames:props.classdata[0].c_name,
     classimage: null,
-    classdetail: null,
-    startdate: null ,
-    enddate:null ,
+    classdetail: props.classdata[0].c_description,
+    startdate: props.classdata[0].c_start_date ,
+    enddate:props.classdata[0].c_end_date ,
     day1 : 0 ,
     day2 : 0 ,
     day3 : 0 ,
-    day4 :0 ,
+    day4 : 0 ,
     day5 : 0 ,
     day6 : 0 ,
     day7 : 0 ,
-    starttime : null ,
-    endtime : null ,
-    teacher: null ,
-    categories:null ,
-    fees: null ,
+    starttime : props.classdata[0].c_start_time ,
+    endtime : props.classdata[0].c_end_time ,
+    teacher: props.classdata[0].instructor_id ,
+    categories:props.classdata[0].category_id ,
+    fees: props.classdata[0].c_fees ,
+    students: null ,
     
 });
-const imgSrc = ref("");
-var imgnoborder = true;
+var checkedcd=true
+var day=props.classdata[0].c_date
+var dayone=day.charAt(0)
+var daytwo=day.charAt(1)
+var daythree=day.charAt(2)
+var dayfour=day.charAt(3)
+var dayfive=day.charAt(4)
+var daysix=day.charAt(5)
+var dayseven=day.charAt(6)
+const imgSrc = ref("/storage/"+props.classdata[0].c_profile);
 const onFile = (e) => {
     const files = e.target.files
     if (!files.length) return
@@ -51,22 +64,24 @@ const onFile = (e) => {
     const reader = new FileReader()
     reader.readAsDataURL(files[0])
     var imgname=files[0].name
-    reader.onload = () => (imgSrc.value = reader.result,imgnoborder=false)
+    reader.onload = () => (imgSrc.value = reader.result)
     form.classimage=files[0];
     console.log(form.classimage)
 }
-const pfimgborder=()=>
-{
- if(imgnoborder){
-  return "profileimgnoborder"
- }
+
+const checkedcondition=(ids)=>{
+  console.log(studentid)
+for (const id of props.studentsid) {
+   if (id.id==ids) {
+    return true
+   }
+  
 }
-
-
+}
 const submit = () => {
-
+  form.students=studentid;
   console.log(form);
-    form.post(route('class.store',form));
+    form.post(route('class.update',props.classdata[0].id));
 };
 
 </script>
@@ -88,7 +103,7 @@ const submit = () => {
     <div class="customnavcolor w-full text-white p-4 rounded-lg">
    <h3 class="sm:text-lg text-base">Class Information</h3>
    <div class="float-right">
-   <img :src="imgSrc" alt="" class="rounded-full sm:w-20 sm:h-20 h-14 w-14" :class="pfimgborder()">
+   <img :src="imgSrc" alt="" class="rounded-full sm:w-20 sm:h-20 h-14 w-14" >
 <label for="file-upload" class="custom-file-upload sm:w-20 w-14 bg-blue-600 hover:bg-blue-700 active:bg-blue-900 sm:text-base text-xs rounded-lg p-1 mt-4">
     Upload
 </label>
@@ -111,25 +126,25 @@ const submit = () => {
         </div>
       <div class="mt-3  flex flex-row ">Day: 
        <span class="flex flex-wrap mt-0.5 sm:text-sm text-xs">  
-       <input type="checkbox" name="checkbox" v-model="form.day1" value="1" class="daycheckbox mt-0.5 ml-3"/>
+       <input type="checkbox" name="checkbox1" v-model="form.day1" value="1" class="daycheckbox mt-0.5 ml-3" checked/>
        <label for="" class="ml-2">SUN</label>
        
-       <input type="checkbox" name="checkbox" v-model="form.day2" value="1" class="daycheckbox mt-0.5 ml-3"/>
+       <input type="checkbox" name="checkbox2" v-model="form.day2" value="1" class="daycheckbox mt-0.5 ml-3" checked/>
        <label for="" class="ml-2">Mon</label>
 
-       <input type="checkbox" name="checkbox" v-model="form.day3" value="1" class="daycheckbox mt-0.5 ml-3"/>
+       <input type="checkbox" name="checkbox3" v-model="form.day3" value="1" class="daycheckbox mt-0.5 ml-3"/>
        <label for="" class="ml-2">TUE</label>
 
-       <input type="checkbox" name="checkbox" v-model="form.day4" value="1" class="daycheckbox mt-0.5 ml-3"/>
+       <input type="checkbox" name="checkbox4" v-model="form.day4" value="1" class="daycheckbox mt-0.5 ml-3"/>
        <label for="" class="ml-2">WED</label>
 
-       <input type="checkbox" name="checkbox" v-model="form.day5" value="1" class="daycheckbox mt-0.5 ml-3"/>
+       <input type="checkbox" name="checkbox5" v-model="form.day5" value="1" class="daycheckbox mt-0.5 ml-3"/>
        <label for="" class="ml-2">THU</label>
 
-     <input type="checkbox" name="checkbox" v-model="form.day6" value="1" class="daycheckbox mt-0.5 ml-3"/>
+     <input type="checkbox" name="checkbox6" v-model="form.day6" value="1" class="daycheckbox mt-0.5 ml-3"/>
        <label for="" class="ml-2">FRI</label>
 
-       <input type="checkbox" name="checkbox" v-model="form.day7" value="1" class="daycheckbox mt-0.5 ml-3"/>
+       <input type="checkbox" name="checkbox7" v-model="form.day7" value="1" class="daycheckbox mt-0.5 ml-3"/>
        <label for="" class="ml-2">SAT</label>
 
        </span>
@@ -144,7 +159,7 @@ const submit = () => {
             <input type="text" v-model="form.endtime" class="customnavcolor text-white sm:text-sm text-xs rounded-lg sm:w-1/4 w-16 customborder1">
             </span>
         </div>
-        <div class="mt-3">Person : <span>20</span></div>
+        <div class="mt-3">Person : <span>{{studentid.length}}</span></div>
     </div>
     <div>
         <div class="sm:mt-0 mt-3">Instructor : 
@@ -185,7 +200,9 @@ const submit = () => {
     </thead>
     <tbody class="lg:text-sm text-xs customfontsize overflow-y-scroll">
     <tr class="customborder" v-for="user in student">
-        <td class="text-start  py-1"><input type="checkbox" name="checkbox" :value="user.id" class="cuscheckbox"/> {{user.name}}</td>
+        <td class="text-start  py-1" >
+       <input  type="checkbox" v-model="studentid" name="checkbox" :value="user.id"  class="cuscheckbox" :checked="checkedcondition(user.id) "/>
+       {{user.name}}</td>
         <td  class="text-center ">{{user.phone}}</td>
         <td class="text-center ">{{user.address}}</td>
         <td  class="text-center">{{user.Age}}</td>

@@ -39,13 +39,41 @@ class MClass extends Model
     public function get_classdetail($id)
     {
        return DB::table('m_classes')
+        ->where('id',$id)
+        ->get();
+    }
+    public function get_classdate($id)
+    {
+       return DB::table('m_classes')
+        ->select('c_date')
+        ->where('id',$id)
+        ->first();
+    }
+    public function get_classdata($id)
+    {
+       return DB::table('m_classes')
         ->join('m_instructors','m_classes.instructor_id','=','m_instructors.id')
         ->join('m_categories','m_classes.category_id','=','m_categories.id')
         ->select('m_classes.id','m_classes.c_name as cname','m_categories.c_name','m_classes.c_profile','m_classes.c_description', 'm_classes.c_date', 'm_classes.c_start_time', 'm_classes.c_end_time', 'm_classes.c_fees', 'm_classes.c_start_date', 'm_classes.c_end_date','m_instructors.i_name')
         ->where('m_classes.id',$id)
         ->get();
     }
-
+    public function get_eachclassstudents($id)
+    {
+       return DB::table('t_student_classes')
+        ->join('users','t_student_classes.user_id','=','users.id')
+        ->select('t_student_classes.start_join', 'users.name', 't_student_classes.paid_fees', 't_student_classes.remain_fees')
+        ->where('t_student_classes.id',$id)
+        ->get();
+    }
+    public function get_studentid($id)
+    {
+       return DB::table('t_student_classes')
+        ->join('users','t_student_classes.user_id','=','users.id')
+        ->select( 'users.id')
+        ->where('t_student_classes.id',$id)
+        ->get();
+    }
     public function addclass(Request $request,$date,$img,$studentids)
     {
         $id=DB::table('m_classes')
@@ -70,9 +98,47 @@ class MClass extends Model
             ->insert([
                 'id' => $id,
                 'user_id' => $ids,
+                'start_join' =>Date('Y-m-d h:i:s'),
                 'paid_fees' => 00,
                 'remain_fees' => 00,
                 'created_at'=>Date('Y-m-d h:i:s'),
+                'created_by'=>"0"
+            ]);
+        };
+
+    }
+
+    public function editclass(Request $request,$date,$img,$studentids,$id)
+    {
+        DB::table('m_classes')
+        ->where('id',$id)
+        ->update([
+            'c_name' => $request->input('classnames'),
+            'c_description' => $request->input('classdetail'),
+            'c_start_date' =>$request->input('startdate'),
+            'c_end_date' => $request->input('enddate'),
+            'c_date'=>$date,
+            'c_start_time'=>$request->input('starttime'),
+            'c_end_time' =>$request->input('endtime'),
+            'c_fees' =>$request->input('fees'),
+            'instructor_id' =>$request->input('teacher') ,
+            'c_profile' =>$img,
+            'category_id' =>$request->input('categories'),
+            'updated_at'=>Date('Y-m-d h:i:s'),
+            'updated_by'=>"0"
+        ]);
+
+        
+        foreach ($studentids as $ids) {
+            DB::table('t_student_classes')
+            ->insert([
+                'id' => $id,
+                'user_id' => $ids,
+                'start_join' =>Date('Y-m-d h:i:s'),
+                'paid_fees' => 00,
+                'remain_fees' => 00,
+                'updated_at'=>Date('Y-m-d h:i:s'),
+                'updated_by'=>"0",
                 'created_by'=>"0"
             ]);
         };

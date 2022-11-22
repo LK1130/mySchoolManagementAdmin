@@ -170,6 +170,10 @@ const bafcolor = (start,end) => {
 <span class="ml-1">ADD</span>
 </button>
 </a>
+            <!-- <div class="flex justify-center items-center py-3">
+                <Pagination :links="dclass">
+                </Pagination>
+            </div> -->
 </div>
 
 </div>
