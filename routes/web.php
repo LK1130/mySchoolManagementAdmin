@@ -35,7 +35,7 @@ Route::get('/classview/{id?}', [viewclassController::class, "getclassdata"])->na
 Route::resource('/class', ClassController::class);
 Route::get('/student', function () {
     return inertia("Student");
-});
+})->name('student');
 Route::get('/student/view', function () {
     return inertia("StudentView");
 });
