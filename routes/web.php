@@ -32,7 +32,16 @@ Route::get('/classview/{id?}', [viewclassController::class, "getclassdata"])->na
 //     return Inertia::render('ViewClass');
 // });
 
-Route::resource('/class',ClassController::class);
+Route::resource('/class', ClassController::class);
+Route::get('/student', function () {
+    return inertia("Student");
+});
+Route::get('/student/view', function () {
+    return inertia("StudentView");
+});
+Route::get('/Addstudent', function () {
+    return inertia("AddStudent");
+})->name("Addstudent.view");
 
 Route::middleware([
     'auth:sanctum',
@@ -43,4 +52,3 @@ Route::middleware([
         return Inertia::render('Dashboard');
     })->name('dashboard');
 });
-
