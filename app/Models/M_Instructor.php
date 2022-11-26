@@ -48,4 +48,26 @@ class M_Instructor extends Model
             'created_by' => "0"
         ]);
     }
+    public function getAllInstructor()
+    {
+        return
+            DB::table('m_classes')
+            ->join('m_instructors', 'm_classes.instructor_id', '=', 'm_instructors.id')
+            ->join('m_categories', 'm_classes.category_id', '=', 'm_categories.id')
+            ->where('m_classes.del_flg', 0)
+            ->where('m_instructors.del_flg', 0)
+            ->orderby("m_instructors.created_at", "desc")
+            ->get();
+
+        // DB::table('m_instructors')->where('del_flg', 0)->orderby("created_at", "desc")->get();
+    }
+    public function getCategories()
+    {
+        return
+            DB::table('m_categories')
+            ->where('del_flg', 0)
+            ->get();
+
+        // DB::table('m_instructors')->where('del_flg', 0)->orderby("created_at", "desc")->get();
+    }
 }

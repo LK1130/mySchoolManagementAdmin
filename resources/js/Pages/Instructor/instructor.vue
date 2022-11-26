@@ -3,41 +3,36 @@ import { Head, Link } from "@inertiajs/inertia-vue3";
 import NavBar from "/resources/js/Components/NavBar.vue";
 import Header from "/resources/js/Components/Header.vue";
 import ClassTable from "/resources/js/Components/ClassTable.vue";
+import { Inertia } from "@inertiajs/inertia";
+import { ref } from "vue";
 
-// const props = defineProps({
-//     messages: {
-//         type: Object,
-//     },
-//     checked: {
-//         type: Array,
-//     },
-// });
+const props = defineProps({
+    instructors: {
+        type: Object,
+    },
+
+    checked: {
+        type: Array,
+    },
+});
 
 let selectedItems = [];
-
-const filter = (e) => {
-    const files = e.target.checked;
-    selectedItems.push(files);
-    console.log(selectedItems);
-};
-// let collapseItem = ref(true);
-
+let collapseItem = ref(true);
 /**
  * Check for user choice
 //  */
-// const checkboxs = () =>
-//     (selectedItems =
-//         props.checked[0] == "" ? ref([1, 2, 3]) : ref(props.checked));
+//
+console.log(props.instructors);
+const checkboxs = () =>
+    (selectedItems = props.checked == "" ? ref([1, 2, 3]) : ref(props.checked));
 
-// const filter = () =>
-//     Inertia.get(
-//         route("instructor.checkChecked", selectedItems.value.join(","))
-//     );
+const filter = () =>
+    Inertia.get(route("instructor.index", selectedItems.value.join(",")));
 
-// checkboxs();
-// const collapse = (id) => {
-//     collapseItem.value = id;
-// };
+checkboxs();
+const collapse = (id) => {
+    collapseItem.value = id;
+};
 </script>
 
 <template>
@@ -119,11 +114,67 @@ const filter = (e) => {
                 </select>
             </div>
         </div>
+        <div class="px-4 my-6">
+            <table class="w-full rounded-lg tableColor">
+                <tr class="text-white pt-4">
+                    <td class="customfontsize1 text-start pl-7 pt-4">Name</td>
+                    <td class="customfontsize1 pt-4">Classes</td>
+                    <td class="customfontsize1 pt-4">Total Student</td>
+                    <td class="customfontsize1 pt-4">Contact</td>
+                    <td class="customfontsize1 pt-4">Address</td>
+                    <td class="customfontsize1 pt-4">Setting</td>
+                </tr>
+                <tbody class="text-sm customfontsize text-white">
+                    <tr
+                        class="cusborder"
+                        v-for="instructor in instructors.data"
+                        :key="instructor.instructor_id"
+                    >
+                        <td class="customfontsize1 text-start pl-7 pt-4">
+                            {{ instructor.i_name }}
+                        </td>
+                        <td class="customfontsize1 pt-4">
+                            {{ instructor.c_name }}
+                        </td>
+                        <td class="customfontsize1 pt-4">Total Student</td>
+                        <td class="customfontsize1 pt-4">
+                            {{ instructor.i_contact }}
+                        </td>
+                        <td class="customfontsize1 pt-4">
+                            {{ instructor.i_address }}
+                        </td>
+                        <td
+                            class="customfontsize1 pt-4 customtextcolor7 underline"
+                        >
+                            <a
+                                :href="
+                                    route(
+                                        'instructors.show',
+                                        instructor.instructor_id
+                                    )
+                                "
+                                >Edit</a
+                            >
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <button
+                class="addButton items-center pt-0.5 w-2/12 relative mt-8 content-end h-8 text-white rounded-lg flex justify-center bg-blue-600 hover:bg-blue-700 active:bg-blue-900 cusmargin"
+            >
+                <a :href="route('instructors.create')" class="w-80">
+                    Add Instructor
+                </a>
+            </button>
+        </div>
     </div>
 </template>
 <style scoped>
 .customalign {
     margin-bottom: 1.3em;
+}
+.addButton {
+    left: 65vw;
 }
 .popfont {
     font-family: poppins !important;
@@ -138,6 +189,9 @@ const filter = (e) => {
 }
 .beforecolor {
     color: #ffc652;
+}
+.tableColor {
+    background-color: #2b2b2b;
 }
 .livecolor {
     color: #33a02c;

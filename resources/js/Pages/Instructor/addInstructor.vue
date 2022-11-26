@@ -103,6 +103,9 @@ const submit = () => {
                     </div>
                 </div>
             </div>
+            <div class="absolute backLink text-xl text-white">
+                <a :href="route('instructor.index')">Back</a>
+            </div>
         </div>
     </form>
 </template>
@@ -111,5 +114,10 @@ input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
+}
+.backLink {
+    top: 72vh;
+    left: 6vw;
+    text-decoration: underline;
 }
 </style>

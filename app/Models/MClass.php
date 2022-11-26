@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 class MClass extends Model
 {
     use HasFactory;
-
+    public $table = 'm_classes';
     public function get_instructors()
     {
         return DB::table('m_instructors')

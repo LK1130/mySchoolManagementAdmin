@@ -3,6 +3,7 @@
 use App\Http\Controllers\ClassController;
 use App\Http\Controllers\ClassesController;
 use App\Http\Controllers\ClasssController;
+use App\Http\Controllers\Instructor;
 use App\Http\Controllers\InstructorController;
 use App\Http\Controllers\viewclassController;
 use Illuminate\Foundation\Application;
@@ -44,7 +45,10 @@ Route::get('/Addstudent', function () {
     return inertia("AddStudent");
 })->name("Addstudent.view");
 
-Route::resource('/instructor', InstructorController::class);
+Route::resource('/instructors', InstructorController::class);
+Route::get('/instructor/{class?}', [Instructor::class, 'index'])->name("instructor.index");
+Route::get('/instructors/edit/{id}', [InstructorController::class, 'show'])->name("instructors.show");
+Route::get('/instructors/create', [InstructorController::class, 'create'])->name("instructors.create");
 
 // Route::get('/addInstructor', function () {
 //     return inertia("addInstructor");
