@@ -3,6 +3,7 @@
 use App\Http\Controllers\ClassController;
 use App\Http\Controllers\ClassesController;
 use App\Http\Controllers\ClasssController;
+use App\Http\Controllers\InstructorController;
 use App\Http\Controllers\viewclassController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -43,6 +44,11 @@ Route::get('/Addstudent', function () {
     return inertia("AddStudent");
 })->name("Addstudent.view");
 
+Route::resource('/instructor', InstructorController::class);
+
+// Route::get('/addInstructor', function () {
+//     return inertia("addInstructor");
+// })->name("addInstructor.view");
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
