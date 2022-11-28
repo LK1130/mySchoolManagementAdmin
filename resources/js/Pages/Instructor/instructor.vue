@@ -134,9 +134,11 @@ const collapse = (id) => {
                             {{ instructor.i_name }}
                         </td>
                         <td class="customfontsize1 pt-4">
-                            {{ instructor.c_name }}
+                            {{ instructor.classes }}
                         </td>
-                        <td class="customfontsize1 pt-4">Total Student</td>
+                        <td class="customfontsize1 pt-4">
+                            {{ instructor.students }}
+                        </td>
                         <td class="customfontsize1 pt-4">
                             {{ instructor.i_contact }}
                         </td>
