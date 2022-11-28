@@ -24,11 +24,11 @@ const showoverAlltable = () => {
 
 let days = [];
 let examMark = [];
-for (let index = 0; index < 7; index++) {
-    days.push("Aug " + [index]);
+for (let index = 0; index < 11; index++) {
+    days.push("Aug " + [index + 1]);
 }
-for (let index = 0; index < 5; index++) {
-    examMark.push(index * 2);
+for (let index = 0; index < 11; index++) {
+    examMark.push(index);
 }
 console.log(days);
 console.log();
@@ -38,46 +38,47 @@ const showSelfRanktable = () => {
     selfRank = true;
     console.log("selfRank" + selfRank);
     console.log("overalltable" + overallTable);
-
-    const chartOptions = ref({
-        chart: {
-            toolbar: {
-                show: false,
-            },
-            id: "basic-bar",
-        },
-        grid: {
-            borderColor: "#e7e7e7",
-            row: {
-                colors: ["#f3f3f3", "transparent"],
-                opacity: 0.5,
-            },
-        },
-        title: {
-            text: "Over All",
-            align: "left",
-        },
-        stroke: {
-            curve: "smooth",
-        },
-        dataLabels: {
-            enabled: true,
-        },
-        xaxis: {
-            categories: days,
-            title: {
-                text: "Days",
-            },
-        },
-        yaxis: {
-            title: {
-                text: "Mark",
-            },
-            min: 0,
-            max: 10,
-        },
-    });
 };
+const chartOptions = ref({
+    chart: {
+        toolbar: {
+            show: false,
+        },
+        id: "basic-bar",
+    },
+    grid: {
+        borderColor: "#fff",
+        row: {
+            colors: ["#fff", ""],
+            opacity: 0,
+        },
+    },
+    title: {
+        text: "Over All",
+        align: "left",
+    },
+    stroke: {
+        curve: "smooth",
+    },
+    dataLabels: {
+        enabled: true,
+    },
+    xaxis: {
+        categories: days,
+        title: {
+            text: "Days",
+        },
+        min: 0,
+        max: 11,
+    },
+    yaxis: {
+        title: {
+            text: "Mark",
+        },
+        min: 0,
+        max: 11,
+    },
+});
 const series = ref([
     {
         name: "series-1",
@@ -353,11 +354,7 @@ const series = ref([
                             </tr>
                         </thead>
                         <tbody>
-                            <tr
-                                class="bg-white dark:bg-gray-800"
-                                v-for="n in 5"
-                                :key="n"
-                            >
+                            <tr class="bg-gray-800" v-for="n in 12" :key="n">
                                 <th
                                     scope="row"
                                     class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
@@ -376,14 +373,9 @@ const series = ref([
             <!-- Student Table End -->
             <!-- Student Self Rank Chart Start-->
             <div
-                class="md:w-4/6 w-full flex flex-col h-96 bg-white"
-                :class="{ hidden: !selfRank }"
+                class="md:w-4/6 w-full flex flex-col h-96 bg-elementBackground justify-center items-center"
             >
-                <Chart
-                    :options="chartOptions"
-                    :series="series"
-                    class="chart h-full"
-                />
+                <Chart :options="chartOptions" :series="series" class="chart" />
             </div>
             <!-- Student Self Rank Chart end-->
             <div class="w-4/6 text-white justify-start mt-5 mb-10">
