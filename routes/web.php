@@ -50,6 +50,9 @@ Route::get('/instructor/{class?}', [Instructor::class, 'index'])->name("instruct
 Route::get('/instructors/edit/{id}', [InstructorController::class, 'show'])->name("instructors.show");
 Route::get('/instructors/create', [InstructorController::class, 'create'])->name("instructors.create");
 
+Route::get('/setting',function (){
+    return inertia("SettingAdmin");
+});
 // Route::get('/addInstructor', function () {
 //     return inertia("addInstructor");
 // })->name("addInstructor.view");
