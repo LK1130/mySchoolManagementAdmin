@@ -11,44 +11,57 @@ import Pagination from "../Components/Pagination.vue";
 
 
     <div class="absolute top-32  headercustomleft w-5/6 h-full bg-primaryBackground items-center flex flex-col ">
-      <input type="text" id="Site_name" class="focus:ring-0 focus:border-white focus:border-0 focus:ring-white focus:outline-none  border border-white text-gray-900 text-sm rounded-lg block w-full bg-elementBackground" placeholder="" required>
+      
 
 
         <div class="flex items-center w-11/12 mt-10 bg-primaryBackground flex-row justify-center">
             <div class="w-4/6 items-center text-center rounded-tl-xl bg-elementBackground text-white p-4">SiteMaster</div>
-            <div class="w-4/6 items-center  text-center rounded-tr-xl  bg-primaryBackground text-white p-4">SiteMaster Public</div>
+            <div class="w-4/6 items-center  text-center rounded-tr-xl  bg-primaryBackground hover:bg-elementBackground text-white p-4">SiteMaster Public</div>
             
         </div>
-        <div class="w-11/12 h-96 bg-elementBackground text-white">
+        <div class="w-11/12 h-auto bg-elementBackground text-white">
         
 <form class="mt-6">
     <div class="grid gap-6 mb-6 md:grid-cols-2">
+        <!-- LOGO -->
         <div class="ml-4">
             <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Logo</label>
-            <input class="block w-full border-2 rounded-lg cursor-pointer" id="file_input" type="file">
+            <input class="block w-full border rounded-lg cursor-pointer " id="file_input" type="file">
         </div>
-        <div class="">
-            <label for="last_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Last name</label>
-            <input type="text" id="last_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Doe" required>
+        <!-- FaceBook -->
+        <div class="mr-4">
+            <label for="facebook" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">FaceBook</label>
+            <input type="url" id="facebook" class="focus:ring-white focus:border-white border-white text-gray-900 text-sm rounded-lg block w-full bg-elementBackground p-2" placeholder="" required>
         </div>
+        <!-- Fav Icon -->
         <div class="ml-4">
             <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Fav Icon</label>
-            <input class="block w-full border-2 rounded-lg cursor-pointer" id="file_input" type="file">
+            <input class="block w-full border rounded-lg cursor-pointer" id="file_input" type="file">
         </div>  
-        <div>
-            <label for="phone" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Phone number</label>
-            <input type="tel" id="phone" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="123-45-678" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" required>
+        <!-- Messenger -->
+        <div class="mr-4">
+            <label for="Messenger" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Messenger</label>
+            <input type="url" id="Messenger" class="focus:ring-white focus:border-white border-white text-gray-900 text-sm rounded-lg block w-full bg-elementBackground p-2" placeholder="" required>
         </div>
+        <!-- Site Name -->
         <div class="ml-4">
             <label for="Site_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Site Name</label>
-                 </div>
-        <div>
-            <label for="visitors" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Unique visitors (per month)</label>
-            <input type="number" id="visitors" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" required>
+            <input type="text" id="Site_name" class="focus:ring-white focus:border-white border-white text-gray-900 text-sm rounded-lg block w-full bg-elementBackground" placeholder="" required>
+        </div>
+        <!-- YouTube1 -->
+        <div class="mr-4">
+            <label for="youtube1" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">YouTube 1</label>
+            <input type="url" id="youtube1" class="focus:ring-white focus:border-white border-white text-gray-900 text-sm rounded-lg block w-full bg-elementBackground p-2" placeholder="" required>
+        </div>
+        <div></div>
+        <!-- Youtube2 -->
+        <div class="mr-4">
+            <label for="youtube3" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">YouTube 2</label>
+            <input type="url" id="youtube3" class="focus:ring-white focus:border-white border-white text-gray-900 text-sm rounded-lg block w-full bg-elementBackground p-2" placeholder="" required>
         </div>
     </div>
     
-    <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+    <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center m-5 flex float-right">Upload</button>
 </form>
   
 </div>
@@ -56,53 +69,5 @@ import Pagination from "../Components/Pagination.vue";
         
     </div>
     
-    <!---------------- body ----------------------->
-    <!-- <div class="absolute h-full w-5/6 headercustomleft top-32 bg-primaryBackground"> -->
-            
-                <!-- <button @click="hello()">Tabe change</button> -->
-                <!-- <div
-                    class="flex flex-row md:w-5/6 w-full h- items-center justify-center bg-white"
-                >
-                    <li class=" ">  
-                        <a
-                            href="#"
-                            class="p-4 text-gray-900 bg-red-300 rounded-l-lg focus:ring-4 focus:ring-blue-300 active focus:outline-none"
-                            aria-current="page"
-                            >Profile</a
-                        >
-                    </li>
-                    <li class=" ">
-                        <a
-                            href="#"
-                            class="p-4 text-gray-900 bg-green-300 rounded-l-lg focus:ring-4 focus:ring-blue-300 active focus:outline-none"
-                            aria-current="page"
-                            >Profile</a
-                        >
-                    </li>
-                </div> -->
-                <!-- <div class="flex flex-row w-5/6 items-center">
-                    <div class="bg-white w-4/6 justify-center flex h-full ">
-                    <ul class="list-none flex flex-row">
-                     <li>
-                        <a
-                            href="#"
-                            class="list-none p-4 text-gray-900 bg-blue-300 rounded-l-lg focus:ring-4 focus:ring-blue-300 active focus:outline-none"
-                            aria-current="page"
-                            >Profilse</a
-                        >
-                    </li>
-                    <li >
-                        <a
-                            href="#"
-                            class="p-4 text-gray-900 bg-green-700 rounded-l-lg focus:ring-4 focus:ring-blue-300 active focus:outline-none"
-                            aria-current="page"
-                            >Profile</a
-                        >
-                    </li>
-                    </ul>
-                    </div>
-                </div>
-            </div> -->
-    <!-- </div> -->
-   
+    
 </template>
