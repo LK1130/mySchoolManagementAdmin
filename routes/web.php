@@ -53,6 +53,31 @@ Route::get('/instructors/create', [InstructorController::class, 'create'])->name
 Route::get('/setting',function (){
     return inertia("SettingAdmin");
 });
+
+Route::get('/mailtool', function () {
+    return inertia("MailTool");
+});
+Route::get('/privacypolicytool', function () {
+    return inertia("PrivacyPolicyTool");
+});
+Route::get('/blogtool', function () {
+    return inertia("BlogTool");
+});
+Route::get('/categoryTool', function () {
+    return inertia("CategoryTool");
+});
+Route::get('/guideTool', function () {
+    return inertia("GuideTool");
+});
+Route::get('/editprivacypolicy',function(){
+    return inertia("EditPrivacyPolicy");
+});
+Route::get('/editblog',function(){
+    return inertia("EditBlog");
+});
+Route::get('/editcategory',function(){
+    return inertia("EditCategory");
+});
 // Route::get('/addInstructor', function () {
 //     return inertia("addInstructor");
 // })->name("addInstructor.view");
