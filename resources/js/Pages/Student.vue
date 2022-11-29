@@ -131,7 +131,7 @@ import Pagination from "../Components/Pagination.vue";
                         <td class="text-center md:block hidden">09795606618</td>
                         <td class="text-center">North Dagon</td>
                         <td class="text-center customtextcolor7 underline">
-                            <a href="#">View</a>
+                            <a href="">View</a>
                         </td>
                     </tr>
                 </tbody>
