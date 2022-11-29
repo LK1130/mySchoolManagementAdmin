@@ -24,7 +24,7 @@ const showoverAlltable = () => {
 
 let days = [];
 let examMark = [];
-for (let index = 0; index < 11; index++) {
+for (let index = 0; index < 7; index++) {
     days.push("Aug " + [index + 1]);
 }
 for (let index = 0; index < 11; index++) {
@@ -55,6 +55,9 @@ const chartOptions = ref({
     },
     title: {
         text: "Over All",
+        style: {
+            color: "#ffffff",
+        },
         align: "left",
     },
     stroke: {
@@ -68,13 +71,65 @@ const chartOptions = ref({
         title: {
             text: "Days",
         },
+        labels: {
+            style: {
+                colors: [
+                    "#ffffff",
+                    "#ffffff",
+                    "#ffffff",
+                    "#ffffff",
+                    "#ffffff",
+                    "#ffffff",
+                    "#ffffff",
+                    "#ffffff",
+                    "#ffffff",
+                    "#ffffff",
+                    "#ffffff",
+                    "#ffffff",
+                    "#ffffff",
+                    "#ffffff",
+                    "#ffffff",
+                    "#ffffff",
+                    "#ffffff",
+                    "#ffffff",
+                ],
+            },
+        },
         min: 0,
         max: 11,
     },
     yaxis: {
         title: {
             text: "Mark",
+            style: {
+                color: "#ffffff",
+            },
         },
+        labels: {
+            style: {
+                colors: [
+                    "#ffffff",
+                    "#ffffff",
+                    "#ffffff",
+                    "#ffffff",
+                    "#ffffff",
+                    "#ffffff",
+                    "#ffffff",
+                    "#ffffff",
+                    "#ffffff",
+                    "#ffffff",
+                    "#ffffff",
+                    "#ffffff",
+                    "#ffffff",
+                    "#ffffff",
+                    "#ffffff",
+                    "#ffffff",
+                    "#ffffff",
+                    "#ffffff",
+                ],
+            },
+        },
+
         min: 0,
         max: 11,
     },
