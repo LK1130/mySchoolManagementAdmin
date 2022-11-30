@@ -25,6 +25,7 @@
         "numeral": "^2.0.6",
         "swiper": "^8.4.5",
         "vue-apexcharts": "^1.6.2",
+        "vue-moment": "^4.1.0",
         "vue3-apexcharts": "^1.4.1"
     }
 }

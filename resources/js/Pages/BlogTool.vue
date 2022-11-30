@@ -3,6 +3,16 @@ import { Head, Link } from "@inertiajs/inertia-vue3";
 import NavBar from "../Components/NavBar.vue";
 import Header from "../Components/Header.vue";
 import Toolsbar from "../Components/Toolsbar.vue";
+import Pagination from "../Components/Pagination.vue"
+import moment from "moment";
+
+const props = defineProps({
+    blogs: {
+        type: Object
+    }
+});
+
+console.log(props.blogs);
 
 </script>
 
@@ -12,7 +22,7 @@ import Toolsbar from "../Components/Toolsbar.vue";
 
     <div class="absolute h-full w-5/6 p-5 headercustomleft top-32 customblack">
         <Toolsbar active="3" />
-        <div class="w-full h-full p-8 relative bg-secondaryBackground rounded-b-xl flex flex-col items-center">
+        <div class="w-full h-auto p-8 relative bg-secondaryBackground rounded-b-xl flex flex-col items-center">
             <!-- Table Section -->
             <div class="p-4 w-full  rounded-xl">
                 <table class="text-white w-full rounded-lg ">
@@ -24,10 +34,10 @@ import Toolsbar from "../Components/Toolsbar.vue";
                         <th class="py-3">SETTINGS</th>
                     </tr>
                     <tbody class="text-sm mt-3">
-                        <tr class="border-b" v-for="n in 5" :key="n">
-                            <td class="text-left py-3">How to use VS Code...</td>
-                            <td class="text-center py-3">Blog Blog Blog</td>
-                            <td class="text-center py-3">2022/09/23</td>
+                        <tr class="border-b" v-for="result in props.blogs.data" :key="result">
+                            <td class="text-left py-3">{{ result.b_title.substring(1,12) + "..." }}</td>
+                            <td class="text-center py-3">{{ result.b_description.substring(1,20) + "..." }}</td>
+                            <td class="text-center py-3">{{ moment(result.created_at).calendar() }}</td>
                             <td class="flex justify-center py-3">
                                 <img src="../../../public/img/blog.png" class="w-12" alt="">
                             </td>
@@ -37,42 +47,16 @@ import Toolsbar from "../Components/Toolsbar.vue";
                         </tr>
                     </tbody>
                 </table>
+
+                <div class="flex justify-center items-center my-10">
+                    <Pagination :links="blogs.links">
+                    </Pagination>
+                </div>
             </div>
 
             <div class="flex flex-col mt-10 md:flex-row w-full px-5 items-center justify-center text-white">
 
-                <nav aria-label="Page navigation example hidden md:block">
-                    <ul class="inline-flex -space-x-px">
-                        <li>
-                            <a href="#"
-                                class="px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700">Previous</a>
-                        </li>
-                        <li>
-                            <a href="#"
-                                class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700">1</a>
-                        </li>
-                        <li>
-                            <a href="#"
-                                class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700">2</a>
-                        </li>
-                        <li>
-                            <a href="#" aria-current="page"
-                                class="px-3 py-2 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700">3</a>
-                        </li>
-                        <li>
-                            <a href="#"
-                                class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700">4</a>
-                        </li>
-                        <li>
-                            <a href="#"
-                                class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700">5</a>
-                        </li>
-                        <li>
-                            <a href="#"
-                                class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700">Next</a>
-                        </li>
-                    </ul>
-                </nav>
+                
 
                 <!-- <Pagination/> -->
 

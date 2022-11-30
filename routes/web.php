@@ -1,10 +1,14 @@
 <?php
 
+use App\Http\Controllers\BlogToolController;
+use App\Http\Controllers\CategoryToolController;
 use App\Http\Controllers\ClassController;
 use App\Http\Controllers\ClassesController;
 use App\Http\Controllers\ClasssController;
+use App\Http\Controllers\GuideToolController;
 use App\Http\Controllers\Instructor;
 use App\Http\Controllers\InstructorController;
+use App\Http\Controllers\PrivacyPolicyController;
 use App\Http\Controllers\viewclassController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -57,18 +61,14 @@ Route::get('/setting', function () {
 Route::get('/mailtool', function () {
     return inertia("MailTool");
 });
-Route::get('/privacypolicytool', function () {
-    return inertia("PrivacyPolicyTool");
-});
-Route::get('/blogtool', function () {
-    return inertia("BlogTool");
-});
-Route::get('/categoryTool', function () {
-    return inertia("CategoryTool");
-});
-Route::get('/guideTool', function () {
-    return inertia("GuideTool");
-});
+Route::get('/privacypolicytool', [PrivacyPolicyController::class,'index']);
+
+Route::get('/blogtool', [BlogToolController::class,'index']);
+
+Route::get('/categoryTool', [CategoryToolController::class,'index']);
+
+Route::get('/guideTool', [GuideToolController::class, 'index']);
+
 Route::get('/editprivacypolicy',function(){
     return inertia("EditPrivacyPolicy");
 });
