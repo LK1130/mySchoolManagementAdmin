@@ -135,20 +135,20 @@ console.log(students);
                 <tbody class="text-sm customfontsize">
                     <tr
                         class="cusborder"
-                        v-for="student in students"
-                        :key="students"
+                        v-for="student in students.data"
+                        :key="students.data"
                     >
                         <td class="text-start pl-4 py-2">{{ student.name }}</td>
                         <td class="text-center">{{ student.Class }}</td>
                         <td class="text-center">{{ student.age }}</td>
-                        <td
-                            class="text-center hidden md:flex md:justify-center md:items-center"
-                        >
+                        <td class="text-center">
                             {{ student.phone }}
                         </td>
                         <td class="text-center">{{ student.address }}</td>
                         <td class="text-center customtextcolor7 underline">
-                            <a :href="route('student.view')">View</a>
+                            <a :href="route('student.view', student.id)"
+                                >View</a
+                            >
                         </td>
                     </tr>
                 </tbody>
@@ -167,9 +167,9 @@ console.log(students);
                     >
                 </button>
             </div>
-            <!-- <div class="flex justify-center items-center mb-10">
+            <div class="flex justify-center items-center mb-10">
                 <Pagination :links="students.links"></Pagination>
-            </div> -->
+            </div>
             <div
                 class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-xl text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
             >

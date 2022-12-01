@@ -20,12 +20,24 @@ class MStudent extends Model
             ->join("t_student_classes", "t_student_classes.user_id", "=", "users.id")
             ->groupBy("t_student_classes.user_id")
             ->selectRaw("COUNT('t_student_classes.class_id') AS Class,users.age,users.email,users.phone,users.address,users.name,users.id")
-            ->get();
+            ->paginate(15);
 
 
         // echo "<pre>";
         // print_r($query);
         // dd($query);
+        return $query;
+    }
+
+    public function oneStudentDetail($id)
+    {
+        $query = DB::table("users")
+            // ->join("t_student_classes", "t_stdent_classes.user_id", "=", $id)
+            // ->join("t_student_exams", "t_student_exams.user_id", "=", $id)
+            // ->join("t_student_attendances", "t_student_attendances", "=", $id)
+            // ->selectRaw("users.age,users.email,users.phone,users.address,users.name,users.id")
+            ->where('id', $id)
+            ->get();
         return $query;
     }
 }

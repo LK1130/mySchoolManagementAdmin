@@ -50,7 +50,9 @@ class StudentController extends Controller
      */
     public function show($id)
     {
-        //
+        $model = new MStudent();
+        $data = $model->oneStudentDetail($id);
+        return inertia('StudentView', ['students' => $data]);
     }
 
     /**
