@@ -5,6 +5,7 @@ use App\Http\Controllers\ClassesController;
 use App\Http\Controllers\ClasssController;
 use App\Http\Controllers\Instructor;
 use App\Http\Controllers\InstructorController;
+use App\Http\Controllers\StudentController;
 use App\Http\Controllers\viewclassController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -35,9 +36,10 @@ Route::get('/classview/{id?}', [viewclassController::class, "getclassdata"])->na
 // });
 
 Route::resource('/class', ClassController::class);
-Route::get('/student', function () {
-    return inertia("Student");
-})->name('student');
+
+
+Route::resource('/students', StudentController::class);
+
 Route::get('/student/view', function () {
     return inertia("StudentView");
 });

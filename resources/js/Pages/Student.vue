@@ -2,6 +2,15 @@
 import NavBar from "../Components/NavBar.vue";
 import Header from "../Components/Header.vue";
 import Pagination from "../Components/Pagination.vue";
+
+const props = defineProps({
+    allStudents: {
+        type: Object,
+    },
+});
+
+let students = props.allStudents;
+console.log(students);
 </script>
 
 <template>
@@ -124,14 +133,22 @@ import Pagination from "../Components/Pagination.vue";
                     <th class="pt-4">DETAILS</th>
                 </tr>
                 <tbody class="text-sm customfontsize">
-                    <tr class="cusborder" v-for="n in 15" :key="n">
-                        <td class="text-start pl-4 py-2">Zar Ni Win Lwin</td>
-                        <td class="text-center">3</td>
-                        <td class="text-center">24</td>
-                        <td class="text-center md:block hidden">09795606618</td>
-                        <td class="text-center">North Dagon</td>
+                    <tr
+                        class="cusborder"
+                        v-for="student in students"
+                        :key="students"
+                    >
+                        <td class="text-start pl-4 py-2">{{ student.name }}</td>
+                        <td class="text-center">{{ student.Class }}</td>
+                        <td class="text-center">{{ student.age }}</td>
+                        <td
+                            class="text-center hidden md:flex md:justify-center md:items-center"
+                        >
+                            {{ student.phone }}
+                        </td>
+                        <td class="text-center">{{ student.address }}</td>
                         <td class="text-center customtextcolor7 underline">
-                            <a href="">View</a>
+                            <a :href="route('student.view')">View</a>
                         </td>
                     </tr>
                 </tbody>
@@ -151,67 +168,8 @@ import Pagination from "../Components/Pagination.vue";
                 </button>
             </div>
             <!-- <div class="flex justify-center items-center mb-10">
-                    <Pagination :links="">
-                    </Pagination>
-                </div>-->
-            <!-- //TEST Pagination START -->
-            <nav aria-label="Page navigation example hidden md:block">
-                <ul class="inline-flex -space-x-px">
-                    <li>
-                        <a
-                            href="#"
-                            class="px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700"
-                            >Previous</a
-                        >
-                    </li>
-                    <li>
-                        <a
-                            href="#"
-                            class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700"
-                            >1</a
-                        >
-                    </li>
-                    <li>
-                        <a
-                            href="#"
-                            class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700"
-                            >2</a
-                        >
-                    </li>
-                    <li>
-                        <a
-                            href="#"
-                            aria-current="page"
-                            class="px-3 py-2 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700"
-                            >3</a
-                        >
-                    </li>
-                    <li>
-                        <a
-                            href="#"
-                            class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700"
-                            >4</a
-                        >
-                    </li>
-                    <li>
-                        <a
-                            href="#"
-                            class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700"
-                            >5</a
-                        >
-                    </li>
-                    <li>
-                        <a
-                            href="#"
-                            class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700"
-                            >Next</a
-                        >
-                    </li>
-                </ul>
-            </nav>
-
-            <!-- //Test Pagination End -->
-
+                <Pagination :links="students.links"></Pagination>
+            </div> -->
             <div
                 class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-xl text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
             >

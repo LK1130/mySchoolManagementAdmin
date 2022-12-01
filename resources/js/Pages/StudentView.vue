@@ -11,14 +11,7 @@ import "swiper/css";
 import "swiper/css/bundle";
 //
 
-let overallTable = ref(true);
-let selfRank = ref(true);
-const showoverAlltable = () => {
-    selfRank = false;
-    overallTable = true;
-    console.log("selfRank" + selfRank);
-    console.log("overalltable" + overallTable);
-};
+let segment = ref(1);
 
 // Studnet Line Chart
 
@@ -33,12 +26,6 @@ for (let index = 0; index < 11; index++) {
 console.log(days);
 console.log();
 
-const showSelfRanktable = () => {
-    overallTable = false;
-    selfRank = true;
-    console.log("selfRank" + selfRank);
-    console.log("overalltable" + overallTable);
-};
 const chartOptions = ref({
     chart: {
         toolbar: {
@@ -380,20 +367,20 @@ const series = ref([
                     <!-- <button @click="hello()">Tabe change</button> -->
                     <div
                         class="md:w-4/6 w-full h-12 rounded-tl-xl bg-elementBackground pt-3 md:text-xl"
-                        @click="showoverAlltable()"
+                        @click="segment = 1"
                     >
                         Overall Table
                     </div>
                     <div
                         class="md:w-4/6 w-full h-12 rounded-tr-xl pt-3 bg-green-300 md:text-xl"
-                        @click="showSelfRanktable()"
+                        @click="segment = 2"
                     >
                         Self Rank
                     </div>
                 </div>
                 <div
-                    class="overflow-x-auto relative w-full hidden"
-                    :class="{ hidden: !overallTable }"
+                    v-if="segment == 1"
+                    class="overflow-x-auto relative w-full"
                 >
                     <table class="w-full text-sm text-left text-whiteTextColor">
                         <thead
@@ -428,6 +415,7 @@ const series = ref([
             <!-- Student Table End -->
             <!-- Student Self Rank Chart Start-->
             <div
+                v-if="segment == 2"
                 class="md:w-4/6 w-full flex flex-col h-96 bg-elementBackground justify-center items-center"
             >
                 <Chart :options="chartOptions" :series="series" class="chart" />
