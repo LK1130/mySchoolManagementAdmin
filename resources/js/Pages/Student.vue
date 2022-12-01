@@ -18,101 +18,47 @@ console.log(students);
     <NavBar />
     <Header headername="Student" />
     <!---------------- body ----------------------->
-    <div
-        class="absolute h-screen w-full md:w-5/6 headercustomleft top-32 customblack"
-    >
+    <div class="absolute h-screen w-full md:w-5/6 headercustomleft top-32 customblack">
         <!-- Radio and Search Box Div -->
-        <div
-            class="text-white sm:text-sm text-xs popfont flex justify-between px-4"
-        >
+        <div class="text-white sm:text-sm text-xs popfont flex justify-between px-4">
             <div>
                 <span>
-                    <input
-                        type="checkbox"
-                        class="css-checkbox"
-                        id="checkbox1"
-                        checked="checked"
-                    />
-                    <label
-                        for="checkbox1"
-                        class="css-label lite-gray-check sm:text-base text-xs"
-                        >Japanese</label
-                    >
+                    <input type="checkbox" class="css-checkbox" id="checkbox1" checked="checked" />
+                    <label for="checkbox1" class="css-label lite-gray-check sm:text-base text-xs">Japanese</label>
                 </span>
                 <span class="sm:ml-3 ml-0 sm:mt-0 mt-2">
-                    <input
-                        type="checkbox"
-                        class="css-checkbox"
-                        id="checkbox2"
-                        checked="checked"
-                    />
-                    <label
-                        for="checkbox2"
-                        class="css-label lite-gray-check sm:text-base text-xs"
-                        >Web Development</label
-                    >
+                    <input type="checkbox" class="css-checkbox" id="checkbox2" checked="checked" />
+                    <label for="checkbox2" class="css-label lite-gray-check sm:text-base text-xs">Web
+                        Development</label>
                 </span>
                 <br class="sm:hidden block" />
                 <span class="sm:ml-3 ml-0 sm:mt-0 mt-2">
-                    <input
-                        type="checkbox"
-                        class="css-checkbox"
-                        id="checkbox3"
-                        checked="checked"
-                    />
-                    <label
-                        for="checkbox3"
-                        class="css-label lite-gray-check sm:text-base text-xs"
-                        >Java</label
-                    >
+                    <input type="checkbox" class="css-checkbox" id="checkbox3" checked="checked" />
+                    <label for="checkbox3" class="css-label lite-gray-check sm:text-base text-xs">Java</label>
                 </span>
             </div>
             <!-- Search Input Box Section -->
             <form class="flex items-center">
                 <label for="simple-search" class="sr-only">Search</label>
                 <div class="relative w-full">
-                    <div
-                        class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"
-                    >
-                        <svg
-                            aria-hidden="true"
-                            class="w-5 h-5 text-gray-500 dark:text-gray-400"
-                            fill="currentColor"
-                            viewBox="0 0 20 20"
-                            xmlns="http://www.w3.org/2000/svg"
-                        >
-                            <path
-                                fill-rule="evenodd"
+                    <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                        <svg aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor"
+                            viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
                                 d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                                clip-rule="evenodd"
-                            ></path>
+                                clip-rule="evenodd"></path>
                         </svg>
                     </div>
-                    <input
-                        type="text"
-                        id="simple-search"
+                    <input type="text" id="simple-search"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5"
-                        placeholder="Search"
-                        required
-                    />
+                        placeholder="Search" required />
                 </div>
-                <button
-                    type="submit"
-                    class="p-2.5 ml-2 text-sm text-black font-bold bg-white rounded-lg border border-gray-300 hover:border-blue-500 focus:ring-3 focus:outline-none focus:ring-blue-300"
-                >
-                    <svg
-                        class="w-5 h-5"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg"
-                    >
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                        ></path>
+                <button type="submit"
+                    class="p-2.5 ml-2 text-sm text-black font-bold bg-white rounded-lg border border-gray-300 hover:border-blue-500 focus:ring-3 focus:outline-none focus:ring-blue-300">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                     </svg>
                     <span class="sr-only">Search</span>
                 </button>
@@ -121,9 +67,7 @@ console.log(students);
 
         <!-- Table Section -->
         <div class="px-4 my-6 w-full">
-            <table
-                class="text-white w-full rounded-lg custombackgroundcolor mb-5"
-            >
+            <table class="text-white w-full rounded-lg custombackgroundcolor mb-5">
                 <tr class="opacity-70 customfontsize">
                     <th class="text-start pl-5 pt-4">NAME</th>
                     <th class="pt-4">CLASS</th>
@@ -156,32 +100,19 @@ console.log(students);
         </div>
         <!-- Footer Section -->
         <div
-            class="flex flex-col space-y-7 md:flex-row w-full md:justify-between px-5 items-start md:items-center text-white"
-        >
+            class="flex flex-col space-y-7 md:flex-row w-full md:justify-between px-5 items-start md:items-center text-white">
             <div class="w-14">
                 <button>
-                    <a
-                        href=""
-                        class="underline underline-offset-4 hidden md:block"
-                        >BACK</a
-                    >
+                    <a href="" class="underline underline-offset-4 hidden md:block">BACK</a>
                 </button>
             </div>
             <div class="flex justify-center items-center mb-10">
                 <Pagination :links="students.links"></Pagination>
             </div>
             <div
-                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-xl text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-            >
-                <a
-                    :href="route('Addstudent.view')"
-                    class="flex flex-row justify-center items-center space-x-3"
-                >
-                    <img
-                        src="../../../public/img/addlogo.png"
-                        alt=""
-                        class="w-5 h-5 pt-0.5"
-                    />
+                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-xl text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                <a :href="route('Addstudent.view')" class="flex flex-row justify-center items-center space-x-3">
+                    <img src="../../../public/img/addlogo.png" alt="" class="w-5 h-5 pt-0.5" />
 
                     <button type="button">
                         <span>Add Student</span>

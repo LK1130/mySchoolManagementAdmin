@@ -17,7 +17,7 @@ let segment = ref(1);
 
 let days = [];
 let examMark = [];
-for (let index = 0; index < 7; index++) {
+for (let index = 0; index < 11; index++) {
     days.push("Aug " + [index + 1]);
 }
 for (let index = 0; index < 11; index++) {
