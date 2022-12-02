@@ -32,12 +32,13 @@ class MStudent extends Model
     public function oneStudentDetail($id)
     {
         $query = DB::table("users")
-            // ->join("t_student_classes", "t_stdent_classes.user_id", "=", $id)
-            // ->join("t_student_exams", "t_student_exams.user_id", "=", $id)
-            // ->join("t_student_attendances", "t_student_attendances", "=", $id)
-            // ->selectRaw("users.age,users.email,users.phone,users.address,users.name,users.id")
-            ->where('id', $id)
-            ->get();
+            ->leftJoin("t_student_classes", "t_student_classes.user_id", "=", "users.id")
+            ->leftJoin("t_student_exams", "t_student_exams.user_id", "=", "users.id")
+            ->leftJoin("t_student_attendances", "t_student_attendances.user_id", "=", "users.id")
+            ->selectRaw("*")
+            ->where('users.id', $id)
+            ->first();
+        // dd($query);
         return $query;
     }
 }
