@@ -6,12 +6,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
-class MRole extends Model
+class MAdmin extends Model
 {
     use HasFactory;
 
-    public function get_roles()
+    public function updateAdminRole($ad_id, $roleId)
     {
-        return DB::table('m_roles')->where('r_name', 'IN')->get();
+        DB::table('m_admin')->where('id', $ad_id)->update([
+            'role' => $roleId
+
+        ]);
     }
 }

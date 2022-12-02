@@ -13,14 +13,14 @@ class Instructor extends Controller
     {
 
 
-        $query = DB::table('m_classes')->selectRaw("m_classes.instructor_id , m_instructors.i_name , m_instructors.i_contact , m_instructors.i_address , COUNT(m_classes.instructor_id) AS classes , COUNT(t_student_classes.class_id) AS students")
-            // ->select('i_name,i_contact,i_address')
-            // selectRaw('count(instructor_id) AS classes , m_classes.id , m_instructors.i_name,m_instructors.i_contact,m_instructors.i_address')
-            ->leftjoin('m_instructors', 'm_classes.instructor_id', '=', 'm_instructors.id')
+        $classes = DB::table('m_classes')->selectRaw("COUNT(m_classes.id) AS classes , m_classes.instructor_id AS insId")->leftjoin('m_instructors', 'm_classes.instructor_id', '=', 'm_instructors.id')->orderby("m_instructors.id", "desc")->groupBy("m_classes.instructor_id")->get();
+
+        $query = DB::table('m_classes')->selectRaw("m_classes.instructor_id , m_instructors.i_name , m_instructors.i_contact , m_instructors.i_address  , COUNT(t_student_classes.class_id) AS students")
+            ->leftjoin('m_instructors', 'm_classes.instructor_id', '=', 'm_instructors.ad_id')
             ->leftjoin('t_student_classes', 'm_classes.id', '=', 't_student_classes.class_id')
             ->where('m_classes.del_flg', 0)
             ->where('m_instructors.del_flg', 0)
-            ->orderby("m_instructors.created_at", "desc")
+            ->orderby("m_instructors.id", "desc")
             ->groupBy("m_classes.instructor_id")
             ->groupBy("m_instructors.i_name")
             ->groupBy("m_instructors.i_contact")
@@ -35,11 +35,10 @@ class Instructor extends Controller
         // }
         $instructors = $query->paginate(10);
 
-
         if ($class == "") {
-            return inertia('Instructor/instructor', ['instructors' => $instructors, "checked" =>  explode(',', $class)]);
+            return inertia('Instructor/instructor', ['instructors' => $instructors, 'classes' => $classes, "checked" =>  explode(',', $class)]);
         }
 
-        return inertia('Instructor/instructor', ['instructors' => $instructors,  "checked" =>  explode(',', $class)]);
+        return inertia('Instructor/instructor', ['instructors' => $instructors, 'classes' => $classes, "checked" =>  explode(',', $class)]);
     }
 }

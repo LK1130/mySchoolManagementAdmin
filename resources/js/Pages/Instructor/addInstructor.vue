@@ -4,22 +4,40 @@ import NavBar from "../../Components/NavBar.vue";
 import Header from "../../Components/Header.vue";
 import { ref } from "vue";
 
-defineProps({
-    roles: Object,
+const props = defineProps({
+    names: Object,
 });
 
 const form = useForm({
     //     _method : "POST",
-    role: 1,
-    name: null,
-    email: null,
+    ad_id: 1,
+    name: props.names[0].name,
+    email: props.names[0].email,
     address: null,
     contact: null,
 });
 // form.role = 1;
 const submit = () => {
-    form.post(route("instructor.store", form));
+    form.post(route("instructors.store", form));
 };
+
+var teacherId = "";
+// console.log(props.names.id[0]);
+const email = () => {
+    teacherId = document.getElementById("selectBox").value;
+    form.ad_id = teacherId;
+
+    checkEmail(teacherId);
+};
+const checkEmail = (teacherId) => {
+    for (let index = 0; index < props.names.length; index++) {
+        if (props.names[index].id == teacherId) {
+            form.email = props.names[index].email;
+            form.name = props.names[index].name;
+        }
+    }
+};
+checkEmail();
 </script>
 
 <template>
@@ -36,24 +54,27 @@ const submit = () => {
             >
                 <div>
                     <div class="mt-5 text-xl text-white">
-                        Role :
-                        <span class="pl-8 ml-5">
+                        Name :
+                        <span class="pl-8 ml-2">
                             <select
-                                v-model="form.role"
+                                id="selectBox"
                                 name="status"
                                 class="customnavcolor sm:text-sm text-xs sm:w-52 w-32 text-white border-white rounded-xl"
+                                autocomplete="off"
+                                v-on:change="email"
                             >
                                 <option
-                                    v-for="vrole in roles"
-                                    :value="vrole.id"
+                                    v-for="vname in names"
+                                    :value="vname.id"
                                     class="sm:text-sm text-xs"
+                                    :selected="vname.id === 1"
                                 >
-                                    {{ vrole.r_name }}
+                                    {{ vname.name }}
                                 </option>
                             </select>
                         </span>
                     </div>
-                    <div class="mt-5 text-xl text-white">
+                    <!-- <div class="mt-5 text-xl text-white">
                         Name :
                         <span class="pl-8 ml-2"
                             ><input
@@ -62,7 +83,7 @@ const submit = () => {
                                 class="customnavcolor text-white sm:text-sm text-xs rounded-lg sm:w-52 w-32 border-white rounded-xl"
                                 required
                         /></span>
-                    </div>
+                    </div> -->
                     <div class="mt-5 text-xl text-white">
                         Email :
                         <span class="pl-8 ml-3"
@@ -70,7 +91,7 @@ const submit = () => {
                                 v-model="form.email"
                                 type="email"
                                 class="customnavcolor text-white sm:text-sm text-xs rounded-lg sm:w-52 w-32 border-white rounded-xl"
-                                required
+                                disabled
                         /></span>
                     </div>
                     <div class="mt-5 text-xl text-white">

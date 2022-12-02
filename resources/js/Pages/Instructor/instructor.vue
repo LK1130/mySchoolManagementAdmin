@@ -1,5 +1,5 @@
 <script setup>
-import { Head, Link } from "@inertiajs/inertia-vue3";
+import { Head, Link, useForm } from "@inertiajs/inertia-vue3";
 import NavBar from "/resources/js/Components/NavBar.vue";
 import Header from "/resources/js/Components/Header.vue";
 import ClassTable from "/resources/js/Components/ClassTable.vue";
@@ -10,7 +10,9 @@ const props = defineProps({
     instructors: {
         type: Object,
     },
-
+    classes: {
+        type: Object,
+    },
     checked: {
         type: Array,
     },
@@ -18,11 +20,14 @@ const props = defineProps({
 
 let selectedItems = [];
 let collapseItem = ref(true);
+let teacherName = ref();
 /**
  * Check for user choice
 //  */
 //
+console.log(props.classes);
 console.log(props.instructors);
+console.log(props.checked);
 const checkboxs = () =>
     (selectedItems = props.checked == "" ? ref([1, 2, 3]) : ref(props.checked));
 
@@ -30,6 +35,9 @@ const filter = () =>
     Inertia.get(route("instructor.index", selectedItems.value.join(",")));
 
 checkboxs();
+const search = () => {
+    console.log(teacherName.value);
+};
 const collapse = (id) => {
     collapseItem.value = id;
 };
@@ -97,21 +105,18 @@ const collapse = (id) => {
             </div>
 
             <div class="dopd">
-                <select
-                    id="sorttype"
-                    name="status"
+                <button>
+                    <ion-icon
+                        v-on:click="search()"
+                        name="search-outline"
+                        class="w-7 h-7 text-white mt-3 absolute right-9 top-2 cursor-pointer bg-red"
+                    ></ion-icon>
+                </button>
+                <input
+                    type="text"
                     class="bg-black text-white border-white rounded-xl customfontsize1"
-                >
-                    <option value="status" class="customfontsize1">
-                        By status
-                    </option>
-                    <option value="name" class="customfontsize1">
-                        By Name
-                    </option>
-                    <option value="person" class="customfontsize1">
-                        By Person
-                    </option>
-                </select>
+                    v-model="teacherName"
+                />
             </div>
         </div>
         <div class="px-4 my-6">
@@ -126,16 +131,30 @@ const collapse = (id) => {
                 </tr>
                 <tbody class="text-sm customfontsize text-white">
                     <tr
-                        class="cusborder"
+                        class="cusborder mb-3"
                         v-for="instructor in instructors.data"
                         :key="instructor.instructor_id"
                     >
                         <td class="customfontsize1 text-start pl-7 pt-4">
                             {{ instructor.i_name }}
                         </td>
-                        <td class="customfontsize1 pt-4">
-                            {{ instructor.classes }}
-                        </td>
+
+                        <span
+                            v-for="studentClass in classes"
+                            :key="studentClass.insId"
+                        >
+                            <td class="customfontsize1 pt-4">
+                                <span
+                                    v-if="
+                                        studentClass.insId ==
+                                        instructor.instructor_id
+                                    "
+                                >
+                                    {{ studentClass.classes }}
+                                </span>
+                            </td>
+                        </span>
+
                         <td class="customfontsize1 pt-4">
                             {{ instructor.students }}
                         </td>

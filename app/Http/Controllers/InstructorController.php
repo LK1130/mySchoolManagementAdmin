@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\M_Instructor;
+use App\Models\MAdmin;
 use App\Models\MClass;
+use App\Models\MRole;
 use Illuminate\Http\Request;
 
 
@@ -46,10 +48,10 @@ class InstructorController extends Controller
     {
 
         $class = new M_Instructor();
-        $roles = $class->get_roles();
+        $names = $class->get_names();
 
 
-        return inertia("Instructor/addInstructor", ['roles' => $roles]);
+        return inertia("Instructor/addInstructor", ['names' => $names]);
     }
 
     /**
@@ -60,16 +62,21 @@ class InstructorController extends Controller
      */
     public function store(Request $request)
     {
-
+        $role = new MRole();
+        $roleId = $role->get_roles();
+        $i_role = $roleId[0]->id;
         $instructor = new M_Instructor();
-        $role = $request->input('role');
+        // $role = $request->input('role');
         // $name = $request->input('name');
         // $email = $request->input('email');
         // $address = $request->input('address');
         // $contact = $request->input('contact');
-        settype($role, "string");
-        $i_role = $role;
+        settype($i_role, "string");
+
+
         $instructor->addInstructor($i_role,  $request);
+        $admin = new MAdmin();
+        $admin->updateAdminRole($request->input("ad_id"), $i_role);
         return redirect('instructor');
     }
 
@@ -83,10 +90,10 @@ class InstructorController extends Controller
     {
 
         $class = new M_Instructor();
-        $roles = $class->get_roles();
+        $names = $class->get_names();
         $showInstructor = $class->showInstructor($id);
 
-        return inertia("Instructor/editInstructor", ['roles' => $roles, 'instructors' => $showInstructor]);
+        return inertia("Instructor/editInstructor", ['names' => $names, 'instructor' => $showInstructor]);
     }
 
     /**

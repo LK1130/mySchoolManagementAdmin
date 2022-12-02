@@ -46,7 +46,7 @@ Route::get('/Addstudent', function () {
 })->name("Addstudent.view");
 
 Route::resource('/instructors', InstructorController::class);
-Route::get('/instructor/{class?}', [Instructor::class, 'index'])->name("instructor.index");
+Route::get('/instructor/{class?}{name?}', [Instructor::class, 'index'])->name("instructor.index");
 Route::get('/instructors/edit/{id}', [InstructorController::class, 'show'])->name("instructors.show");
 Route::get('/instructors/create', [InstructorController::class, 'create'])->name("instructors.create");
 

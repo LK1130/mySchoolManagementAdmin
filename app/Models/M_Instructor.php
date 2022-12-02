@@ -14,19 +14,20 @@ class M_Instructor extends Model
     public $table = 'm_instructors';
     use HasFactory;
 
-    public function get_roles()
+    public function get_names()
     {
-        return DB::table('m_roles')
+        return DB::table('m_admin')
             ->get();
     }
     public function addInstructor($i_role,  $request)
     {
         DB::table('m_instructors')
             ->insert([
+                'ad_id' => $request->input('ad_id'),
                 'i_name' => $request->input('name'),
                 'i_contact' => $request->input('contact'),
                 'i_address' => $request->input('address'),
-                'i_email' => $request->input('email'),
+
                 'role_id' => $i_role,
                 'created_at' => Date('Y-m-d h:i:s'),
                 'created_by' => "0"
@@ -34,15 +35,15 @@ class M_Instructor extends Model
     }
     public function showInstructor($id)
     {
-        return DB::table('m_instructors')->find($id);
+        return DB::table('m_instructors')->where('ad_id', $id)->get();
     }
     public function updateInstructor($i_id, $request)
     {
-        DB::table('m_instructors')->where('id', $i_id)->update([
+        DB::table('m_instructors')->where('ad_id', $i_id)->update([
             'i_name' => $request->input('name'),
             'i_contact' => $request->input('contact'),
             'i_address' => $request->input('address'),
-            'i_email' => $request->input('email'),
+
             'role_id' => $request->input('role'),
             'created_at' => Date('Y-m-d h:i:s'),
             'created_by' => "0"
