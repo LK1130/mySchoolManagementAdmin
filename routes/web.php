@@ -1,11 +1,16 @@
 <?php
 
+use App\Http\Controllers\BlogToolController;
+use App\Http\Controllers\CategoryToolController;
 use App\Http\Controllers\ClassController;
 use App\Http\Controllers\ClassesController;
 use App\Http\Controllers\ClasssController;
+use App\Http\Controllers\GuideToolController;
 use App\Http\Controllers\Instructor;
 use App\Http\Controllers\InstructorController;
 use App\Http\Controllers\SettingController;
+use App\Http\Controllers\StudentController;
+use App\Http\Controllers\PrivacyPolicyController;
 use App\Http\Controllers\viewclassController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -36,9 +41,11 @@ Route::get('/classview/{id?}', [viewclassController::class, "getclassdata"])->na
 // });
 
 Route::resource('/class', ClassController::class);
-Route::get('/student', function () {
-    return inertia("Student");
-})->name('student');
+
+
+Route::resource('/students', StudentController::class);
+Route::get('/studentview/{students?}', [StudentController::class, "show"])->name('student.view');
+
 Route::get('/student/view', function () {
     return inertia("StudentView");
 });
@@ -47,7 +54,7 @@ Route::get('/Addstudent', function () {
 })->name("Addstudent.view");
 
 Route::resource('/instructors', InstructorController::class);
-Route::get('/instructor/{class?}', [Instructor::class, 'index'])->name("instructor.index");
+Route::get('/instructor/{class?}{name?}', [Instructor::class, 'index'])->name("instructor.index");
 Route::get('/instructors/edit/{id}', [InstructorController::class, 'show'])->name("instructors.show");
 Route::get('/instructors/create', [InstructorController::class, 'create'])->name("instructors.create");
 
@@ -55,6 +62,27 @@ Route::post('/setting/upload',[SettingController::class,'upload'])->name("settin
 Route::post('/setting/uploadpublic',[SettingController::class,'upload_public'])->name("setting.upload_public");
 Route::get('/setting', function () {
     return inertia("SettingAdmin");
+});
+
+Route::get('/mailtool', function () {
+    return inertia("MailTool");
+});
+Route::get('/privacypolicytool', [PrivacyPolicyController::class,'index']);
+
+Route::get('/blogtool', [BlogToolController::class,'index']);
+
+Route::get('/categoryTool', [CategoryToolController::class,'index']);
+
+Route::get('/guideTool', [GuideToolController::class, 'index']);
+
+Route::get('/editprivacypolicy',function(){
+    return inertia("EditPrivacyPolicy");
+});
+Route::get('/editblog',function(){
+    return inertia("EditBlog");
+});
+Route::get('/editcategory',function(){
+    return inertia("EditCategory");
 });
 // Route::get('/addInstructor', function () {
 //     return inertia("addInstructor");

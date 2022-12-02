@@ -5,22 +5,40 @@ import Header from "../../Components/Header.vue";
 import { ref } from "vue";
 
 const props = defineProps({
-    roles: Object,
-    instructors: Object,
+    names: Object,
+    instructor: Object,
 });
 const form = useForm({
     _method: "POST",
-    role: props.instructors.role_id,
-    name: props.instructors.i_name,
-    email: props.instructors.i_email,
-    address: props.instructors.i_address,
-    contact: props.instructors.i_contact,
-    id: props.instructors.id,
+
+    id: props.instructor[0].ad_id,
+    role: props.instructor[0].role_id,
+    name: props.names[0].name,
+    email: props.names[0].email,
+    address: props.instructor[0].i_address,
+    contact: props.instructor[0].i_contact,
 });
 // form.role = 1;
 const submit = () => {
-    form.put(route("instructor.update", form));
+    form.put(route("instructors.update", form));
 };
+var teacherId = "";
+// console.log(props.names.id[0]);
+const email = () => {
+    teacherId = document.getElementById("selectBox").value;
+    form.ad_id = teacherId;
+
+    checkEmail(teacherId);
+};
+const checkEmail = (teacherId) => {
+    for (let index = 0; index < props.names.length; index++) {
+        if (props.names[index].id == teacherId) {
+            form.email = props.names[index].email;
+            form.name = props.names[index].name;
+        }
+    }
+};
+checkEmail();
 </script>
 
 <template>
@@ -36,24 +54,27 @@ const submit = () => {
                 class="w-full md:w-4/6 h-auto custombackgroundcolor mt-14 rounded-2xl flex justify-center"
             >
                 <div>
-                    <div class="mt-5 text-xl text-white">
-                        Role :
-                        <span class="pl-8 ml-5">
+                    <!-- <div class="mt-5 text-xl text-white">
+                        Name :
+                        <span class="pl-8 ml-2">
                             <select
-                                v-model="form.role"
+                                id="selectBox"
                                 name="status"
                                 class="customnavcolor sm:text-sm text-xs sm:w-52 w-32 text-white border-white rounded-xl"
+                                autocomplete="off"
+                                v-on:change="email"
                             >
                                 <option
-                                    v-for="vrole in roles"
-                                    :value="vrole.id"
+                                    v-for="vname in names"
+                                    :value="vname.id"
                                     class="sm:text-sm text-xs"
+                                    :selected="vname.id === 1"
                                 >
-                                    {{ vrole.r_name }}
+                                    {{ vname.name }}
                                 </option>
                             </select>
                         </span>
-                    </div>
+                    </div> -->
                     <div class="mt-5 text-xl text-white">
                         Name :
                         <span class="pl-8 ml-2"
@@ -61,7 +82,7 @@ const submit = () => {
                                 v-model="form.name"
                                 type="text"
                                 class="customnavcolor text-white sm:text-sm text-xs rounded-lg sm:w-52 w-32 border-white rounded-xl"
-                                required
+                                readonly
                         /></span>
                     </div>
                     <div class="mt-5 text-xl text-white">
@@ -71,7 +92,7 @@ const submit = () => {
                                 v-model="form.email"
                                 type="email"
                                 class="customnavcolor text-white sm:text-sm text-xs rounded-lg sm:w-52 w-32 border-white rounded-xl"
-                                required
+                                readonly
                         /></span>
                     </div>
                     <div class="mt-5 text-xl text-white">

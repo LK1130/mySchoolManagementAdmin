@@ -11,14 +11,7 @@ import "swiper/css";
 import "swiper/css/bundle";
 //
 
-let overallTable = ref(true);
-let selfRank = ref(true);
-const showoverAlltable = () => {
-    selfRank = false;
-    overallTable = true;
-    console.log("selfRank" + selfRank);
-    console.log("overalltable" + overallTable);
-};
+let segment = ref(1);
 
 // Studnet Line Chart
 
@@ -33,12 +26,6 @@ for (let index = 0; index < 11; index++) {
 console.log(days);
 console.log();
 
-const showSelfRanktable = () => {
-    overallTable = false;
-    selfRank = true;
-    console.log("selfRank" + selfRank);
-    console.log("overalltable" + overallTable);
-};
 const chartOptions = ref({
     chart: {
         toolbar: {
@@ -140,6 +127,14 @@ const series = ref([
         data: examMark,
     },
 ]);
+
+const props = defineProps({
+    students: {
+        type: Object,
+    },
+});
+let studentDetail = props.students;
+console.log(studentDetail);
 </script>
 
 <template>
@@ -164,11 +159,13 @@ const series = ref([
                     />
                 </div>
                 <div class="bg-white md:w-0.5 md:h-5/6 w-5/6 h-0.5 mt-6"></div>
-                <div class="items-center w-full md:3/6 md:space-y-4 space-y-2">
-                    <h3
-                        class="md:text-4xl text-3xl font-bold justify-center flex mt-7"
-                    >
-                        Thazin Aung
+                <div
+                    class="items-center w-full md:3/6 md:space-y-4 space-y-2"
+                    v-for="studentD in studentDetail"
+                    :key="studentDetail"
+                >
+                    <h3 class="text-3xl font-bold justify-center flex mt-7">
+                        {{ studentD.name }}
                     </h3>
                     <div class="items-center flex flex-row mb-2 md:gap-8">
                         <div class="w-2/6 md:justify-end justify-start flex">
@@ -194,7 +191,7 @@ const series = ref([
                         </div>
 
                         <div class="w-4/6 flex flex-row jstify-center">
-                            <p>North Dagon,Yangon</p>
+                            <p>{{ studentD.address }}</p>
                         </div>
                     </div>
                     <div class="items-center flex flex-row mb-2 md:gap-8">
@@ -205,7 +202,7 @@ const series = ref([
                         </div>
 
                         <div class="w-4/6 flex flex-row jstify-center">
-                            <p>09-795659575</p>
+                            <p>{{ studentD.phone }}</p>
                         </div>
                     </div>
                     <div class="items-center flex flex-row mb-2 md:gap-8">
@@ -216,7 +213,7 @@ const series = ref([
                         </div>
 
                         <div class="w-4/6 flex flex-row jstify-center">
-                            <p>26</p>
+                            <p>{{ studentD.age }}</p>
                         </div>
                     </div>
                     <div class="items-center flex flex-row mb-2 md:gap-8">
@@ -227,7 +224,7 @@ const series = ref([
                         </div>
 
                         <div class="w-4/6 flex flex-row jstify-center">
-                            <p>thazinaung@gmail.com</p>
+                            <p>{{ studentD.email }}</p>
                         </div>
                     </div>
                 </div>
@@ -380,20 +377,20 @@ const series = ref([
                     <!-- <button @click="hello()">Tabe change</button> -->
                     <div
                         class="md:w-4/6 w-full h-12 rounded-tl-xl bg-elementBackground pt-3 md:text-xl"
-                        @click="showoverAlltable()"
+                        @click="segment = 1"
                     >
                         Overall Table
                     </div>
                     <div
                         class="md:w-4/6 w-full h-12 rounded-tr-xl pt-3 bg-green-300 md:text-xl"
-                        @click="showSelfRanktable()"
+                        @click="segment = 2"
                     >
                         Self Rank
                     </div>
                 </div>
                 <div
-                    class="overflow-x-auto relative w-full hidden"
-                    :class="{ hidden: !overallTable }"
+                    v-if="segment == 1"
+                    class="overflow-x-auto relative w-full"
                 >
                     <table class="w-full text-sm text-left text-whiteTextColor">
                         <thead
@@ -428,6 +425,7 @@ const series = ref([
             <!-- Student Table End -->
             <!-- Student Self Rank Chart Start-->
             <div
+                v-if="segment == 2"
                 class="md:w-4/6 w-full flex flex-col h-96 bg-elementBackground justify-center items-center"
             >
                 <Chart :options="chartOptions" :series="series" class="chart" />
@@ -436,7 +434,7 @@ const series = ref([
             <div class="w-4/6 text-white justify-start mt-5 mb-10">
                 <button>
                     <a
-                        :href="route('student')"
+                        href=""
                         class="underline underline-offset-4 hidden md:block"
                         >BACK
                     </a>
