@@ -14,11 +14,14 @@ class M_Instructor extends Model
     public $table = 'm_instructors';
     use HasFactory;
 
-    public function get_names()
+    public function get_Names()
     {
-        return DB::table('m_admin')
+        $names = DB::table('m_admin')
             ->get();
+
+        return $names;
     }
+
     public function addInstructor($i_role,  $request)
     {
         DB::table('m_instructors')
@@ -35,7 +38,7 @@ class M_Instructor extends Model
     }
     public function showInstructor($id)
     {
-        return DB::table('m_instructors')->where('ad_id', $id)->get();
+        return DB::table('m_instructors')->join('m_admin', 'm_instructors.ad_id', "=", "m_admin.id")->where('ad_id', $id)->get();
     }
     public function updateInstructor($i_id, $request)
     {
@@ -43,8 +46,6 @@ class M_Instructor extends Model
             'i_name' => $request->input('name'),
             'i_contact' => $request->input('contact'),
             'i_address' => $request->input('address'),
-
-            'role_id' => $request->input('role'),
             'created_at' => Date('Y-m-d h:i:s'),
             'created_by' => "0"
         ]);

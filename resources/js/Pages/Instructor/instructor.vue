@@ -18,6 +18,7 @@ const props = defineProps({
     },
 });
 
+// console.log(obj);
 let selectedItems = [];
 let collapseItem = ref(true);
 let teacherName = ref();
@@ -61,7 +62,7 @@ const collapse = (id) => {
                         checked="checked"
                         v-on:change="filter"
                         v-model="selectedItems"
-                        value="1"
+                        value="2"
                     />
                     <label
                         for="checkbox1"
@@ -77,7 +78,7 @@ const collapse = (id) => {
                         checked="checked"
                         v-on:change="filter"
                         v-model="selectedItems"
-                        value="2"
+                        value="1"
                     />
                     <label
                         for="checkbox2"
@@ -169,10 +170,7 @@ const collapse = (id) => {
                         >
                             <a
                                 :href="
-                                    route(
-                                        'instructors.show',
-                                        instructor.instructor_id
-                                    )
+                                    route('instructors.show', instructor.ad_id)
                                 "
                                 >Edit</a
                             >
