@@ -8,6 +8,7 @@ use App\Http\Controllers\ClasssController;
 use App\Http\Controllers\GuideToolController;
 use App\Http\Controllers\Instructor;
 use App\Http\Controllers\InstructorController;
+use App\Http\Controllers\SettingController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\PrivacyPolicyController;
 use App\Http\Controllers\viewclassController;
@@ -57,6 +58,8 @@ Route::get('/instructor/{class?}{name?}', [Instructor::class, 'index'])->name("i
 Route::get('/instructors/edit/{id}', [InstructorController::class, 'show'])->name("instructors.show");
 Route::get('/instructors/create', [InstructorController::class, 'create'])->name("instructors.create");
 
+Route::post('/setting/upload',[SettingController::class,'upload'])->name("setting.upload");
+Route::post('/setting/uploadpublic',[SettingController::class,'upload_public'])->name("setting.upload_public");
 Route::get('/setting', function () {
     return inertia("SettingAdmin");
 });
