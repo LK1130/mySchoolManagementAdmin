@@ -159,13 +159,9 @@ console.log(studentDetail);
                     />
                 </div>
                 <div class="bg-white md:w-0.5 md:h-5/6 w-5/6 h-0.5 mt-6"></div>
-                <div
-                    class="items-center w-full md:3/6 md:space-y-4 space-y-2"
-                    v-for="studentD in studentDetail"
-                    :key="studentDetail"
-                >
+                <div class="items-center w-full md:3/6 md:space-y-4 space-y-2">
                     <h3 class="text-3xl font-bold justify-center flex mt-7">
-                        {{ studentD.name }}
+                        {{ studentDetail.name }}
                     </h3>
                     <div class="items-center flex flex-row mb-2 md:gap-8">
                         <div class="w-2/6 md:justify-end justify-start flex">
@@ -191,7 +187,7 @@ console.log(studentDetail);
                         </div>
 
                         <div class="w-4/6 flex flex-row jstify-center">
-                            <p>{{ studentD.address }}</p>
+                            <p>{{ studentDetail.address }}</p>
                         </div>
                     </div>
                     <div class="items-center flex flex-row mb-2 md:gap-8">
@@ -202,7 +198,7 @@ console.log(studentDetail);
                         </div>
 
                         <div class="w-4/6 flex flex-row jstify-center">
-                            <p>{{ studentD.phone }}</p>
+                            <p>{{ studentDetail.phone }}</p>
                         </div>
                     </div>
                     <div class="items-center flex flex-row mb-2 md:gap-8">
@@ -213,7 +209,7 @@ console.log(studentDetail);
                         </div>
 
                         <div class="w-4/6 flex flex-row jstify-center">
-                            <p>{{ studentD.age }}</p>
+                            <p>{{ studentDetail.age }}</p>
                         </div>
                     </div>
                     <div class="items-center flex flex-row mb-2 md:gap-8">
@@ -224,7 +220,7 @@ console.log(studentDetail);
                         </div>
 
                         <div class="w-4/6 flex flex-row jstify-center">
-                            <p>{{ studentD.email }}</p>
+                            <p>{{ studentDetail.email }}</p>
                         </div>
                     </div>
                 </div>
@@ -263,7 +259,7 @@ console.log(studentDetail);
                                     <h1
                                         class="font-medium text-lg md:text-4xl tracking-wide"
                                     >
-                                        Thazin Aung
+                                        {{ studentDetail.name }}
                                     </h1>
                                 </div>
                                 <div
@@ -334,34 +330,10 @@ console.log(studentDetail);
                                     </div>
                                 </div>
                                 <div
-                                    class="mt-10 flex flex-col justify-center items-center space-y-4"
+                                    class="mt-10 flex justify-center items-center space-y-4"
                                 >
                                     <div class="text-xl font-semibold">
                                         Batch 6 N4
-                                    </div>
-                                    <div
-                                        class="flex flex-row md:space-x-8 space-x-2 sm:space-x-4 items-center"
-                                    >
-                                        <div
-                                            class="lg:w-28 md:w-20 sm:w-16 w-6 h-2 bg-slidebarBackground rounded-tl-md rounded-bl-md"
-                                        ></div>
-                                        <div
-                                            class="lg:w-28 md:w-20 sm:w-16 w-6 h-2 bg-slidebarBackground"
-                                        ></div>
-                                        <div
-                                            class="lg:w-28 md:w-20 sm:w-16 w-6 h-2 bg-white rounded-tr-md rounded-br-md"
-                                        ></div>
-                                    </div>
-                                    <div>
-                                        <p class="space-x-5">
-                                            <span
-                                                class="text-sm sm:text-base md:text-lg font-medium"
-                                                >Status ></span
-                                            ><span
-                                                class="text-base sm:text-lg md:text-xl font-semibold"
-                                                >Active</span
-                                            >
-                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -372,7 +344,7 @@ console.log(studentDetail);
 
             <!-- Student Swiper Slide End -->
             <!-- Student Table Start -->
-            <div class="md:w-4/6 w-full flex flex-col h-full">
+            <div class="md:w-4/6 w-full flex flex-col h-full mt-10">
                 <div class="w-full h-full flex flex-row text-white text-center">
                     <!-- <button @click="hello()">Tabe change</button> -->
                     <div

@@ -29,16 +29,27 @@ class MStudent extends Model
         return $query;
     }
 
-    public function oneStudentDetail($id)
+    public function studentClassandAttend($id)
     {
-        $query = DB::table("users")
-            ->leftJoin("t_student_classes", "t_student_classes.user_id", "=", "users.id")
-            ->leftJoin("t_student_exams", "t_student_exams.user_id", "=", "users.id")
-            ->leftJoin("t_student_attendances", "t_student_attendances.user_id", "=", "users.id")
-            ->selectRaw("*")
-            ->where('users.id', $id)
-            ->first();
+        $query = DB::table("t_student_attendances")
+            ->join("m_classes", "m_classes.id", "=", "t_student_attendances.class_id")
+            ->join("users", "users.id", "=", "t_student_attendances.user_id")
+            ->join("t_student_exams", "t_student_exams.user_id", "=", "users.id")
+            ->selectRaw("AVG(t_student_attendances.attendance) AS attendance,users.name,users.id,t_student_attendances.class_id")
+            // ->select("*")
+            ->where('t_student_attendances.user_id', $id)
+            ->groupBy("t_student_attendances.class_id")
+            ->get();
         // dd($query);
+        // echo "<pre>";
+        // print_r($query);
         return $query;
     }
+
+    // public function studentExam($id){
+    //     $query = DB::table("users")
+    //         -// ->leftJoin("t_student_exams", "t_student_exams.user_id", "=", "users.id")
+    //         ->select("name","")
+
+    // }
 }
