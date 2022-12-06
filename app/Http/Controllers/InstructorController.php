@@ -6,8 +6,11 @@ use App\Models\M_Instructor;
 use App\Models\MAdmin;
 use App\Models\MClass;
 use App\Models\MRole;
+use Illuminate\Contracts\Session\Session as SessionSession;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session as FacadesSession;
+use Session;
 
 
 
@@ -46,12 +49,12 @@ class InstructorController extends Controller
      */
     public function create()
     {
-
+        $noAdmin = false;
         $class = new M_Instructor();
-        $names = $class->get_names();
+        $names = $class->get_Names();
 
 
-        return inertia("Instructor/addInstructor", ['names' => $names]);
+        return inertia("Instructor/addInstructor", ['names' => $names, 'noAdmin' => $noAdmin]);
     }
 
     /**
@@ -90,10 +93,10 @@ class InstructorController extends Controller
     {
 
         $class = new M_Instructor();
-        $names = $class->get_names();
+
         $showInstructor = $class->showInstructor($id);
 
-        return inertia("Instructor/editInstructor", ['names' => $names, 'instructor' => $showInstructor]);
+        return inertia("Instructor/editInstructor", ['instructor' => $showInstructor]);
     }
 
     /**
@@ -120,7 +123,8 @@ class InstructorController extends Controller
         $id = $request->input('id');
         settype($role, "string");
         $i_id = $id;
-        $updateInstructor = $instructor->updateInstructor($i_id, $request);
+        $instructor->updateInstructor($i_id, $request);
+        return redirect('instructor');
     }
 
     /**

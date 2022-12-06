@@ -5,16 +5,13 @@ import Header from "../../Components/Header.vue";
 import { ref } from "vue";
 
 const props = defineProps({
-    names: Object,
     instructor: Object,
 });
 const form = useForm({
     _method: "POST",
-
     id: props.instructor[0].ad_id,
-    role: props.instructor[0].role_id,
-    name: props.names[0].name,
-    email: props.names[0].email,
+    name: props.instructor[0].i_name,
+    email: props.instructor[0].email,
     address: props.instructor[0].i_address,
     contact: props.instructor[0].i_contact,
 });
@@ -22,23 +19,23 @@ const form = useForm({
 const submit = () => {
     form.put(route("instructors.update", form));
 };
-var teacherId = "";
+// var teacherId = "";
 // console.log(props.names.id[0]);
-const email = () => {
-    teacherId = document.getElementById("selectBox").value;
-    form.ad_id = teacherId;
+// const email = () => {
+//     teacherId = document.getElementById("selectBox").value;
+//     form.ad_id = teacherId;
 
-    checkEmail(teacherId);
-};
-const checkEmail = (teacherId) => {
-    for (let index = 0; index < props.names.length; index++) {
-        if (props.names[index].id == teacherId) {
-            form.email = props.names[index].email;
-            form.name = props.names[index].name;
-        }
-    }
-};
-checkEmail();
+//     checkEmail(teacherId);
+// };
+// const checkEmail = (teacherId) => {
+//     for (let index = 0; index < props.names.length; index++) {
+//         if (props.names[index].id == teacherId) {
+//             form.email = props.names[index].email;
+//             form.name = props.names[index].name;
+//         }
+//     }
+// };
+// checkEmail();
 </script>
 
 <template>
