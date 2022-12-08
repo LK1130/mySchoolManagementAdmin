@@ -1,6 +1,6 @@
 <script setup>
-import { computed } from 'vue';
-import { Link } from '@inertiajs/inertia-vue3';
+import { computed } from "vue";
+import { Link } from "@inertiajs/inertia-vue3";
 
 const props = defineProps({
     href: String,
@@ -9,60 +9,135 @@ const props = defineProps({
 
 const classes = computed(() => {
     return props.active
-        ? 'inline-flex items-center px-1 pt-1 border-b-2 border-indigo-400 text-sm font-medium leading-5 text-gray-900 focus:outline-none focus:border-indigo-700 transition'
-        : 'inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition';
+        ? "inline-flex items-center px-1 pt-1 border-b-2 border-indigo-400 text-sm font-medium leading-5 text-gray-900 focus:outline-none focus:border-indigo-700 transition"
+        : "inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition";
 });
 </script>
 
 <template>
-
     <!------------- Nav ---------->
     <div class="customnavcolor w-1/6 min-h-full fixed z-10">
         <!-------- Logo ---------->
         <div class="flex flex-row pt-5">
-            <img src="../../../public/img/logo.png" alt="" class="sm:w-16 w-12 flex sm:ml-3.5 mx-auto">
-            <img src="../../../public/img/icon1.png" alt="" class="h-6 ml-auto mr-5 sm:block hidden">
+            <img
+                src="../../../public/img/logo.png"
+                alt=""
+                class="sm:w-16 w-12 flex sm:ml-3.5 mx-auto"
+            />
+            <img
+                src="../../../public/img/icon1.png"
+                alt=""
+                class="h-6 ml-auto mr-5 sm:block hidden"
+            />
         </div>
         <!--  -->
-        <div class=" lg:ml-8">
-            <div class="flex flex-row ml-1 text-white mt-7 lg:justify-start justify-center">
-                <img src="../../../public/img/dashboardicon.png" alt="" class="sm:w-10 w-7">
-                <span class="text-lg ml-6 pt-1 opacity-70 lg:block hidden">Dashboard</span>
+        <div class="lg:ml-8">
+            <div
+                class="flex flex-row ml-1 text-white mt-7 lg:justify-start justify-center"
+            >
+                <img
+                    src="../../../public/img/dashboardicon.png"
+                    alt=""
+                    class="sm:w-10 w-7"
+                />
+                <span class="text-lg ml-6 pt-1 opacity-70 lg:block hidden"
+                    >Dashboard</span
+                >
             </div>
-            <div class="flex flex-row  text-white mt-4 lg:justify-start justify-center">
-                <img src="../../../public/img/courseicon.png" alt="" class="sm:w-11 w-8">
-                <span class="text-lg ml-5 pt-1 opacity-70 lg:block hidden">Course</span>
+            <div
+                class="flex flex-row text-white mt-4 lg:justify-start justify-center"
+            >
+                <img
+                    src="../../../public/img/courseicon.png"
+                    alt=""
+                    class="sm:w-11 w-8"
+                />
+                <span class="text-lg ml-5 pt-1 opacity-70 lg:block hidden"
+                    >Course</span
+                >
             </div>
-            <div class="flex flex-row  text-white mt-4 lg:justify-start justify-center">
-                <img src="../../../public/img/studenticon.png" alt="" class="sm:w-10 w-7">
-                <span class="text-lg ml-6 pt-1 opacity-70 lg:block hidden">Student</span>
+            <div
+                class="flex flex-row text-white mt-4 lg:justify-start justify-center"
+            >
+                <img
+                    src="../../../public/img/studenticon.png"
+                    alt=""
+                    class="sm:w-10 w-7"
+                />
+                <span class="text-lg ml-6 pt-1 opacity-70 lg:block hidden">
+                    <a :href="route('students.view')">Student</a>
+                </span>
             </div>
-            <div class="flex flex-row  text-white mt-4 lg:justify-start justify-center">
-                <img src="../../../public/img/financeicon.png" alt="" class="sm:w-10 w-7">
-                <span class="text-lg ml-6 pt-1 opacity-70 lg:block hidden">Finance</span>
+            <div
+                class="flex flex-row text-white mt-4 lg:justify-start justify-center"
+            >
+                <img
+                    src="../../../public/img/financeicon.png"
+                    alt=""
+                    class="sm:w-10 w-7"
+                />
+                <span class="text-lg ml-6 pt-1 opacity-70 lg:block hidden"
+                    >Finance</span
+                >
             </div>
-            <div class="flex flex-row  text-white mt-4 lg:justify-start justify-center">
-                <img src="../../../public/img/instructoricon.png" alt="" class="sm:w-10 w-7">
-                <span class="text-lg ml-6 pt-1 opacity-70 lg:block hidden">Instructor</span>
+            <div
+                class="flex flex-row text-white mt-4 lg:justify-start justify-center"
+            >
+                <img
+                    src="../../../public/img/instructoricon.png"
+                    alt=""
+                    class="sm:w-10 w-7"
+                />
+                <span class="text-lg ml-6 pt-1 opacity-70 lg:block hidden"
+                    >Instructor</span
+                >
             </div>
-            <hr class="w-3/4 mt-12 lg:mx-0 mx-auto">
-            <div class="flex flex-row  text-white mt-10 lg:justify-start justify-center">
-                <img src="../../../public/img/settingsicon.png" alt="" class="sm:w-10 w-7">
-                <span class="text-lg ml-6 pt-1 opacity-70 lg:block hidden">Setting</span>
+            <hr class="w-3/4 mt-12 lg:mx-0 mx-auto" />
+            <div
+                class="flex flex-row text-white mt-10 lg:justify-start justify-center"
+            >
+                <img
+                    src="../../../public/img/settingsicon.png"
+                    alt=""
+                    class="sm:w-10 w-7"
+                />
+                <span class="text-lg ml-6 pt-1 opacity-70 lg:block hidden"
+                    >Setting</span
+                >
             </div>
-            <div class="flex flex-row  text-white mt-4 lg:justify-start justify-center">
-                <img src="../../../public/img/toolicon.png" alt="" class="sm:w-9 w-6">
-                <span class="text-lg ml-7 pt-1 opacity-70 lg:block hidden">Tools</span>
+            <div
+                class="flex flex-row text-white mt-4 lg:justify-start justify-center"
+            >
+                <img
+                    src="../../../public/img/toolicon.png"
+                    alt=""
+                    class="sm:w-9 w-6"
+                />
+                <span class="text-lg ml-7 pt-1 opacity-70 lg:block hidden"
+                    >Tools</span
+                >
             </div>
         </div>
 
         <div
-            class="flex justify-center items-center md:flex-row flex-col md:space-x-4 space-y-2 sm:mt-10 md:mt-20 mt-28">
-            <img src="../../../public/img/facebooklogo.png" alt="" class="w-8 h-8 md:mt-2">
-            <img src="../../../public/img/youtubelogo.png" alt="" class="w-8">
-            <img src="../../../public/img/messangerlogo.png" alt="" class="w-8">
+            class="flex justify-center items-center md:flex-row flex-col md:space-x-4 space-y-2 sm:mt-10 md:mt-20 mt-28"
+        >
+            <img
+                src="../../../public/img/facebooklogo.png"
+                alt=""
+                class="w-8 h-8 md:mt-2"
+            />
+            <img src="../../../public/img/youtubelogo.png" alt="" class="w-8" />
+            <img
+                src="../../../public/img/messangerlogo.png"
+                alt=""
+                class="w-8"
+            />
         </div>
-        <div class="text-white flex justify-center font-semibold opacity-70 mt-2 sm:text-base customfsize">Copyright @
-            exbrain</div>
+        <div
+            class="text-white flex justify-center font-semibold opacity-70 mt-2 sm:text-base customfsize"
+        >
+            Copyright @ exbrain
+        </div>
     </div>
 </template>

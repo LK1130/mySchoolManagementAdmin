@@ -2,8 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\StudentAccountCreate;
 use App\Models\MStudent;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Validation\Rule;
+
+function generate()
+{
+    $char = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!#$%&*+';
+
+    $randString = "";
+
+    for ($i = 0; $i < 8; $i++) {
+        $index =  rand(0, strlen($char) - 1);
+        $randString .= $char[$index];
+    }
+
+    return $randString;
+}
 
 class StudentController extends Controller
 {
@@ -28,7 +46,7 @@ class StudentController extends Controller
      */
     public function create()
     {
-        //
+        return inertia("AddStudent");
     }
 
     /**
@@ -39,7 +57,23 @@ class StudentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $request->validate([
+            'name' => 'required|min:4|max:15',
+            'email' => "required|unique:users,email|email"
+        ]);
+
+        // dd($request->email);
+        $password = generate();
+        $data = [
+            'email' => $request->email,
+            'password' => $password,
+        ];
+        Mail::to($request->email)->send(new StudentAccountCreate($data));
+        dd($password);
+        $model = new MStudent();
+        $model->studentAccount($request, $password);
+        return Redirect::route('students.view');
     }
 
     /**

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class MStudent extends Model
 {
@@ -52,4 +53,14 @@ class MStudent extends Model
     //         ->select("name","")
 
     // }
+
+    public function studentAccount($request, $password)
+    {
+        return DB::table("users")
+            ->insert([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make($password)
+            ]);
+    }
 }
