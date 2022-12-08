@@ -168,56 +168,6 @@ const bafcolor = (start, end) => {
       </div>
     </div>
 
-<<<<<<< HEAD
-<div class="dopd ">
-<select id="sorttype" name="status" class="bg-black text-white border-white rounded-xl customfontsize1">
-<option value="status" class="customfontsize1">By status</option>
-<option value="name" class="customfontsize1">By Name</option>
-<option value="person" class="customfontsize1">By Person</option>
- </select>
-</div>
-
-</div>
-
-<div class="px-4 my-6">
-<table class="text-white w-full rounded-lg custombackgroundcolor mb-5">
-    <tr class=" opacity-70 customfontsize">
-        <th class="text-start pl-5 pt-4">NAME</th>
-        <th class="pt-4">Instructor</th>
-        <th class="pt-4">DAY</th>
-        <th class="pt-4">TIME</th>
-        <th class="pt-4">PERSON</th>
-        <th class="pt-4">STATUS</th>
-        <th class="pt-4">Fees</th>
-        <th class="pt-4">Setting</th>
-    </tr>
-    <tbody class="text-sm customfontsize">
-    <tr class="cusborder" v-for="data in dclass" :key="data.id">
-        <td class="text-start pl-4 py-2">{{data.c_name}}</td>
-        <td class="text-center">{{data.i_name}}</td>
-        <td class="text-center" >{{datesplit(data.c_date)}}</td>
-        <td class="text-center">{{data.c_start_time}} - {{data.c_end_time}} </td>
-        <td class="text-center">25</td>
-        <td class="text-center" :class="bafcolor(data.c_start_time,data.c_end_time)">{{beforeaftercalculate(data.c_start_time,data.c_end_time)}}</td>
-        <td class="text-center">{{ Number(data.c_fees).toLocaleString() }} Ks</td>
-        <td class="text-center customtextcolor7 underline"> <a :href="route('class.view',data.id)">Edit</a></td>
-    </tr>
-    </tbody>
-</table>
-<a href="/class/create"><button class="pt-0.5 sm:w-1/12 w-20 h-7 text-white rounded-lg flex justify-center bg-blue-600 hover:bg-blue-700 active:bg-blue-900 cusmargin">
-<ion-icon name="add-circle-outline"></ion-icon>
-<img src="../../../public/img/addlogo.png" alt="" class="w-5 h-5 pt-0.5">
-<span class="ml-1">ADD</span>
-</button>
-</a>
-            <!-- <div class="flex justify-center items-center py-3">
-                <Pagination :links="dclass">
-                </Pagination>
-            </div> -->
-</div>
-
-</div>
-=======
     <div class="px-4 my-6">
       <table class="text-white w-full rounded-lg custombackgroundcolor mb-5">
         <tr class="opacity-70 customfontsize">
@@ -282,7 +232,6 @@ const bafcolor = (start, end) => {
       </a>
     </div>
   </div>
->>>>>>> origin/main
 </template>
 <style scoped>
 .customalign {
