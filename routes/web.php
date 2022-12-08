@@ -59,11 +59,11 @@ Route::get('/instructors/edit/{id}', [InstructorController::class, 'show'])->nam
 Route::get('/instructors/create', [InstructorController::class, 'create'])->name("instructors.create");
 
 Route::post('/setting/upload',[SettingController::class,'upload'])->name("setting.upload");
-Route::post('/setting/uploadpublic',[SettingController::class,'upload_public'])->name("setting.upload_public");
-Route::get('/setting', function () {
-    return inertia("SettingAdmin");
-});
-
+Route::post('/setting/upload_public',[SettingController::class,'upload_public'])->name("setting.upload_public");
+// Route::get('/setting', function () {
+//     return inertia("SettingAdmin");
+// });
+Route::get('/setting', [SettingController::class, 'index'])->name("setting.index");
 Route::get('/mailtool', function () {
     return inertia("MailTool");
 });

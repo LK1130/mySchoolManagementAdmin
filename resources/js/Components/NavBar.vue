@@ -31,7 +31,7 @@ const classes = computed(() => {
             </div>
             <div class="flex flex-row  text-white mt-4 lg:justify-start justify-center">
                 <img src="../../../public/img/courseicon.png" alt="" class="sm:w-11 w-8">
-                <span class="text-lg ml-5 pt-1 opacity-70 lg:block hidden">Course</span>
+                <span class="text-lg ml-5 pt-1 opacity-70 lg:block hidden">Class</span>
             </div>
             <div class="flex flex-row  text-white mt-4 lg:justify-start justify-center">
                 <img src="../../../public/img/studenticon.png" alt="" class="sm:w-10 w-7">
@@ -48,9 +48,10 @@ const classes = computed(() => {
             <hr class="w-3/4 mt-12 lg:mx-0 mx-auto">
             <div class="flex flex-row  text-white mt-10 lg:justify-start justify-center">
                 <img src="../../../public/img/settingsicon.png" alt="" class="sm:w-10 w-7">
-                <span class="text-lg ml-6 pt-1 opacity-70 lg:block hidden">Setting</span>
+                <span class="text-lg ml-6 pt-1 opacity-70 lg:block hidden"><Link href="/setting">Setting</Link></span>
             </div>
             <div class="flex flex-row  text-white mt-4 lg:justify-start justify-center">
+                
                 <img src="../../../public/img/toolicon.png" alt="" class="sm:w-9 w-6">
                 <span class="text-lg ml-7 pt-1 opacity-70 lg:block hidden">Tools</span>
             </div>
