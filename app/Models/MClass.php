@@ -77,4 +77,41 @@ class MClass extends Model
                 ]);
         };
     }
+
+    public function editclass(Request $request,$date,$img,$studentids,$id)
+    {
+        DB::table('m_classes')
+        ->where('id',$id)
+        ->update([
+            'c_name' => $request->input('classnames'),
+            'c_description' => $request->input('classdetail'),
+            'c_start_date' =>$request->input('startdate'),
+            'c_end_date' => $request->input('enddate'),
+            'c_date'=>$date,
+            'c_start_time'=>$request->input('starttime'),
+            'c_end_time' =>$request->input('endtime'),
+            'c_fees' =>$request->input('fees'),
+            'instructor_id' =>$request->input('teacher') ,
+            'c_profile' =>$img,
+            'category_id' =>$request->input('categories'),
+            'updated_at'=>Date('Y-m-d h:i:s'),
+            'updated_by'=>"0"
+        ]);
+
+        
+        foreach ($studentids as $ids) {
+            DB::table('t_student_classes')
+            ->insert([
+                'id' => $id,
+                'user_id' => $ids,
+                'start_join' =>Date('Y-m-d h:i:s'),
+                'paid_fees' => 00,
+                'remain_fees' => 00,
+                'updated_at'=>Date('Y-m-d h:i:s'),
+                'updated_by'=>"0",
+                'created_by'=>"0"
+            ]);
+        };
+
+    }
 }

@@ -87,8 +87,14 @@ class ClassController extends Controller
     public function edit($id)
     {
         $class = new MClass();
-        // $classdetail=$class->get_classdetail($id);
-        return inertia("ViewClass",['classdata' => $id]);
+        $classdetail=$class->get_classdetail($id);
+        $instructors= $class->get_instructors();
+        $categories= $class->get_category();
+        $students= $class->get_student();
+        $studentsid=$class->get_studentid($id);
+        $date=$class->get_classdate($id);
+        $day=$date->c_date;
+        return inertia("EditClass",['classdata' => $classdetail,'instructor' => $instructors,'category' => $categories,'student' => $students ,"day"=>$day,"studentsid"=>$studentsid]);
     }
 
     /**
@@ -100,7 +106,27 @@ class ClassController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $class = new MClass();
+        $date1=$request->input('day1');
+        $date2=$request->input('day2');
+        $date3=$request->input('day3');
+        $date4=$request->input('day4');
+        $date5=$request->input('day5');
+        $date6=$request->input('day6');
+        $date7=$request->input('day7');
+        $studentids=$request->input('students');
+        $img=$request->file('classimage');
+        $saveimg = $img->store('Classphoto');
+        settype($date1, "string");
+        settype($date2, "string");
+        settype($date3, "string");
+        settype($date4, "string");
+        settype($date5, "string");
+        settype($date6, "string");
+        settype($date7, "string");
+        $date=$date1.$date2.$date3.$date4.$date5.$date6.$date7;
+        $editclass=$class->editclass($request,$date,$saveimg,$studentids,$id);
+        return redirect('class');
     }
 
     /**
