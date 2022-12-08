@@ -5,13 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
 
-class MRole extends Model
+class MSetting extends Model
 {
     use HasFactory;
+    // public $table = 'm_sitemaster_myschools';
 
-    public function get_roles()
-    {
-        return DB::table('m_roles')->where('r_name', 'IN')->get();
-    }
+
 }

@@ -1,60 +1,61 @@
 <script setup>
-import { Head, Link } from '@inertiajs/inertia-vue3';
+import { Head, Link } from "@inertiajs/inertia-vue3";
 import NavBar from "../Components/NavBar.vue";
 import Header from "../Components/Header.vue";
 import ClassInformationBox from "../Components/ClassInformationBox.vue";
 import StudentListTableBox from "../Components/StudentListTableBox.vue";
 import RecordingVideoListTableBox from "../Components/RecordingVideolistTablebox.vue";
+import { ref } from "vue";
 
 const datesplit = (data) => {
-    const fullday=[];
-    var arrycount=0;
+    const fullday = [];
+    var arrycount = 0;
     for (let index = 0; index < 7; index++) {
-        var day = data.charAt(index)
-        var output=dateshow(day,index);
-        if (output!=null) {
-            fullday[arrycount++]=output;
-        }    
+        var day = data.charAt(index);
+        var output = dateshow(day, index);
+        if (output != null) {
+            fullday[arrycount++] = output;
+        }
     }
     return fullday.toString();
-} ;
-const dateshow = (data,count) =>{
+};
+const dateshow = (data, count) => {
     switch (count) {
         case 0:
-        if (data==1) {
-            return "Sun"
-        }    
-        break;
+            if (data == 1) {
+                return "Sun";
+            }
+            break;
         case 1:
-        if (data==1) {
-            return "Mon"
-        }    
-        break;
+            if (data == 1) {
+                return "Mon";
+            }
+            break;
         case 2:
-        if (data==1) {
-            return "Tue"
-        }    
-        break;
+            if (data == 1) {
+                return "Tue";
+            }
+            break;
         case 3:
-        if (data==1) {
-            return "Wed"
-        }    
-        break;
+            if (data == 1) {
+                return "Wed";
+            }
+            break;
         case 4:
-        if (data==1) {
-            return "Thu"
-        }    
-        break;
+            if (data == 1) {
+                return "Thu";
+            }
+            break;
         case 5:
-        if (data==1) {
-            return "Fri"
-        }    
-        break;
+            if (data == 1) {
+                return "Fri";
+            }
+            break;
         case 6:
-        if (data==1) {
-            return "Sat"
-        }   
-        break;
+            if (data == 1) {
+                return "Sat";
+            }
+            break;
     }
 };
 
@@ -63,25 +64,37 @@ defineProps({
     canRegister: Boolean,
     laravelVersion: String,
     phpVersion: String,
+<<<<<<< HEAD
     classdata:Object,
     students:Object,
+=======
+    classdata: Object,
+>>>>>>> origin/main
 });
 </script>
 
-<template >
-<!-------------------- Navbar&header -------------------->
-<NavBar/>
-<Header classaddmode=true />
+<template>
+    <!-------------------- Navbar&header -------------------->
+    <NavBar />
+    <Header classaddmode="true" />
 
-<!---------------- body ----------------------->
-<div class="absolute w-5/6 headercustomleft  top-32 customblack px-5 max-h-full">
-<div class="flex flex-row mt-10 fixed sm:top-4 top-10 z-50 w-full">
-<div class="text-white  font-bold sm:text-2xl  text-sm">{{classdata[0].cname}}</div>
- <a :href="route('class.edit',classdata[0].id)" class="mt-2 text-center bg-blue-600 hover:bg-blue-700 active:bg-blue-900 text-white sm:w-20 w-14 h-5 text-sm  rounded-md ml-7">
-     Edit
-</a>
-</div>
+    <!---------------- body ----------------------->
+    <div
+        class="absolute w-5/6 headercustomleft top-32 customblack px-5 max-h-full"
+    >
+        <div class="flex flex-row mt-10 fixed sm:top-4 top-10 z-50 w-full">
+            <div class="text-white font-bold sm:text-2xl text-sm">
+                {{ classdata[0].cname }}
+            </div>
+            <a
+                :href="route('class.edit', classdata[0].id)"
+                class="mt-2 text-center bg-blue-600 hover:bg-blue-700 active:bg-blue-900 text-white sm:w-20 w-14 h-5 text-sm rounded-md ml-7"
+            >
+                Edit
+            </a>
+        </div>
 
+<<<<<<< HEAD
 <div class="custombackgroundcolor w-full text-white p-4 rounded-lg">
    <h3 class="sm:text-lg text-base">Class Information</h3>
    <img :src='"/storage/"+classdata[0].c_profile' alt="" class="rounded-full sm:w-20 w-14 sm:h-20 h-14 float-right">
@@ -183,21 +196,102 @@ defineProps({
 </div>
 </div>
 </div>
+=======
+        <div class="custombackgroundcolor w-full text-white p-4 rounded-lg">
+            <h3 class="sm:text-lg text-base">Class Information</h3>
+            <img
+                :src="'/storage/' + classdata[0].c_profile"
+                alt=""
+                class="rounded-full sm:w-20 w-14 sm:h-20 h-14 float-right"
+            />
+            <div class="sm:text-2xl text-lg font-bold mt-2">
+                {{ classdata[0].cname }}
+            </div>
+            <p class="sm:text-sm text-xs opacity-80 mt-2 w-10/12">
+                {{ classdata[0].c_description }}
+            </p>
+            <div
+                class="flex flex-row justify-between w-10/12 sm:text-sm text-xs mt-3"
+            >
+                <div>
+                    <div>
+                        Date : <br class="sm:hidden block" /><span
+                            >{{ classdata[0].c_start_date }} -
+                            {{ classdata[0].c_end_date }}</span
+                        >
+                    </div>
+                    <div class="mt-1">
+                        Day : <br class="sm:hidden block" /><span>{{
+                            datesplit(classdata[0].c_date)
+                        }}</span>
+                    </div>
+                    <div class="mt-1">
+                        Time : <br class="sm:hidden block" /><span
+                            >{{ classdata[0].c_start_time }} -
+                            {{ classdata[0].c_end_time }}</span
+                        >
+                    </div>
+                    <div class="mt-1">
+                        Person : <br class="sm:hidden block" /><span>20</span>
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        Instructor : <br class="sm:hidden block" /><span
+                            class="customtextcolor7 underline"
+                            >{{ classdata[0].i_name }}</span
+                        >
+                    </div>
+                    <div class="mt-1">
+                        Category : <br class="sm:hidden block" /><span
+                            class="customtextcolor7 underline"
+                            >{{ classdata[0].c_name }}</span
+                        >
+                    </div>
+                    <div class="mt-1">
+                        Fees : <br class="sm:hidden block" /><span
+                            >{{
+                                Number(classdata[0].c_fees).toLocaleString()
+                            }}
+                            Ks</span
+                        >
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="flex flex-wrap mt-5 sm:justify-between justify-center">
+            <div class="sm:w-7/12 w-11/12">
+                <h3 class="text-white">Student List</h3>
+                <StudentListTableBox />
+            </div>
+            <div class="cuswidth sm:mt-0 mt-5">
+                <h3 class="text-white">Recording Video List</h3>
+                <RecordingVideoListTableBox />
+            </div>
+        </div>
+    </div>
+>>>>>>> origin/main
 </template>
 <style scoped>
-.customalign{
+.customalign {
     margin-bottom: 1.3em;
 }
-.cuswidth{
+.cuswidth {
     width: 40%;
 }
 
 @media screen and (max-width: 640px) {
+<<<<<<< HEAD
     .cuswidth{
         width:80% ;
       }
           .customfontsize{
         font-size: 0.6em;
       }
+=======
+    .cuswidth {
+        width: 80%;
+>>>>>>> origin/main
     }
+}
 </style>
