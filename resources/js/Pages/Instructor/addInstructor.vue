@@ -6,16 +6,21 @@ import { ref } from "vue";
 
 const props = defineProps({
     names: Object,
+    noAdmin: Boolean,
 });
+console.log(props.noAdmin);
 
 const form = useForm({
     //     _method : "POST",
-    ad_id: 1,
+    ad_id: props.names[0].id,
     name: props.names[0].name,
     email: props.names[0].email,
     address: null,
     contact: null,
 });
+
+console.log(props.names);
+
 // form.role = 1;
 const submit = () => {
     form.post(route("instructors.store", form));
@@ -55,6 +60,7 @@ checkEmail();
                 <div>
                     <div class="mt-5 text-xl text-white">
                         Name :
+
                         <span class="pl-8 ml-2">
                             <select
                                 id="selectBox"
