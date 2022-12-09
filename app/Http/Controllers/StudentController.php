@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Validation\Rule;
+use Inertia\Inertia;
 
 function generate()
 {
@@ -30,12 +31,18 @@ class StudentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $search = $request->search;
+        // if($request.)
+        // dd($search);
         $model1 = new MStudent();
-        $data = $model1->allStuents();
-        return inertia('Student', [
-            'allStudents' => $data
+        $data = $model1->allStuents($search);
+        $category = $model1->category();
+        return Inertia::render('Student', [
+            'allStudents' => $data,
+            'filter' => $search,
+            'categories' => $category,
         ]);
     }
 
@@ -70,10 +77,10 @@ class StudentController extends Controller
             'password' => $password,
         ];
         Mail::to($request->email)->send(new StudentAccountCreate($data));
-        dd($password);
+        // dd($password);
         $model = new MStudent();
         $model->studentAccount($request, $password);
-        return Redirect::route('students.view');
+        return Redirect::route('students.index');
     }
 
     /**
