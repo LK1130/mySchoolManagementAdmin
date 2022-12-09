@@ -44,9 +44,6 @@ Route::resource('/class', ClassController::class);
 
 
 Route::resource('/students', StudentController::class);
-Route::get('students', [StudentController::class, "index"])->name('students.view');
-Route::get('/studentview/{students?}', [StudentController::class, "show"])->name('student.view');
-Route::get('/Addstudent', [StudentController::class, 'create'])->name('Addstudent.view');
 Route::post('/Addstudent/add', [StudentController::class, 'store']);
 
 Route::resource('/instructors', InstructorController::class);
