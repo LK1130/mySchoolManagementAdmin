@@ -60,26 +60,19 @@ Route::post('/setting/upload_public', [SettingController::class, 'upload_public'
 //     return inertia("SettingAdmin");
 // });
 Route::get('/setting', [SettingController::class, 'index'])->name("setting.index");
-Route::get('/mailtool', function () {
+
+// Start Tools
+Route::get('/mailTool', function () {
     return inertia("MailTool");
 });
-Route::get('/privacypolicytool', [PrivacyPolicyController::class, 'index']);
 
-Route::get('/blogtool', [BlogToolController::class, 'index']);
+// Route::get('/privacypolicytool', [PrivacyPolicyController::class, 'index']);
+Route::resource('privacypolicyTool', PrivacyPolicyController::class);
+Route::resource('categoryTool', CategoryToolController::class);
+Route::resource('guideTool', GuideToolController::class);
+Route::resource('blogTool', BlogToolController::class);
+// End Tools
 
-Route::get('/categoryTool', [CategoryToolController::class, 'index']);
-
-Route::get('/guideTool', [GuideToolController::class, 'index']);
-
-Route::get('/editprivacypolicy', function () {
-    return inertia("EditPrivacyPolicy");
-});
-Route::get('/editblog', function () {
-    return inertia("EditBlog");
-});
-Route::get('/editcategory', function () {
-    return inertia("EditCategory");
-});
 // Route::get('/addInstructor', function () {
 //     return inertia("addInstructor");
 // })->name("addInstructor.view");

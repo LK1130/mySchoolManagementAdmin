@@ -36,7 +36,7 @@ const props = defineProps({
                             <td class="text-center py-3">{{ result.c_description.substring(1, 10) + "..." }}</td>
                             <td class="text-center py-3">{{  moment(result.created_at).calendar() }}</td>
                             <td class="text-center customtextcolor7 underline">
-                                <a href="#">Edit</a>
+                                <Link :href="route('categoryTool.edit', result.id)" :id="result.id">Edit</Link>
                             </td>
                         </tr>
                     </tbody>

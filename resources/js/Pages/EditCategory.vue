@@ -4,6 +4,14 @@ import NavBar from "../Components/NavBar.vue";
 import Header from "../Components/Header.vue";
 import Toolsbar from "../Components/Toolsbar.vue";
 
+const props = defineProps({
+    categoriesInfo:{
+        type: Object
+    }
+});
+
+
+
 </script>
 
 <template>
@@ -17,6 +25,7 @@ import Toolsbar from "../Components/Toolsbar.vue";
                 <div class="flex items-center mt-5 w-full justify-between">
                     <label for="" class="text-whiteTextColor text-md">Name : </label>
                     <input type="text"
+                        :value="categoriesInfo.c_name"
                         class="w-72 rounded-xl bg-secondaryBackground text-whiteTextColor border-whiteTextColor focus:outline-0">
                 </div>
 

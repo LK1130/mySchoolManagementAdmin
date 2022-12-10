@@ -40,7 +40,7 @@ const props = defineProps({
                             <td class="text-center py-4">{{ result.p_description.substring(1, 20) + "..." }}</td>
                             <td class="text-center py-4">{{ moment(result.created_at).calendar() }}</td>
                             <td class="text-center py-4 customtextcolor7 underline">
-                                <a href="/editprivacypolicy">Edit</a>
+                                <Link :href="route('privacypolicyTool.edit', result.id)" :id="result.id">Edit</Link>
                             </td>
                         </tr>
                     </tbody>

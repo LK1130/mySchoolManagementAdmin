@@ -42,7 +42,7 @@ console.log(props.blogs);
                                 <img src="../../../public/img/blog.png" class="w-12" alt="">
                             </td>
                             <td class="text-center customtextcolor7 underline">
-                                <a href="/editblog">Edit</a>
+                                <Link :href="route('blogTool.edit', result.id)" :id="result.id">Edit</Link>
                             </td>
                         </tr>
                     </tbody>
