@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\MSetting;
 use App\Models\MSitemasterMyschool;
 use App\Models\MSitemasterPublic;
+use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 class SettingController extends Controller
 {
@@ -18,6 +20,7 @@ class SettingController extends Controller
         // $youtube2 =$request->input('youtube2');
         // $sitename =$request->input('sitename');
         // $messenger =$request->input('messenger');
+        
         $request->validate([
             'logo' => 'mimes:png,jpg,jpeg,csv,svg',
             'favicon' => 'mimes:png,jpg,jpeg,csv,svg,ico',
@@ -39,38 +42,38 @@ class SettingController extends Controller
         }
         $new->uploadSetting($request,$logo,$favicon);
 
-      
+      return Redirect::route('setting.index')->with('message','success');
 
     }
     
 
     public function upload_public(Request $request){
         $request->validate([
-            'logo_p' => 'mimes:png,jpg,jpeg,csv,svg',
-            'favicon_p' => 'mimes:png,jpg,jpeg,csv,svg,ico',
-            'phone_p'=>'required|numeric|min:9|max:11',
-            'sitename_p'=>'required',
-            'facebook_p'=>'required|url',
-            'youtube1_p'=>'required|url',
-            'youtube2_p'=>'required|url',
-            'copyright_p'=>'required'
+            'logos' => 'mimes:png,jpg,jpeg,csv,svg',
+            'favicons' => 'mimes:png,jpg,jpeg,csv,svg',
+            'phone'=>'required|digits:9|numeric',
+            'sitenames'=>'required',
+            'facebook'=>'required|url',
+            'youtube1'=>'required|url',
+            'youtube2'=>'required|url',
+            'copyright'=>'required'
         ]);
         // dd($request);
         $new = new MSitemasterPublic();
         // dd($request);
-       if($request->hasFile('logo_p')) {
-        $file= $request->file('logo_p');
-        $logo_p = $file->storePublicly('logo_p', ['disk' => 'public']);
+       if($request->hasFile('logos')) {
+        $file= $request->file('logos');
+        $logos = $file->storePublicly('logos', ['disk' => 'public']);
        }
-       if($request->hasFile('favicon_p')) {
-        $file= $request->file('favicon_p');
-        $favicon_p = $file->storePublicly('favicon_p', ['disk' => 'public']);
+       if($request->hasFile('favicons')) {
+        $file= $request->file('favicons');
+        $favicons = $file->storePublicly('favicons', ['disk' => 'public']);
        }
     
 
-        $new->uploadpublicSetting($request,$logo_p,$favicon_p);
+        $new->uploadpublicSetting($request,$logos,$favicons);
         
-        
+        return Redirect::route('setting.index')->with('message','success');
     }
     public function index(){
         $new = new MSitemasterMyschool();

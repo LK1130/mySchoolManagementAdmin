@@ -13,18 +13,18 @@ class MSitemasterPublic extends Model
     use HasFactory;
 
 
-    public function uploadpublicSetting($request,$logo_p="",$favicon_p=""){
+    public function uploadpublicSetting($request,$logos="",$favicons=""){
         DB::table('m_sitemaster_publics')
         ->where("id",1)
         ->update([
-            'logo'=> $logo_p || "/img/logo.png",
-            'favicon' => $favicon_p || "/favicon.ico",
-                'sitename'=>$request->input("sitename_p") || 'm_sitemaster_publics.sitename' ,
-                'facebook_link'=>$request->input("facebook_p"),
-                'youtube_link1'=>$request->input("youtube1_p"),
-                'youtube_link2'=>$request->input("youtube2_p"),
-                'copyright'=>$request->input("copyright_p"),
-                'phones'=>$request->input("phone_p"),
+            'logo'=> $logos|| "/img/logo.png",
+            'favicon' => $favicons || "/favicon.ico",
+                'sitename'=>$request->input("sitenames"),
+                'facebook_link'=>$request->input("facebook"),
+                'youtube_link1'=>$request->input("youtube1"),
+                'youtube_link2'=>$request->input("youtube2"),
+                'copyright'=>$request->input("copyright"),
+                'phones'=>$request->input("phone"),
             'del_flg'=>1,
     ]);
     }

@@ -2,7 +2,7 @@
 import NavBar from "../Components/NavBar.vue";
 import Header from "../Components/Header.vue";
 import { Inertia } from "@inertiajs/inertia";
-import { useForm } from "@inertiajs/inertia-vue3";
+import { useForm, Link } from "@inertiajs/inertia-vue3";
 import { ref } from "vue";
 
 const form = useForm({
@@ -10,15 +10,21 @@ const form = useForm({
     email: null,
 });
 
+const disable = ref(false);
+
 const props = defineProps({
-    errors: {
-        type: Object,
-    },
+    errors: Object,
 });
 const submit = () => {
-    Inertia.post("/Addstudent/add", form, {
+    Inertia.post(route("students.store"), form, {
         onError: (data) => {
             console.log(data);
+        },
+        onStart: () => {
+            disable.value = true;
+        },
+        onFinish: () => {
+            disable.value = false;
         },
     });
 };
@@ -76,6 +82,7 @@ console.log(props.errors);
                 <button
                     type="submit"
                     class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-2 focus:ring-blue-300 font-medium rounded-lg text-lg px-16 py-2"
+                    :disabled="disable"
                 >
                     Create
                 </button>

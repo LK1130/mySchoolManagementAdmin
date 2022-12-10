@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
@@ -11,7 +12,7 @@ class MStudent extends Model
 {
     use HasFactory;
 
-    public function allStuents()
+    public function allStuents($search = "")
     {
         // $query = DB::select("SELECT COUNT(t_student_classes.class_id),users.age,users.email,users.phone,users.address,users.name  FROM `users`
         //         JOIN t_student_classes
@@ -20,14 +21,21 @@ class MStudent extends Model
         $query = DB::table("users")
             ->join("t_student_classes", "t_student_classes.user_id", "=", "users.id")
             ->groupBy("t_student_classes.user_id")
-            ->selectRaw("COUNT('t_student_classes.class_id') AS Class,users.age,users.email,users.phone,users.address,users.name,users.id")
-            ->paginate(15);
+            ->selectRaw("COUNT('t_student_classes.class_id') AS Class,users.age,users.email,users.phone,users.address,users.name,users.id");
+
+        $query->when($search, function ($query) use ($search) {
+            return  $query->where('name', 'like', '%' . $search . '%')
+                ->orWhere('address', 'like', '%' . $search . '%');
+        });
+        // dd($search);
+
+        $messages = $query->paginate(15)->withQueryString();
 
 
         // echo "<pre>";
         // print_r($query);
         // dd($query);
-        return $query;
+        return $messages;
     }
 
     public function studentClassandAttend($id)
@@ -62,5 +70,14 @@ class MStudent extends Model
                 'email' => $request->email,
                 'password' => Hash::make($password)
             ]);
+    }
+
+    public function category()
+    {
+        $query = DB::table("m_categories")
+            ->select('*')
+            ->get();
+
+        return $query;
     }
 }
