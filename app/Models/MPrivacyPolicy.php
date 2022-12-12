@@ -24,4 +24,12 @@ class MPrivacyPolicy extends Model
                 "p_description" => $request->input('privacypolicys_description')
             ]);
     }
+
+    public function insertData($request){
+        DB::table('m_privacy_policies')
+            ->insert([
+                'p_title' => $request->privacypolicys_title,
+                'p_description' => $request->privacypolicys_description
+            ]);
+    }
 }

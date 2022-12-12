@@ -26,7 +26,7 @@ class PrivacyPolicyController extends Controller
      */
     public function create()
     {
-        //
+        return inertia('AddPrivacyPolicy');
     }
 
     /**
@@ -37,7 +37,15 @@ class PrivacyPolicyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'privacypolicys_title' => 'required',
+            'privacypolicys_description' => 'required'
+        ]);
+
+        $privacypolicys = new MPrivacyPolicy();
+        $privacypolicys->insertData($request);
+
+        return inertia('privacypolicyTool');
     }
 
     /**
@@ -62,7 +70,6 @@ class PrivacyPolicyController extends Controller
         $privacypolicys = new MPrivacyPolicy();
         $privacypolicysInfo = $privacypolicys->searchById($id);
 
-        // return $privacypolicysInfo;
         return inertia('EditPrivacyPolicy',['privacypolicysInfo' => $privacypolicysInfo]);
     }
 

@@ -26,7 +26,7 @@ class BlogToolController extends Controller
      */
     public function create()
     {
-        //
+        return inertia('AddBlog');
     }
 
     /**

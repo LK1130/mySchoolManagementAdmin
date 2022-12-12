@@ -8,6 +8,7 @@ use App\Http\Controllers\ClasssController;
 use App\Http\Controllers\GuideToolController;
 use App\Http\Controllers\Instructor;
 use App\Http\Controllers\InstructorController;
+use App\Http\Controllers\MailToolController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\PrivacyPolicyController;
@@ -63,7 +64,7 @@ Route::get('/mailTool', function () {
     return inertia("MailTool");
 });
 
-// Route::get('/privacypolicytool', [PrivacyPolicyController::class, 'index']);
+Route::resource('mailtool', MailToolController::class);
 Route::resource('privacypolicyTool', PrivacyPolicyController::class);
 Route::resource('categoryTool', CategoryToolController::class);
 Route::resource('guideTool', GuideToolController::class);
