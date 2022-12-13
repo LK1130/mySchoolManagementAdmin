@@ -149,13 +149,13 @@ let showNoti = ref(true);
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                             >FaceBook</label
                         >
-                        <input
-                            v-model="form.facebook"
-                            type="text"
-                            id="facebook"
-                            class="focus:ring-white focus:border-white border-white text-sm rounded-xl block w-5/6 bg-elementBackground p-2 text-white"
-                            placeholder=""
-                        />
+                            <input
+                                v-model="form.facebook"
+                                type="text"
+                                id="facebook"
+                                class="focus:ring-white focus:border-white border-white text-sm rounded-xl block w-5/6 bg-elementBackground p-2 text-white"
+                                placeholder=""
+                            />
                         <div v-if="errors.facebook" class="text-red-500">
                             {{ errors.facebook }}
                         </div>

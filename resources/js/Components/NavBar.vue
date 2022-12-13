@@ -53,7 +53,7 @@ const classes = computed(() => {
                     class="sm:w-11 w-8"
                 />
                 <span class="text-lg ml-5 pt-1 opacity-70 lg:block hidden"
-                    >Course</span
+                    >Class</span
                 >
             </div>
             <div

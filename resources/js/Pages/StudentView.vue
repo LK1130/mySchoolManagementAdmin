@@ -128,11 +128,7 @@ const series = ref([
     },
 ]);
 
-const props = defineProps({
-    students: {
-        type: Object,
-    },
-});
+const props = defineProps({});
 let studentDetail = props.students;
 console.log(studentDetail);
 </script>
@@ -160,9 +156,9 @@ console.log(studentDetail);
                 </div>
                 <div class="bg-white md:w-0.5 md:h-5/6 w-5/6 h-0.5 mt-6"></div>
                 <div class="items-center w-full md:3/6 md:space-y-4 space-y-2">
-                    <h3 class="text-3xl font-bold justify-center flex mt-7">
-                        {{ studentDetail.name }}
-                    </h3>
+                    <h3
+                        class="text-3xl font-bold justify-center flex mt-7"
+                    ></h3>
                     <div class="items-center flex flex-row mb-2 md:gap-8">
                         <div class="w-2/6 md:justify-end justify-start flex">
                             <p class="md:text-base text-sm font-semibold">
@@ -187,7 +183,7 @@ console.log(studentDetail);
                         </div>
 
                         <div class="w-4/6 flex flex-row jstify-center">
-                            <p>{{ studentDetail.address }}</p>
+                            <p>Yangon</p>
                         </div>
                     </div>
                     <div class="items-center flex flex-row mb-2 md:gap-8">
@@ -198,7 +194,7 @@ console.log(studentDetail);
                         </div>
 
                         <div class="w-4/6 flex flex-row jstify-center">
-                            <p>{{ studentDetail.phone }}</p>
+                            <p>09</p>
                         </div>
                     </div>
                     <div class="items-center flex flex-row mb-2 md:gap-8">
@@ -209,7 +205,7 @@ console.log(studentDetail);
                         </div>
 
                         <div class="w-4/6 flex flex-row jstify-center">
-                            <p>{{ studentDetail.age }}</p>
+                            <p>16</p>
                         </div>
                     </div>
                     <div class="items-center flex flex-row mb-2 md:gap-8">
@@ -220,7 +216,7 @@ console.log(studentDetail);
                         </div>
 
                         <div class="w-4/6 flex flex-row jstify-center">
-                            <p>{{ studentDetail.email }}</p>
+                            <p>email</p>
                         </div>
                     </div>
                 </div>
@@ -259,7 +255,7 @@ console.log(studentDetail);
                                     <h1
                                         class="font-medium text-lg md:text-4xl tracking-wide"
                                     >
-                                        {{ studentDetail.name }}
+                                        Yeee
                                     </h1>
                                 </div>
                                 <div
