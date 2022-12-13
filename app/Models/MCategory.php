@@ -15,4 +15,17 @@ class MCategory extends Model
             ->where('id',$id)
             ->first();
     }
+
+    public function updateData($request, $id)
+    {
+        $mcategory = MCategory::find($id);
+        $mcategory->c_name = $request->category_name;
+        $mcategory->save();
+    }
+
+    public function deleteData($id){
+        $mcategory = MCategory::find($id);
+        $mcategory->del_flg = 1;
+        $mcategory->save();
+    }
 }

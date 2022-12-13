@@ -69,6 +69,7 @@ Route::resource('privacypolicyTool', PrivacyPolicyController::class);
 Route::resource('categoryTool', CategoryToolController::class);
 Route::resource('guideTool', GuideToolController::class);
 Route::resource('blogTool', BlogToolController::class);
+
 // End Tools
 
 // Route::get('/addInstructor', function () {

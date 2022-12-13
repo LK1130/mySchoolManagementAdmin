@@ -12,12 +12,16 @@ const form = useForm({
 });
 
 const submit = () => {
-    Inertia.post(route("blogTool.store"),form,{
+    Inertia.post(route("blogTool.store"), form, {
         onError: (data) => {
             console.log(data);
         }
     })
 }
+
+
+
+
 
 </script>
 
@@ -43,9 +47,13 @@ const submit = () => {
 
                     <label for="" class="text-whiteTextColor">File</label>
                     <div class="flex items-center justify-center w-full">
+
                         <label for="dropzone-file"
                             class="flex flex-col items-center justify-center w-full h-32 border-2 cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
-                            <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                            <div class="relative flex flex-col items-center justify-center pt-5 pb-6 overflow-hidden">
+                                <div class="flex absolute w-full">
+                                    <img :src="imageFile" alt="" class="w-full items-center" >
+                                </div>
                                 <svg aria-hidden="true" class="w-10 h-10 mb-3 text-gray-400" fill="none"
                                     stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -59,9 +67,10 @@ const submit = () => {
                                     800x400px)
                                 </p>
                             </div>
-                            <input id="dropzone-file" type="file" class="hidden" @change="onFile($event)"/>
+                                <input id="dropzone-file" type="file" @change="showImagePreview($event)" accept="image/*" class="hidden"/>
                         </label>
                     </div>
+
 
                     <div class="flex justify-between py-8">
                         <Link href="/blogTool"
@@ -79,6 +88,8 @@ const submit = () => {
             </div>
         </form>
 
+
+
         <div class="py-5">
             <button>
                 <a href="/blogTool" class="underline underline-offset-4 hidden md:block text-whiteTextColor">BACK</a>
@@ -86,3 +97,28 @@ const submit = () => {
         </div>
     </div>
 </template>
+
+<script>
+export default {
+    name: "ImageUploader",
+    data() {
+        return {
+            imageFile: null,
+            input: null,
+            isImageUploading: false,
+        };
+    },
+    methods: {
+        showImagePreview(event) {
+            this.input = event.target;
+            if (this.input.files && this.input.files[0]) {
+                let reader = new FileReader();
+                reader.onload = (e) => {
+                    this.imageFile = e.target.result;
+                };
+                reader.readAsDataURL(this.input.files[0]);
+            }
+        },
+    },
+};
+</script>
