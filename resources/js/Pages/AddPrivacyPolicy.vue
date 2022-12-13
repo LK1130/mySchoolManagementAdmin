@@ -22,9 +22,7 @@ const form = useForm({
     privacypolicys_title: null,
     privacypolicys_description: null,
     category: null
-})
-
-const disable = ref(false);
+});
 
 const submit = () => {
     Inertia.post(route("privacypolicyTool.store"), form, {

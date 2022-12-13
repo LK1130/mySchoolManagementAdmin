@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\MBlog;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 class BlogToolController extends Controller
 {
@@ -37,7 +38,19 @@ class BlogToolController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'blog_title' => 'required',
+            'blog_description' => 'required',
+            'blog_file' => 'required'
+        ]);
+
+        $file = $request->blog_file;
+        $blog_image = $file->storePublicly("Blog", ['disk' => 'public']);
+
+        $blogs = new MBlog();
+        $blogs->insertData($request, $blog_image);
+
+        return Redirect::route('blogTool.index');
     }
 
     /**
@@ -62,7 +75,7 @@ class BlogToolController extends Controller
         $blogs = new MBlog();
         $blogsInfo = $blogs->searchById($id);
 
-        return inertia('EditBlog',['blogsInfo' => $blogsInfo]);
+        return inertia('EditBlog', ['blogsInfo' => $blogsInfo]);
     }
 
     /**
@@ -74,7 +87,19 @@ class BlogToolController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'blog_title' => 'required',
+            'blog_description' => 'required',
+            'blog_file' => 'required'
+        ]);
+
+        $file = $request->blog_file;
+        $blog_image = $file->storePublicly("Blog", ['disk' => 'public']);
+
+        $blogs = new MBlog();
+        $blogs->updateData($request, $blog_image, $id);
+
+        return Redirect::route('blogTool.index');
     }
 
     /**
@@ -85,6 +110,9 @@ class BlogToolController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $blogs = new MBlog();
+        $blogs->deleteData($id);
+
+        return Redirect::route('blogTool.index');
     }
 }

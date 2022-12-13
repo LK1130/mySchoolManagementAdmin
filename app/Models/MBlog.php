@@ -15,4 +15,28 @@ class MBlog extends Model
             ->where('id',$id)
             ->first();
     }
+
+    public function updateData($request, $image, $id)
+    {
+        $mblog = MBlog::find($id);
+        $mblog->b_title = $request->blog_title;
+        $mblog->b_description = $request->blog_description;
+        $mblog->b_photo = $image;
+        $mblog->save();
+    }
+
+    public function insertData($request,$image)
+    {
+        $mblog = new MBlog();
+        $mblog->b_title = $request->blog_title;
+        $mblog->b_description = $request->blog_description;
+        $mblog->b_photo = $image;
+        $mblog->save();
+    }
+
+    public function deleteData($id){
+        $mblog = MBlog::find($id);
+        $mblog->del_flg = 1;
+        $mblog->save();
+    }
 }
