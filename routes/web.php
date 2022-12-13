@@ -45,7 +45,7 @@ Route::resource('/class', ClassController::class);
 
 
 Route::resource('/students', StudentController::class);
-// Route::post('/Addstudent/add', [StudentController::class, 'store']);
+
 
 Route::resource('/instructors', InstructorController::class);
 Route::get('/instructor/{class?}{name?}', [Instructor::class, 'index'])->name("instructor.index");

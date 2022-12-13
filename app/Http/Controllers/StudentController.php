@@ -41,14 +41,19 @@ class StudentController extends Controller
         // if($request.)
         // dd($checked);
         $model1 = new MStudent();
-        $data = $model1->allStuents("", $search);
         $category = $model1->category();
 
         $tmpCheck = [];
         foreach ($category as $key => $value) {
             array_push($tmpCheck, $value->id);
         }
-        $checkBox = $model1->allStuents($checked, "");
+
+        $data = ($request->selectedItem) ?
+            $model1->allStuents(explode("-", $checked))
+            : $model1->allStuents("", $search);
+
+        // dd($data);
+        // typeOf($checked);
         return Inertia::render('Student', [
             'allStudents' => $data,
             'filter' => $search,
@@ -104,8 +109,9 @@ class StudentController extends Controller
     public function show($id)
     {
         $model = new MStudent();
-        $classnatt = $model->studentClassandAttend($id);
-        return inertia('StudentView', ['students' => $classnatt]);
+        $studenProfile = $model->studnetDetailandClasses($id);
+        dd($studenProfile);
+        return inertia('StudentView');
     }
 
     /**
@@ -139,6 +145,6 @@ class StudentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // 
     }
 }
