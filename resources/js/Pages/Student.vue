@@ -6,24 +6,45 @@ import { Link } from "@inertiajs/inertia-vue3";
 import { ref, watch } from "vue";
 import { Inertia } from "@inertiajs/inertia";
 import throttle from "lodash/throttle";
+import { prop, value } from "dom7";
 
 let props = defineProps({
     allStudents: Object,
     filter: Object,
     categories: Object,
+    checkBox: Object,
 });
 
+console.log(props);
+
 let search = ref(props.filter);
-let selectedItem = ref([]);
+// console.log(props.checkBox);
+let selectedItem = ref(props.checkBox);
+
+let cat = props.categories;
+
+// Watching the search variable and throttling the function to 300ms.
 watch(
     search,
     throttle(function (value) {
+        // console.log(checkBox);
         Inertia.get(
             "/students",
             { search: value },
             { preserveState: true, replace: true }
         );
     }, 300)
+);
+watch(
+    selectedItem,
+    throttle(function (value) {
+        console.log(value);
+        Inertia.get(
+            "/students",
+            { selectedItem: value.join("-") },
+            { preserveState: true, replace: true }
+        );
+    }, 200)
 );
 </script>
 
@@ -46,6 +67,8 @@ watch(
                         class="css-checkbox"
                         :id="category.id"
                         checked="checked"
+                        v-model="selectedItem"
+                        :value="category.id"
                     />
                     <label
                         :for="category.id"

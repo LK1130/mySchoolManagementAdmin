@@ -24,8 +24,7 @@ return new class extends Migration
             $table->integer("updated_by")->nullable();
             $table->timestamps();
             $table->foreign('role_id')->references('id')->on("m_roles")
-            ->onDelete('restrict')->onUpdate('cascade');
-
+                ->onDelete('restrict')->onUpdate('cascade');
         });
     }
 
