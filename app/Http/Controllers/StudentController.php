@@ -33,16 +33,27 @@ class StudentController extends Controller
      */
     public function index(Request $request)
     {
+
         $search = $request->search;
+        $checked = $request->selectedItem;
+        // dd($request->all());
+
         // if($request.)
-        // dd($search);
+        // dd($checked);
         $model1 = new MStudent();
-        $data = $model1->allStuents($search);
+        $data = $model1->allStuents("", $search);
         $category = $model1->category();
+
+        $tmpCheck = [];
+        foreach ($category as $key => $value) {
+            array_push($tmpCheck, $value->id);
+        }
+        $checkBox = $model1->allStuents($checked, "");
         return Inertia::render('Student', [
             'allStudents' => $data,
             'filter' => $search,
             'categories' => $category,
+            'checkBox' => ($checked == "") ? $tmpCheck : explode("-", $checked),
         ]);
     }
 
@@ -76,8 +87,9 @@ class StudentController extends Controller
             'email' => $request->email,
             'password' => $password,
         ];
-        Mail::to($request->email)->send(new StudentAccountCreate($data));
+
         // dd($password);
+        Mail::to($request->email)->send(new StudentAccountCreate($data));
         $model = new MStudent();
         $model->studentAccount($request, $password);
         return Redirect::route('students.index');
