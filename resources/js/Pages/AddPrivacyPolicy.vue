@@ -1,14 +1,32 @@
 <script setup>
-import { Head, Link } from "@inertiajs/inertia-vue3";
+import { Head, Link, useForm } from "@inertiajs/inertia-vue3";
 import NavBar from "../Components/NavBar.vue";
 import Header from "../Components/Header.vue";
 import Toolsbar from "../Components/Toolsbar.vue";
+import { Inertia } from "@inertiajs/inertia";
+import { ref } from "vue";
 
 const props = defineProps({
-    privacypolicysInfo: {
-        type: Object
-    }
-});
+    errors: Object
+})
+
+console.log(props.errors)
+
+const form = useForm({
+    privacypolicys_title: null,
+    privacypolicys_description: null
+})
+
+const disable = ref(false);
+
+const submit = () => {
+    Inertia.post(route("privacypolicyTool.store"), form, {
+        onError: (data) => {
+            console.log(data);
+        }
+    })
+};
+
 
 </script>
 
@@ -19,24 +37,27 @@ const props = defineProps({
     <div class="absolute h-full w-5/6 p-5 headercustomleft top-32 customblack">
         <Toolsbar active="2" />
         <div class="w-full h-full py-8 bg-secondaryBackground rounded-b-xl flex flex-col items-center">
-            <form :action="route('privacypolicyTool.update', privacypolicysInfo.id)" method="POST">
+            <form @submit.prevent="submit">
                 <div class="w-96 flex flex-col space-y-4">
                     <label for="" class="text-whiteTextColor">Title</label>
                     <input type="text"
                         class="w-72 rounded-xl bg-secondaryBackground text-whiteTextColor border-whiteTextColor focus:outline-0"
-                        name="privacypolicys_title" :value="privacypolicysInfo.p_title">
+                        v-model="form.privacypolicys_title">
+                    <!-- <div v-if="errors.privacypolicys_title" class="text-red-700 text-md">
+                        {{ errors.privacypolicys_title }}
+                    </div> -->
 
                     <label for="" class="text-whiteTextColor">Description</label>
                     <textarea
                         class="h-32 resize-none rounded-xl bg-secondaryBackground text-whiteTextColor border-whiteTextColor focus:outline-0"
-                        name="privacypolicys_description" :value="privacypolicysInfo.p_description"></textarea>
+                        v-model="form.privacypolicys_description"></textarea>
 
                     <div class="flex justify-between py-8">
-                        <button
+                        <Link href="/privacypolicyTool"
                             class="py-2 px-5 text-whiteTextColor text-sm bg-redTextColor rounded-xl flex items-center">
-                            <img src="../../../public/img/delete.png" alt="" class="w-5 h-5 pt-0.5" />
-                            <span class="mx-2">Delete</span>
-                        </button>
+                        <img src="../../../public/img/delete.png" alt="" class="w-5 h-5 pt-0.5" />
+                        <span class="mx-2">Cancel</span>
+                        </Link>
                         <button type="submit"
                             class="py-2 px-5 text-whiteTextColor text-sm bg-blueTextColor rounded-xl flex items-center">
                             <img src="../../../public/img/save.png" alt="" class="w-5 h-5 pt-0.5" />
@@ -49,7 +70,7 @@ const props = defineProps({
 
         <div class="py-5">
             <button>
-                <a href="/privacypolicytool"
+                <a href="/privacypolicyTool"
                     class="underline underline-offset-4 hidden md:block text-whiteTextColor">BACK</a>
             </button>
         </div>

@@ -42,7 +42,7 @@ console.log(props.blogs);
                                 <img src="../../../public/img/blog.png" class="w-12" alt="">
                             </td>
                             <td class="text-center customtextcolor7 underline">
-                                <a href="/editblog">Edit</a>
+                                <Link :href="route('blogTool.edit', result.id)" :id="result.id">Edit</Link>
                             </td>
                         </tr>
                     </tbody>
@@ -62,7 +62,7 @@ console.log(props.blogs);
 
                 <div
                     class="absolute text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-xl text-sm px-5 py-2.5 mr-2 mb-2 bottom-5 right-3 focus:outline-none">
-                    <Link href="/editblog" class="flex flex-row justify-center items-center space-x-3">
+                    <Link :href="route('blogTool.create')" class="flex flex-row justify-center items-center space-x-3">
                         <img src="../../../public/img/addlogo.png" alt="" class="w-5 h-5 pt-0.5" />
 
                         <button type="button">

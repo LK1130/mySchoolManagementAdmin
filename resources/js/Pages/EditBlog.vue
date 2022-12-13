@@ -4,6 +4,12 @@ import NavBar from "../Components/NavBar.vue";
 import Header from "../Components/Header.vue";
 import Toolsbar from "../Components/Toolsbar.vue";
 
+const props = defineProps({
+    blogsInfo: {
+        type: Object
+    }
+})
+
 </script>
 
 <template>
@@ -16,10 +22,12 @@ import Toolsbar from "../Components/Toolsbar.vue";
             <div class="w-96 flex flex-col space-y-4">
                 <label for="" class="text-whiteTextColor">Title</label>
                 <input type="text"
+                    :value="blogsInfo.b_title"
                     class="w-72 rounded-xl bg-secondaryBackground text-whiteTextColor border-whiteTextColor focus:outline-0">
 
                 <label for="" class="text-whiteTextColor">Description</label>
                 <textarea
+                    :value="blogsInfo.b_description"
                     class="h-32 resize-none rounded-xl bg-secondaryBackground text-whiteTextColor border-whiteTextColor focus:outline-0"></textarea>
 
                 <label for="" class="text-whiteTextColor">File</label>
