@@ -80,7 +80,7 @@ let showNoti = ref(true);
     <Header headername="Settings" />
 
     <div
-        class="absolute top-32 headercustomleft w-5/6 h-full bg-primaryBackground items-center flex flex-col"
+        class="absolute top-32 headercustomleft w-5/6 h-auto bg-primaryBackground items-center flex flex-col"
     >
         <div v-if="$page.props.flash.message" class="fixed z-50 right-10">
 
