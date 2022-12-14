@@ -110,10 +110,9 @@ class StudentController extends Controller
     {
         $model = new MStudent();
         $studenProfile = $model->studnetDetailandClasses($id);
-        dd($studenProfile);
-        return inertia('StudentView');
+        // dd($studenProfile);
+        return inertia('StudentView', ['studenProfile' => $studenProfile]);
     }
-
     /**
      * Show the form for editing the specified resource.
      *

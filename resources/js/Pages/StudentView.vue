@@ -14,7 +14,7 @@ import "swiper/css/bundle";
 let segment = ref(1);
 
 // Studnet Line Chart
-
+let stuClass = props.studenProfile[0].Class.split(",");
 let days = [];
 let examMark = [];
 for (let index = 0; index < 11; index++) {
@@ -23,9 +23,6 @@ for (let index = 0; index < 11; index++) {
 for (let index = 0; index < 11; index++) {
     examMark.push(index);
 }
-console.log(days);
-console.log();
-
 const chartOptions = ref({
     chart: {
         toolbar: {
@@ -128,9 +125,12 @@ const series = ref([
     },
 ]);
 
-const props = defineProps({});
-let studentDetail = props.students;
-console.log(studentDetail);
+const props = defineProps({
+    studenProfile: Object,
+});
+
+// let classes = stuClass.split(",");
+console.log(stuClass);
 </script>
 
 <template>
@@ -145,6 +145,8 @@ console.log(studentDetail);
             <!-- Student Card Start -->
             <div
                 class="bg-elementBackground flex md:flex-row flex-col justify-center items-center md:justify-around p-5 w-full lg:w-3/6 mb-16 h-full md:h-96 text-whiteTextColor rounded-3xl border-2 border-slate-300"
+                v-for="data in studenProfile"
+                :key="studenProfile"
             >
                 <div class="items-center justify-center flex px-4 md:w-3/6">
                     <img
@@ -156,9 +158,9 @@ console.log(studentDetail);
                 </div>
                 <div class="bg-white md:w-0.5 md:h-5/6 w-5/6 h-0.5 mt-6"></div>
                 <div class="items-center w-full md:3/6 md:space-y-4 space-y-2">
-                    <h3
-                        class="text-3xl font-bold justify-center flex mt-7"
-                    ></h3>
+                    <h3 class="text-3xl font-bold justify-center flex mt-7">
+                        {{ data.name }}
+                    </h3>
                     <div class="items-center flex flex-row mb-2 md:gap-8">
                         <div class="w-2/6 md:justify-end justify-start flex">
                             <p class="md:text-base text-sm font-semibold">
@@ -167,12 +169,11 @@ console.log(studentDetail);
                         </div>
 
                         <div
-                            class="w-4/6 flex flex-row jstify-center text-sm underline-offset-4 underline text-yellowTextColor"
+                            class="w-4/6 flex flex-col jstify-center text-sm underline-offset-4 underline text-yellowTextColor"
                         >
-                            <a href="">Java</a>
-                            <!-- <a href="">Japanese</a>
-                            <a href="">WebDev</a>
-                            <a href="">SEJ</a> -->
+                            <ul v-for="classi in stuClass" :key="stuClass">
+                                <li>{{ classi }}</li>
+                            </ul>
                         </div>
                     </div>
                     <div class="items-center flex flex-row mb-2 md:gap-8">
@@ -183,7 +184,7 @@ console.log(studentDetail);
                         </div>
 
                         <div class="w-4/6 flex flex-row jstify-center">
-                            <p>Yangon</p>
+                            <p>{{ data.address }}</p>
                         </div>
                     </div>
                     <div class="items-center flex flex-row mb-2 md:gap-8">
@@ -194,7 +195,7 @@ console.log(studentDetail);
                         </div>
 
                         <div class="w-4/6 flex flex-row jstify-center">
-                            <p>09</p>
+                            <p>{{ data.phone }}</p>
                         </div>
                     </div>
                     <div class="items-center flex flex-row mb-2 md:gap-8">
@@ -205,7 +206,7 @@ console.log(studentDetail);
                         </div>
 
                         <div class="w-4/6 flex flex-row jstify-center">
-                            <p>16</p>
+                            <p>{{ data.age }}</p>
                         </div>
                     </div>
                     <div class="items-center flex flex-row mb-2 md:gap-8">
@@ -216,7 +217,7 @@ console.log(studentDetail);
                         </div>
 
                         <div class="w-4/6 flex flex-row jstify-center">
-                            <p>email</p>
+                            <p>{{ data.email }}</p>
                         </div>
                     </div>
                 </div>

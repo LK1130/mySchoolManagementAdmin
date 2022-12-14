@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\MCategory;
 use App\Models\MPrivacyPolicy;
+use Illuminate\Console\View\Components\Alert;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 class PrivacyPolicyController extends Controller
 {
@@ -16,7 +19,10 @@ class PrivacyPolicyController extends Controller
     {
         $privacypolicys = MPrivacyPolicy::where("del_flg", 0)
             ->paginate(5);
-        return inertia('PrivacyPolicyTool', ['privacypolicys' => $privacypolicys]);
+
+        return inertia('PrivacyPolicyTool', [
+            'privacypolicys' => $privacypolicys
+        ]);
     }
 
     /**
@@ -26,7 +32,10 @@ class PrivacyPolicyController extends Controller
      */
     public function create()
     {
-        return inertia('AddPrivacyPolicy');
+        $categories = MCategory::where("del_flg", 0)->get();
+
+        // dd($categories);
+        return inertia('AddPrivacyPolicy', ['categories' => $categories]);
     }
 
     /**
@@ -39,13 +48,13 @@ class PrivacyPolicyController extends Controller
     {
         $request->validate([
             'privacypolicys_title' => 'required',
-            'privacypolicys_description' => 'required'
+            'privacypolicys_description' => 'required',
         ]);
 
         $privacypolicys = new MPrivacyPolicy();
         $privacypolicys->insertData($request);
 
-        return inertia('privacypolicyTool');
+        return Redirect::route('privacypolicyTool.index');
     }
 
     /**
@@ -70,7 +79,12 @@ class PrivacyPolicyController extends Controller
         $privacypolicys = new MPrivacyPolicy();
         $privacypolicysInfo = $privacypolicys->searchById($id);
 
-        return inertia('EditPrivacyPolicy',['privacypolicysInfo' => $privacypolicysInfo]);
+        $categories = MCategory::where("del_flg", 0)->get();
+
+        return inertia('EditPrivacyPolicy', [
+            'privacypolicysInfo' => $privacypolicysInfo,
+            'categories' => $categories
+        ]);
     }
 
     /**
@@ -82,10 +96,15 @@ class PrivacyPolicyController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'privacypolicys_title' => 'required',
+            'privacypolicys_description' => 'required',
+        ]);
+        
         $privacypolicys = new MPrivacyPolicy();
         $privacypolicys->updateData($request, $id);
 
-        return inertia('PrivacyPolicyTool');
+        return Redirect::route('privacypolicyTool.index');
     }
 
     /**
@@ -96,6 +115,9 @@ class PrivacyPolicyController extends Controller
      */
     public function destroy($id)
     {
-        //
+       $privacypolicys = new MPrivacyPolicy();
+       $privacypolicys->deleteData($id);
+
+       return Redirect::route('privacypolicyTool.index');
     }
 }

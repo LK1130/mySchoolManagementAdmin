@@ -7,17 +7,22 @@ import { Inertia } from "@inertiajs/inertia";
 import { ref } from "vue";
 
 const props = defineProps({
-    errors: Object
+    errors: {
+        type: Object
+    },
+    categories: {
+        type: Object
+    }
 })
 
-console.log(props.errors)
+// console.log(props.errors)
+console.log(props.categories);
 
 const form = useForm({
     privacypolicys_title: null,
-    privacypolicys_description: null
-})
-
-const disable = ref(false);
+    privacypolicys_description: null,
+    category: null
+});
 
 const submit = () => {
     Inertia.post(route("privacypolicyTool.store"), form, {
@@ -43,14 +48,19 @@ const submit = () => {
                     <input type="text"
                         class="w-72 rounded-xl bg-secondaryBackground text-whiteTextColor border-whiteTextColor focus:outline-0"
                         v-model="form.privacypolicys_title">
-                    <!-- <div v-if="errors.privacypolicys_title" class="text-red-700 text-md">
-                        {{ errors.privacypolicys_title }}
-                    </div> -->
 
                     <label for="" class="text-whiteTextColor">Description</label>
                     <textarea
                         class="h-32 resize-none rounded-xl bg-secondaryBackground text-whiteTextColor border-whiteTextColor focus:outline-0"
                         v-model="form.privacypolicys_description"></textarea>
+
+                    <label for="" class="text-whiteTextColor">Categories</label>
+                    <select name="" id="" v-model="form.category"
+                        class="w-72 rounded-xl bg-secondaryBackground text-whiteTextColor border-whiteTextColor focus:outline-0">
+                        <option :value="cat.id" v-for="cat in categories" :key="categories">
+                            {{ cat.c_name }}
+                        </option>
+                    </select>
 
                     <div class="flex justify-between py-8">
                         <Link href="/privacypolicyTool"
