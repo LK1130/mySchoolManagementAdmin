@@ -16,7 +16,7 @@ const props = defineProps({
 })
 
 // console.log(props.errors)
-console.log(props.categories);
+// console.log(props.categories);
 
 const form = useForm({
     privacypolicys_title: null,

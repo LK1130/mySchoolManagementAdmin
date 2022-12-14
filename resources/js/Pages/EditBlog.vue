@@ -4,6 +4,7 @@ import NavBar from "../Components/NavBar.vue";
 import Header from "../Components/Header.vue";
 import Toolsbar from "../Components/Toolsbar.vue";
 import { Inertia } from "@inertiajs/inertia";
+import { ref } from "vue";
 
 const props = defineProps({
     blogsInfo: {
@@ -11,22 +12,40 @@ const props = defineProps({
     }
 })
 
-const form = useForm({
+let input = null
+
+const form = ref({
     id: props.blogsInfo.id,
     blog_title: props.blogsInfo.b_title,
     blog_description: props.blogsInfo.b_description,
-    blog_file: null
+    blog_file: "/storage/" + props.blogsInfo.b_photo
 })
 
 // console.log(props.blogsInfo.b_description)
 
 const submit = () => {
-    Inertia.put(route("blogTool.update", form.id), form, {
+    console.log(form);
+    Inertia.put(route("blogTool.update", form.value.id), form.value, {
         onError: (data) => {
             console.log(data);
         }
     })
 };
+
+const showImagePreview = (event) => {
+    event.preventDefault();
+            input = event.target;
+            if (input.files && input.files[0]) {
+                let reader = new FileReader();
+                reader.onload = (e) => {
+                    form.blog_file = e.target.result;
+                  
+                };
+                reader.readAsDataURL(input.files[0]);
+               
+            }
+           
+        };
 
 </script>
 
@@ -54,7 +73,7 @@ const submit = () => {
                             class="flex flex-col items-center justify-center w-full h-32 border-2 cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
                             <div class="relative flex flex-col items-center justify-center pt-5 pb-6 overflow-hidden">
                                 <div class="flex absolute w-full">
-                                    <img :src="imageFile" alt="" class="w-full items-center">
+                                    <img :src="form.blog_file" alt="" class="w-full items-center">
                                 </div>
                                 <svg aria-hidden="true" class="w-10 h-10 mb-3 text-gray-400" fill="none"
                                     stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -69,8 +88,8 @@ const submit = () => {
                                     800x400px)
                                 </p>
                             </div>
-                            <input id="dropzone-file" type="file" @input="form.blog_file = $event.target.files[0]"
-                                @change="showImagePreview($event)" accept="image/*" class="hidden" />
+                            <input id="dropzone-file" type="file"  @input="form.blog_file = $event.target.files[0]"
+                                @change="showImagePreview" accept="image/*" class="hidden" />
                         </label>
                     </div>
 
@@ -98,28 +117,19 @@ const submit = () => {
     </div>
 </template>
 
-<script>
+<!-- <script>
 export default {
     name: "ImageUploader",
     data() {
         return {
-            imageFile: null,
+            imageFile: props.blogsInfo.b_photo,
             input: null,
             isImageUploading: false,
         };
     },
     methods: {
-        showImagePreview(event) {
-            this.input = event.target;
-            if (this.input.files && this.input.files[0]) {
-                let reader = new FileReader();
-                reader.onload = (e) => {
-                    this.imageFile = e.target.result;
-                };
-                reader.readAsDataURL(this.input.files[0]);
-            }
-        },
+        
     },
 };
 
-</script>
+</script> -->

@@ -12,7 +12,7 @@ const props = defineProps({
     }
 });
 
-console.log(props.blogs);
+// console.log(props.blogs);
 
 </script>
 
@@ -35,7 +35,7 @@ console.log(props.blogs);
                     </tr>
                     <tbody class="text-sm mt-3">
                         <tr class="border-b" v-for="result in props.blogs.data" :key="result">
-                            <td class="text-left py-3">{{ result.b_title.substring(0, 12) + "..." }}</td>
+                            <td class="text-left py-3">{{ result.b_title.substring(0, 30) }}</td>
                             <td class="text-center py-3">{{ result.b_description.substring(0, 20) + "..." }}</td>
                             <td class="text-center py-3">{{ moment(result.created_at).calendar() }}</td>
                             <td class="flex justify-center py-3">
