@@ -38,9 +38,9 @@ const classes = computed(() => {
                 <img
                     src="../../../public/img/dashboardicon.png"
                     alt=""
-                    class="sm:w-10 w-7"
+                    class="w-7 h-7"
                 />
-                <span class="text-lg ml-6 pt-1 opacity-70 lg:block hidden"
+                <span class="text-lg ml-6 pt-1  lg:block hidden"
                     >Dashboard</span
                 >
             </div>
@@ -50,9 +50,9 @@ const classes = computed(() => {
                 <img
                     src="../../../public/img/courseicon.png"
                     alt=""
-                    class="sm:w-11 w-8"
+                    class="w-7 h-7"
                 />
-                <span class="text-lg ml-5 pt-1 opacity-70 lg:block hidden"
+                <span class="text-lg ml-5 pt-1  lg:block hidden"
                     >Class</span
                 >
             </div>
@@ -62,9 +62,9 @@ const classes = computed(() => {
                 <img
                     src="../../../public/img/studenticon.png"
                     alt=""
-                    class="sm:w-10 w-7"
+                    class="w-7 h-7"
                 />
-                <span class="text-lg ml-6 pt-1 opacity-70 lg:block hidden">
+                <span class="text-lg ml-6 pt-1  lg:block hidden">
                     <Link :href="route('students.index')">Student</Link>
                 </span>
             </div>
@@ -74,9 +74,9 @@ const classes = computed(() => {
                 <img
                     src="../../../public/img/financeicon.png"
                     alt=""
-                    class="sm:w-10 w-7"
+                    class="w-7 h-7"
                 />
-                <span class="text-lg ml-6 pt-1 opacity-70 lg:block hidden"
+                <span class="text-lg ml-6 pt-1  lg:block hidden"
                     >Finance</span
                 >
             </div>
@@ -86,9 +86,9 @@ const classes = computed(() => {
                 <img
                     src="../../../public/img/instructoricon.png"
                     alt=""
-                    class="sm:w-10 w-7"
+                    class="w-7 h-7"
                 />
-                <span class="text-lg ml-6 pt-1 opacity-70 lg:block hidden"
+                <span class="text-lg ml-6 pt-1  lg:block hidden"
                     >Instructor</span
                 >
             </div>
@@ -99,9 +99,9 @@ const classes = computed(() => {
                 <img
                     src="../../../public/img/settingsicon.png"
                     alt=""
-                    class="sm:w-10 w-7"
+                    class="w-7 h-7"
                 />
-                <span class="text-lg ml-6 pt-1 opacity-70 lg:block hidden"
+                <span class="text-lg ml-6 pt-1  lg:block hidden"
                     ><Link href="/setting">Setting</Link></span
                 >
             </div>
@@ -111,10 +111,10 @@ const classes = computed(() => {
                 <img
                     src="../../../public/img/toolicon.png"
                     alt=""
-                    class="sm:w-9 w-6"
+                    class="w-7 h-7"
                 />
-                <span class="text-lg ml-7 pt-1 opacity-70 lg:block hidden"
-                    >Tools</span
+                <span class="text-lg ml-7 pt-1  lg:block hidden"
+                    ><Link :href="route('mailtool.index')">Tools</Link></span
                 >
             </div>
         </div>
@@ -135,7 +135,7 @@ const classes = computed(() => {
             />
         </div>
         <div
-            class="text-white flex justify-center font-semibold opacity-70 mt-2 sm:text-base customfsize"
+            class="text-white flex justify-center font-semibold  mt-2 sm:text-base customfsize"
         >
             Copyright @ exbrain
         </div>

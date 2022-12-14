@@ -35,13 +35,13 @@ const props = defineProps({
                     </tr>
                     <tbody class="text-sm mt-3">
                         <tr class="border-b" v-for="result in props.blogs.data" :key="result">
-                            <td class="text-left py-3">{{ result.b_title.substring(0, 30) }}</td>
-                            <td class="text-center py-3">{{ result.b_description.substring(0, 20) + "..." }}</td>
-                            <td class="text-center py-3">{{ moment(result.created_at).calendar() }}</td>
-                            <td class="flex justify-center py-3">
-                                <img src="../../../public/img/blog.png" class="w-12" alt="">
+                            <td class="text-left py-3 text-base">{{ result.b_title.substring(0, 30) }}</td>
+                            <td class="text-left py-3 text-base">{{ result.b_description.substring(0, 50) + "..." }}</td>
+                            <td class="text-center py-3 text-base">{{ moment(result.created_at).calendar() }}</td>
+                            <td class="flex justify-center py-3 ">
+                                <img :src="/storage/+result.b_photo" class="w-32" alt="">
                             </td>
-                            <td class="text-center customtextcolor7 underline">
+                            <td class="text-center customtextcolor7 underline text-base">
                                 <Link :href="route('blogTool.edit', result.id)" :id="result.id">Edit</Link>
                             </td>
                         </tr>
@@ -66,7 +66,7 @@ const props = defineProps({
                     <img src="../../../public/img/addlogo.png" alt="" class="w-5 h-5 pt-0.5" />
 
                     <button type="button">
-                        <span>Add</span>
+                        <span class="mx-1 font-bold text-base">Add</span>
                     </button>
                     </Link>
                 </div>
