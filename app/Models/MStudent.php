@@ -12,6 +12,10 @@ class MStudent extends Model
 {
     use HasFactory;
 
+    public function getStudents(){
+        return $query = DB::table("users")->where('del_flg',0)->get();
+    }
+
 
 
     public function allStuents($selectedItem = [], $search = "")

@@ -16,6 +16,7 @@ class BlogToolController extends Controller
     public function index()
     {
         $blogs = MBlog::where("del_flg", 0)
+            ->orderBy('updated_at','desc')
             ->paginate(5);
         return inertia('BlogTool', ['blogs' => $blogs]);
     }
