@@ -57,8 +57,19 @@ Route::post('/setting/upload_public', [SettingController::class, 'upload_public'
 // Route::get('/setting', function () {
 //     return inertia("SettingAdmin");
 // });
+
 Route::get('/setting', [SettingController::class, 'index'])->name("setting.index");
 
+
+Route::get('/admin',function(){
+    return inertia("Admin");
+});
+Route::get('/addadmin',function(){
+    return inertia("AddAdmin");
+});
+Route::get('/editadmin',function(){
+    return inertia("EditAdmin");
+});
 // Start Tools
 Route::get('/mailTool', function () {
     return inertia("MailTool");
@@ -69,6 +80,7 @@ Route::resource('privacypolicyTool', PrivacyPolicyController::class);
 Route::resource('categoryTool', CategoryToolController::class);
 Route::resource('guideTool', GuideToolController::class);
 Route::resource('blogTool', BlogToolController::class);
+
 // End Tools
 
 // Route::get('/addInstructor', function () {

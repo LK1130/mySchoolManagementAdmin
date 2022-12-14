@@ -35,8 +35,8 @@ console.log(props.blogs);
                     </tr>
                     <tbody class="text-sm mt-3">
                         <tr class="border-b" v-for="result in props.blogs.data" :key="result">
-                            <td class="text-left py-3">{{ result.b_title.substring(1,12) + "..." }}</td>
-                            <td class="text-center py-3">{{ result.b_description.substring(1,20) + "..." }}</td>
+                            <td class="text-left py-3">{{ result.b_title.substring(0, 12) + "..." }}</td>
+                            <td class="text-center py-3">{{ result.b_description.substring(0, 20) + "..." }}</td>
                             <td class="text-center py-3">{{ moment(result.created_at).calendar() }}</td>
                             <td class="flex justify-center py-3">
                                 <img src="../../../public/img/blog.png" class="w-12" alt="">
@@ -56,18 +56,18 @@ console.log(props.blogs);
 
             <div class="flex flex-col mt-10 md:flex-row w-full px-5 items-center justify-center text-white">
 
-                
+
 
                 <!-- <Pagination/> -->
 
                 <div
                     class="absolute text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-xl text-sm px-5 py-2.5 mr-2 mb-2 bottom-5 right-3 focus:outline-none">
                     <Link :href="route('blogTool.create')" class="flex flex-row justify-center items-center space-x-3">
-                        <img src="../../../public/img/addlogo.png" alt="" class="w-5 h-5 pt-0.5" />
+                    <img src="../../../public/img/addlogo.png" alt="" class="w-5 h-5 pt-0.5" />
 
-                        <button type="button">
-                            <span>Add</span>
-                        </button>
+                    <button type="button">
+                        <span>Add</span>
+                    </button>
                     </Link>
                 </div>
             </div>

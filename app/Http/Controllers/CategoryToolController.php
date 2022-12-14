@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\MCategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 class CategoryToolController extends Controller
 {
@@ -62,7 +63,6 @@ class CategoryToolController extends Controller
         $categories = new MCategory();
         $categoriesInfo = $categories->searchById($id);
 
-        // return $privacypolicysInfo;
         return inertia('EditCategory',['categoriesInfo' => $categoriesInfo]);
     }
 
@@ -75,7 +75,14 @@ class CategoryToolController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'category_name' => 'required'
+        ]);
+        
+        $categories = new MCategory();
+        $categories->updateData($request, $id);
+
+        return Redirect::route('categoryTool.index');
     }
 
     /**
@@ -86,6 +93,9 @@ class CategoryToolController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $categories = new MCategory();
+       $categories->deleteData($id);
+
+       return Redirect::route('categoryTool.index');
     }
 }

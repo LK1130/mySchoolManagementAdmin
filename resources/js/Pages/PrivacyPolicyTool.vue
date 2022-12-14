@@ -36,8 +36,8 @@ const props = defineProps({
                     <tbody class="text-sm mt-3">
                         <tr class="border-b" v-for="result in props.privacypolicys.data" :key="result">
                             <!-- <td>{{ result.p_title }}</td> -->
-                            <td class="text-left py-4">{{ result.p_title.substring(1, 10) + "..." }}</td>
-                            <td class="text-center py-4">{{ result.p_description.substring(1, 20) + "..." }}</td>
+                            <td class="text-left py-4">{{ result.p_title.substring(0, 15) + "..." }}</td>
+                            <td class="text-center py-4">{{ result.p_description.substring(0, 20) + "..." }}</td>
                             <td class="text-center py-4">{{ moment(result.created_at).calendar() }}</td>
                             <td class="text-center py-4 customtextcolor7 underline">
                                 <Link :href="route('privacypolicyTool.edit', result.id)" :id="result.id">Edit</Link>
