@@ -64,8 +64,7 @@ class MStudent extends Model
         $query = DB::table("users")
             ->join("t_student_classes", "t_student_classes.user_id", "=", "users.id")
             ->join("m_classes", "m_classes.id", "=", "t_student_classes.class_id")
-            ->join("m_categories", "m_categories.id", "=", "m_classes.category_id")
-            ->selectRaw("GROUP_CONCAT(m_categories.c_name) AS Class,users.name,users.age,users.phone,users.address,users.email")
+            ->selectRaw("GROUP_CONCAT(m_classes.c_name) AS Class,users.name,users.age,users.phone,users.address,users.email,users.profile_photo_path")
             ->where("users.id", "=", $id)
             // ->select("*")
             ->get();
