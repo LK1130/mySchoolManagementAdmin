@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\MClass;
+use App\Models\MStudent;
 use Illuminate\Http\Request;
 
 class MailToolController extends Controller
@@ -13,7 +15,17 @@ class MailToolController extends Controller
      */
     public function index()
     {
-        return inertia('MailTool');
+        $getStudents = new MStudent();
+        $students = $getStudents->getStudents();
+        
+        $classes = MClass::where('del_flg',0)->get();
+
+        // dd($classes);
+
+        return inertia('MailTool',[
+            'students' => $students,
+            'classes' => $classes
+        ]);
     }
 
     /**

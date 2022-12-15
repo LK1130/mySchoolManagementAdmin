@@ -5,6 +5,12 @@ import Header from "../Components/Header.vue";
 import Toolsbar from "../Components/Toolsbar.vue";
 import { Inertia } from "@inertiajs/inertia";
 
+const props = defineProps({
+    errors: {
+        type: Object
+    }
+})
+
 const form = useForm({
     blog_title: null,
     blog_description: null,
@@ -18,41 +24,44 @@ const submit = () => {
         }
     })
 }
-
-
-
-
-
 </script>
 
 <template>
     <NavBar />
+
+    <Head title="Add Blog"></Head>
     <Header headername="Tools" />
 
     <div class="absolute h-full w-5/6 p-5 headercustomleft top-32 customblack">
         <Toolsbar active="3" />
 
         <form @submit.prevent="submit">
-            <div class="w-full h-full py-8 bg-secondaryBackground rounded-b-xl flex flex-col items-center">
-                <div class="w-96 flex flex-col space-y-4">
+            <div class="w-full h-auto py-8 bg-secondaryBackground rounded-b-xl flex flex-col items-center">
+                <div class="w-full px-20 flex flex-col space-y-4">
                     <label for="" class="text-whiteTextColor">Title</label>
                     <input type="text"
-                        class="w-72 rounded-xl bg-secondaryBackground text-whiteTextColor border-whiteTextColor focus:outline-0"
+                        class="w-full rounded-xl bg-secondaryBackground text-whiteTextColor border-whiteTextColor focus:outline-0"
                         v-model="form.blog_title">
+                    <div v-if="errors.blog_title" class="text-red-500 font-bold text-md">
+                        {{ errors.blog_title }}
+                    </div>
 
                     <label for="" class="text-whiteTextColor">Description</label>
                     <textarea
                         class="h-32 resize-none rounded-xl bg-secondaryBackground text-whiteTextColor border-whiteTextColor focus:outline-0"
                         v-model="form.blog_description"></textarea>
-
+                    <div v-if="errors.blog_description" class="text-red-500 font-bold text-md">
+                        {{ errors.blog_description }}
+                    </div>
                     <label for="" class="text-whiteTextColor">File</label>
                     <div class="flex items-center justify-center w-full">
 
-                        <label for="dropzone-file"
-                            class="flex flex-col items-center justify-center w-full h-32 border-2 cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
-                            <div class="relative flex flex-col items-center justify-center pt-5 pb-6 overflow-hidden">
-                                <div class="flex absolute w-full">
-                                    <img :src="imageFile" alt="" class="w-full items-center">
+                        <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-48 border-2 cursor-pointer
+                             bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600
+                              dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                            <div class="relative flex flex-col items-center justify-center py-14 overflow-hidden">
+                                <div class="flex absolute w-full ">
+                                    <img :src="imageFile" alt="" class="w-full   items-center">
                                 </div>
                                 <svg aria-hidden="true" class="w-10 h-10 mb-3 text-gray-400" fill="none"
                                     stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -71,30 +80,28 @@ const submit = () => {
                                 @change="showImagePreview($event)" accept="image/*" class="hidden" />
                         </label>
                     </div>
-
-
-                    <div class="flex justify-between py-8">
-                        <Link href="/blogTool"
+                    <div v-if="errors.blog_file" class="text-red-500 font-bold text-md">
+                        {{ errors.blog_file }}
+                    </div>
+                    <div class="flex justify-end py-8">
+                        <!-- <Link href="/blogTool"
                             class="py-2 px-5 text-whiteTextColor text-sm bg-redTextColor rounded-xl flex items-center">
                         <img src="../../../public/img/delete.png" alt="" class="w-5 h-5 pt-0.5" />
                         <span class="mx-2">Cancel</span>
-                        </Link>
+                        </Link> -->
 
                         <button type="submit"
-                            class="py-2 px-5 text-whiteTextColor text-sm bg-blueTextColor rounded-xl flex items-center">
+                            class="py-2 px-5 text-whiteTextColor text-sm bg-blueTextColor rounded-xl flex  items-center">
                             <img src="../../../public/img/save.png" alt="" class="w-5 h-5 pt-0.5" />
-                            <span class="mx-2">Save</span>
+                            <span class="mx-1 font-bold text-base">Save</span>
                         </button>
                     </div>
                 </div>
             </div>
         </form>
-
-
-
         <div class="py-5">
             <button>
-                <a href="/blogTool" class="underline underline-offset-4 hidden md:block text-whiteTextColor">BACK</a>
+                <a href="/blogTool" class="underline underline-offset-4 hidden md:block text-whiteTextColor">back</a>
             </button>
         </div>
     </div>
