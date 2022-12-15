@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Mail\StudentAccountCreate;
 use App\Models\MStudent;
+use App\Models\TStudentAttendance;
+use App\Models\TStudentClass;
+use App\Models\TStudentExam;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
@@ -110,8 +113,117 @@ class StudentController extends Controller
     {
         $model = new MStudent();
         $studenProfile = $model->studnetDetailandClasses($id);
-        // dd($studenProfile);
-        return inertia('StudentView', ['studenProfile' => $studenProfile]);
+
+        $classes = new TStudentClass();
+        $exam   = new TStudentExam();
+        $attendances = new TStudentAttendance();
+
+        $allUserRank = [];
+        $allClass = [];
+
+        $oneExamCallRank = [];
+
+        //get ALl classid
+        $allClassID = [];
+
+        $oneClassRank = [];
+
+        $oneClassEachExamRank = [];
+
+        //get attendance  
+        $attendance  = $attendances->getAttendance($id);
+        $examPercent = $exam->getExamRankPercent($id);
+
+        //get Exam List
+        $examList = $exam->getExamList();
+
+        //get Class List
+        $totalClass = $classes->totalClass($id);
+
+        //loop for each examid 
+        foreach ($examList as  $examid) {
+            //collect all data to array
+
+
+            $allUserRank = array_merge($allUserRank, $exam->showRankTable($examid));
+        }
+
+        //loop for each classid rank
+        foreach ($totalClass as $classid) {
+
+
+            $oneClassEachExamRank = array_merge($oneClassEachExamRank, $exam->getExamlistByClassID($classid->class_id));
+            $oneClassRank = array_merge($oneClassRank, $exam->getUserRankById($classid->class_id));
+        }
+
+        //filter for get only current login user id
+        // dd($id);
+        $examRank = array_filter($allUserRank, function ($rank) use ($id) {
+            return ($rank->id == $id);
+
+        });
+
+        //filter for get only current login user id
+        $eachExamRank = array_filter($oneClassEachExamRank, function ($rank) use ($id) {
+
+            return ($rank->uid == $id);
+        });
+
+        $newArray = array_values($eachExamRank);
+
+
+        for ($i = 0; $i < count($newArray); $i++) {
+            if (!in_array($newArray[$i]->cid, $allClassID)) {
+                array_push($allClassID, $newArray[$i]->cid);
+            }
+        }
+
+        for ($i = 0; $i < count($allClassID); $i++) {
+            $temp = [];
+            for ($j = 0; $j < count($newArray); $j++) {
+                if ($allClassID[$i] == $newArray[$j]->cid) {
+                    array_push($temp, $newArray[$j]);
+                }
+            }
+
+            array_push($oneExamCallRank, $temp);
+        }
+
+        //get all user rank
+        $userRanks = $exam->getUserRank();
+
+        //filter for get only current login user id
+        $userRank = array_filter($userRanks, function ($ranking) use ($id){
+            return ($ranking->id == $id);
+        });
+
+        // dd($userRank);
+
+        //filter for get overall rank only current login user id
+        $overallRank = array_filter($oneClassRank, function ($ranking) use ($id) {
+            return ($ranking->id == $id);
+        });
+
+        foreach ($totalClass  as $class) {
+            array_push($allClass, $class->id);
+        }
+
+        $classid =  join(',', $allClass);
+
+        $eachClass =   $classes->totalStudents($classid);
+
+        return inertia('StudentView', [
+            'studenProfile' => $studenProfile,
+            'classes' => $totalClass,
+            'attendance' => $attendance,
+            'examRanks' => $examRank,
+            'rank_mark' => $userRank,
+            'all_ranks' => $userRanks,
+            'one_class' => $eachClass,
+            'exam_percent' =>  $examPercent,
+            'overall_rank' => $overallRank,
+            'class_rank'  => $oneExamCallRank
+        ]);
     }
     /**
      * Show the form for editing the specified resource.
