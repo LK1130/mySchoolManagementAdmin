@@ -666,7 +666,7 @@ const series = ref([
                             "
                         >
                             <tr
-                                class="bg-gray-800"
+                                class="bg-elementBackground"
                                 v-for="result in oneClasExamRank[
                                     activeIndex
                                 ][1]"
