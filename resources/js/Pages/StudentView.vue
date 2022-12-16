@@ -5,6 +5,7 @@ import { Navigation, Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import Chart from "../Components/LineChart.vue";
 import { ref } from "vue";
+import moment from "moment";
 
 // Import Swiper styles
 import "swiper/css";
@@ -13,16 +14,249 @@ import "swiper/css/bundle";
 
 let segment = ref(1);
 
+/// student join class id
+let allId = [];
+// active exam id
+let activeExamClassId = [];
+// active attedance id
+let attendClassId = [];
+let processBar = [];
+let examName = []; // exam name list for only user progress chart
+let examMark = []; // exam name list for only user progress chart
+
+let attendancePercentage = []; //attendance percentage for one class
+let examPercentage = []; //exam percentage for one class
+let currentOverall = []; //current overall score
+let oneClasExamRank = []; // one classExam Rank
+let activeIndex = ref(0);
+let count = ref(0); // count for classes join
+let examCount = ref(0); // count for exams
+
+let allRank = {}; // all ranking object
+let allRankPercentage = []; // rall ranking with percentage
+
 // Studnet Line Chart
 let stuClass = props.studenProfile[0].Class.split(",");
 let days = [];
-let examMark = [];
-for (let index = 0; index < 11; index++) {
-    days.push("Aug " + [index + 1]);
+
+const forceRerender = (activeIndex) => {
+    console.log(activeIndex);
+    examMark = [];
+    examName = [];
+
+    if (oneClasExamRank[activeIndex][1].length > 1) {
+        // result in oneClasExamRank[activeIndex][1]
+
+        for (
+            let index = 0;
+            index < oneClasExamRank[activeIndex][1].length;
+            index++
+        ) {
+            examMark.push(oneClasExamRank[activeIndex][1][index].mark);
+            examName.push(oneClasExamRank[activeIndex][1][index].e_name);
+        }
+
+        // chartOptions.value[0].xaxis.categories = [examName];
+        chartOptions.value = {
+            ...chartOptions.value,
+            ...{
+                xaxis: {
+                    categories: examName.length == 0 ? "No Exam" : examName,
+                },
+            },
+        };
+        series.value[0].data = examMark.length == 0 ? 0 : examMark;
+    } else {
+        examMark.push(oneClasExamRank[activeIndex][1][0].mark);
+        examName.push(oneClasExamRank[activeIndex][1][0].e_name);
+
+        series.value[0].data = examMark.length == 0 ? 0 : examMark;
+        chartOptions.value = {
+            ...chartOptions.value,
+            ...{
+                xaxis: {
+                    categories: examName.length == 0 ? "No Exam" : examName,
+                },
+            },
+        };
+    }
+};
+
+const props = defineProps({
+    classes: {
+        type: Object,
+    },
+    studenProfile: {
+        type: Object,
+    },
+    examRanks: {
+        type: Object,
+    },
+    rank_mark: {
+        type: Object,
+    },
+    all_ranks: {
+        type: Object,
+    },
+    attendance: {
+        type: Object,
+    },
+    one_class: {
+        type: Object,
+    },
+    exam_percent: {
+        type: Object,
+    },
+    overall_rank: {
+        type: Object,
+    },
+    class_rank: {
+        type: Array,
+    },
+    processBar: {
+        type: Array,
+    },
+});
+console.log(props.attendance);
+
+for (let index = 0; index < props.classes.length; index++) {
+    allId.push(props.classes[index].id);
 }
-for (let index = 0; index < 11; index++) {
-    examMark.push(index);
+console.log(allId);
+
+for (let index = 0; index < props.exam_percent.length; index++) {
+    activeExamClassId.push(props.exam_percent[index].id);
+
+    examPercentage.push(props.exam_percent[index]);
+
+    currentOverall.push(Object.values(props.overall_rank)[index]);
+    oneClasExamRank.push(props.class_rank[index]);
 }
+
+for (let index = 0; index < props.attendance.length; index++) {
+    attendClassId.push(props.attendance[index].class_id);
+    attendancePercentage.push(props.attendance[index]);
+    console.log(props.attendance[index]);
+}
+
+console.log(attendancePercentage);
+
+// push extra array room in exam perctange
+//main function
+
+console.log(allId);
+console.log(attendClassId);
+
+for (let index = 0; index < allId.length; index++) {
+    if (allId.length != attendClassId.length) {
+        if (
+            allId[index] != attendClassId[index] &&
+            !attendClassId.includes(allId[index])
+        ) {
+            attendClassId.push(allId[index]);
+            attendClassId.sort();
+            let active_attendance = {
+                attend: 0,
+                class_id: allId[index],
+            };
+
+            let handler1 = {};
+
+            const proxy1 = new Proxy(active_attendance, handler1);
+            attendancePercentage.push(proxy1);
+        }
+    }
+    if (allId.length != activeExamClassId.length) {
+        if (
+            allId[index] != activeExamClassId[index] &&
+            !activeExamClassId.includes(allId[index])
+        ) {
+            activeExamClassId.push(allId[index]);
+            activeExamClassId.sort();
+            let exam_percent = {
+                exam: 0,
+                id: allId[index],
+            };
+
+            let overall_ranks = {
+                id: allId[index],
+                ranks: 0,
+            };
+
+            let one_class_exams = {
+                0: {
+                    cid: allId[index],
+                },
+            };
+
+            let handler1 = {};
+            let handler2 = {};
+            let handler3 = {};
+            const proxy1 = new Proxy(exam_percent, handler1);
+            const proxy2 = new Proxy(overall_ranks, handler2);
+            const proxy3 = new Proxy(one_class_exams, handler3);
+            examPercentage.push(proxy1);
+            currentOverall.push(proxy2);
+            oneClasExamRank.push(proxy3);
+        }
+    }
+}
+
+// array sorting for each class
+examPercentage = Object.entries(examPercentage).sort(
+    (a, b) => a[1].id - b[1].id
+);
+currentOverall = Object.entries(currentOverall).sort(
+    (a, b) => a[1].id - b[1].id
+);
+oneClasExamRank = Object.entries(oneClasExamRank).sort(
+    (a, b) => a[1][0].cid - b[1][0].cid
+);
+attendancePercentage = Object.entries(attendancePercentage).sort(
+    (a, b) => a[1].class_id - b[1].class_id
+);
+
+// console.log(oneClasExamRank);
+
+//get class join count
+count = props.classes.length;
+examCount = Object.values(props.examRanks).length;
+
+//get exam mark percentage
+// percentage = Math.floor(Object.values(props.rank_mark)[0].sumMark / examCount * 10);
+// get all user exam mark percentage
+console.log(props.all_ranks);
+// for (let index = 0; index < props.all_ranks.length; index++) {
+//     allRank = {
+//         name: props.all_ranks.value[index].name,
+//         percent: Math.floor(
+//             (Object.values(props.all_ranks)[index].sumMark / examCount) * 10
+//         ),
+//     };
+
+//     allRankPercentage.push(allRank);
+// }
+
+// console.log(allRankPercentage);
+// console.log(props.all_ranks);
+
+if (oneClasExamRank[activeIndex.value][1].length > 1) {
+    // result in oneClasExamRank[activeIndex][1]
+
+    for (
+        let index = 0;
+        index < oneClasExamRank[activeIndex.value][1].length;
+        index++
+    ) {
+        examMark.push(oneClasExamRank[activeIndex.value][1][index].mark);
+        examName.push(oneClasExamRank[activeIndex.value][1][index].e_name);
+    }
+} else {
+    examMark.push(oneClasExamRank[activeIndex.value][1][0].mark);
+    examName.push(oneClasExamRank[activeIndex.value][1][0].e_name);
+}
+
+// console.log(examName);
 const chartOptions = ref({
     chart: {
         toolbar: {
@@ -51,9 +285,9 @@ const chartOptions = ref({
         enabled: true,
     },
     xaxis: {
-        categories: days,
+        categories: examName.length == 0 ? "No Exam" : examName,
         title: {
-            text: "Days",
+            text: "Exam",
         },
         labels: {
             style: {
@@ -121,16 +355,12 @@ const chartOptions = ref({
 const series = ref([
     {
         name: "series-1",
-        data: examMark,
+        data: examMark.length == 0 ? 0 : examMark,
     },
 ]);
 
-const props = defineProps({
-    studenProfile: Object,
-});
-
-// let classes = stuClass.split(",");
-console.log(stuClass);
+// console.log(activeIndex);
+// console.log(allRank);
 </script>
 
 <template>
@@ -139,7 +369,7 @@ console.log(stuClass);
     <Header />
     <!---------------- body ----------------------->
     <div
-        class="absolute h-screen w-5/6 headercustomleft top-32 bg-primaryBackground"
+        class="absolute h-auto w-5/6 headercustomleft top-32 bg-primaryBackground"
     >
         <div class="flex flex-col items-center">
             <!-- Student Card Start -->
@@ -150,8 +380,8 @@ console.log(stuClass);
             >
                 <div class="items-center justify-center flex px-4 md:w-3/6">
                     <img
-                        src="../../../public/img/studentpp.jpeg"
-                        alt=""
+                        :src="data.profile_photo_path"
+                        alt="Profile photo is not uploaded"
                         srcset=""
                         class="w-32 rounded-full"
                     />
@@ -225,7 +455,7 @@ console.log(stuClass);
 
             <!-- Student Card End -->
             <div class="text-white w-11/12 text-4xl border-white border-t pt-6">
-                <h2>2 Classes Joined</h2>
+                <h2>{{ stuClass.length }} Classes Joined</h2>
             </div>
             <!-- Student Swiper Slide Start -->
             <swiper
@@ -239,12 +469,13 @@ console.log(stuClass);
                 @slideChange="
                     (event) => {
                         activeIndex = event.activeIndex;
+                        forceRerender(activeIndex);
                     }
                 "
             >
-                <swiper-slide v-for="n in 3" :key="n" :virtual-index="n">
+                <swiper-slide v-for="n in count" :key="n" :virtual-index="n">
                     <div
-                        class="p-4 md:p-8 lg:w-10/12 xl:w-8/12 md:w-5/6 w-5/6 mx-auto"
+                        class="p-4 md:p-8 lg:w-10/12 xl:w-8/12 md:w-5/6 w-5/6 mx-auto h-auto"
                     >
                         <div
                             class="flex flex-col bg-elementBackground rounded-3xl border-2 border-slate-300 lg:space-y-14 space-y-10 text-white md:p-8 p-5 w-full mb-4 md:mb-0 overflow-hidden card"
@@ -256,7 +487,7 @@ console.log(stuClass);
                                     <h1
                                         class="font-medium text-lg md:text-4xl tracking-wide"
                                     >
-                                        Yeee
+                                        {{ props.studenProfile[0].name }}
                                     </h1>
                                 </div>
                                 <div
@@ -268,7 +499,15 @@ console.log(stuClass);
                                         <p
                                             class="text-yellowTextColor font-bold text-xl md:text-4xl"
                                         >
-                                            80%
+                                            {{
+                                                attendancePercentage.length == 0
+                                                    ? 0
+                                                    : Math.floor(
+                                                          attendancePercentage[
+                                                              activeIndex
+                                                          ][1].attend * 100
+                                                      )
+                                            }}%
                                         </p>
                                         <p
                                             class="text-lg md:text-xl font-medium md:font-semibold"
@@ -303,7 +542,15 @@ console.log(stuClass);
                                         <p
                                             class="text-yellowTextColor font-bold text-xl md:text-4xl"
                                         >
-                                            80%
+                                            {{
+                                                attendancePercentage.length == 0
+                                                    ? 0
+                                                    : Math.floor(
+                                                          attendancePercentage[
+                                                              activeIndex
+                                                          ][1].attend * 100
+                                                      )
+                                            }}%
                                         </p>
                                         <p
                                             class="text-lg md:text-xl font-medium md:font-semibold"
@@ -317,12 +564,20 @@ console.log(stuClass);
                                         <p
                                             class="text-yellowTextColor font-bold text-xl md:text-4xl"
                                         >
-                                            70%
+                                            {{
+                                                examPercentage.length == 0
+                                                    ? 0
+                                                    : Math.floor(
+                                                          examPercentage[
+                                                              activeIndex
+                                                          ][1].exam
+                                                      )
+                                            }}%
                                         </p>
                                         <p
                                             class="text-base sm:text-lg md:text-xl font-medium md:font-semibold"
                                         >
-                                            Daily Exam Work
+                                            Exam Mark
                                         </p>
                                     </div>
                                 </div>
@@ -330,7 +585,7 @@ console.log(stuClass);
                                     class="mt-10 flex justify-center items-center space-y-4"
                                 >
                                     <div class="text-xl font-semibold">
-                                        Batch 6 N4
+                                        {{ props.classes[n - 1].c_name }}
                                     </div>
                                 </div>
                             </div>
@@ -341,17 +596,19 @@ console.log(stuClass);
 
             <!-- Student Swiper Slide End -->
             <!-- Student Table Start -->
-            <div class="md:w-4/6 w-full flex flex-col h-full mt-10">
+            <div class="md:w-4/6 w-full flex flex-col h-5/6 mt-10">
                 <div class="w-full h-full flex flex-row text-white text-center">
                     <!-- <button @click="hello()">Tabe change</button> -->
                     <div
-                        class="md:w-4/6 w-full h-12 rounded-tl-xl bg-elementBackground pt-3 md:text-xl"
+                        :class="{ 'bg-elementBackground': segment == 1 }"
+                        class="md:w-4/6 w-full h-12 rounded-tl-xl pt-3 md:text-xl"
                         @click="segment = 1"
                     >
                         Overall Table
                     </div>
                     <div
-                        class="md:w-4/6 w-full h-12 rounded-tr-xl pt-3 bg-green-300 md:text-xl"
+                        :class="{ 'bg-elementBackground': segment == 2 }"
+                        class="md:w-4/6 w-full h-12 rounded-tr-xl pt-3 md:text-xl"
                         @click="segment = 2"
                     >
                         Self Rank
@@ -366,26 +623,91 @@ console.log(stuClass);
                             class="text-lg font-semibold uppercase bg-elementBackground"
                         >
                             <tr>
-                                <th scope="col" class="py-3 px-6">
-                                    Product name
-                                </th>
-                                <th scope="col" class="py-3 px-6">Color</th>
-                                <th scope="col" class="py-3 px-6">Category</th>
-                                <th scope="col" class="py-3 px-6">Price</th>
+                                <th scope="col" class="py-3 px-6">Date</th>
+                                <th scope="col" class="py-3 px-6">Exam</th>
+                                <th scope="col" class="py-3 px-6">Mark</th>
+                                <th scope="col" class="py-3 px-6">Rank</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr class="bg-gray-800" v-for="n in 12" :key="n">
-                                <th
-                                    scope="row"
-                                    class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                        <tbody
+                            v-if="oneClasExamRank[activeIndex][1].length > 1"
+                        >
+                            <tr
+                                class="bg-elementBackground"
+                                v-for="result in oneClasExamRank[
+                                    activeIndex
+                                ][1]"
+                            >
+                                <td class="py-4 px-6">
+                                    {{
+                                        moment(result.date_submitted).format(
+                                            "MMM D"
+                                        )
+                                    }}
+                                </td>
+                                <td class="py-4 px-6">{{ result.e_name }}</td>
+                                <td
+                                    class="py-4 px-6"
+                                    :class="{
+                                        'text-green-500': result.mark == 10,
+                                        'text-red-500': result.mark <= 5,
+                                        'text-yellow-500':
+                                            result.mark > 5 && result.mark < 10,
+                                    }"
                                 >
-                                    Apple MacBook Pro 17"
-                                </th>
+                                    {{ result.mark }}
+                                </td>
+                                <td class="py-4 px-6">{{ result.rank }}</td>
+                            </tr>
+                        </tbody>
+                        <tbody
+                            v-else-if="
+                                oneClasExamRank[activeIndex][1].length == 1
+                            "
+                        >
+                            <tr
+                                class="bg-elementBackground"
+                                v-for="result in oneClasExamRank[
+                                    activeIndex
+                                ][1]"
+                            >
+                                <td class="py-4 px-6">
+                                    {{
+                                        moment(result.date_submitted).format(
+                                            "MMM D"
+                                        )
+                                    }}
+                                </td>
+                                <td
+                                    class="py-3 w-48 text-left font-bold dark:text-whiteTextColor"
+                                >
+                                    {{ result.e_name }}
+                                </td>
+                                <td
+                                    class="py-4 px-6"
+                                    :class="{
+                                        'text-green-500': result.mark == 10,
+                                        'text-red-500': result.mark <= 5,
+                                        'text-yellow-500':
+                                            result.mark > 5 && result.mark < 10,
+                                    }"
+                                >
+                                    {{ result.mark }}
+                                </td>
 
-                                <td class="py-4 px-6">Blue</td>
-                                <td class="py-4 px-6">Laptop</td>
-                                <td class="py-4 px-6">$2999</td>
+                                <td class="py-4 px-6">
+                                    {{ result.rank }}
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tbody v-else>
+                            <tr class="display-flex justify-center item-center">
+                                <td
+                                    colspan="4"
+                                    class="display-flex justify-center item-center"
+                                >
+                                    No Exam Result Yet!!
+                                </td>
                             </tr>
                         </tbody>
                     </table>
