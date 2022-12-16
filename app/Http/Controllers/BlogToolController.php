@@ -39,7 +39,6 @@ class BlogToolController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
         $request->validate([
             'blog_title' => 'required',
             'blog_description' => 'required',
@@ -89,7 +88,6 @@ class BlogToolController extends Controller
      */
     public function update(Request $request, $id)
     {
-        dd($request);
         $request->validate([
             'blog_title' => 'required',
             'blog_description' => 'required',
