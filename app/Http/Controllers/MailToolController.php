@@ -23,17 +23,10 @@ class MailToolController extends Controller
      */
     public function index()
     {
-        $getStudents = new MStudent();
-        $students = $getStudents->getStudents();
-
-        $classes = MClass::where('del_flg', 0)->get();
-
-        // dd($classes);
-
-        return inertia('MailTool', [
-            'students' => $students,
-            'classes' => $classes
-        ]);
+        $mails = TMail::where("del_flg", 0)
+            ->orderBy('updated_at','desc')
+            ->paginate(15);
+        return inertia('MailTool', ['mails' => $mails]);
     }
 
     /**
@@ -43,7 +36,17 @@ class MailToolController extends Controller
      */
     public function create()
     {
-        //
+        $getStudents = new MStudent();
+        $students = $getStudents->getStudents();
+
+        $classes = MClass::where('del_flg', 0)->get();
+
+        // dd($classes);
+
+        return inertia('AddMail', [
+            'students' => $students,
+            'classes' => $classes
+        ]);
     }
 
     /**
