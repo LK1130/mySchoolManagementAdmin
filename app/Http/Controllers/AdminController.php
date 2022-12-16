@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\CreateAdmin;
+use App\Mail\EditAdmin;
 use App\Models\MAdmin;
 use App\Models\MRole;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 
 class AdminController extends Controller
@@ -57,10 +60,13 @@ class AdminController extends Controller
                 'role' => 'exists:m_roles,id'
             ]
         );
-
+            $mail =[
+                    'email'=>$request->email,
+                    'password'=>$request->password
+            ];
         $addadmin = new MAdmin();
-
         $addadmin->Addadmin($request);
+        Mail::to($request->email)->send(new CreateAdmin($mail));
         return Redirect::route('admin.index');
     }
 
@@ -102,9 +108,21 @@ class AdminController extends Controller
     public function update(Request $request, $id)
     {
         // dd($request);
+        $request->validate(
+            [
+                'name' => 'required',
+                'email' => 'email|required',
+                'password' => 'required',
+                'role' => 'exists:m_roles,id'
+            ]
+        );
+        $mail =[
+            'email'=>$request->email,
+            'password'=>$request->password
+    ];
         $admin = new MAdmin();
         $admin->updateAdmin($request, $id);
-        
+        Mail::to($request->email)->send(new EditAdmin($mail));
         return Redirect::route('admin.index');
     }
 

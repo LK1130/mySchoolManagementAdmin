@@ -9,6 +9,7 @@ use App\Http\Controllers\ClasssController;
 use App\Http\Controllers\GuideToolController;
 use App\Http\Controllers\Instructor;
 use App\Http\Controllers\InstructorController;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MailToolController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\StudentController;
@@ -63,9 +64,10 @@ Route::get('/setting', [SettingController::class, 'index'])->name("setting.index
 
 
 Route::resource('admin' , AdminController::class);
-// Route::get('/admin',function(){
-//     return inertia("Admin");
-// });
+Route::get('/login',function(){
+    return inertia("Admin/AdLogin");
+});
+Route::post('/login',[LoginController::class,'store'])->name('login.store');
 // Route::get('/addadmin',function(){
 //     return inertia("AddAdmin");
 // });

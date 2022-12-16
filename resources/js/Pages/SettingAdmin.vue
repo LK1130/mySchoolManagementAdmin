@@ -75,6 +75,7 @@ let showNoti = ref(true);
 </script>
 
 <template>
+    <Head title="Setting" />
     <!-------------------- Navbar&header -------------------->
     <NavBar />
     <Header headername="Settings" />
@@ -179,7 +180,7 @@ let showNoti = ref(true);
                     </div>
                     <!-- White Line -->
                     <div
-                        class="absolute left-1/2 sm:w-0 md:w-0.5 h-3/6 bg-white"
+                        class="absolute left-1/2 sm:w-0 md:w-0.5 h-4/6 bg-white"
                     ></div>
                     <!-- Messenger -->
                     <div class="ml-10 sm:w-full sm:ml-4">

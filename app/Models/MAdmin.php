@@ -63,4 +63,17 @@ class MAdmin extends Model
 
     //     return $sAdmin;
     // }
+        public function checkAdminEmail($email){
+            $hasemail = MAdmin::where('email','=',$email)->get();
+
+            return $hasemail;
+        }
+
+    // public function checkAdmin($request){
+    //     dd($request);
+    //     $admin = MAdmin::find($request->email , $request->password);
+    //     $admin->save();
+        
+
+    // }
 }
