@@ -82,7 +82,7 @@ class MailToolController extends Controller
 
             $mail->insertClassMail($request);
 
-            return Redirect::route('mailTool.index');
+            return Redirect::route('mailtool.index');
         } else {
 
             $user = User::find($request->student);
