@@ -88,6 +88,19 @@ const classes = computed(() => {
                     >Instructor</span
                 >
             </div>
+             <div
+                class="flex flex-row text-white mt-4 lg:justify-start justify-center"
+            >
+                <img
+                    src="../../../public/img/wpf_administrator.png"
+                    alt=""
+                    class="w-7 h-7"
+                />
+                <span class="text-lg ml-6 pt-1  lg:block hidden"
+                    >
+                    <Link href="/admin"> Admins</Link> </span
+                >
+            </div>
             <hr class="w-3/4 mt-12 lg:mx-0 mx-auto" />
             <div
                 class="flex flex-row text-white mt-10 lg:justify-start justify-center"

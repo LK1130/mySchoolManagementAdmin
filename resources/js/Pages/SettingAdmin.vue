@@ -75,12 +75,13 @@ let showNoti = ref(true);
 </script>
 
 <template>
+    <Head title="Setting" />
     <!-------------------- Navbar&header -------------------->
     <NavBar />
     <Header headername="Settings" />
 
     <div
-        class="absolute top-32 headercustomleft w-5/6 h-full bg-primaryBackground items-center flex flex-col"
+        class="absolute top-32 headercustomleft w-5/6 h-auto bg-primaryBackground items-center flex flex-col"
     >
         <div v-if="$page.props.flash.message" class="fixed z-50 right-10">
 
@@ -179,7 +180,7 @@ let showNoti = ref(true);
                     </div>
                     <!-- White Line -->
                     <div
-                        class="absolute left-1/2 sm:w-0 md:w-0.5 h-3/6 bg-white"
+                        class="absolute left-1/2 sm:w-0 md:w-0.5 h-4/6 bg-white"
                     ></div>
                     <!-- Messenger -->
                     <div class="ml-10 sm:w-full sm:ml-4">

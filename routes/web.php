@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BlogToolController;
 use App\Http\Controllers\CategoryToolController;
 use App\Http\Controllers\ClassController;
@@ -8,6 +9,7 @@ use App\Http\Controllers\ClasssController;
 use App\Http\Controllers\GuideToolController;
 use App\Http\Controllers\Instructor;
 use App\Http\Controllers\InstructorController;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MailToolController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\StudentController;
@@ -61,12 +63,14 @@ Route::post('/setting/upload_public', [SettingController::class, 'upload_public'
 Route::get('/setting', [SettingController::class, 'index'])->name("setting.index");
 
 
-Route::get('/admin',function(){
-    return inertia("Admin");
+Route::resource('admin' , AdminController::class);
+Route::get('/login',function(){
+    return inertia("Admin/AdLogin");
 });
-Route::get('/addadmin',function(){
-    return inertia("AddAdmin");
-});
+Route::post('/login',[LoginController::class,'store'])->name('login.store');
+// Route::get('/addadmin',function(){
+//     return inertia("AddAdmin");
+// });
 Route::get('/editadmin',function(){
     return inertia("EditAdmin");
 });
