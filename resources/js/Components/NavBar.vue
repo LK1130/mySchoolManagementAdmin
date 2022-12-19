@@ -40,7 +40,9 @@ const classes = computed(() => {
                     alt=""
                     class="w-7 h-7"
                 />
-                <span class="text-lg ml-6 pt-1 lg:block hidden">Dashboard</span>
+                <span class="text-lg ml-6 pt-1  lg:block hidden"
+                    >Dashboard</span
+                >
             </div>
             <div
                 class="flex flex-row text-white mt-4 lg:justify-start justify-center"
