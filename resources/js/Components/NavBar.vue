@@ -40,9 +40,7 @@ const classes = computed(() => {
                     alt=""
                     class="w-7 h-7"
                 />
-                <span class="text-lg ml-6 pt-1  lg:block hidden"
-                    >Dashboard</span
-                >
+                <span class="text-lg ml-6 pt-1 lg:block hidden">Dashboard</span>
             </div>
             <div
                 class="flex flex-row text-white mt-4 lg:justify-start justify-center"
@@ -52,9 +50,7 @@ const classes = computed(() => {
                     alt=""
                     class="w-7 h-7"
                 />
-                <span class="text-lg ml-5 pt-1  lg:block hidden"
-                    >Class</span
-                >
+                <span class="text-lg ml-5 pt-1 lg:block hidden">Class</span>
             </div>
             <div
                 class="flex flex-row text-white mt-4 lg:justify-start justify-center"
@@ -64,7 +60,7 @@ const classes = computed(() => {
                     alt=""
                     class="w-7 h-7"
                 />
-                <span class="text-lg ml-6 pt-1  lg:block hidden">
+                <span class="text-lg ml-6 pt-1 lg:block hidden">
                     <Link :href="route('students.index')">Student</Link>
                 </span>
             </div>
@@ -76,9 +72,7 @@ const classes = computed(() => {
                     alt=""
                     class="w-7 h-7"
                 />
-                <span class="text-lg ml-6 pt-1  lg:block hidden"
-                    >Finance</span
-                >
+                <span class="text-lg ml-6 pt-1 lg:block hidden">Finance</span>
             </div>
             <div
                 class="flex flex-row text-white mt-4 lg:justify-start justify-center"
@@ -88,7 +82,7 @@ const classes = computed(() => {
                     alt=""
                     class="w-7 h-7"
                 />
-                <span class="text-lg ml-6 pt-1  lg:block hidden"
+                <span class="text-lg ml-6 pt-1 lg:block hidden"
                     >Instructor</span
                 >
             </div>
@@ -101,7 +95,7 @@ const classes = computed(() => {
                     alt=""
                     class="w-7 h-7"
                 />
-                <span class="text-lg ml-6 pt-1  lg:block hidden"
+                <span class="text-lg ml-6 pt-1 lg:block hidden"
                     ><Link href="/setting">Setting</Link></span
                 >
             </div>
@@ -113,8 +107,8 @@ const classes = computed(() => {
                     alt=""
                     class="w-7 h-7"
                 />
-                <span class="text-lg ml-7 pt-1  lg:block hidden"
-                    ><Link :href="route('mailtool.index')">Tools</Link></span
+                <span class="text-lg ml-7 pt-1 lg:block hidden"
+                    ><Link :href="route('mailTool.index')">Tools</Link></span
                 >
             </div>
         </div>
@@ -135,7 +129,7 @@ const classes = computed(() => {
             />
         </div>
         <div
-            class="text-white flex justify-center font-semibold  mt-2 sm:text-base customfsize"
+            class="text-white flex justify-center font-semibold mt-2 sm:text-base customfsize"
         >
             Copyright @ exbrain
         </div>

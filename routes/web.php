@@ -71,11 +71,11 @@ Route::get('/editadmin',function(){
     return inertia("EditAdmin");
 });
 // Start Tools
-Route::get('/mailTool', function () {
-    return inertia("MailTool");
-});
+// Route::get('/mailTool', function () {
+//     return inertia("MailTool");
+// });
 
-Route::resource('mailtool', MailToolController::class);
+Route::resource('mailTool', MailToolController::class);
 Route::resource('privacypolicyTool', PrivacyPolicyController::class);
 Route::resource('categoryTool', CategoryToolController::class);
 Route::resource('guideTool', GuideToolController::class);
