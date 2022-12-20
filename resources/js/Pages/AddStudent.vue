@@ -2,6 +2,7 @@
 import NavBar from "../Components/NavBar.vue";
 import Header from "../Components/Header.vue";
 import { Inertia } from "@inertiajs/inertia";
+import { Link, Head } from "@inertiajs/inertia-vue3";
 import { useForm, Link } from "@inertiajs/inertia-vue3";
 import { ref } from "vue";
 
@@ -45,6 +46,7 @@ console.log(props.errors);
 <template>
     <!-------------------- Navbar&header -------------------->
     <NavBar />
+    <Head title="Student List"></Head>
     <Header headername="Add Student" />
     <!---------------- body ----------------------->
     <div
