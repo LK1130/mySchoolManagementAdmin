@@ -75,17 +75,31 @@ Route::get('/editadmin',function(){
     return inertia("EditAdmin");
 });
 // Start Tools
-Route::get('/mailTool', function () {
-    return inertia("MailTool");
-});
+// Route::get('/mailTool', function () {
+//     return inertia("MailTool");
+// });
 
-Route::resource('mailtool', MailToolController::class);
+Route::resource('mailTool', MailToolController::class);
 Route::resource('privacypolicyTool', PrivacyPolicyController::class);
 Route::resource('categoryTool', CategoryToolController::class);
 Route::resource('guideTool', GuideToolController::class);
 Route::resource('blogTool', BlogToolController::class);
 
 // End Tools
+
+// Start Admin Permission
+Route::get('/adminPermission',function(){
+    return inertia('AdminPermission');
+});
+
+Route::get('/addRole',function(){
+    return inertia('AddRole');
+});
+
+Route::get('/addPage',function(){
+    return inertia('AddPage');
+});
+// End Admin Permission
 
 // Route::get('/addInstructor', function () {
 //     return inertia("addInstructor");

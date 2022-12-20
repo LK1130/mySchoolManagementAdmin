@@ -97,7 +97,7 @@ class MailToolController extends Controller
             }
             $mail->insertStudentMail($request);
 
-            return Redirect::route('mailtool.index');
+            return Redirect::route('mailTool.index');
         }
     }
 
