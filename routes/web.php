@@ -6,6 +6,7 @@ use App\Http\Controllers\CategoryToolController;
 use App\Http\Controllers\ClassController;
 use App\Http\Controllers\ClassesController;
 use App\Http\Controllers\ClasssController;
+use App\Http\Controllers\Controller;
 use App\Http\Controllers\GuideToolController;
 use App\Http\Controllers\Instructor;
 use App\Http\Controllers\InstructorController;
@@ -59,7 +60,6 @@ Route::post('/setting/upload_public', [SettingController::class, 'upload_public'
 // Route::get('/setting', function () {
 //     return inertia("SettingAdmin");
 // });
-
 Route::get('/setting', [SettingController::class, 'index'])->name("setting.index");
 
 
