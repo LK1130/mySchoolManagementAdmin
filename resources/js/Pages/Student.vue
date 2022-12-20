@@ -2,7 +2,7 @@
 import NavBar from "../Components/NavBar.vue";
 import Header from "../Components/Header.vue";
 import Pagination from "../Components/Pagination.vue";
-import { Link } from "@inertiajs/inertia-vue3";
+import { Link, Head } from "@inertiajs/inertia-vue3";
 import { ref, watch } from "vue";
 import { Inertia } from "@inertiajs/inertia";
 import throttle from "lodash/throttle";
@@ -50,8 +50,11 @@ watch(
 
 <template>
     <!-------------------- Navbar&header -------------------->
+
     <NavBar />
+    <Head title="Student List"></Head>
     <Header headername="Student" />
+
     <!---------------- body ----------------------->
     <div
         class="absolute h-auto w-full md:w-5/6 headercustomleft top-32 customblack"

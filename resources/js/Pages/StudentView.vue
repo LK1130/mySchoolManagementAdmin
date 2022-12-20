@@ -2,6 +2,7 @@
 import NavBar from "../Components/NavBar.vue";
 import Header from "../Components/Header.vue";
 import { Navigation, Pagination } from "swiper";
+import { Link, Head } from "@inertiajs/inertia-vue3";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import Chart from "../Components/LineChart.vue";
 import { ref } from "vue";
@@ -366,6 +367,7 @@ const series = ref([
 <template>
     <!-------------------- Navbar&header -------------------->
     <NavBar />
+    <Head title="Student View"></Head>
     <Header />
     <!---------------- body ----------------------->
     <div
@@ -724,11 +726,11 @@ const series = ref([
             <!-- Student Self Rank Chart end-->
             <div class="w-4/6 text-white justify-start mt-5 mb-10">
                 <button>
-                    <a
-                        href=""
+                    <Link
+                        :href="route('students.index')"
                         class="underline underline-offset-4 hidden md:block"
                         >BACK
-                    </a>
+                    </Link>
                 </button>
             </div>
         </div>
