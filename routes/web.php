@@ -71,14 +71,16 @@ Route::post('/login',[LoginController::class,'store'])->name('login.store');
 // Route::get('/addadmin',function(){
 //     return inertia("AddAdmin");
 // });
-Route::get('/editadmin',function(){
-    return inertia("EditAdmin");
-});
+// Route::get('/editadmin',function(){
+//     return inertia("EditAdmin");
+// });
 // Start Tools
 // Route::get('/mailTool', function () {
 //     return inertia("MailTool");
 // });
-
+Route::get('/addguide',function(){
+    return inertia("Addguide");
+});
 Route::resource('mailTool', MailToolController::class);
 Route::resource('privacypolicyTool', PrivacyPolicyController::class);
 Route::resource('categoryTool', CategoryToolController::class);

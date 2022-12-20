@@ -53,17 +53,20 @@ const props = defineProps({
                 
 
                 <!-- <Pagination/> -->
-
+        <!-- <Link :href="route('guideTools.create')"> -->
                 <div
                     class="absolute text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-xl text-sm px-5 py-2.5 mr-2 mb-2 bottom-5 right-3 focus:outline-none">
                     <a href="#" class="flex flex-row justify-center items-center space-x-3">
                         <img src="../../../public/img/addlogo.png" alt="" class="w-5 h-5 pt-0.5" />
 
                         <button type="button">
-                            <span>Add</span>
+                           
+                            <span >Add</span>
+                           
                         </button>
                     </a>
                 </div>
+                 <!-- </Link> -->
             </div>
         </div>
     </div>

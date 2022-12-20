@@ -46,7 +46,7 @@ const props = defineProps({
         </div>
         <div
             class="flex flex-col space-y-7 md:flex-row w-full md:justify-between px-5 items-start md:items-center text-white"
-        >
+                >
             <div class="w-14">
                 <button>
                     <a class="underline underline-offset-4 hidden md:block"

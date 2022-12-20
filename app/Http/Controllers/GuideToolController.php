@@ -26,7 +26,7 @@ class GuideToolController extends Controller
      */
     public function create()
     {
-        //
+        return inertia('Addguide');
     }
 
     /**
