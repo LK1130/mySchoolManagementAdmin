@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\AddPageController;
+use App\Http\Controllers\AddRoleController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AdminPermissionController;
 use App\Http\Controllers\BlogToolController;
 use App\Http\Controllers\CategoryToolController;
 use App\Http\Controllers\ClassController;
@@ -88,17 +91,11 @@ Route::resource('blogTool', BlogToolController::class);
 // End Tools
 
 // Start Admin Permission
-Route::get('/adminPermission',function(){
-    return inertia('AdminPermission');
-});
+Route::resource('adminPermission',AdminPermissionController::class);
 
-Route::get('/addRole',function(){
-    return inertia('AddRole');
-});
+Route::resource('addRole', AddRoleController::class);
 
-Route::get('/addPage',function(){
-    return inertia('AddPage');
-});
+Route::resource('addPage',AddPageController::class);
 // End Admin Permission
 
 // Route::get('/addInstructor', function () {
