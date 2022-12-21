@@ -1,13 +1,20 @@
 <?php
 
+use App\Http\Controllers\AddPageController;
+use App\Http\Controllers\AddRoleController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AdminPermissionController;
 use App\Http\Controllers\BlogToolController;
 use App\Http\Controllers\CategoryToolController;
 use App\Http\Controllers\ClassController;
 use App\Http\Controllers\ClassesController;
 use App\Http\Controllers\ClasssController;
+use App\Http\Controllers\Controller;
 use App\Http\Controllers\GuideToolController;
 use App\Http\Controllers\Instructor;
 use App\Http\Controllers\InstructorController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\MailToolController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\PrivacyPolicyController;
@@ -46,46 +53,55 @@ Route::resource('/class', ClassController::class);
 
 
 Route::resource('/students', StudentController::class);
-Route::get('/studentview/{students?}', [StudentController::class, "show"])->name('student.view');
 
-Route::get('/student/view', function () {
-    return inertia("StudentView");
-});
-Route::get('/Addstudent', function () {
-    return inertia("AddStudent");
-})->name("Addstudent.view");
 
 Route::resource('/instructors', InstructorController::class);
 Route::get('/instructor/{class?}{name?}', [Instructor::class, 'index'])->name("instructor.index");
 Route::get('/instructors/edit/{id}', [InstructorController::class, 'show'])->name("instructors.show");
 Route::get('/instructors/create', [InstructorController::class, 'create'])->name("instructors.create");
 
-Route::post('/setting/upload',[SettingController::class,'upload'])->name("setting.upload");
-Route::post('/setting/uploadpublic',[SettingController::class,'upload_public'])->name("setting.upload_public");
-Route::get('/setting', function () {
-    return inertia("SettingAdmin");
-});
+Route::post('/setting/upload', [SettingController::class, 'upload'])->name("setting.upload");
+Route::post('/setting/upload_public', [SettingController::class, 'upload_public'])->name("setting.upload_public");
+// Route::get('/setting', function () {
+//     return inertia("SettingAdmin");
+// });
+Route::get('/setting', [SettingController::class, 'index'])->name("setting.index");
 
-Route::get('/mailtool', function () {
-    return inertia("MailTool");
-});
-Route::get('/privacypolicytool', [PrivacyPolicyController::class,'index']);
 
-Route::get('/blogtool', [BlogToolController::class,'index']);
-
-Route::get('/categoryTool', [CategoryToolController::class,'index']);
-
-Route::get('/guideTool', [GuideToolController::class, 'index']);
-
-Route::get('/editprivacypolicy',function(){
-    return inertia("EditPrivacyPolicy");
+Route::resource('admin' , AdminController::class);
+Route::get('/login',function(){
+    return inertia("Admin/AdLogin");
 });
-Route::get('/editblog',function(){
-    return inertia("EditBlog");
+Route::post('/login',[LoginController::class,'store'])->name('login.store');
+// Route::get('/addadmin',function(){
+//     return inertia("AddAdmin");
+// });
+// Route::get('/editadmin',function(){
+//     return inertia("EditAdmin");
+// });
+// Start Tools
+// Route::get('/mailTool', function () {
+//     return inertia("MailTool");
+// });
+Route::get('/addguide',function(){
+    return inertia("Addguide");
 });
-Route::get('/editcategory',function(){
-    return inertia("EditCategory");
-});
+Route::resource('mailTool', MailToolController::class);
+Route::resource('privacypolicyTool', PrivacyPolicyController::class);
+Route::resource('categoryTool', CategoryToolController::class);
+Route::resource('guideTool', GuideToolController::class);
+Route::resource('blogTool', BlogToolController::class);
+
+// End Tools
+
+// Start Admin Permission
+Route::resource('adminPermission',AdminPermissionController::class);
+
+Route::resource('addRole', AddRoleController::class);
+
+Route::resource('addPage',AddPageController::class);
+// End Admin Permission
+
 // Route::get('/addInstructor', function () {
 //     return inertia("addInstructor");
 // })->name("addInstructor.view");

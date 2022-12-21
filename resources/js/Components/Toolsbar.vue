@@ -13,11 +13,11 @@ console.log(props.active);
 <template>
     <div class="flex justify-between text-whiteTextColor">
         <div class="py-3 w-1/6 flex justify-center rounded-tl-xl" 
-        :class="{'bg-secondaryBackground' : active == 1}"><Link href="/mailtool">Mail</Link></div>
+        :class="{'bg-secondaryBackground' : active == 1}"><Link href="/mailTool">Mail</Link></div>
         <div class="py-3 w-1/6 flex justify-center"
-        :class="{'bg-secondaryBackground' : active == 2}"><Link href="/privacypolicytool">Privacy Policy</Link></div>
+        :class="{'bg-secondaryBackground' : active == 2}"><Link href="/privacypolicyTool">Privacy Policy</Link></div>
         <div class="py-3 w-1/6 flex justify-center"
-        :class="{'bg-secondaryBackground' : active == 3}"><Link href="/blogtool">Blog</Link></div>
+        :class="{'bg-secondaryBackground' : active == 3}"><Link href="/blogTool">Blog</Link></div>
         <div class="py-3 w-1/6 flex justify-center"
         :class="{'bg-secondaryBackground' : active == 4}"><Link href="/categoryTool">Category</Link></div>
         <div class="py-2 w-1/6 flex justify-center rounded-tr-xl"
