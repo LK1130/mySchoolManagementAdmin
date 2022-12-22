@@ -14,4 +14,9 @@ class MRole extends Model
     {
         return DB::table('m_roles')->where('r_name', 'IN')->get();
     }
+
+    public function page()
+    {
+        return $this->belongsToMany(MPage::class,"m_role_pages");
+    }
 }

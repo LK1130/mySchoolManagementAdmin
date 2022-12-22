@@ -2,7 +2,7 @@
 import NavBar from "../Components/NavBar.vue";
 import Header from "../Components/Header.vue";
 import Pagination from "../Components/Pagination.vue";
-import { Link } from "@inertiajs/inertia-vue3";
+import { Link, Head } from "@inertiajs/inertia-vue3";
 import { ref, watch } from "vue";
 import { Inertia } from "@inertiajs/inertia";
 import throttle from "lodash/throttle";
@@ -50,11 +50,14 @@ watch(
 
 <template>
     <!-------------------- Navbar&header -------------------->
+
     <NavBar />
+    <Head title="Student List"></Head>
     <Header headername="Student" />
+
     <!---------------- body ----------------------->
     <div
-        class="absolute h-screen w-full md:w-5/6 headercustomleft top-32 customblack"
+        class="absolute h-auto w-full md:w-5/6 headercustomleft top-32 customblack"
     >
         <!-- Radio and Search Box Div -->
         <div
@@ -125,7 +128,7 @@ watch(
                 </tr>
                 <tbody class="text-sm customfontsize">
                     <tr
-                        class="cusborder"
+                        class="cusborder border-b border-slate-600"
                         v-for="student in allStudents.data"
                         :key="allStudents.data"
                     >

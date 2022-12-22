@@ -4,7 +4,7 @@ import NavBar from "../Components/NavBar.vue";
 import Header from "../Components/Header.vue";
 import { ref } from '@vue/reactivity';
 import { Inertia } from '@inertiajs/inertia';
-var studentid = ref([1,3,4,5]);
+
 const props = defineProps({
     classdata : {
         type : Object
@@ -21,10 +21,16 @@ const props = defineProps({
         day : {
         type : Object
     },
-    studentsid: {
+    studentsids: {
         type : Object
     },
 })
+// const forceRerender = () => {
+//     reload.value += 1;
+// };
+
+
+
 const form = useForm({
     _method : "PUT",
     classnames:props.classdata[0].c_name,
@@ -47,8 +53,19 @@ const form = useForm({
     students: null ,
     
 });
+const testarry=[]
+var arrycount=0
+const toarry=(a)=>{
+ a.forEach(element => {
+  testarry[arrycount++]=element.user_id
+ });
+//  forceRerender();
+}
+toarry(props.studentsids);
+var studentid = ref(testarry);
+
 var checkedcd=true
-var day=props.classdata[0].c_date
+var day=props.classdata[0].c_day
 var dayone=day.charAt(0)
 var daytwo=day.charAt(1)
 var daythree=day.charAt(2)
@@ -208,6 +225,7 @@ const submit = () => {
 <span class="ml-2 sm:text-base text-xs sm:pt-0 pt-1" >Save</span>
 </button>
 </form>
+<!-- <div class="text-white hidden">{{toarry(studentsids)}}</div> -->
 </div>
 </template>
 <style scoped>

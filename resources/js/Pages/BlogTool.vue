@@ -3,17 +3,16 @@ import { Head, Link } from "@inertiajs/inertia-vue3";
 import NavBar from "../Components/NavBar.vue";
 import Header from "../Components/Header.vue";
 import Toolsbar from "../Components/Toolsbar.vue";
-import Pagination from "../Components/Pagination.vue"
+import Pagination from "../Components/Pagination.vue";
 import moment from "moment";
 
 const props = defineProps({
     blogs: {
-        type: Object
-    }
+        type: Object,
+    },
 });
 
 // console.log(props.blogs);
-
 </script>
 
 <template>
@@ -22,10 +21,12 @@ const props = defineProps({
 
     <div class="absolute h-auto w-5/6 p-5 headercustomleft top-32 customblack">
         <Toolsbar active="3" />
-        <div class="w-full h-auto p-8 relative bg-secondaryBackground rounded-b-xl flex flex-col items-center">
+        <div
+            class="w-full h-auto p-8 relative bg-secondaryBackground rounded-b-xl flex flex-col items-center"
+        >
             <!-- Table Section -->
-            <div class="p-4 w-full  rounded-xl">
-                <table class="text-white w-full rounded-lg ">
+            <div class="p-4 w-full rounded-xl">
+                <table class="text-white w-full rounded-lg">
                     <tr class="opacity-70 customfontsize">
                         <th class="text-center py-3">TITLE</th>
                         <th class="py-3">DESCRIPTION</th>
@@ -34,42 +35,73 @@ const props = defineProps({
                         <th class="py-3">SETTINGS</th>
                     </tr>
                     <tbody class="text-sm mt-3">
-                        <tr class="border-b" v-for="result in props.blogs.data" :key="result">
-                            <td class="text-left py-3 text-base">{{ result.b_title.substring(0, 30) }}</td>
-                            <td class="text-left py-3 text-base">{{ result.b_description.substring(0, 50) + "..." }}</td>
-                            <td class="text-center py-3 text-base">{{ moment(result.created_at).calendar() }}</td>
-                            <td class="flex justify-center py-3 ">
-                                <img :src="/storage/+result.b_photo" class="w-32" alt="">
+                        <tr
+                            class="border-b"
+                            v-for="result in props.blogs.data"
+                            :key="result"
+                        >
+                            <td class="text-left py-3 text-base">
+                                {{ result.b_title.substring(0, 30) }}
                             </td>
-                            <td class="text-center customtextcolor7 underline text-base">
-                                <Link :href="route('blogTool.edit', result.id)" :id="result.id">Edit</Link>
+                            <td class="text-left py-3 text-base">
+                                {{
+                                    result.b_description.substring(0, 50) +
+                                    "..."
+                                }}
+                            </td>
+                            <td class="text-center py-3 text-base">
+                                {{ moment(result.created_at).calendar() }}
+                            </td>
+                            <td class="flex justify-center py-3">
+                                <img
+                                    :src="/storage/ + result.b_photo"
+                                    class="w-32"
+                                    alt=""
+                                />
+                            </td>
+                            <td
+                                class="text-center customtextcolor7 underline text-base"
+                            >
+                                <Link
+                                    :href="route('blogTool.edit', result.id)"
+                                    :id="result.id"
+                                    >Edit</Link
+                                >
                             </td>
                         </tr>
                     </tbody>
                 </table>
 
                 <div class="flex justify-center items-center my-10">
-                    <Pagination :links="blogs.links">
-                    </Pagination>
+                    <Pagination :links="blogs.links"> </Pagination>
                 </div>
             </div>
 
-            <div class="flex flex-col mt-10 md:flex-row w-full px-5 items-center justify-center text-white">
-
-
-
+            <div
+                class="flex flex-col mt-10 md:flex-row w-full px-5 items-center justify-center text-white"
+            >
                 <!-- <Pagination/> -->
 
                 <div
-                    class="absolute text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-xl text-sm px-5 py-2.5 mr-2 mb-2 bottom-5 right-3 focus:outline-none">
-                    <Link :href="route('blogTool.create')" class="flex flex-row justify-center items-center space-x-3">
-                    <img src="../../../public/img/addlogo.png" alt="" class="w-5 h-5 pt-0.5" />
+                    class="absolute text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-xl text-sm px-5 py-2.5 mr-2 mb-2 bottom-5 right-3 focus:outline-none"
+                >
+                    <Link
+                        :href="route('blogTool.create')"
+                        class="flex flex-row justify-center items-center space-x-3"
+                    >
+                        <img
+                            src="../../../public/img/addlogo.png"
+                            alt=""
+                            class="w-5 h-5 pt-0.5"
+                        />
 
-                    <button type="button">
-                        <span class="mx-1 font-bold text-base">Add</span>
-                    </button>
+                        <button type="button">
+                            <span class="mx-1 font-bold text-base">Add</span>
+                        </button>
                     </Link>
                 </div>
+
+                <!-- Hello                 -->
             </div>
         </div>
     </div>

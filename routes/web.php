@@ -1,13 +1,19 @@
 <?php
 
+use App\Http\Controllers\AddPageController;
+use App\Http\Controllers\AddRoleController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AdminPermissionController;
 use App\Http\Controllers\BlogToolController;
 use App\Http\Controllers\CategoryToolController;
 use App\Http\Controllers\ClassController;
 use App\Http\Controllers\ClassesController;
 use App\Http\Controllers\ClasssController;
+use App\Http\Controllers\Controller;
 use App\Http\Controllers\GuideToolController;
 use App\Http\Controllers\Instructor;
 use App\Http\Controllers\InstructorController;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MailToolController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\StudentController;
@@ -37,9 +43,11 @@ Route::get('/', function () {
     ]);
 });
 Route::get('/classview/{id?}', [viewclassController::class, "getclassdata"])->name("class.view");
-// Route::get('/viewclass', function () {
-//     return Inertia::render('ViewClass');
-// });
+Route::get('/classsorting/{name?}', [viewclassController::class, "classsorting"])->name("class.sorting");
+Route::get('/classscategory/{id?}', [viewclassController::class, "classcategory"])->name("class.category");
+Route::get('/addvideo', function () {
+    return Inertia::render('AddVideo');
+});
 
 Route::resource('/class', ClassController::class);
 
@@ -57,31 +65,42 @@ Route::post('/setting/upload_public', [SettingController::class, 'upload_public'
 // Route::get('/setting', function () {
 //     return inertia("SettingAdmin");
 // });
-
 Route::get('/setting', [SettingController::class, 'index'])->name("setting.index");
 
 
-Route::get('/admin',function(){
-    return inertia("Admin");
+Route::resource('admin' , AdminController::class);
+Route::get('/login',function(){
+    return inertia("Admin/AdLogin");
 });
-Route::get('/addadmin',function(){
-    return inertia("AddAdmin");
-});
-Route::get('/editadmin',function(){
-    return inertia("EditAdmin");
-});
+Route::post('/login',[LoginController::class,'store'])->name('login.store');
+// Route::get('/addadmin',function(){
+//     return inertia("AddAdmin");
+// });
+// Route::get('/editadmin',function(){
+//     return inertia("EditAdmin");
+// });
 // Start Tools
-Route::get('/mailTool', function () {
-    return inertia("MailTool");
+// Route::get('/mailTool', function () {
+//     return inertia("MailTool");
+// });
+Route::get('/addguide',function(){
+    return inertia("Addguide");
 });
-
-Route::resource('mailtool', MailToolController::class);
+Route::resource('mailTool', MailToolController::class);
 Route::resource('privacypolicyTool', PrivacyPolicyController::class);
 Route::resource('categoryTool', CategoryToolController::class);
 Route::resource('guideTool', GuideToolController::class);
 Route::resource('blogTool', BlogToolController::class);
 
 // End Tools
+
+// Start Admin Permission
+Route::resource('adminPermission',AdminPermissionController::class);
+
+Route::resource('addRole', AddRoleController::class);
+
+Route::resource('addPage',AddPageController::class);
+// End Admin Permission
 
 // Route::get('/addInstructor', function () {
 //     return inertia("addInstructor");

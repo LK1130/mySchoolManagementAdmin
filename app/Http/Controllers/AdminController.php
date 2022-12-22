@@ -2,7 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\CreateAdmin;
+use App\Mail\EditAdmin;
+use App\Models\MAdmin;
+use App\Models\MRole;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Redirect;
 
 class AdminController extends Controller
 {
@@ -13,7 +19,15 @@ class AdminController extends Controller
      */
     public function index()
     {
-        //
+
+        $admin = MAdmin::where("m_admins.del_flg", 0)
+            ->join('m_roles','m_roles.id','=','m_admins.role_id')
+            ->selectRaw("m_admins.id,m_admins.name,m_admins.email,m_roles.r_name")
+            ->orderBy("m_admins.id")
+            ->paginate(10);
+
+
+        return inertia('Admin', ['admins' => $admin]);
     }
 
     /**
@@ -23,7 +37,11 @@ class AdminController extends Controller
      */
     public function create()
     {
-        //
+
+        $roles = MRole::where("del_flg", 0)
+            ->get();
+
+        return  inertia('AddAdmin', ['roles' => $roles]);
     }
 
     /**
@@ -34,7 +52,22 @@ class AdminController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate(
+            [
+                'name' => 'required',
+                'email' => 'unique:m_admins,email|email|required',
+                'password' => 'required',
+                'role' => 'exists:m_roles,id'
+            ]
+        );
+            $mail =[
+                    'email'=>$request->email,
+                    'password'=>$request->password
+            ];
+        $addadmin = new MAdmin();
+        $addadmin->Addadmin($request);
+        Mail::to($request->email)->send(new CreateAdmin($mail));
+        return Redirect::route('admin.index');
     }
 
     /**
@@ -56,7 +89,13 @@ class AdminController extends Controller
      */
     public function edit($id)
     {
-        //
+        $edadmin = new MAdmin();
+        $adminInfo = $edadmin->searchAdmin($id);
+
+        $roles = MRole::where("del_flg", 0)
+        ->get();
+        // dd($adminInfo);
+        return inertia('EditAdmin', ['adminInfo' => $adminInfo ,'roles'=> $roles]);
     }
 
     /**
@@ -68,7 +107,23 @@ class AdminController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // dd($request);
+        $request->validate(
+            [
+                'name' => 'required',
+                'email' => 'email|required',
+                'password' => 'required',
+                'role' => 'exists:m_roles,id'
+            ]
+        );
+        $mail =[
+            'email'=>$request->email,
+            'password'=>$request->password
+    ];
+        $admin = new MAdmin();
+        $admin->updateAdmin($request, $id);
+        Mail::to($request->email)->send(new EditAdmin($mail));
+        return Redirect::route('admin.index');
     }
 
     /**
