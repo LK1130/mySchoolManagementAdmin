@@ -70,11 +70,24 @@ const submit = () => {
                                     type="checkbox"
                                     class="mt-1"
                                     :checked="rpage.id == page.id"
-                                /> 
+                                />
                             </div>
-                        
-                            <input type="checkbox" class="mt-1" v-if="role.page.length==0" />
 
+                            <!-- <div v-for="rpage in role.page">
+                                <div v-if="rpage.id == page.id">
+                                    <input
+                                        type="checkbox"
+                                        class="mt-1"
+                                        hidden
+                                    />
+                                </div>
+                            </div> -->
+
+                            <input
+                                type="checkbox"
+                                class="mt-1"
+                                v-if="role.page.length == 0"
+                            />
                         </div>
                     </div>
                 </div>
