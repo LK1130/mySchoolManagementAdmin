@@ -15,4 +15,9 @@ class MGuide extends Model
             ->where('id',$id)
             ->first();
     }
+
+    public function guideStep()
+    {
+        return $this->hasMany(MGuideStep::class, "guide_id", "id");
+    }
 }

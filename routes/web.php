@@ -43,9 +43,11 @@ Route::get('/', function () {
     ]);
 });
 Route::get('/classview/{id?}', [viewclassController::class, "getclassdata"])->name("class.view");
-// Route::get('/viewclass', function () {
-//     return Inertia::render('ViewClass');
-// });
+Route::get('/classsorting/{name?}', [viewclassController::class, "classsorting"])->name("class.sorting");
+Route::get('/classscategory/{id?}', [viewclassController::class, "classcategory"])->name("class.category");
+Route::get('/addvideo', function () {
+    return Inertia::render('AddVideo');
+});
 
 Route::resource('/class', ClassController::class);
 

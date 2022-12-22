@@ -18,7 +18,7 @@ class ClassController extends Controller
     {
        $class=new MClass();
        $classdata=$class->get_class();
-       return inertia("Class",['dclass' => $classdata]);
+       return inertia("Class",['dclass' => $classdata,'sorttype'=>"status"]);
     }
 
     /**
@@ -93,8 +93,8 @@ class ClassController extends Controller
         $students= $class->get_student();
         $studentsid=$class->get_studentid($id);
         $date=$class->get_classdate($id);
-        $day=$date->c_date;
-        return inertia("EditClass",['classdata' => $classdetail,'instructor' => $instructors,'category' => $categories,'student' => $students ,"day"=>$day,"studentsid"=>$studentsid]);
+        $day=$date->c_day;
+        return inertia("EditClass",['classdata' => $classdetail,'instructor' => $instructors,'category' => $categories,'student' => $students ,"day"=>$day,"studentsids"=>$studentsid]);
     }
 
     /**

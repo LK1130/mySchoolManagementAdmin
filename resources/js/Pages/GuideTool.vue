@@ -12,6 +12,8 @@ const props = defineProps({
     }
 });
 
+console.log(props.guides);
+
 </script>
 
 <template>
@@ -31,11 +33,11 @@ const props = defineProps({
                         <th class="py-3">SETTINGS</th>
                     </tr>
                     <tbody class="text-sm mt-3">
-                        <tr class="border-b" v-for="result in props.guides.data" :key="result">
-                            <td class="text-left py-3">{{ result.g_title.substring(1, 10) + "..." }}</td>
-                            <td class="text-center py-3">{{ result.g_title.substring(1, 10) + "..." }}</td>
-                            <td class="text-center py-3">{{  moment(result.created_at).calendar() }}</td>
-                            <td class="text-center customtextcolor7 underline">
+                        <tr class="border-b" v-for="result in guides.data" :key="result">
+                            <td class="text-left py-3 text-base">{{ result.g_title }}</td>
+                            <td class="text-center py-3 text-base">{{ result.guide_step.length}}</td>
+                            <td class="text-center py-3 text-base">{{  moment(result.created_at).calendar() }}</td>
+                            <td class="text-center customtextcolor7 underline text-base">
                                 <Link :href="route('guideTool.edit', result.id)" :id="result.id">Edit</Link>
                             </td>
                         </tr>
@@ -60,9 +62,7 @@ const props = defineProps({
                         <img src="../../../public/img/addlogo.png" alt="" class="w-5 h-5 pt-0.5" />
 
                         <button type="button">
-                           
-                            <span >Add</span>
-                           
+                            <span class="mx-1 font-bold text-base">Add</span>
                         </button>
                     </a>
                 </div>

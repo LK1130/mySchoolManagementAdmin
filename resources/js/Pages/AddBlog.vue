@@ -32,7 +32,7 @@ const submit = () => {
     <Head title="Add Blog"></Head>
     <Header headername="Tools" />
 
-    <div class="absolute h-full w-5/6 p-5 headercustomleft top-32 customblack">
+    <div class="absolute h-auto w-5/6 p-5 headercustomleft top-32 customblack">
         <Toolsbar active="3" />
 
         <form @submit.prevent="submit">
