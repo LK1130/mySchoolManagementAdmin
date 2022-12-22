@@ -16,6 +16,10 @@ class GuideToolController extends Controller
     {
         $guides = MGuide::where("del_flg",0)
         ->paginate(5);
+
+        foreach ($guides as $guide) {
+            $guide->guideStep;
+        }
         return inertia('GuideTool',['guides'=> $guides]);
     }
 

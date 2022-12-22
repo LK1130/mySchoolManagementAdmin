@@ -40,7 +40,7 @@ const submit = () => {
     <NavBar />
     <Header headername="Tools" />
 
-    <div class="absolute h-full w-5/6 p-5 headercustomleft top-32 customblack">
+    <div class="absolute h-auto w-5/6 p-5 headercustomleft top-32 customblack">
         <Toolsbar active="1" />
         <form @submit.prevent="submit">
             <div class="w-full h-full py-8 bg-secondaryBackground rounded-b-xl flex flex-col items-center">

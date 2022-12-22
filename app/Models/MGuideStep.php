@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class MGuideStep extends Model
 {
     use HasFactory;
+
+    public function guide()
+    {
+        return $this->belongsTo(MGuide::class);
+    }
 }
