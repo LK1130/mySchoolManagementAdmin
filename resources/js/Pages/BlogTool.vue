@@ -12,7 +12,7 @@ const props = defineProps({
     },
 });
 
-// console.log(props.blogs);
+console.log(props.blogs);
 </script>
 
 <template>
