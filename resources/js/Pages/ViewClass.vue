@@ -8,6 +8,7 @@ import RecordingVideoListTableBox from "../Components/RecordingVideolistTablebox
 import { ref } from "vue";
 
 const datesplit = (data) => {
+    console.log(data)
     const fullday = [];
     var arrycount = 0;
     for (let index = 0; index < 7; index++) {
@@ -175,5 +176,5 @@ defineProps({
     .cuswidth {
         width: 80%;
     }
-}
+
 </style>

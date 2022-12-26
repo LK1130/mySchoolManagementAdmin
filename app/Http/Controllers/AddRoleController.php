@@ -2,15 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\MGuide;
-use App\Models\MGuideStep;
+use App\Models\MRole;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
-class GuideToolController extends Controller
+class AddRoleController extends Controller
 {
-
-    
     /**
      * Display a listing of the resource.
      *
@@ -18,14 +15,7 @@ class GuideToolController extends Controller
      */
     public function index()
     {
-        
-        $guides = MGuide::where("del_flg",0)
-        ->paginate(5);
-
-        foreach ($guides as $guide) {
-            $guide->guideStep;
-        }
-        return inertia('GuideTool',['guides'=> $guides]);
+        return inertia('AddRole');
     }
 
     /**
@@ -35,7 +25,7 @@ class GuideToolController extends Controller
      */
     public function create()
     {
-        return inertia('Addguide');
+        //
     }
 
     /**
@@ -46,24 +36,15 @@ class GuideToolController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
         $request->validate([
-            'guidetitle'=> 'unique:m_guides,g_title|required'
+            'role_name' => 'required'
         ]);
-        // dd(count($request->steptitle));
-        $addguide = new MGuide();
-        $addguide->addData($request);
-        // for ($i=0; $i < count($request->steptitle); $i++) { 
-        //     $addstep  = new  MGuideStep();
-        // $addstep->addStep($request->steptitle[$i]);
-        // $addstep->addStep($request->description[$i]);
-        // $addguide->addStep((int)$i);
-        // }
-        $data = $addguide->getLastData($request->guidetitle);
-        // dd($data);
-        $addstep  = new  MGuideStep();
-        $addstep->addStep($request,$data[0]->id);
 
+        $role = new MRole();
+        $role->r_name = $request->role_name;
+        $role->save();
+
+        return Redirect::route('adminPermission.index');
     }
 
     /**
@@ -85,11 +66,7 @@ class GuideToolController extends Controller
      */
     public function edit($id)
     {
-        $guides = new MGuide();
-        $guidesInfo = $guides->searchById($id);
-
-        // return $privacypolicysInfo;
-        // return inertia('EditGuide',['guideInfo' => $guidesInfo]);
+        //
     }
 
     /**

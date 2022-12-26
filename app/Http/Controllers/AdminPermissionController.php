@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\MGuide;
-use App\Models\MGuideStep;
+use App\Models\MPage;
+use App\Models\MRole;
+use App\Models\MRolePage;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Redirect;
 
-class GuideToolController extends Controller
+class AdminPermissionController extends Controller
 {
-
-    
     /**
      * Display a listing of the resource.
      *
@@ -18,14 +18,22 @@ class GuideToolController extends Controller
      */
     public function index()
     {
-        
-        $guides = MGuide::where("del_flg",0)
-        ->paginate(5);
+        // $routeList = Route::getRoutes();
 
-        foreach ($guides as $guide) {
-            $guide->guideStep;
+        // dd($routeList);
+
+        $pages = MPage::where('del_flg', 0)->get();
+
+        $role_pages = MRole::all();
+
+        foreach ($role_pages as  $role_page) {
+            $role_page->page;
         }
-        return inertia('GuideTool',['guides'=> $guides]);
+
+        return inertia('AdminPermission', [
+            'role_page' => $role_pages,
+            'pages' => $pages
+        ]);
     }
 
     /**
@@ -35,7 +43,7 @@ class GuideToolController extends Controller
      */
     public function create()
     {
-        return inertia('Addguide');
+        //
     }
 
     /**
@@ -46,24 +54,17 @@ class GuideToolController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
-        $request->validate([
-            'guidetitle'=> 'unique:m_guides,g_title|required'
-        ]);
-        // dd(count($request->steptitle));
-        $addguide = new MGuide();
-        $addguide->addData($request);
-        // for ($i=0; $i < count($request->steptitle); $i++) { 
-        //     $addstep  = new  MGuideStep();
-        // $addstep->addStep($request->steptitle[$i]);
-        // $addstep->addStep($request->description[$i]);
-        // $addguide->addStep((int)$i);
-        // }
-        $data = $addguide->getLastData($request->guidetitle);
-        // dd($data);
-        $addstep  = new  MGuideStep();
-        $addstep->addStep($request,$data[0]->id);
+        $rolePage = new MRolePage();
+        MRolePage::truncate();
 
+        for ($i = 0; $i < count($request->lists); $i++) {
+            $rolePage = new MRolePage();
+            $rolePage->m_page_id = $request->lists[$i]["pageId"];
+            $rolePage->m_role_id = $request->lists[$i]["roleId"];
+            $rolePage->save();
+        }
+
+        return Redirect::route('adminPermission.index');
     }
 
     /**
@@ -85,11 +86,7 @@ class GuideToolController extends Controller
      */
     public function edit($id)
     {
-        $guides = new MGuide();
-        $guidesInfo = $guides->searchById($id);
-
-        // return $privacypolicysInfo;
-        // return inertia('EditGuide',['guideInfo' => $guidesInfo]);
+        //
     }
 
     /**

@@ -1,16 +1,18 @@
 <script setup>
-import { Head, Link } from "@inertiajs/inertia-vue3";
+import { Head, Link, useForm } from "@inertiajs/inertia-vue3";
 import NavBar from "../Components/NavBar.vue";
 import Header from "../Components/Header.vue";
 import ClassTable from "../Components/ClassTable.vue";
-
-defineProps({
-  canLogin: Boolean,
-  canRegister: Boolean,
-  laravelVersion: String,
-  phpVersion: String,
-  dclass: Object,
-});
+import { ref } from "@vue/reactivity";
+var categoryid = ref([]);
+const props = defineProps({
+    dclass : {
+        type : Object
+    },
+    sorttype : {
+        type : Object
+    },
+})
 const datesplit = (data) => {
   const fullday = [];
   var arrycount = 0;
@@ -101,6 +103,21 @@ const bafcolor = (start, end) => {
     }
   }
 };
+const form = useForm({
+    sorting: props.sorttype,
+});
+const categoryform = useForm({
+    categoryids:null,
+});
+
+const submit = () => {
+ form.get(route('class.sorting',form.sorting));
+};
+const categoryselect = () => {
+categoryform.categoryids=categoryid
+ console.log(categoryid)
+//  categoryform.get(route('class.category',categoryid));
+};
 </script>
 
 <template >
@@ -119,6 +136,9 @@ const bafcolor = (start, end) => {
             class="css-checkbox"
             id="checkbox1"
             checked="checked"
+            value="2"
+            v-model="categoryid"
+            @click="categoryselect"
           />
           <label
             for="checkbox1"
@@ -132,6 +152,9 @@ const bafcolor = (start, end) => {
             class="css-checkbox"
             id="checkbox2"
             checked="checked"
+            value="3"
+            v-model="categoryid"
+            @click="categoryselect"
           />
           <label
             for="checkbox2"
@@ -146,6 +169,9 @@ const bafcolor = (start, end) => {
             class="css-checkbox"
             id="checkbox3"
             checked="checked"
+            value="1"
+            v-model="categoryid"
+            @click="categoryselect"
           />
           <label
             for="checkbox3"
@@ -156,15 +182,17 @@ const bafcolor = (start, end) => {
       </div>
 
       <div class="dopd">
+        <form>
         <select
           id="sorttype"
-          name="status"
           class="bg-black text-white border-white rounded-xl customfontsize1"
+          v-model="form.sorting"
         >
-          <option value="status" class="customfontsize1">By status</option>
-          <option value="name" class="customfontsize1">By Name</option>
-          <option value="person" class="customfontsize1">By Person</option>
+          <option value="status" class="customfontsize1" @click="submit()">By status</option>
+          <option value="name" class="customfontsize1" @click="submit()">By Name</option>
+          <option value="person" class="customfontsize1" @click="submit()">By Person</option>
         </select>
+        </form>
       </div>
     </div>
 

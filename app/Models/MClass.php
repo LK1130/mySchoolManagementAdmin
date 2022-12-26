@@ -34,6 +34,17 @@ class MClass extends Model
         return DB::table('m_classes')
             ->join('m_instructors', 'm_classes.instructor_id', '=', 'm_instructors.id')
             ->select('m_classes.id', 'm_classes.c_name', 'm_classes.c_day', 'm_classes.c_start_time', 'm_classes.c_end_time', 'm_classes.c_fees', 'm_instructors.i_name')
+            ->orderBy('m_classes.c_start_time', 'desc')
+            ->where('m_classes.del_flg',0)
+            ->get();
+    }
+    public function get_classbyname()
+    {
+        return DB::table('m_classes')
+            ->join('m_instructors', 'm_classes.instructor_id', '=', 'm_instructors.id')
+            ->select('m_classes.id', 'm_classes.c_name', 'm_classes.c_day', 'm_classes.c_start_time', 'm_classes.c_end_time', 'm_classes.c_fees', 'm_instructors.i_name')
+            ->orderBy('m_classes.c_name', 'asc')
+            ->where('m_classes.del_flg',0)
             ->get();
     }
     public function get_classdetail($id)
@@ -54,7 +65,7 @@ class MClass extends Model
                 'c_description' => $request->input('classdetail'),
                 'c_start_date' => $request->input('startdate'),
                 'c_end_date' => $request->input('enddate'),
-                'c_date' => $date,
+                'c_day' => $date,
                 'c_start_time' => $request->input('starttime'),
                 'c_end_time' => $request->input('endtime'),
                 'c_fees' => $request->input('fees'),
@@ -87,7 +98,7 @@ class MClass extends Model
             'c_description' => $request->input('classdetail'),
             'c_start_date' =>$request->input('startdate'),
             'c_end_date' => $request->input('enddate'),
-            'c_date'=>$date,
+            'c_day'=>$date,
             'c_start_time'=>$request->input('starttime'),
             'c_end_time' =>$request->input('endtime'),
             'c_fees' =>$request->input('fees'),
@@ -99,19 +110,19 @@ class MClass extends Model
         ]);
 
         
-        foreach ($studentids as $ids) {
-            DB::table('t_student_classes')
-            ->insert([
-                'id' => $id,
-                'user_id' => $ids,
-                'start_join' =>Date('Y-m-d h:i:s'),
-                'paid_fees' => 00,
-                'remain_fees' => 00,
-                'updated_at'=>Date('Y-m-d h:i:s'),
-                'updated_by'=>"0",
-                'created_by'=>"0"
-            ]);
-        };
+        // foreach ($studentids as $ids) {
+        //     DB::table('t_student_classes')
+        //     ->insert([
+        //         'id' => $id,
+        //         'user_id' => $ids,
+        //         'start_join' =>Date('Y-m-d h:i:s'),
+        //         'paid_fees' => 00,
+        //         'remain_fees' => 00,
+        //         'updated_at'=>Date('Y-m-d h:i:s'),
+        //         'updated_by'=>"0",
+        //         'created_by'=>"0"
+        //     ]);
+        // };
 
     }
 }
