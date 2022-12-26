@@ -65,12 +65,8 @@ defineProps({
     canRegister: Boolean,
     laravelVersion: String,
     phpVersion: String,
-<<<<<<< HEAD
     classdata:Object,
     students:Object,
-=======
-    classdata: Object,
->>>>>>> origin/main
 });
 </script>
 
@@ -95,7 +91,6 @@ defineProps({
             </a>
         </div>
 
-<<<<<<< HEAD
 <div class="custombackgroundcolor w-full text-white p-4 rounded-lg">
    <h3 class="sm:text-lg text-base">Class Information</h3>
    <img :src='"/storage/"+classdata[0].c_profile' alt="" class="rounded-full sm:w-20 w-14 sm:h-20 h-14 float-right">
@@ -197,81 +192,6 @@ defineProps({
 </div>
 </div>
 </div>
-=======
-        <div class="custombackgroundcolor w-full text-white p-4 rounded-lg">
-            <h3 class="sm:text-lg text-base">Class Information</h3>
-            <img
-                :src="'/storage/' + classdata[0].c_profile"
-                alt=""
-                class="rounded-full sm:w-20 w-14 sm:h-20 h-14 float-right"
-            />
-            <div class="sm:text-2xl text-lg font-bold mt-2">
-                {{ classdata[0].cname }}
-            </div>
-            <p class="sm:text-sm text-xs opacity-80 mt-2 w-10/12">
-                {{ classdata[0].c_description }}
-            </p>
-            <div
-                class="flex flex-row justify-between w-10/12 sm:text-sm text-xs mt-3"
-            >
-                <div>
-                    <div>
-                        Date : <br class="sm:hidden block" /><span
-                            >{{ classdata[0].c_start_date }} -
-                            {{ classdata[0].c_end_date }}</span
-                        >
-                    </div>
-                    <div class="mt-1">
-                        Day : <br class="sm:hidden block" /><span>{{
-                            datesplit(classdata[0].c_date)
-                        }}</span>
-                    </div>
-                    <div class="mt-1">
-                        Time : <br class="sm:hidden block" /><span
-                            >{{ classdata[0].c_start_time }} -
-                            {{ classdata[0].c_end_time }}</span
-                        >
-                    </div>
-                    <div class="mt-1">
-                        Person : <br class="sm:hidden block" /><span>20</span>
-                    </div>
-                </div>
-                <div>
-                    <div>
-                        Instructor : <br class="sm:hidden block" /><span
-                            class="customtextcolor7 underline"
-                            >{{ classdata[0].i_name }}</span
-                        >
-                    </div>
-                    <div class="mt-1">
-                        Category : <br class="sm:hidden block" /><span
-                            class="customtextcolor7 underline"
-                            >{{ classdata[0].c_name }}</span
-                        >
-                    </div>
-                    <div class="mt-1">
-                        Fees : <br class="sm:hidden block" /><span
-                            >{{
-                                Number(classdata[0].c_fees).toLocaleString()
-                            }}
-                            Ks</span
-                        >
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="flex flex-wrap mt-5 sm:justify-between justify-center">
-            <div class="sm:w-7/12 w-11/12">
-                <h3 class="text-white">Student List</h3>
-                <StudentListTableBox />
-            </div>
-            <div class="cuswidth sm:mt-0 mt-5">
-                <h3 class="text-white">Recording Video List</h3>
-                <RecordingVideoListTableBox />
-            </div>
-        </div>
-    </div>
->>>>>>> origin/main
 </template>
 <style scoped>
 .customalign {
@@ -282,17 +202,12 @@ defineProps({
 }
 
 @media screen and (max-width: 640px) {
-<<<<<<< HEAD
     .cuswidth{
         width:80% ;
       }
           .customfontsize{
         font-size: 0.6em;
       }
-=======
-    .cuswidth {
-        width: 80%;
->>>>>>> origin/main
     }
 
 </style>
