@@ -15,4 +15,19 @@ class MGuide extends Model
             ->where('id',$id)
             ->first();
     }
+
+
+
+    public function addData($request){
+        
+        $guide = new MGuide();
+        $guide->g_title = $request->guidetitle;
+        $guide->save();
+    }
+    public function getLastData($data){
+       return DB::table('m_guides')
+        ->where('g_title',$data)
+        ->get();
+        
+    }
 }
