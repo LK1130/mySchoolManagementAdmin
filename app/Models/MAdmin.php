@@ -76,4 +76,9 @@ class MAdmin extends Model
         
 
     // }
+        public function deleteAdmin($id){
+            $deladmin = MAdmin::find($id);
+            $deladmin->del_flg = 1 ;
+            $deladmin->save();
+        }
 }

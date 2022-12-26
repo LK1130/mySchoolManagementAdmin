@@ -5,6 +5,7 @@ import Pagination from "../Components/Pagination.vue";
 import { Inertia } from "@inertiajs/inertia";
 import { ref } from "vue";
 import { useForm } from "@inertiajs/inertia-vue3";
+import { Link } from "@inertiajs/inertia-vue3";
 
 const props = defineProps({
     adminInfo: {
@@ -121,7 +122,8 @@ const submit = () => {
                     </div>
                 </div>
                 <div class="flex justify-between py-8">
-                    <button
+                    <Link :href="route('admin.destroy',form.id)"  method="delete"> 
+                                        <button
                         class="py-2 px-5 text-whiteTextColor text-md bg-redTextColor rounded-xl flex items-center"
                     >
                         <img
@@ -131,6 +133,9 @@ const submit = () => {
                         />
                         <span class="mx-2">Delete</span>
                     </button>
+                    
+                    </Link>
+
                     <button
                         class="py-2 px-5 text-whiteTextColor text-md bg-blueTextColor rounded-xl flex items-center"
                     >

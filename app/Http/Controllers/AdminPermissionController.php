@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\MPage;
 use App\Models\MRole;
+use App\Models\MRolePage;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Route;
+use Illuminate\Support\Facades\Redirect;
 
 class AdminPermissionController extends Controller
 {
@@ -13,8 +16,13 @@ class AdminPermissionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(){
-        $pages = MPage::where('del_flg',0)->get();
+    public function index()
+    {
+        // $routeList = Route::getRoutes();
+
+        // dd($routeList);
+
+        $pages = MPage::where('del_flg', 0)->get();
 
         $role_pages = MRole::all();
 
@@ -22,9 +30,9 @@ class AdminPermissionController extends Controller
             $role_page->page;
         }
 
-        return inertia('AdminPermission',[
-            'role_page'=>$role_pages,
-            'pages'=>$pages
+        return inertia('AdminPermission', [
+            'role_page' => $role_pages,
+            'pages' => $pages
         ]);
     }
 
@@ -46,7 +54,17 @@ class AdminPermissionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $rolePage = new MRolePage();
+        MRolePage::truncate();
+
+        for ($i = 0; $i < count($request->lists); $i++) {
+            $rolePage = new MRolePage();
+            $rolePage->m_page_id = $request->lists[$i]["pageId"];
+            $rolePage->m_role_id = $request->lists[$i]["roleId"];
+            $rolePage->save();
+        }
+
+        return Redirect::route('adminPermission.index');
     }
 
     /**

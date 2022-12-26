@@ -55,7 +55,7 @@ console.log(props.guides);
                 
 
                 <!-- <Pagination/> -->
-        <!-- <Link :href="route('guideTools.create')"> -->
+        <Link :href="route('guideTool.create')">
                 <div
                     class="absolute text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-xl text-sm px-5 py-2.5 mr-2 mb-2 bottom-5 right-3 focus:outline-none">
                     <a href="#" class="flex flex-row justify-center items-center space-x-3">
@@ -66,7 +66,7 @@ console.log(props.guides);
                         </button>
                     </a>
                 </div>
-                 <!-- </Link> -->
+                 </Link>
             </div>
         </div>
     </div>
