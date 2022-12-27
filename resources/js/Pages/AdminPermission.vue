@@ -2,6 +2,7 @@
 import NavBar from "../Components/NavBar.vue";
 import Header from "../Components/Header.vue";
 import Pagination from "../Components/Pagination.vue";
+import Notisuccess from "../Components/Notisuccuss.vue";
 import { Inertia } from "@inertiajs/inertia";
 import { ref } from "vue";
 import { Link, useForm } from "@inertiajs/inertia-vue3";
@@ -14,6 +15,8 @@ const props = defineProps({
         type: Object,
     },
 });
+
+// console.log(props.role_page)
 
 const form = useForm({
     lists: null,
@@ -62,8 +65,17 @@ const submit = () => {
         onError: (data) => {
             console.log(data);
         },
+        onSuccess: (data) => {
+            showNoti.value = true;
+
+            setTimeout(() => {
+                showNoti.value = false;
+            }, 2000);
+        }
     });
 };
+
+let showNoti = ref(false);
 
 form.lists = checkList;
 </script>
@@ -72,7 +84,11 @@ form.lists = checkList;
     <NavBar />
     <Header headername="Admin Permission" />
 
-    <div class="absolute h-full w-5/6 p-5 headercustomleft top-32 customblack">
+    <div class="absolute h-auto w-5/6 p-5 headercustomleft top-32 customblack">
+        <div class="absolute right-0 z-10">
+            <Notisuccess v-if="showNoti"/>
+        </div>
+
         <form @submit.prevent="submit">
             <div
                 class="w-full h-auto p-8 relative bg-secondaryBackground rounded-xl flex flex-col space-y-5"
@@ -125,15 +141,15 @@ form.lists = checkList;
                 <div class="flex justify-between mt-5">
                     <div class="flex space-x-5">
                         <Link
-                            href="/addPage"
+                            href="/pageList"
                             class="py-2 px-5 text-whiteTextColor text-sm bg-blueTextColor rounded-xl flex items-center"
                         >
-                            <img
+                            <!-- <img
                                 src="../../../public/img/plus.png"
                                 alt=""
                                 class="w-5 h-5 pt-0.5"
-                            />
-                            <span class="mx-2">Add Page</span>
+                            /> -->
+                            <span class="mx-2">Page List</span>
                         </Link>
                         <Link
                             href="/addRole"

@@ -71,7 +71,7 @@ const submit_public = () => {
 // TabChange
 let openTab = ref(1);
 
-let showNoti = ref(true);
+let showNoti = ref(false);
 </script>
 
 <template>
@@ -83,7 +83,7 @@ let showNoti = ref(true);
     <div
         class="absolute top-32 headercustomleft w-5/6 h-auto bg-primaryBackground items-center flex flex-col"
     >
-        <div v-if="$page.props.flash.message" class="fixed z-50 right-10">
+        <div v-if="$page.props.flash.message" class="absolute z-50 right-10">
 
             <Notisuccuss v-if="showNoti"/>
         </div>

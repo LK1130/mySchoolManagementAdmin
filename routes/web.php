@@ -42,6 +42,7 @@ Route::get('/', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 });
+
 Route::get('/classview/{id?}', [viewclassController::class, "getclassdata"])->name("class.view");
 Route::get('/classsorting/{name?}', [viewclassController::class, "classsorting"])->name("class.sorting");
 Route::get('/classscategory/{id?}', [viewclassController::class, "classcategory"])->name("class.category");
@@ -68,22 +69,20 @@ Route::post('/setting/upload_public', [SettingController::class, 'upload_public'
 Route::get('/setting', [SettingController::class, 'index'])->name("setting.index");
 
 
-Route::resource('admin' , AdminController::class);
-Route::get('/login',function(){
+Route::resource('admin', AdminController::class);
+Route::get('/login', function () {
     return inertia("Admin/AdLogin");
 });
-Route::post('/login',[LoginController::class,'store'])->name('login.store');
+Route::post('/login', [LoginController::class, 'store'])->name('login.store');
 // Route::get('/addadmin',function(){
 //     return inertia("AddAdmin");
 // });
 // Route::get('/editadmin',function(){
 //     return inertia("EditAdmin");
 // });
+
 // Start Tools
-// Route::get('/mailTool', function () {
-//     return inertia("MailTool");
-// });
-Route::get('/addguide',function(){
+Route::get('/addguide', function () {
     return inertia("Addguide");
 });
 Route::resource('mailTool', MailToolController::class);
@@ -91,15 +90,14 @@ Route::resource('privacypolicyTool', PrivacyPolicyController::class);
 Route::resource('categoryTool', CategoryToolController::class);
 Route::resource('guideTool', GuideToolController::class);
 Route::resource('blogTool', BlogToolController::class);
-
 // End Tools
 
 // Start Admin Permission
-Route::resource('adminPermission',AdminPermissionController::class);
+Route::resource('adminPermission', AdminPermissionController::class);
 
 Route::resource('addRole', AddRoleController::class);
 
-Route::resource('addPage',AddPageController::class);
+Route::resource('pageList', AddPageController::class);
 // End Admin Permission
 
 // Route::get('/addInstructor', function () {

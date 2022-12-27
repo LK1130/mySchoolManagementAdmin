@@ -4,15 +4,22 @@ import Header from "../Components/Header.vue";
 import Pagination from "../Components/Pagination.vue";
 import { Inertia } from "@inertiajs/inertia";
 import { ref } from "vue";
-import { useForm } from "@inertiajs/inertia-vue3";
+import { Link, useForm } from "@inertiajs/inertia-vue3";
+
+const props = defineProps({
+    page: {
+        type: Object,
+    },
+});
 
 const form = useForm({
-    page_name: null,
-    page_route: null,
+    page_id: props.page.id,
+    page_name: props.page.p_name,
+    page_route: props.page.p_route,
 });
 
 const submit = () => {
-    Inertia.post(route("pageList.store"), form, {
+    Inertia.put(route("pageList.update", form.page_id), form, {
         onError: (data) => {
             console.log(data);
         },
@@ -22,7 +29,7 @@ const submit = () => {
 
 <template>
     <NavBar />
-    <Header headername="Add Page" />
+    <Header headername="Edit Page" />
 
     <div
         class="absolute h-full w-5/6 p-5 headercustomleft top-32 customblack bg-white"
@@ -57,7 +64,19 @@ const submit = () => {
                     </div>
                 </div>
 
-                <div class="flex justify-end mt-5">
+                <div class="flex justify-around mt-10">
+                    <Link
+                        :href="route('pageList.destroy', form.page_id)"
+                        method="delete"
+                        class="py-2 px-5 text-whiteTextColor text-sm bg-redTextColor rounded-xl flex items-center"
+                    >
+                        <img
+                            src="../../../public/img/delete.png"
+                            alt=""
+                            class="w-5 h-5 pt-0.5"
+                        />
+                        <span class="mx-2">Delete</span>
+                    </Link>
                     <button
                         type="submit"
                         class="py-2 px-5 text-whiteTextColor text-sm bg-blueTextColor rounded-xl flex items-center"
@@ -67,7 +86,7 @@ const submit = () => {
                             alt=""
                             class="w-5 h-5 pt-0.5"
                         />
-                        <span class="mx-2">Add Page</span>
+                        <span class="mx-2">Update</span>
                     </button>
                 </div>
             </div>
