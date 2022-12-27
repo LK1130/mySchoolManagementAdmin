@@ -12,6 +12,9 @@ const props = defineProps({
     sorttype : {
         type : Object
     },
+      categories : {
+        type : Object
+    },
 })
 const datesplit = (data) => {
   const fullday = [];
@@ -106,18 +109,20 @@ const bafcolor = (start, end) => {
 const form = useForm({
     sorting: props.sorttype,
 });
-const categoryform = useForm({
-    categoryids:null,
-});
-
 const submit = () => {
  form.get(route('class.sorting',form.sorting));
 };
-const categoryselect = () => {
-categoryform.categoryids=categoryid
- console.log(categoryid)
-//  categoryform.get(route('class.category',categoryid));
-};
+watch(
+    selectedItem,
+    throttle(function (value) {
+        console.log(value);
+        Inertia.get(
+            "/students",
+            { selectedItem: value.join("-") },
+            { preserveState: true, replace: true }
+        );
+    }, 200)
+);
 </script>
 
 <template >
@@ -130,23 +135,21 @@ categoryform.categoryids=categoryid
       class="text-white sm:text-sm text-xs popfont flex justify-between px-4"
     >
       <div>
-        <span>
-          <input
-            type="checkbox"
-            class="css-checkbox"
-            id="checkbox1"
-            checked="checked"
-            value="2"
-            v-model="categoryid"
-            @click="categoryselect"
-          />
-          <label
-            for="checkbox1"
-            class="css-label lite-gray-check sm:text-base text-xs"
-            >Japanese</label
-          >
-        </span>
-        <span class="sm:ml-3 ml-0 sm:mt-0 mt-2">
+              <span v-for="category in categories" :key="categories" class="ml-2">
+                    <input
+                        type="checkbox"
+                        class="css-checkbox"
+                        :id="category.id"
+                        checked="checked"
+                        :value="category.id"
+                    />
+                    <label
+                        :for="category.id"
+                        class="css-label lite-gray-check sm:text-base text-xs"
+                        >{{ category.c_name }}</label
+                    >
+                </span>
+        <!-- <span class="sm:ml-3 ml-0 sm:mt-0 mt-2">
           <input
             type="checkbox"
             class="css-checkbox"
@@ -178,7 +181,7 @@ categoryform.categoryids=categoryid
             class="css-label lite-gray-check sm:text-base text-xs"
             >Java</label
           >
-        </span>
+        </span> -->
       </div>
 
       <div class="dopd">

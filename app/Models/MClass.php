@@ -29,6 +29,13 @@ class MClass extends Model
             ->get();
     }
 
+    public function category()
+    {
+        return  DB::table("m_categories")
+            ->select('*')
+            ->get();    
+    }
+
     public function get_class()
     {
         return DB::table('m_classes')

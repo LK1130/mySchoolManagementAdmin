@@ -16,8 +16,18 @@ class MGuide extends Model
             ->first();
     }
 
-    public function guideStep()
-    {
-        return $this->hasMany(MGuideStep::class, "guide_id", "id");
+
+
+    public function addData($request){
+        
+        $guide = new MGuide();
+        $guide->g_title = $request->guidetitle;
+        $guide->save();
+    }
+    public function getLastData($data){
+       return DB::table('m_guides')
+        ->where('g_title',$data)
+        ->get();
+        
     }
 }

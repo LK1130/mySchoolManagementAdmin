@@ -82,9 +82,12 @@ Route::post('/login', [LoginController::class, 'store'])->name('login.store');
 // });
 
 // Start Tools
-Route::get('/addguide', function () {
-    return inertia("Addguide");
-});
+// Route::get('/mailTool', function () {
+//     return inertia("MailTool");
+// });
+// Route::get('/addguide',function(){
+//     return inertia("Addguide");
+// });
 Route::resource('mailTool', MailToolController::class);
 Route::resource('privacypolicyTool', PrivacyPolicyController::class);
 Route::resource('categoryTool', CategoryToolController::class);

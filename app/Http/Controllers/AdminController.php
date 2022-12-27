@@ -134,6 +134,11 @@ class AdminController extends Controller
      */
     public function destroy($id)
     {
-        //
+        
+        $delAdmin = new MAdmin();
+        $delAdmin->deleteAdmin($id);
+
+
+        return Redirect::route('admin.index');
     }
 }

@@ -18,7 +18,8 @@ class ClassController extends Controller
     {
        $class=new MClass();
        $classdata=$class->get_class();
-       return inertia("Class",['dclass' => $classdata,'sorttype'=>"status"]);
+       $category=$class->category();
+       return inertia("Class",['dclass' => $classdata,'sorttype'=>"status",'categories'=>$category]);
     }
 
     /**
