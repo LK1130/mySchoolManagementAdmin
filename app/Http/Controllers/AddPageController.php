@@ -53,7 +53,7 @@ class AddPageController extends Controller
 
         $page = new MPage();
         $page->p_name = $request->page_name;
-        $page->p_route = $request->page_route;
+        $page->p_route = strtolower($request->page_route);
         $page->save();
 
         return Redirect::route('pageList.index');

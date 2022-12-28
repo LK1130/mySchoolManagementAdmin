@@ -2,6 +2,9 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\MPage;
+use App\Models\MRole;
+use App\Models\MRolePage;
 use Closure;
 use Illuminate\Http\Request;
 
@@ -16,6 +19,16 @@ class CheckRole
      */
     public function handle(Request $request, Closure $next)
     {
-        return $next($request);
+        if ($request->session()->has('adminId') && $request->session()->has('roleId')) {
+            $page = MPage::where('p_route', $request->path())->first();
+            $rolepage = MRolePage::where('m_page_id', $page->id)
+                ->where('m_role_id', session()->get('roleId'))->get();
+
+             if(count($rolepage) == 0){
+                abort(403);
+             };
+            return $next($request);
+        }
+        return redirect('/login');
     }
 }
