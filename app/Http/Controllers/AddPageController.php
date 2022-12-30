@@ -15,7 +15,17 @@ class AddPageController extends Controller
      */
     public function index()
     {
-        return inertia('AddPage');
+        $pages = MPage::where('del_flg', 0)
+            ->orderBy('updated_at', 'desc')
+            ->paginate(5);
+
+        foreach ($pages as  $page) {
+            $page->role;
+        }
+
+        return inertia('PageList', [
+            'pages' => $pages
+        ]);
     }
 
     /**
@@ -25,7 +35,7 @@ class AddPageController extends Controller
      */
     public function create()
     {
-        //
+        return inertia('AddPage');
     }
 
     /**
@@ -43,10 +53,10 @@ class AddPageController extends Controller
 
         $page = new MPage();
         $page->p_name = $request->page_name;
-        $page->p_route = $request->page_route;
+        $page->p_route = strtolower($request->page_route);
         $page->save();
 
-        return Redirect::route('adminPermission.index');
+        return Redirect::route('pageList.index');
     }
 
     /**
@@ -68,7 +78,11 @@ class AddPageController extends Controller
      */
     public function edit($id)
     {
-        //
+        $page = MPage::find($id);
+
+        return inertia('EditPage', [
+            'page' => $page
+        ]);
     }
 
     /**
@@ -80,7 +94,17 @@ class AddPageController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'page_name' => 'required',
+            'page_route' => 'required'
+        ]);
+
+        $page = MPage::find($id);
+        $page->p_name = $request->page_name;
+        $page->p_route = $request->page_route;
+        $page->save();
+
+        return Redirect::route('pageList.index');
     }
 
     /**
@@ -91,6 +115,10 @@ class AddPageController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $page = MPage::find($id);
+        $page->del_flg = 1;
+        $page->save();
+
+        return Redirect::route('pageList.index');
     }
 }
