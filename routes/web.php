@@ -96,7 +96,7 @@ Route::post('/login', [LoginController::class, 'store'])->name('login.store');
     // });
     
     // Start Tools
-    Route::resource('mailTool', MailToolController::class)->middleware('checkRole');
+    Route::resource('mailTool', MailToolController::class);
     Route::resource('privacypolicyTool', PrivacyPolicyController::class);
     Route::resource('categoryTool', CategoryToolController::class);
     Route::resource('guideTool', GuideToolController::class);

@@ -41,12 +41,12 @@
                              </h1>
                              <p class="my-2 text-gray-800 dark:text-secondaryBackground">Sorry about that! Please visit our hompage to get where you need to go.</p>
                              <button class="sm:w-full lg:w-auto my-2 border rounded md py-4 px-8 text-center bg-blue-700 text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-700 focus:ring-opacity-50 dark:bg-darkSecondaryBackground">
-                                 <a href="./homepage">
+                                 <a href="/home">
                                  Take me there!</a></button>
                          </div>
                      </div>
                      <div>
-                         <p class="text-9xl opacity-20">404</p>
+                         <p class="text-5xl opacity-20">Permission <br> Denied</p>
                      </div>
                  </div>
              </div>

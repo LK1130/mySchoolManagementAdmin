@@ -35,36 +35,42 @@ const classes = computed(() => {
             <div
                 class="flex flex-row ml-1 text-white mt-7 lg:justify-start justify-center"
             >
-                <img
-                    src="../../../public/img/dashboardicon.png"
-                    alt=""
-                    class="w-7 h-7"
-                />
-                <span class="text-lg ml-6 pt-1  lg:block hidden"
-                    >Dashboard</span
-                >
+                <Link href="home" class="flex">
+                    <img
+                        src="../../../public/img/dashboardicon.png"
+                        alt=""
+                        class="w-7 h-7"
+                    />
+                    <span class="text-lg ml-6 pt-1 lg:block hidden"
+                        >Dashboard</span
+                    >
+                </Link>
             </div>
             <div
                 class="flex flex-row text-white mt-4 lg:justify-start justify-center"
             >
-                <img
-                    src="../../../public/img/courseicon.png"
-                    alt=""
-                    class="w-7 h-7"
-                />
-                <span class="text-lg ml-5 pt-1 lg:block hidden">Class</span>
+                <Link href="class" class="flex">
+                    <img
+                        src="../../../public/img/courseicon.png"
+                        alt=""
+                        class="w-7 h-7"
+                    />
+                    <span class="text-lg ml-5 pt-1 lg:block hidden">Class</span>
+                </Link>
             </div>
             <div
                 class="flex flex-row text-white mt-4 lg:justify-start justify-center"
             >
-                <img
-                    src="../../../public/img/studenticon.png"
-                    alt=""
-                    class="w-7 h-7"
-                />
-                <span class="text-lg ml-6 pt-1 lg:block hidden">
-                    <Link :href="route('students.index')">Student</Link>
-                </span>
+                <Link :href="route('students.index')" class="flex">
+                    <img
+                        src="../../../public/img/studenticon.png"
+                        alt=""
+                        class="w-7 h-7"
+                    />
+                    <span class="text-lg ml-6 pt-1 lg:block hidden">
+                        Student
+                    </span>
+                </Link>
             </div>
             <div
                 class="flex flex-row text-white mt-4 lg:justify-start justify-center"
@@ -79,6 +85,7 @@ const classes = computed(() => {
             <div
                 class="flex flex-row text-white mt-4 lg:justify-start justify-center"
             >
+            <Link :href="route('instructors.index')" class="flex">
                 <img
                     src="../../../public/img/instructoricon.png"
                     alt=""
@@ -87,8 +94,9 @@ const classes = computed(() => {
                 <span class="text-lg ml-6 pt-1 lg:block hidden"
                     >Instructor</span
                 >
+            </Link>
             </div>
-             <div
+            <div
                 class="flex flex-row text-white mt-4 lg:justify-start justify-center"
             >
                 <img
@@ -96,10 +104,9 @@ const classes = computed(() => {
                     alt=""
                     class="w-7 h-7"
                 />
-                <span class="text-lg ml-6 pt-1  lg:block hidden"
-                    >
-                    <Link href="/admin"> Admins</Link> </span
-                >
+                <span class="text-lg ml-6 pt-1 lg:block hidden">
+                    <Link href="/admin"> Admins</Link>
+                </span>
             </div>
             <hr class="w-3/4 mt-12 lg:mx-0 mx-auto" />
             <div
@@ -126,27 +133,6 @@ const classes = computed(() => {
                     ><Link :href="route('mailTool.index')">Tools</Link></span
                 >
             </div>
-        </div>
-
-        <div
-            class="flex justify-center items-center md:flex-row flex-col md:space-x-4 space-y-2 sm:mt-10 md:mt-20 mt-28"
-        >
-            <img
-                src="../../../public/img/facebooklogo.png"
-                alt=""
-                class="w-8 h-8 md:mt-2"
-            />
-            <img src="../../../public/img/youtubelogo.png" alt="" class="w-8" />
-            <img
-                src="../../../public/img/messangerlogo.png"
-                alt=""
-                class="w-8"
-            />
-        </div>
-        <div
-            class="text-white flex justify-center font-semibold mt-2 sm:text-base customfsize"
-        >
-            Copyright @ exbrain
         </div>
     </div>
 </template>
