@@ -6,6 +6,7 @@ use App\Models\MGuide;
 use App\Models\MGuideStep;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
 
 class GuideToolController extends Controller
 {
@@ -45,21 +46,20 @@ class GuideToolController extends Controller
      */
     public function store(Request $request)
     {
-        
-        dd($request);
+   
         $request->validate([
             'guidetitle'=> 'unique:m_guides,g_title|required'
         ]);
-        echo("<pre>");
+
         $addguide = new MGuide();
         $addguide->g_title = $request->guidetitle;
-       // $addguide->save();
-        var_dump($request->files[1]);
+       $addguide->save();
+        
         $steps = [];
         for ($step=0; $step < count( $request->steptitle) ; $step++) { 
            $gStep = new MGuideStep();
            
-           $file = $request->files->step_file[$steps][0];
+           $file = $request->step_file[$step][0];
            $guidephoto = $file->storePublicly("Guide", ['disk' => 'public']);
         //    dd($guidephoto);
            $gStep->step =  $step+1;
@@ -68,7 +68,6 @@ class GuideToolController extends Controller
            $gStep->step_photo = $guidephoto;
            array_push($steps, $gStep);
         }
-
         $addguide->guideStep()->saveMany($steps);
         return Redirect::route('guideTool.index');
     }
