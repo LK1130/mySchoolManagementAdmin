@@ -30,7 +30,7 @@ const props = defineProps({
                     <th class="pt-4">SETTING</th>
                 </tr>
                 <tbody class="text-sm customfontsize">
-                    <tr class="cusborder" v-for="admin in props.admins.data" :key="admin">
+                    <tr class="cusborder  " v-for="admin in props.admins.data" :key="admin">
                         <td class="text-start pl-10 py-2">{{admin.name}}</td>
                         <td class="text-center">{{ admin.email }}</td>
                         <td class="text-center" >{{ admin.r_name}}</td>
@@ -47,13 +47,6 @@ const props = defineProps({
         <div
             class="flex flex-col space-y-7 md:flex-row w-full md:justify-between px-5 items-start md:items-center text-white"
                 >
-            <div class="w-14">
-                <button>
-                    <a class="underline underline-offset-4 hidden md:block"
-                        >BACK</a
-                    >
-                </button>
-            </div>
             <div class="flex justify-center items-center mb-10"></div>
             <Link :href="route('admin.create')">
                 <div

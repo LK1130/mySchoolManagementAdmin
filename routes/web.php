@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AddPageController;
 use App\Http\Controllers\AddRoleController;
+use App\Http\Controllers\AddVideoController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdminPermissionController;
 use App\Http\Controllers\BlogToolController;
@@ -65,14 +66,13 @@ Route::get('/home', function () {
 Route::get('/classview/{id?}', [viewclassController::class, "getclassdata"])->name("class.view");
 // Route::get('/classsorting/{name?}', [viewclassController::class, "classsorting"])->name("class.sorting");
 Route::get('/classscategory/{id?}', [viewclassController::class, "classcategory"])->name("class.category");
-Route::get('/addvideo', function () {
-    return Inertia::render('AddVideo');
-});
+
 
 Route::resource('/class', ClassController::class);
 
 
 Route::resource('/students', StudentController::class);
+Route::resource('/addvideo',AddVideoController::class);
 
 
 Route::resource('/instructors', InstructorController::class);

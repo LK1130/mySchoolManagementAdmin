@@ -5,13 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class TLectureNote extends Model
+class M_Video extends Model
 {
-
-    public function mvideos()
-    {
-        return $this->belongsTo(M_Video::class);
-    }
-
     use HasFactory;
+
+    public function TLectureNote()
+    {
+        return $this->hasMany(TLectureNote::class);
+    }
 }
