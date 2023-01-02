@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class MClass extends Model
 {
@@ -35,37 +36,56 @@ class MClass extends Model
             ->select('*')
             ->get();    
     }
-
     public function get_class($selectedItem = [], $sorting = "")
     {
-        // $data= DB::table('m_classes')
-        //     ->join('m_instructors', 'm_classes.instructor_id', '=', 'm_instructors.id')
-        //     ->selectRaw('m_classes.id, m_classes.c_name, m_classes.c_day, m_classes.c_start_time, m_classes.c_end_time, m_classes.c_fees, m_instructors.i_name')
-        //     ->where('m_classes.del_flg',0)
-        //     ->get();
-            if(empty($selectedItem) && empty($sorting)){
-                return DB::table('m_classes')
-                ->join('m_instructors', 'm_classes.instructor_id', '=', 'm_instructors.id')
-                ->selectRaw('m_classes.id, m_classes.c_name, m_classes.c_day, m_classes.c_start_time, m_classes.c_end_time, m_classes.c_fees, m_instructors.i_name')
-                ->orderBy('m_classes.c_start_time', 'desc')
-                ->where('m_classes.del_flg',0)
-                ->get();
-            }
+        $data= DB::table('m_classes')
+            ->join('m_instructors', 'm_classes.instructor_id', '=', 'm_instructors.id')
+            ->leftjoin('t_student_classes', 'm_classes.id', '=', 't_student_classes.class_id')
+            ->selectRaw("COUNT('t_student_classes.class_id') AS StudenyCount,m_classes.id, m_classes.c_name, m_classes.c_day, m_classes.c_start_time, m_classes.c_end_time, m_classes.c_fees, m_instructors.i_name")
+            ->where('m_classes.del_flg',0)
+            ->groupBy("m_classes.id")
+            ->get();
+            return $data;
+        //     $data->when(empty($selectedItem) && empty($sorting),function($data){
+        //          return $data->selectRaw("COUNT('t_student_classes.class_id') AS Class,m_classes.id, m_classes.c_name, m_classes.c_day, m_classes.c_start_time, m_classes.c_end_time, m_classes.c_fees, m_instructors.i_name");
+        //     });
+            // if(empty($selectedItem) && empty($sorting)){
+            //     return DB::table('m_classes')
+            //     ->join('m_instructors', 'm_classes.instructor_id', '=', 'm_instructors.id')
+            //     ->selectRaw('m_classes.id, m_classes.c_name, m_classes.c_day, m_classes.c_start_time, m_classes.c_end_time, m_classes.c_fees, m_instructors.i_name')
+            //     ->orderBy('m_classes.c_start_time', 'desc')
+            //     ->where('m_classes.del_flg',0)
+            //     ->get();
+            // }
+            // if(!empty($selectedItem)){
+            //     return DB::table('m_classes')
+            //     ->join('m_instructors', 'm_classes.instructor_id', '=', 'm_instructors.id')
+            //     ->selectRaw('m_classes.id,m_classes.category_id, m_classes.c_name, m_classes.c_day, m_classes.c_start_time, m_classes.c_end_time, m_classes.c_fees, m_instructors.i_name')
+            //     ->whereIn('m_classes.category_id',$selectedItem)
+            //     ->where('m_classes.del_flg',0)
+            //     ->get();
+            // }
+            // if(!empty($sorting)){
+            //     switch ($sorting) {
+            //         case 'status':
+            //             return DB::table('m_classes')
+            //             ->join('m_instructors', 'm_classes.instructor_id', '=', 'm_instructors.id')
+            //             ->selectRaw('m_classes.id,m_classes.category_id, m_classes.c_name, m_classes.c_day, m_classes.c_start_time, m_classes.c_end_time, m_classes.c_fees, m_instructors.i_name')
+            //             ->orderBy('m_classes.c_start_time', 'desc')
+            //             ->where('m_classes.del_flg',0)
+            //             ->get();
+            //             break;                 
+            //         case 'name':
+            //             return DB::table('m_classes')
+            //             ->join('m_instructors', 'm_classes.instructor_id', '=', 'm_instructors.id')
+            //             ->selectRaw('m_classes.id,m_classes.category_id, m_classes.c_name, m_classes.c_day, m_classes.c_start_time, m_classes.c_end_time, m_classes.c_fees, m_instructors.i_name')
+            //             ->orderBy('m_classes.c_name', 'asc')
+            //             ->where('m_classes.del_flg',0)
+            //             ->get();
+            //             break;
+            //     }
+        }
 
-            // $data->when(empty($selectedItem) && empty($sorting), function ($data) {
-
-            //     return $data;
-            // });
-    }
-    // public function get_classbyname()
-    // {
-    //     return DB::table('m_classes')
-    //         ->join('m_instructors', 'm_classes.instructor_id', '=', 'm_instructors.id')
-    //         ->select('m_classes.id', 'm_classes.c_name', 'm_classes.c_day', 'm_classes.c_start_time', 'm_classes.c_end_time', 'm_classes.c_fees', 'm_instructors.i_name')
-    //         ->orderBy('m_classes.c_name', 'asc')
-    //         ->where('m_classes.del_flg',0)
-    //         ->get();
-    // }
     public function get_classdetail($id)
     {
        return DB::table('m_classes')
@@ -156,20 +176,22 @@ class MClass extends Model
             'updated_by'=>"0"
         ]);
 
-        
-        // foreach ($studentids as $ids) {
-        //     DB::table('t_student_classes')
-        //     ->insert([
-        //         'id' => $id,
-        //         'user_id' => $ids,
-        //         'start_join' =>Date('Y-m-d h:i:s'),
-        //         'paid_fees' => 00,
-        //         'remain_fees' => 00,
-        //         'updated_at'=>Date('Y-m-d h:i:s'),
-        //         'updated_by'=>"0",
-        //         'created_by'=>"0"
-        //     ]);
-        // };
+        DB::table('t_student_classes')
+        ->where('class_id',$id)
+        ->delete();
+        foreach ($studentids as $ids) {
+            DB::table('t_student_classes')
+            ->insert([
+                'class_id' => $id,
+                'user_id' => $ids,
+                'start_join' =>Date('Y-m-d h:i:s'),
+                'paid_fees' => 00,
+                'remain_fees' => 00,
+                'updated_at'=>Date('Y-m-d h:i:s'),
+                'updated_by'=>"0",
+                'created_by'=>"0"
+            ]);
+        };
 
     }
 }

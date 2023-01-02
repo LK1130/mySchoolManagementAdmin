@@ -24,11 +24,28 @@ const props = defineProps({
     studentsids: {
         type : Object
     },
+    date1: {
+        type : Object
+    },
+        date2: {
+        type : Object
+    },
+        date3: {
+        type : Object
+    },
+        date4: {
+        type : Object
+    },
+        date5: {
+        type : Object
+    },
+        date6: {
+        type : Object
+    },
+            date7: {
+        type : Object
+    },
 })
-// const forceRerender = () => {
-//     reload.value += 1;
-// };
-
 
 
 const form = useForm({
@@ -59,10 +76,36 @@ const toarry=(a)=>{
  a.forEach(element => {
   testarry[arrycount++]=element.user_id
  });
-//  forceRerender();
+
 }
+const adddate=()=>{
+  if (props.date1==1) {
+    form.day1=true;
+  }
+    if (props.date2==1) {
+    form.day2=true;
+  }
+    if (props.date3==1) {
+    form.day3=true;
+  }
+    if (props.date4==1) {
+    form.day4=true;
+  }
+    if (props.date5==1) {
+    form.day5=true;
+  }
+    if (props.date6==1) {
+    form.day6=true;
+  }
+    if (props.date7==1) {
+    form.day7=true;
+  }
+  
+}
+adddate();
 toarry(props.studentsids);
 var studentid = ref(testarry);
+var testdate=true;
 
 var checkedcd=true
 var day=props.classdata[0].c_day
@@ -134,25 +177,25 @@ const submit = () => {
         </div>
       <div class="mt-3  flex flex-row ">Day: 
        <span class="flex flex-wrap mt-0.5 sm:text-sm text-xs">  
-       <input type="checkbox" name="checkbox1" v-model="form.day1" value="1" class="daycheckbox mt-0.5 ml-3" checked/>
+       <input type="checkbox"  v-model="form.day1" value="1" class="daycheckbox mt-0.5 ml-3" checked/>
        <label for="" class="ml-2">SUN</label>
        
-       <input type="checkbox" name="checkbox2" v-model="form.day2" value="1" class="daycheckbox mt-0.5 ml-3" checked/>
+       <input type="checkbox"  v-model="form.day2" value="1" class="daycheckbox mt-0.5 ml-3" checked/>
        <label for="" class="ml-2">Mon</label>
 
-       <input type="checkbox" name="checkbox3" v-model="form.day3" value="1" class="daycheckbox mt-0.5 ml-3"/>
+       <input type="checkbox"  v-model="form.day3" value="1" class="daycheckbox mt-0.5 ml-3"/>
        <label for="" class="ml-2">TUE</label>
 
-       <input type="checkbox" name="checkbox4" v-model="form.day4" value="1" class="daycheckbox mt-0.5 ml-3"/>
+       <input type="checkbox"  v-model="form.day4" value="1" class="daycheckbox mt-0.5 ml-3"/>
        <label for="" class="ml-2">WED</label>
 
-       <input type="checkbox" name="checkbox5" v-model="form.day5" value="1" class="daycheckbox mt-0.5 ml-3"/>
+       <input type="checkbox"  v-model="form.day5" value="1" class="daycheckbox mt-0.5 ml-3"/>
        <label for="" class="ml-2">THU</label>
 
      <input type="checkbox" name="checkbox6" v-model="form.day6" value="1" class="daycheckbox mt-0.5 ml-3"/>
        <label for="" class="ml-2">FRI</label>
 
-       <input type="checkbox" name="checkbox7" v-model="form.day7" value="1" class="daycheckbox mt-0.5 ml-3"/>
+       <input type="checkbox"  v-model="form.day7" value="1" class="daycheckbox mt-0.5 ml-3"/>
        <label for="" class="ml-2">SAT</label>
 
        </span>
@@ -225,7 +268,14 @@ const submit = () => {
 <span class="ml-2 sm:text-base text-xs sm:pt-0 pt-1" >Save</span>
 </button>
 </form>
-<!-- <div class="text-white hidden">{{toarry(studentsids)}}</div> -->
+<div class="text-white">{{props.day}}</div>
+<div class="text-white">{{props.date1}}</div>
+<div class="text-white">{{props.date2}}</div>
+<div class="text-white">{{props.date3}}</div>
+<div class="text-white">{{props.date4}}</div>
+<div class="text-white">{{props.date5}}</div>
+<div class="text-white">{{props.date6}}</div>
+<div class="text-white">{{props.date7}}</div>
 </div>
 </template>
 <style scoped>
