@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\MClass;
+use Illuminate\Http\Client\Request as ClientRequest;
 use Illuminate\Http\Request;
 use Nette\Utils\Strings;
 use PhpParser\Node\Expr\Cast\String_;
@@ -14,11 +15,16 @@ class ClassController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-       $class=new MClass();
-       $classdata=$class->get_class();
-       return inertia("Class",['dclass' => $classdata,'sorttype'=>"status"]);
+        $checked = $request->selectedItem;
+        $sorting = $request->sorting;
+        $class=new MClass();
+        $classdata = ($request->selectedItem) ?
+        $class->get_class(explode("-", $checked))
+        : $class->get_class("",$sorting );
+       $category=$class->category();
+       return inertia("Class",['dclass' => $classdata,'sorttype'=>"status",'categories'=>$category]);
     }
 
     /**

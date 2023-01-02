@@ -23,7 +23,10 @@ class LoginController extends Controller
             ]);
             // dd($admin);
             if(Hash::check($request->password , $admin->password)){
-                return redirect('/');
+                session()->put('adminId', $admin->id);
+                session()->put('roleId', $admin->role_id);
+
+                return redirect('/home');
             }else{
                return redirect()->back()->with('message','Your password did not match');
             };

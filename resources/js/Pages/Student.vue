@@ -6,7 +6,7 @@ import { Link, Head } from "@inertiajs/inertia-vue3";
 import { ref, watch } from "vue";
 import { Inertia } from "@inertiajs/inertia";
 import throttle from "lodash/throttle";
-import { prop, value } from "dom7";
+// import { prop, value } from "dom7";
 
 let props = defineProps({
     allStudents: Object,

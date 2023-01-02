@@ -29,35 +29,81 @@ class MClass extends Model
             ->get();
     }
 
-    public function get_class()
+    public function category()
     {
-        return DB::table('m_classes')
-            ->join('m_instructors', 'm_classes.instructor_id', '=', 'm_instructors.id')
-            ->select('m_classes.id', 'm_classes.c_name', 'm_classes.c_day', 'm_classes.c_start_time', 'm_classes.c_end_time', 'm_classes.c_fees', 'm_instructors.i_name')
-            ->orderBy('m_classes.c_start_time', 'desc')
-            ->where('m_classes.del_flg',0)
-            ->get();
-    }
-    public function get_classbyname()
-    {
-        return DB::table('m_classes')
-            ->join('m_instructors', 'm_classes.instructor_id', '=', 'm_instructors.id')
-            ->select('m_classes.id', 'm_classes.c_name', 'm_classes.c_day', 'm_classes.c_start_time', 'm_classes.c_end_time', 'm_classes.c_fees', 'm_instructors.i_name')
-            ->orderBy('m_classes.c_name', 'asc')
-            ->where('m_classes.del_flg',0)
-            ->get();
-    }
-    public function get_classdetail($id)
-    {
-        return DB::table('m_classes')
-            ->join('m_instructors', 'm_classes.instructor_id', '=', 'm_instructors.id')
-            ->join('m_categories', 'm_classes.category_id', '=', 'm_categories.id')
-            ->select('m_classes.id', 'm_classes.c_name as cname', 'm_categories.c_name', 'm_classes.c_profile', 'm_classes.c_description', 'm_classes.c_date', 'm_classes.c_start_time', 'm_classes.c_end_time', 'm_classes.c_fees', 'm_classes.c_start_date', 'm_classes.c_end_date', 'm_instructors.i_name')
-            ->where('m_classes.id', $id)
-            ->get();
+        return  DB::table("m_categories")
+            ->select('*')
+            ->get();    
     }
 
-    public function addclass(Request $request, $date, $img, $studentids)
+    public function get_class($selectedItem = [], $sorting = "")
+    {
+        // $data= DB::table('m_classes')
+        //     ->join('m_instructors', 'm_classes.instructor_id', '=', 'm_instructors.id')
+        //     ->selectRaw('m_classes.id, m_classes.c_name, m_classes.c_day, m_classes.c_start_time, m_classes.c_end_time, m_classes.c_fees, m_instructors.i_name')
+        //     ->where('m_classes.del_flg',0)
+        //     ->get();
+            if(empty($selectedItem) && empty($sorting)){
+                return DB::table('m_classes')
+                ->join('m_instructors', 'm_classes.instructor_id', '=', 'm_instructors.id')
+                ->selectRaw('m_classes.id, m_classes.c_name, m_classes.c_day, m_classes.c_start_time, m_classes.c_end_time, m_classes.c_fees, m_instructors.i_name')
+                ->orderBy('m_classes.c_start_time', 'desc')
+                ->where('m_classes.del_flg',0)
+                ->get();
+            }
+
+            // $data->when(empty($selectedItem) && empty($sorting), function ($data) {
+
+            //     return $data;
+            // });
+    }
+    // public function get_classbyname()
+    // {
+    //     return DB::table('m_classes')
+    //         ->join('m_instructors', 'm_classes.instructor_id', '=', 'm_instructors.id')
+    //         ->select('m_classes.id', 'm_classes.c_name', 'm_classes.c_day', 'm_classes.c_start_time', 'm_classes.c_end_time', 'm_classes.c_fees', 'm_instructors.i_name')
+    //         ->orderBy('m_classes.c_name', 'asc')
+    //         ->where('m_classes.del_flg',0)
+    //         ->get();
+    // }
+    public function get_classdetail($id)
+    {
+       return DB::table('m_classes')
+        ->where('id',$id)
+        ->get();
+    }
+    public function get_classdate($id)
+    {
+       return DB::table('m_classes')
+        ->select('c_day')
+        ->where('id',$id)
+        ->first();
+    }
+    public function get_classdata($id)
+    {
+       return DB::table('m_classes')
+        ->join('m_instructors','m_classes.instructor_id','=','m_instructors.id')
+        ->join('m_categories','m_classes.category_id','=','m_categories.id')
+        ->select('m_classes.id','m_classes.c_name as cname','m_categories.c_name','m_classes.c_profile','m_classes.c_description', 'm_classes.c_day', 'm_classes.c_start_time', 'm_classes.c_end_time', 'm_classes.c_fees', 'm_classes.c_start_date', 'm_classes.c_end_date','m_instructors.i_name')
+        ->where('m_classes.id',$id)
+        ->get();
+    }
+    public function get_eachclassstudents($id)
+    {
+       return DB::table('t_student_classes')
+        ->join('users','t_student_classes.user_id','=','users.id')
+        ->select('t_student_classes.start_join', 'users.name', 't_student_classes.paid_fees', 't_student_classes.remain_fees')
+        ->where('t_student_classes.class_id',$id)
+        ->get();
+    }
+    public function get_studentid($id)
+    {
+       return DB::table('t_student_classes')
+        ->select( 'user_id')
+        ->where('class_id',$id)
+        ->get();
+    }
+    public function addclass(Request $request,$date,$img,$studentids)
     {
         $id = DB::table('m_classes')
             ->insertGetId([
@@ -78,14 +124,15 @@ class MClass extends Model
 
         foreach ($studentids as $ids) {
             DB::table('t_student_classes')
-                ->insert([
-                    'id' => $id,
-                    'user_id' => $ids,
-                    'paid_fees' => 00,
-                    'remain_fees' => 00,
-                    'created_at' => Date('Y-m-d h:i:s'),
-                    'created_by' => "0"
-                ]);
+            ->insert([
+                'class_id' => $id,
+                'user_id' => $ids,
+                'start_join' =>Date('Y-m-d h:i:s'),
+                'paid_fees' => 00,
+                'remain_fees' => 00,
+                'created_at'=>Date('Y-m-d h:i:s'),
+                'created_by'=>"0"
+            ]);
         };
     }
 

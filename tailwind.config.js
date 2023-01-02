@@ -6,6 +6,7 @@ module.exports = {
         './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
         './vendor/laravel/jetstream/**/*.blade.php',
         './storage/framework/views/*.php',
+        './resources/views/errors/*.blade.php',
         './resources/views/**/*.blade.php',
         './resources/js/**/*.vue',
         './resources/js/Pages/Admin/*.vue',

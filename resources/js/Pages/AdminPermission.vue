@@ -2,6 +2,7 @@
 import NavBar from "../Components/NavBar.vue";
 import Header from "../Components/Header.vue";
 import Pagination from "../Components/Pagination.vue";
+import Notisuccess from "../Components/Notisuccuss.vue";
 import { Inertia } from "@inertiajs/inertia";
 import { ref } from "vue";
 import { Link, useForm } from "@inertiajs/inertia-vue3";
@@ -14,6 +15,8 @@ const props = defineProps({
         type: Object,
     },
 });
+
+// console.log(props.role_page)
 
 const form = useForm({
     lists: null,
@@ -62,8 +65,17 @@ const submit = () => {
         onError: (data) => {
             console.log(data);
         },
+        onSuccess: (data) => {
+            showNoti.value = true;
+
+            setTimeout(() => {
+                showNoti.value = false;
+            }, 2000);
+        },
     });
 };
+
+let showNoti = ref(false);
 
 form.lists = checkList;
 </script>
@@ -72,7 +84,11 @@ form.lists = checkList;
     <NavBar />
     <Header headername="Admin Permission" />
 
-    <div class="absolute h-full w-5/6 p-5 headercustomleft top-32 customblack">
+    <div class="absolute h-auto w-5/6 p-5 headercustomleft top-32 customblack">
+        <div class="absolute right-0 z-10">
+            <Notisuccess v-if="showNoti" />
+        </div>
+
         <form @submit.prevent="submit">
             <div
                 class="w-full h-auto p-8 relative bg-secondaryBackground rounded-xl flex flex-col space-y-5"
@@ -84,36 +100,41 @@ form.lists = checkList;
                     :id="role.id"
                 >
                     <div
-                        class="flex items-center justify-center border-r border-white py-5 w-32"
+                        class="flex items-center justify-center border-r border-white py-5 w-56"
                     >
                         <p class="text-white text-xl">
                             {{ role.r_name }}
                         </p>
                     </div>
-                    <div
-                        class="flex items-center px-7 py-2"
-                        v-for="page in props.pages"
-                        :key="page"
-                    >
-                        <div class="flex flex-col items-center mx-5">
-                            <p class="text-white">{{ page.p_name }}</p>
-                            <input
-                                type="checkbox"
-                                name="role.id[]"
-                                class="mt-1"
-                                checked
-                                v-if="
-                                    role.page.find((obj) => obj.id === page.id)
-                                "
-                                @click="checkpage(role.id, page.id)"
-                            />
-                            <input
-                                type="checkbox"
-                                @click="checkpage(role.id, page.id)"
-                                class="mt-1"
-                                v-else
-                                :id="page.id"
-                            />
+
+                    <div class="flex items-center overflow-x-auto py-2">
+                        <div
+                            class="flex items-center px-7 py-2"
+                            v-for="page in props.pages"
+                            :key="page"
+                        >
+                            <div class="flex flex-col items-center mx-5">
+                                <p class="text-white whitespace-nowrap">{{ page.p_name }}</p>
+                                <input
+                                    type="checkbox"
+                                    name="role.id[]"
+                                    class="mt-1"
+                                    checked
+                                    v-if="
+                                        role.page.find(
+                                            (obj) => obj.id === page.id
+                                        )
+                                    "
+                                    @click="checkpage(role.id, page.id)"
+                                />
+                                <input
+                                    type="checkbox"
+                                    @click="checkpage(role.id, page.id)"
+                                    class="mt-1"
+                                    v-else
+                                    :id="page.id"
+                                />
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -125,15 +146,15 @@ form.lists = checkList;
                 <div class="flex justify-between mt-5">
                     <div class="flex space-x-5">
                         <Link
-                            href="/addPage"
+                            href="/pageList"
                             class="py-2 px-5 text-whiteTextColor text-sm bg-blueTextColor rounded-xl flex items-center"
                         >
-                            <img
+                            <!-- <img
                                 src="../../../public/img/plus.png"
                                 alt=""
                                 class="w-5 h-5 pt-0.5"
-                            />
-                            <span class="mx-2">Add Page</span>
+                            /> -->
+                            <span class="mx-2">Page List</span>
                         </Link>
                         <Link
                             href="/addRole"

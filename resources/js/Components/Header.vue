@@ -28,8 +28,8 @@
                     </div>
                 </div>
                 <img
-                    src="../../../public/img/php-developer.jpg"
-                    alt=""
+                    src=""
+                    alt="Your Profile Image"
                     class="sm:w-16 w-10 sm:h-16 h-10 rounded-full"
                 />
             </div>

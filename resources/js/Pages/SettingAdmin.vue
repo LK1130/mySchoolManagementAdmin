@@ -71,7 +71,7 @@ const submit_public = () => {
 // TabChange
 let openTab = ref(1);
 
-let showNoti = ref(true);
+let showNoti = ref(false);
 </script>
 
 <template>
