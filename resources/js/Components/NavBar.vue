@@ -85,16 +85,16 @@ const classes = computed(() => {
             <div
                 class="flex flex-row text-white mt-4 lg:justify-start justify-center"
             >
-            <Link :href="route('instructors.index')" class="flex">
-                <img
-                    src="../../../public/img/instructoricon.png"
-                    alt=""
-                    class="w-7 h-7"
-                />
-                <span class="text-lg ml-6 pt-1 lg:block hidden"
-                    >Instructor</span
-                >
-            </Link>
+                <Link :href="route('instructors.index')" class="flex">
+                    <img
+                        src="../../../public/img/instructoricon.png"
+                        alt=""
+                        class="w-7 h-7"
+                    />
+                    <span class="text-lg ml-6 pt-1 lg:block hidden"
+                        >Instructor</span
+                    >
+                </Link>
             </div>
             <div
                 class="flex flex-row text-white mt-4 lg:justify-start justify-center"
@@ -105,8 +105,22 @@ const classes = computed(() => {
                     class="w-7 h-7"
                 />
                 <span class="text-lg ml-6 pt-1 lg:block hidden">
-                    <Link href="/admin"> Admins</Link>
+                    <Link href="/admin">Admins</Link>
                 </span>
+            </div>
+            <div
+                class="flex flex-row text-white mt-4 lg:justify-start justify-center"
+            >
+                <Link :href="route('adminPermission.index')" class="flex">
+                    <img
+                        src="../../../public/img/instructoricon.png"
+                        alt=""
+                        class="w-7 h-7"
+                    />
+                    <span class="text-lg ml-6 pt-1 lg:block hidden"
+                        >Admin Permission</span
+                    >
+                </Link>
             </div>
             <hr class="w-3/4 mt-12 lg:mx-0 mx-auto" />
             <div
@@ -132,6 +146,20 @@ const classes = computed(() => {
                 <span class="text-lg ml-7 pt-1 lg:block hidden"
                     ><Link :href="route('mailTool.index')">Tools</Link></span
                 >
+            </div>
+            <div
+                class="flex flex-row text-white mt-4 lg:justify-start justify-center"
+            >
+                <Link href="/logout" class="flex">
+                    <img
+                        src="../../../public/img/toolicon.png"
+                        alt=""
+                        class="w-7 h-7"
+                    />
+                    <span class="text-lg ml-7 pt-1 lg:block hidden"
+                        >Logout</span
+                    >
+                </Link>
             </div>
         </div>
     </div>
