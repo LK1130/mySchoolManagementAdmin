@@ -83,7 +83,7 @@ let showNoti = ref(true);
     <div
         class="absolute top-32 headercustomleft w-5/6 h-auto bg-primaryBackground items-center flex flex-col"
     >
-        <div v-if="$page.props.flash.message" class="fixed z-50 right-10">
+        <div v-if="$page.props.flash.message" class="absolute z-50 right-10">
 
             <Notisuccuss v-if="showNoti"/>
         </div>
@@ -311,6 +311,7 @@ let showNoti = ref(true);
                         >
                         <input
                             @input="form_public.logos = $event.target.files[0]"
+                            @change="showImagePreview($event)" 
                             class="block w-5/6 h-9 border rounded-xl cursor-pointer file:h-full file:rounded-l-sm file:border-0 file:mr-1.5"
                             id="file_input"
                             type="file"
@@ -467,3 +468,31 @@ let showNoti = ref(true);
         </div>
     </div>
 </template>
+<script>
+export default {
+    name: "ImageUploader",
+    data() {
+        return {
+            imageFile: null,
+            input: null,
+            isImageUploading: false,
+        };
+    },
+    methods: {
+        showImagePreview(event) {
+            this.input = event.target;
+            if (this.input.files && this.input.files[0]) {
+                let reader = new FileReader();
+                console.log(this.input.files[0]);
+                reader.onload = (e) => {
+                    console.log(this.imageFile);
+                    this.imageFile = e.target.result;
+                };
+                console.log(this.input.files[0]);
+                reader.readAsDataURL(this.input.files[0]);
+            }
+        },
+    },
+};
+
+</script>
