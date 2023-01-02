@@ -10,7 +10,7 @@ class TLectureNote extends Model
 
     public function mvideos()
     {
-        return $this->belongsTo(M_Video::class);
+        return $this->belongsTo(MVideo::class);
     }
 
     use HasFactory;
