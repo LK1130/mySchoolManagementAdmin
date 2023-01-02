@@ -7,5 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class TLectureNote extends Model
 {
+
+    public function mvideos()
+    {
+        return $this->belongsTo(MVideo::class);
+    }
+
     use HasFactory;
 }

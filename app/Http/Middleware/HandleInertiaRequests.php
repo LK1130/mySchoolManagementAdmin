@@ -2,6 +2,8 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\MAdmin;
+use App\Models\MRole;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -36,11 +38,26 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
+
+        $admin = MAdmin::find(session()->get('adminId'));
+        $role = MRole::find(session()->get('roleId'));
+
+        if ($admin == null || $role == null) {
+            $admin = "";
+            $role = "";
+        } else {
+            $admin = $admin->name;
+            $role = $role->r_name;
+        }
         return array_merge(parent::share($request), [
             'flash' => [
                 'message' => fn () => $request->session()->get('message'),
                 'pmessage' => fn () => $request->session()->get('message')
             ],
+            'auth' => [
+                'username' => ($request->path() == "login") ? "" : $admin,
+                'userrole' => ($request->path() == "login") ? "" : $role
+            ]
         ]);
     }
 }

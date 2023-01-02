@@ -71,7 +71,7 @@ const submit = () => {
             setTimeout(() => {
                 showNoti.value = false;
             }, 2000);
-        }
+        },
     });
 };
 
@@ -86,7 +86,7 @@ form.lists = checkList;
 
     <div class="absolute h-auto w-5/6 p-5 headercustomleft top-32 customblack">
         <div class="absolute right-0 z-10">
-            <Notisuccess v-if="showNoti"/>
+            <Notisuccess v-if="showNoti" />
         </div>
 
         <form @submit.prevent="submit">
@@ -100,36 +100,41 @@ form.lists = checkList;
                     :id="role.id"
                 >
                     <div
-                        class="flex items-center justify-center border-r border-white py-5 w-32"
+                        class="flex items-center justify-center border-r border-white py-5 w-56"
                     >
                         <p class="text-white text-xl">
                             {{ role.r_name }}
                         </p>
                     </div>
-                    <div
-                        class="flex items-center px-7 py-2"
-                        v-for="page in props.pages"
-                        :key="page"
-                    >
-                        <div class="flex flex-col items-center mx-5">
-                            <p class="text-white">{{ page.p_name }}</p>
-                            <input
-                                type="checkbox"
-                                name="role.id[]"
-                                class="mt-1"
-                                checked
-                                v-if="
-                                    role.page.find((obj) => obj.id === page.id)
-                                "
-                                @click="checkpage(role.id, page.id)"
-                            />
-                            <input
-                                type="checkbox"
-                                @click="checkpage(role.id, page.id)"
-                                class="mt-1"
-                                v-else
-                                :id="page.id"
-                            />
+
+                    <div class="flex items-center overflow-x-auto py-2">
+                        <div
+                            class="flex items-center px-7 py-2"
+                            v-for="page in props.pages"
+                            :key="page"
+                        >
+                            <div class="flex flex-col items-center mx-5">
+                                <p class="text-white whitespace-nowrap">{{ page.p_name }}</p>
+                                <input
+                                    type="checkbox"
+                                    name="role.id[]"
+                                    class="mt-1"
+                                    checked
+                                    v-if="
+                                        role.page.find(
+                                            (obj) => obj.id === page.id
+                                        )
+                                    "
+                                    @click="checkpage(role.id, page.id)"
+                                />
+                                <input
+                                    type="checkbox"
+                                    @click="checkpage(role.id, page.id)"
+                                    class="mt-1"
+                                    v-else
+                                    :id="page.id"
+                                />
+                            </div>
                         </div>
                     </div>
                 </div>

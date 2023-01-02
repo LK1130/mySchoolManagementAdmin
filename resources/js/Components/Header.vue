@@ -22,14 +22,14 @@
                 class="flex flex-row text-white 2xl:ml-80 xl:ml-60 lg:ml-40 md:ml-20 ml-0 sm:mt-7 mt-10"
             >
                 <div class="mt-1.5 sm:mr-3 mr-1 sm:ml-5 ml-0">
-                    <div class="sm:text-base text-xs">Linn Ko Ko</div>
+                    <div class="sm:text-base text-xs">{{ $page.props.auth.username }}</div>
                     <div class="opacity-80 text-right sm:text-base text-xs">
-                        Admin
+                        {{ $page.props.auth.userrole }}
                     </div>
                 </div>
                 <img
-                    src="../../../public/img/php-developer.jpg"
-                    alt=""
+                    src=""
+                    alt="Your Profile Image"
                     class="sm:w-16 w-10 sm:h-16 h-10 rounded-full"
                 />
             </div>

@@ -6,6 +6,7 @@ use App\Models\MGuide;
 use App\Models\MGuideStep;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
 
 class GuideToolController extends Controller
 {
@@ -21,7 +22,6 @@ class GuideToolController extends Controller
         
         $guides = MGuide::where("del_flg",0)
         ->paginate(5);
-
         foreach ($guides as $guide) {
             $guide->guideStep;
         }
@@ -46,24 +46,30 @@ class GuideToolController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
+   
         $request->validate([
             'guidetitle'=> 'unique:m_guides,g_title|required'
         ]);
-        // dd(count($request->steptitle));
-        $addguide = new MGuide();
-        $addguide->addData($request);
-        // for ($i=0; $i < count($request->steptitle); $i++) { 
-        //     $addstep  = new  MGuideStep();
-        // $addstep->addStep($request->steptitle[$i]);
-        // $addstep->addStep($request->description[$i]);
-        // $addguide->addStep((int)$i);
-        // }
-        $data = $addguide->getLastData($request->guidetitle);
-        // dd($data);
-        $addstep  = new  MGuideStep();
-        $addstep->addStep($request,$data[0]->id);
 
+        $addguide = new MGuide();
+        $addguide->g_title = $request->guidetitle;
+       $addguide->save();
+        
+        $steps = [];
+        for ($step=0; $step < count( $request->steptitle) ; $step++) { 
+           $gStep = new MGuideStep();
+           
+           $file = $request->step_file[$step][0];
+           $guidephoto = $file->storePublicly("Guide", ['disk' => 'public']);
+        //    dd($guidephoto);
+           $gStep->step =  $step+1;
+           $gStep->step_title =   $request->steptitle[$step];
+           $gStep->step_description = $request->description[$step];
+           $gStep->step_photo = $guidephoto;
+           array_push($steps, $gStep);
+        }
+        $addguide->guideStep()->saveMany($steps);
+        return Redirect::route('guideTool.index');
     }
 
     /**
@@ -85,9 +91,9 @@ class GuideToolController extends Controller
      */
     public function edit($id)
     {
-        $guides = new MGuide();
-        $guidesInfo = $guides->searchById($id);
-
+        $guides = MGuide::find($id);
+        $guides->guideStep;
+        return inertia("EditGuide",["guideInfo"=> $guides]);
         // return $privacypolicysInfo;
         // return inertia('EditGuide',['guideInfo' => $guidesInfo]);
     }
@@ -101,7 +107,21 @@ class GuideToolController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $update =MGuide::find($id);
+        $update->g_title = $request->guidetitle;
+        $update->save();
+        MGuideStep::where("guide_id",$id)->delete();
+
+        $steps = [];
+        for ($step=0; $step < count( $request->steptitle) ; $step++) { 
+           $gStep = new MGuideStep();
+           $gStep->step =  $step+1;
+           $gStep->step_title =   $request->steptitle[$step];
+           $gStep->step_description = $request->description[$step];
+           array_push($steps, $gStep);
+        }
+
+        $update->guideStep()->saveMany($steps);
     }
 
     /**
@@ -110,8 +130,22 @@ class GuideToolController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id )
     {
-        //
+        
+        $delguide = MGuide::find($id);
+        $delguide->del_flg = 1 ;
+        $delguide->save();
+        MGuideStep::where("guide_id",$id)
+            ->update(['del_flg'=>'1']);
+
+        // $steps = [];
+        // for ($step=0; $step < count( $request->steptitle) ; $step++) { 
+        //    $gStep = new MGuideStep();
+        //    $gStep->del_flg = 1 ;
+        //    array_push($steps, $gStep);
+        // }
+        
+            return Redirect::route("guideTool.index");
     }
 }
