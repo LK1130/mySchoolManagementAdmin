@@ -60,7 +60,7 @@ const dateshow = (data, count) => {
     }
 };
 
-defineProps({
+const porps = defineProps({
     canLogin: Boolean,
     canRegister: Boolean,
     laravelVersion: String,
@@ -81,7 +81,7 @@ defineProps({
     >
         <div class="flex flex-row mt-10 fixed sm:top-4 top-10 z-50 w-full">
             <div class="text-white font-bold sm:text-2xl text-sm">
-                {{ classdata[0].cname }}
+                {{ porps.classdata[0].cname }}
             </div>
             <a
                 :href="route('class.edit', classdata[0].id)"

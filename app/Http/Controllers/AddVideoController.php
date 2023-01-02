@@ -14,9 +14,7 @@ class AddVideoController extends Controller
      */
     public function index()
     {
-    //    $model = new MClass();
-    //     $classData = $model->getClasses();
-    //     dd($classData);
+
     }
 
     /**
@@ -26,10 +24,7 @@ class AddVideoController extends Controller
      */
     public function create()
     {
-        $model = new MClass();
-        $classData = $model->getClasses();
-
-       return inertia('AddVideo',['classDdata'=> $classData]);
+   
     }
 
     /**
@@ -40,7 +35,7 @@ class AddVideoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd($request);
     }
 
     /**
@@ -51,7 +46,9 @@ class AddVideoController extends Controller
      */
     public function show($id)
     {
-        //
+        $model = new MClass();
+        $classData = $model->getClasses($id);
+        return inertia('AddVideo',['classDdata'=> $classData]);
     }
 
     /**

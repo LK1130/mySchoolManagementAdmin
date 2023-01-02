@@ -141,10 +141,11 @@ class MClass extends Model
 
     }
 
-    public function getClasses()
+    public function getClasses($id)
     {
         return DB::table('m_classes')
         ->select('id','c_name')
+        ->where("id",$id)
         ->get();
     }
 }
