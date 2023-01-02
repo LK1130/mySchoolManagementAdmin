@@ -39,14 +39,13 @@ class HandleInertiaRequests extends Middleware
     public function share(Request $request): array
     {
 
-        $admin =MAdmin::find(session()->get('adminId'));
+        $admin = MAdmin::find(session()->get('adminId'));
         $role = MRole::find(session()->get('roleId'));
 
-
-        if($admin == null || $role == null){
+        if ($admin == null || $role == null) {
             $admin = "";
             $role = "";
-        }else{
+        } else {
             $admin = $admin->name;
             $role = $role->r_name;
         }
@@ -56,8 +55,8 @@ class HandleInertiaRequests extends Middleware
                 'pmessage' => fn () => $request->session()->get('message')
             ],
             'auth' => [
-                'username' => ($request->path()=="login") ? "": $admin,
-                'userrole' => ($request->path()=="login") ? "" : $role
+                'username' => ($request->path() == "login") ? "" : $admin,
+                'userrole' => ($request->path() == "login") ? "" : $role
             ]
         ]);
     }
