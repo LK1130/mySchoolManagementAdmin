@@ -8,7 +8,7 @@ import { Inertia } from "@inertiajs/inertia";
 const props = defineProps({
     classDdata: Object,
 });
-console.log(props.classDdata);
+// console.log(props.classDdata);
 
 const inputs = ref(1);
 const addInput = () => {
@@ -23,7 +23,8 @@ const removeInput = (index) => {
 };
 
 const form = useForm({
-    classId: props.classDdata[0].c_name,
+    className: props.classDdata[0].c_name,
+    classId: props.classDdata[0].id,
     videoName: null,
     description: null,
     date: null,
@@ -31,11 +32,19 @@ const form = useForm({
     storagelocation: null,
     lecturename: [],
     storagelink: [],
+    astoragelink: [],
     lecturelocation: [],
     lecturefile: [],
     input: inputs,
 });
 const submit = () => {
+    for (let i = 0; i < form.lecturename.length; i++) {
+        if (form.storagelink[i]) {
+            form.astoragelink.push(form.storagelink[i]);
+        } else {
+            form.astoragelink.push(null);
+        }
+    }
     console.log(form);
     Inertia.post(route("addvideo.store"), form, {
         onError: (data) => {
@@ -69,7 +78,7 @@ const submit = () => {
                                 >Class Name</label
                             >
                             <input
-                                v-model="form.classId"
+                                v-model="form.className"
                                 type="text"
                                 id="classname"
                                 class="focus:ring-white focus:border-white border-white text-white text-sm rounded-xl block w-5/6 bg-elementBackground p-2"
