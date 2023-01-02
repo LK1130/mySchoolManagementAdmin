@@ -13,5 +13,9 @@ import { ref } from "@vue/reactivity";
     <!---------------- body ----------------------->
     <div
         class="absolute h-5/6 w-5/6 headercustomleft top-32 bg-white flex justify-center items-center"
-    ></div>
+    >
+        <form @submit.prevent="submit">
+            
+        </form>
+    </div>
 </template>
