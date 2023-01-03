@@ -9,12 +9,25 @@ import { Link } from "@inertiajs/inertia-vue3";
 import Toolsbar from "../Components/Toolsbar.vue";
 
 const props = defineProps({
-    guideInfo : {
-        type : Object
+    guideInfo: {
+        type: Object,
     },
- 
 });
+// console.log(props.guideInfo);
+// console.log(props.guideInfo.guide_step.map(item => item.step_photo));
 
+let imageFile = ref(props.guideInfo.guide_step.map(item => "/storage/"+item.step_photo))
+// let input = null;
+// console.log(imageFile.value);
+// const showImagePreview = (event) => {
+//     input = event.target;
+//     if (input.files && input.files[0]) {
+//         const file = event.target.files[0];
+//         imageFile.value = URL.createObjectURL(file);
+//     }
+//     console.log(imageF);
+// };
+console.log(imageFile);
 const inputs = ref(props.guideInfo.guide_step.length);
 const addInput = () => {
     inputs.value += 1;
@@ -29,10 +42,12 @@ const removeInput = (index) => {
 const form = useForm({
     id: props.guideInfo.id,
     guidetitle: props.guideInfo.g_title,
-    stepid : props.guideInfo.guide_step.map(item => item.id),
-    steptitle: props.guideInfo.guide_step.map(item => item.step_title),
-    description: props.guideInfo.guide_step.map(item => item.step_description),
-    step_file: null,
+    stepid: props.guideInfo.guide_step.map((item) => item.id),
+    steptitle: props.guideInfo.guide_step.map((item) => item.step_title),
+    description: props.guideInfo.guide_step.map(
+        (item) => item.step_description
+    ),
+    step_file: props.guideInfo.guide_step.map(item => item.step_photo),
     input: inputs,
 });
 
@@ -50,7 +65,7 @@ const submit = () => {
 
 <template>
     <NavBar />
-    <Header headername="Guide" />
+    <Header headername="Edit Guide" />
 
     <div class="absolute h-full w-5/6 p-5 headercustomleft top-32 customblack">
         <Toolsbar active="5" />
@@ -81,8 +96,9 @@ const submit = () => {
                             <div
                                 class="pt-6 pr-20"
                                 @click="removeInput(input - 1)"
-                             v-show="input > 1">
-                                <button type="button" >
+                                v-show="input > 1"
+                            >
+                                <button type="button">
                                     <img
                                         src="../../../public/img/minus-circle.svg"
                                         alt=""
@@ -121,8 +137,7 @@ const submit = () => {
                             >
                             </textarea>
                         </div>
-                        <!-- Dropzone -->
-                        <!-- <div class="mt-5">
+                          <div class="mt-5">
                             <label for="" class="text-white text-lg"
                                 >File</label
                             >
@@ -132,12 +147,19 @@ const submit = () => {
                             class="flex items-center justify-center w-11/12 mt-5"
                         >
                             <label
-                                for="dropzone-file"
+                                :for="`dropzone-file${input - 1}`"
                                 class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
                             >
                                 <div
-                                    class="flex flex-col items-center justify-center pt-5 pb-6"
+                                    class="relative flex flex-col items-center justify-center pt-5 pb-6 overflow-hidden"
                                 >
+                                    <div class="flex absolute w-full">
+                                        <img
+                                            :src="imageFile[input-1]"
+                                            alt=""
+                                            class="w-full items-center"
+                                        />
+                                    </div>
                                     <svg
                                         aria-hidden="true"
                                         class="w-10 h-10 mb-3 text-gray-400"
@@ -159,7 +181,6 @@ const submit = () => {
                                         <span class="font-semibold"
                                             >Click to upload</span
                                         >
-                                        or drag and drop
                                     </p>
                                     <p
                                         class="text-xs text-gray-500 dark:text-gray-400"
@@ -168,12 +189,19 @@ const submit = () => {
                                     </p>
                                 </div>
                                 <input
-                                    id="dropzone-file"
+                                    :id="`dropzone-file${input - 1}`"
                                     type="file"
+                                    @input="
+                                        form.step_file[input - 1] =
+                                            $event.target.files
+                                    "
+                                   
+                                    accept="image/*"
                                     class="hidden"
                                 />
                             </label>
-                        </div> -->
+                        </div>
+
 
                         <!-- line -->
                         <hr
@@ -196,20 +224,22 @@ const submit = () => {
                 </div>
 
                 <div class="flex justify-between py-8">
-                    <Link :href="route('guideTool.destroy',form.id)"  method="delete">
-                     <button
-                        class="py-2 px-5 text-whiteTextColor text-md bg-redTextColor rounded-xl flex items-center"
+                    <Link
+                        :href="route('guideTool.destroy', form.id)"
+                        method="delete"
                     >
-                        <img
-                            src="../../../public/img/delete.png"
-                            alt=""
-                            class="w-5 h-5 pt-0.5"
-                        />
-                        <span class="mx-2">Delete</span>
-                    </button>
-                    
+                        <button
+                            class="py-2 px-5 text-whiteTextColor text-md bg-redTextColor rounded-xl flex items-center"
+                        >
+                            <img
+                                src="../../../public/img/delete.png"
+                                alt=""
+                                class="w-5 h-5 pt-0.5"
+                            />
+                            <span class="mx-2">Delete</span>
+                        </button>
                     </Link>
-                   
+
                     <button
                         class="py-2 px-5 text-whiteTextColor text-md bg-blueTextColor rounded-xl flex items-center"
                     >
@@ -224,13 +254,14 @@ const submit = () => {
             </form>
         </div>
         <div class="w-14 mt-20 ml-6">
-            
-                <button>
-                    <a href="/guideTool" class="underline underline-offset-4 hidden md:block text-white text-xl"
-                        >BACK</a
-                    >
-                </button>
-            </div>
+            <button>
+                <a
+                    href="/guideTool"
+                    class="underline underline-offset-4 hidden md:block text-white text-xl"
+                    >BACK</a
+                >
+            </button>
+        </div>
     </div>
 </template>
 

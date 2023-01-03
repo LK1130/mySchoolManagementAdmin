@@ -16,8 +16,10 @@ class AddVideoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
+        
+        // 
     }
 
     /**
@@ -37,7 +39,7 @@ class AddVideoController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
+        // dd($request);
 
         $request->validate([
             'videoName' => "required",
@@ -74,6 +76,7 @@ class AddVideoController extends Controller
             } else if ($request->astoragelink[$i] != null && $request->alecturefile[$i] == null) {
                 $ledb->l_storage_link = $request->astoragelink[$i];
                 $ledb->l_storage_location = $request->lecturelocation[$i];
+                // dd( $request->astoragelink[$i]);
             }
             array_push($lectureUpload, $ledb);
         }
@@ -90,7 +93,7 @@ class AddVideoController extends Controller
     public function show($id)
     {
         $model = new MClass();
-        $classData = $model->getClasses($id);
+        $classData = $model->getClasses($id)->where('del_flg', 0);
         return inertia('AddVideo', ['classDdata' => $classData]);
     }
 
@@ -104,9 +107,11 @@ class AddVideoController extends Controller
     {
 
         $video = MVideo::find($id);
+        $class = MClass::find($video->class_id);
         $video->TLectureNote;
-        dd($video);
-        return inertia('EditVideo', ["videoData" => $video]);
+        
+        // dd($video);
+        return inertia('EditVideo', ["videoData" => $video,'classDdata' => $class]);
     }
 
     /**
@@ -118,7 +123,7 @@ class AddVideoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        dd($request);
     }
 
     /**
@@ -129,6 +134,6 @@ class AddVideoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        dd($id);
     }
 }
