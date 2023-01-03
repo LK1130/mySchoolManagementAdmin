@@ -18,7 +18,7 @@ class AddVideoController extends Controller
      */
     public function index($id)
     {
-        
+
         // 
     }
 
@@ -109,9 +109,9 @@ class AddVideoController extends Controller
         $video = MVideo::find($id);
         $class = MClass::find($video->class_id);
         $video->TLectureNote;
-        
+
         // dd($video);
-        return inertia('EditVideo', ["videoData" => $video,'classDdata' => $class]);
+        return inertia('EditVideo', ["videoData" => $video, 'classDdata' => $class]);
     }
 
     /**
@@ -123,7 +123,51 @@ class AddVideoController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // dd($request);
+        $request->validate([
+            'videoName' => "required",
+            'description' => 'required',
+            'date' => 'required',
+            'storage' => 'required',
+            'storagelocation' => 'required',
+            'lecturename' => 'required'
+        ]);
+
+        $videoUpload = MVideo::find($id);
+        $videoUpload->v_name = $request->videoName;
+        $videoUpload->v_description = $request->description;
+        $videoUpload->v_date = $request->date;
+        $videoUpload->v_storage_link = $request->storage;
+        $videoUpload->v_storage_location = $request->storagelocation;
+        // $videoUpload->class_id = $request->classId;
+        $videoUpload->save();
         dd($request);
+        TLectureNote::where("video_id", $id)
+            ->delete();
+
+        // dd($request);
+        $lectureUpload = [];
+        for ($i = 0; $i < count($request->lecturename); $i++) {
+            $ledb = new TLectureNote();
+            $ledb->l_name = $request->lecturename[$i];
+            if ($request->alecturefile[$i] != null && $request->astoragelink[$i] == null) {
+                echo "<pre>";
+                var_dump($request->alecturefile[$i]);
+                $file = $request->alecturefile[$i][0];
+                // dd($file);
+                $fileupload = $file->storePublicly("Leacture", ['disk' => 'public']);
+                $ledb->l_storage_link = $fileupload;
+
+                // dd($fileupload);
+            } else if ($request->astoragelink[$i] != null && $request->alecturefile[$i] == null) {
+                $ledb->l_storage_link = $request->astoragelink[$i];
+                $ledb->l_storage_location = $request->lecturelocation[$i];
+                // dd( $request->astoragelink[$i]);
+            }
+            array_push($lectureUpload, $ledb);
+        }
+        $videoUpload->TLectureNote()->saveMany($lectureUpload);
+        return Redirect::route("class.index");
     }
 
     /**
@@ -134,6 +178,11 @@ class AddVideoController extends Controller
      */
     public function destroy($id)
     {
-        dd($id);
+        $videoUpload = MVideo::find($id);
+        $videoUpload->del_flg = 1;
+        $videoUpload->save();
+        TLectureNote::where("video_id", $id)
+            ->update(['del_flg' => '1']);
+        return Redirect::route("class.index");
     }
 }
