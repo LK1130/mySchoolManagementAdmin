@@ -60,7 +60,7 @@ class GuideToolController extends Controller
            $gStep = new MGuideStep();
            
            $file = $request->step_file[$step][0];
-        //    $guidephoto = $file->storePublicly("Guide", ['disk' => 'public']);
+           $guidephoto = $file->storePublicly("Guide", ['disk' => 'public']);
            $guidephoto = env("DO_URL")."/".Storage::disk('digitalocean')->put('guides', $file, 'public');
         //    dd($guidephoto);
            $gStep->step =  $step+1;
