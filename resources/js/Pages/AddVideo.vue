@@ -21,7 +21,7 @@ const removeInput = (index) => {
     form.lecturefile.splice(index, 1);
     inputs.value -= 1;
 };
-
+const dis = ref(1);
 const form = useForm({
     className: props.classDdata[0].c_name,
     classId: props.classDdata[0].id,
@@ -61,6 +61,18 @@ const submit = () => {
         },
     });
 };
+function fileOn(obj){
+    document.getElementById("rfile"+obj).disabled = true
+    document.getElementById("stlink"+obj).disabled = false;
+    document.getElementById("storagelocation"+obj).disabled = false;
+
+}
+function inputOn(obj){
+    document.getElementById("stlink"+obj).disabled = true;
+    document.getElementById("storagelocation"+obj).disabled = true;
+     document.getElementById("rfile"+obj).disabled = false;
+     console.log("a");
+}
 </script>
 
 <template>
@@ -230,49 +242,62 @@ const submit = () => {
                             <!-- FILE -->
                             <div class="sm:w-full sm:ml-4 mt-5 pl-7">
                                 <label
-                                    for="File"
+                                    :for="`rfile${input}`"
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                                     >File</label
                                 >
-
-                                <input
-                                    @input="
-                                        form.lecturefile[input - 1] =
-                                            $event.target.files
-                                    "
-                                    type="file"
-                                    class="block w-5/6 h-9 border rounded-xl cursor-pointer file:h-full file:rounded-l-sm file:border-0 file:mr-1.5"
-                                />
+                                <div class="flex flex-row">
+                                    <input
+                                        v-bind:class="{ disabled: dis==1}"
+                                        @input="
+                                            form.lecturefile[input - 1] =
+                                                $event.target.files
+                                        "
+                                        :id="`rfile${input}`"
+                                        disabled
+                                        type="file"
+                                        class="block w-5/6 h-9 border rounded-xl cursor-pointer file:h-full file:rounded-l-sm file:border-0 file:mr-1.5 "
+                                    />
+                                    <input type="radio" id="default-radio-1" class="ml-4 mt-2" :name="input" @click="inputOn(input)"/>
+                                </div>
+                            </div>
+                            <div class="flex mt-5 justify-center">
+                                <hr class="h-px w-3/12 mt-2" />
+                                <p class="text-white mx-5">OR</p>
+                                <hr class="h-px w-3/12 mt-2" />
                             </div>
                             <!-- storageLink -->
                             <div class="sm:w-full sm:ml-4 mt-5 pl-7">
                                 <label
-                                    for="stlink"
+                                    :for="`stlink${input}`"
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                                     >Storage Link</label
                                 >
                                 <input
                                     v-model="form.storagelink[input - 1]"
                                     type="text"
-                                    id="stlink"
-                                    class="focus:ring-white focus:border-white border-white text-white text-sm rounded-xl block w-5/6 bg-elementBackground p-2"
+                                    :id="`stlink${input}`"
+                                    class="focus:ring-white focus:border-white border-white text-white text-sm rounded-xl block w-5/6 bg-elementBackground p-2 "
                                     placeholder=""
                                 />
+                            </div>
+                            <div class="float-right pr-8">
+                                <input checked type="radio" id="default-radio-1" class="ml-4 mt-2" :name="input" @click="fileOn(input)"/>
                             </div>
                             <!-- Storage Location -->
                             <div class="pl-7 sm:w-full sm:ml-4 mt-5">
                                 <label
-                                    for="storagelocaton"
+                                    :for="`storagelocation${input}`"
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                                     >Storage location</label
                                 >
                                 <select
                                     v-model="form.lecturelocation[input - 1]"
                                     name=""
-                                    id="storagelocaton"
-                                    class="focus:ring-white focus:border-white border-white text-white text-sm rounded-xl block w-5/6 bg-elementBackground p-2"
+                                    :id="`storagelocation${input}`"
+                                    class="focus:ring-white focus:border-white border-white text-white text-sm rounded-xl block w-5/6 bg-elementBackground p-2 "
                                 >
-                                    <option value="Local Database">
+                                    <option value="Local Database" d>
                                         Local Database
                                     </option>
                                     <option value="Youtube">Youtube</option>
