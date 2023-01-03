@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\MBlog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
 
 class BlogToolController extends Controller
 {
@@ -39,6 +40,7 @@ class BlogToolController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->blog_file);
         $request->validate([
             'blog_title' => 'required',
             'blog_description' => 'required',
@@ -46,7 +48,8 @@ class BlogToolController extends Controller
         ]);
 
         $file = $request->blog_file;
-        $blog_image = $file->storePublicly("Blog", ['disk' => 'public']);
+        // $blog_image = $file->store("Blog", ['disk' => 'do']);
+        $blog_image = Storage::disk('do')->put("Blog",$file);
 
         $blogs = new MBlog();
         $blogs->insertData($request, $blog_image);
