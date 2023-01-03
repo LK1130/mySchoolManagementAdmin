@@ -90,7 +90,7 @@ class AddVideoController extends Controller
     public function show($id)
     {
         $model = new MClass();
-        $classData = $model->getClasses($id);
+        $classData = $model->getClasses($id)->where('del_flg', 0);
         return inertia('AddVideo', ['classDdata' => $classData]);
     }
 
@@ -103,7 +103,7 @@ class AddVideoController extends Controller
     public function edit($id)
     {
 
-        $video = MVideo::find($id);
+        $video = MVideo::find($id)->where('del_flg', 0);
         $video->TLectureNote;
         dd($video);
         return inertia('EditVideo', ["videoData" => $video]);

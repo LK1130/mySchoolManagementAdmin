@@ -12,8 +12,9 @@ class MStudent extends Model
 {
     use HasFactory;
 
-    public function getStudents(){
-        return $query = DB::table("users")->where('del_flg',0)->get();
+    public function getStudents()
+    {
+        return DB::table("users")->where('del_flg', 0)->get();
     }
 
 
@@ -29,6 +30,7 @@ class MStudent extends Model
             ->join("m_classes", "m_classes.id", "=", "t_student_classes.class_id")
             ->groupBy("t_student_classes.user_id");
 
+        // dd($selectedItem);
         $query->when(empty($selectedItem) && empty($search), function ($query) {
 
             return $query->selectRaw("COUNT('t_student_classes.class_id') AS Class,users.age,users.email,users.phone,users.address,users.name,users.id");
