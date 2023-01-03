@@ -107,9 +107,11 @@ class AddVideoController extends Controller
     {
 
         $video = MVideo::find($id);
+        $class = MClass::find($video->class_id);
         $video->TLectureNote;
-        dd($video);
-        return inertia('EditVideo', ["videoData" => $video]);
+        
+        // dd($video);
+        return inertia('EditVideo', ["videoData" => $video,'classDdata' => $class]);
     }
 
     /**
@@ -121,7 +123,7 @@ class AddVideoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        dd($request);
     }
 
     /**
@@ -132,6 +134,6 @@ class AddVideoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        dd($id);
     }
 }

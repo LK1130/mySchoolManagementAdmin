@@ -8,7 +8,7 @@ import { Inertia } from "@inertiajs/inertia";
 const props = defineProps({
     classDdata: Object,
 });
-// console.log(props.classDdata);
+console.log(props.classDdata);
 
 const inputs = ref(1);
 const addInput = () => {
@@ -62,14 +62,20 @@ const submit = () => {
     });
 };
 function fileOn(obj) {
-    document.getElementById("rfile" + obj).disabled = true;
-    document.getElementById("stlink" + obj).disabled = false;
-    document.getElementById("storagelocation" + obj).disabled = false;
+   document.getElementById("rfile"+obj).disabled = true
+    document.getElementById("stlink"+obj).disabled = false;
+    document.getElementById("storagelocation"+obj).disabled = false;
+    document.getElementById("rfile"+obj).value ="";
+    document.getElementById("stlink"+obj).required =true;
+    document.getElementById("storagelocation"+obj).required =true;
 }
 function inputOn(obj) {
-    document.getElementById("stlink" + obj).disabled = true;
-    document.getElementById("storagelocation" + obj).disabled = true;
-    document.getElementById("rfile" + obj).disabled = false;
+    document.getElementById("rfile"+obj).disabled = true
+    document.getElementById("stlink"+obj).disabled = false;
+    document.getElementById("storagelocation"+obj).disabled = false;
+    document.getElementById("rfile"+obj).value ="";
+    document.getElementById("stlink"+obj).required =true;
+    document.getElementById("storagelocation"+obj).required =true;
     console.log("a");
 }
 </script>
@@ -103,6 +109,7 @@ function inputOn(obj) {
                                 id="classname"
                                 class="focus:ring-white focus:border-white border-white text-white text-sm rounded-xl block w-5/6 bg-elementBackground p-2"
                                 placeholder=""
+                                disabled
                             />
                         </div>
                         <!-- Name -->
@@ -278,6 +285,7 @@ function inputOn(obj) {
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                                     >Storage Link</label
                                 >
+                                <div class="flex flex-row">
                                 <input
                                     v-model="form.storagelink[input - 1]"
                                     type="text"
@@ -285,8 +293,6 @@ function inputOn(obj) {
                                     class="focus:ring-white focus:border-white border-white text-white text-sm rounded-xl block w-5/6 bg-elementBackground p-2"
                                     placeholder=""
                                 />
-                            </div>
-                            <div class="float-right pr-8">
                                 <input
                                     checked
                                     type="radio"
@@ -295,7 +301,9 @@ function inputOn(obj) {
                                     :name="input"
                                     @click="fileOn(input)"
                                 />
+                                </div>
                             </div>
+                            
                             <!-- Storage Location -->
                             <div class="pl-7 sm:w-full sm:ml-4 mt-5">
                                 <label

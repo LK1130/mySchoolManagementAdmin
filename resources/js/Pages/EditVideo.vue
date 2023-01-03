@@ -6,11 +6,19 @@ import { ref } from "@vue/reactivity";
 import { Inertia } from "@inertiajs/inertia";
 
 const props = defineProps({
-    videodata : Object,
+    videoData: Object,
+    classDdata:Object
 });
-console.log(props.videodata);
+console.log(props.classDdata);
+console.log(props.videoData.t_lecture_note.map((item) => item.l_storage_link));
+console.log(props.videoData.v_date);
 
-const inputs = ref(1);
+const inputs = ref(props.videoData.t_lecture_note.length);
+const File = ref(
+    "/storage/" +
+        props.videoData.t_lecture_note.map((item) => item.l_storage_link)
+);
+console.log(File);
 const addInput = () => {
     inputs.value += 1;
 };
@@ -23,46 +31,64 @@ const removeInput = (index) => {
 };
 
 const form = useForm({
-    className: props.videodata,
-    classId: props.classDdata,
-    videoName: null,
-    description: null,
-    date: null,
-    storage: null,
-    storagelocation: null,
-    lecturename: [],
-    storagelink: [],
+    id: props.videoData.id,
+    className: props.classDdata.c_name,
+    classId: props.videoData,
+    videoName: props.videoData.v_name,
+    description: props.videoData.v_description,
+    date: props.videoData.v_date,
+    storage: props.videoData.v_storage_link,
+    storagelocation: props.videoData.v_storage_location,
+    lecturename: props.videoData.t_lecture_note.map((item) => item.l_name),
+    storagelink: props.videoData.t_lecture_note.map(
+        (item) => item.l_storage_link
+    ),
     astoragelink: [],
-    lecturelocation: [],
+    lecturelocation: props.videoData.t_lecture_note.map(
+        (item) => item.l_storage_location
+    ),
     lecturefile: [],
+    alecturefile: [],
     input: inputs,
 });
 const submit = () => {
+    form.astoragelink = [];
+    form.alecturefile = [];
     for (let i = 0; i < form.lecturename.length; i++) {
         if (form.storagelink[i]) {
             form.astoragelink.push(form.storagelink[i]);
         } else {
             form.astoragelink.push(null);
         }
+
+        if (form.lecturefile[i]) {
+            form.alecturefile.push(form.lecturefile[i]);
+        } else {
+            form.alecturefile.push(null);
+        }
     }
     console.log(form);
-    Inertia.post(route("addvideo.store"), form, {
+    Inertia.put(route("addvideo.update", form.id), form, {
         onError: (data) => {
             console.log(data);
         },
     });
 };
-function fileOn(obj){
-    document.getElementById("rfile"+obj).disabled = true
-    document.getElementById("stlink"+obj).disabled = false;
-    document.getElementById("storagelocation"+obj).disabled = false;
-
+function fileOn(obj) {
+    document.getElementById("rfile" + obj).disabled = true;
+    document.getElementById("stlink" + obj).disabled = false;
+    document.getElementById("storagelocation" + obj).disabled = false;
+    document.getElementById("rfile" + obj).value = "";
+    document.getElementById("stlink" + obj).required = true;
+    document.getElementById("storagelocation" + obj).required = true;
 }
-function inputOn(obj){
-    document.getElementById("stlink"+obj).disabled = true;
-    document.getElementById("storagelocation"+obj).disabled = true;
-     document.getElementById("rfile"+obj).disabled = false;
-     console.log("a");
+function inputOn(obj) {
+    document.getElementById("stlink" + obj).disabled = true;
+    document.getElementById("storagelocation" + obj).disabled = true;
+    document.getElementById("rfile" + obj).disabled = false;
+    document.getElementById("stlink" + obj).value = "";
+    document.getElementById("storagelocation" + obj).value = "";
+    document.getElementById("rfile" + obj).required = true;
 }
 </script>
 
@@ -72,7 +98,7 @@ function inputOn(obj){
     <Header headername="Edit Video" />
 
     <!---------------- body ----------------------->
-    <div class="absolute h-full w-5/6 p-5 headercustomleft top-32 customblack">
+    <div class="absolute h-auto w-5/6 p-5 headercustomleft top-32 customblack">
         <Toolsbar active="5" />
         <div
             class="w-full h-auto p-8 relative bg-secondaryBackground rounded-xl flex flex-col items-center"
@@ -90,11 +116,12 @@ function inputOn(obj){
                                 >Class Name</label
                             >
                             <input
-                                
+                            v-model="form.className"
                                 type="text"
                                 id="classname"
                                 class="focus:ring-white focus:border-white border-white text-white text-sm rounded-xl block w-5/6 bg-elementBackground p-2"
                                 placeholder=""
+                                disabled
                             />
                         </div>
                         <!-- Name -->
@@ -105,7 +132,7 @@ function inputOn(obj){
                                 >Name</label
                             >
                             <input
-                                
+                                v-model="form.videoName"
                                 type="text"
                                 id="Name"
                                 class="focus:ring-white focus:border-white border-white text-white text-sm rounded-xl block w-5/6 bg-elementBackground p-2"
@@ -120,7 +147,7 @@ function inputOn(obj){
                                 >Description</label
                             >
                             <textarea
-                                
+                                v-model="form.description"
                                 name=""
                                 id="description"
                                 class="resize-none focus:ring-white focus:border-white border-white text-white text-sm rounded-xl block w-5/6 bg-elementBackground p-2 h-40"
@@ -134,7 +161,7 @@ function inputOn(obj){
                                 >Date</label
                             >
                             <input
-                                
+                                v-model="form.date"
                                 type="date"
                                 id="Date"
                                 class="focus:ring-white focus:border-white border-white text-white text-sm rounded-xl block w-5/6 bg-elementBackground p-2"
@@ -149,7 +176,7 @@ function inputOn(obj){
                                 >Storage Link</label
                             >
                             <input
-                                
+                                v-model="form.storage"
                                 type="text"
                                 id="storage"
                                 class="focus:ring-white focus:border-white border-white text-white text-sm rounded-xl block w-5/6 bg-elementBackground p-2"
@@ -164,7 +191,7 @@ function inputOn(obj){
                                 >Storage location</label
                             >
                             <select
-                                
+                                v-model="form.storagelocation"
                                 name=""
                                 id="storagelocaton"
                                 class="focus:ring-white focus:border-white border-white text-white text-sm rounded-xl block w-5/6 bg-elementBackground p-2"
@@ -222,7 +249,7 @@ function inputOn(obj){
                                     >Lecture Name</label
                                 >
                                 <input
-                                    
+                                    v-model="form.lecturename[input - 1]"
                                     type="text"
                                     id="Lecturename"
                                     class="focus:ring-white focus:border-white border-white text-white text-sm rounded-xl block w-5/6 bg-elementBackground p-2"
@@ -239,14 +266,18 @@ function inputOn(obj){
                                 >
                                 <div class="flex flex-row">
                                     <input
-                                        
-                                        
                                         :id="`rfile${input}`"
                                         disabled
                                         type="file"
-                                        class="block w-5/6 h-9 border rounded-xl cursor-pointer file:h-full file:rounded-l-sm file:border-0 file:mr-1.5 "
+                                        class="block w-5/6 h-9 border rounded-xl cursor-pointer file:h-full file:rounded-l-sm file:border-0 file:mr-1.5"
                                     />
-                                    <input type="radio" id="default-radio-1" class="ml-4 mt-2" :name="input" @click="inputOn(input)"/>
+                                    <input
+                                        type="radio"
+                                        id="default-radio-1"
+                                        class="ml-4 mt-2"
+                                        :name="input"
+                                        @click="inputOn(input)"
+                                    />
                                 </div>
                             </div>
                             <div class="flex mt-5 justify-center">
@@ -261,17 +292,25 @@ function inputOn(obj){
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                                     >Storage Link</label
                                 >
+                                <div class="flex flex-row" >
                                 <input
-                                    
+                                    v-model="form.storagelink[input - 1]"
                                     type="text"
                                     :id="`stlink${input}`"
-                                    class="focus:ring-white focus:border-white border-white text-white text-sm rounded-xl block w-5/6 bg-elementBackground p-2 "
+                                    class="focus:ring-white focus:border-white border-white text-white text-sm rounded-xl block w-5/6 bg-elementBackground p-2"
                                     placeholder=""
                                 />
+                                    <input
+                                    checked
+                                    type="radio"
+                                    id="default-radio-1"
+                                    class="ml-4 mt-2"
+                                    :name="input"
+                                    @click="fileOn(input)"
+                                />
+                                </div>
                             </div>
-                            <div class="float-right pr-8">
-                                <input checked type="radio" id="default-radio-1" class="ml-4 mt-2" :name="input" @click="fileOn(input)"/>
-                            </div>
+                            
                             <!-- Storage Location -->
                             <div class="pl-7 sm:w-full sm:ml-4 mt-5">
                                 <label
@@ -280,10 +319,10 @@ function inputOn(obj){
                                     >Storage location</label
                                 >
                                 <select
-
+                                    v-model="form.lecturelocation[input - 1]"
                                     name=""
                                     :id="`storagelocation${input}`"
-                                    class="focus:ring-white focus:border-white border-white text-white text-sm rounded-xl block w-5/6 bg-elementBackground p-2 "
+                                    class="focus:ring-white focus:border-white border-white text-white text-sm rounded-xl block w-5/6 bg-elementBackground p-2"
                                 >
                                     <option value="Local Database" d>
                                         Local Database
@@ -302,7 +341,25 @@ function inputOn(obj){
                         </div>
                     </div>
                 </div>
-                <div class="flex float-right py-8">
+                <div class="flex justify-between py-8">
+                    
+                    <Link
+                        :href="route('addvideo.destroy', form.id)"
+                        method="delete"
+                    >
+                        <button
+                            class="py-2 px-5 text-whiteTextColor text-md bg-redTextColor rounded-xl flex items-center"
+                        >
+                            <img
+                                src="../../../public/img/delete.png"
+                                alt=""
+                                class="w-5 h-5 pt-0.5"
+                            />
+                            <span class="mx-2">Delete</span>
+                        </button>
+                    </Link>
+                
+                
                     <button
                         class="py-2 px-5 text-whiteTextColor text-md bg-blueTextColor rounded-xl flex items-center"
                     >
@@ -313,7 +370,9 @@ function inputOn(obj){
                         />
                         <span class="mx-2">Save</span>
                     </button>
+                
                 </div>
+                
             </form>
         </div>
     </div>
