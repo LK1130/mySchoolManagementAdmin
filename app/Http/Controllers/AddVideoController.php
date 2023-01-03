@@ -36,9 +36,16 @@ class AddVideoController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request);
+        dd($request);
 
-
+        $request->validate([
+            'videoName' => "required",
+            'description' => 'required',
+            'date' => 'required',
+            'storage' => 'required',
+            'storagelocation' => 'required',
+            'lecturename' => 'required'
+        ]);
 
         $videoUpload = new MVideo();
         $videoUpload->v_name = $request->videoName;
