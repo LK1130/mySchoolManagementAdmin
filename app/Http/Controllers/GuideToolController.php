@@ -56,18 +56,18 @@ class GuideToolController extends Controller
         $addguide->save();
 
         $steps = [];
-        
-        for ($step = 0; $step < count($request->steptitle); $step++) {
-            $gStep = new MGuideStep();
-
-            $file = $request->step_file[$step][0];
-            $guidephoto = $file->storePublicly("Guide", ['disk' => 'public']);
-            //    dd($guidephoto);
-            $gStep->step =  $step + 1;
-            $gStep->step_title =   $request->steptitle[$step];
-            $gStep->step_description = $request->description[$step];
-            $gStep->step_photo = $guidephoto;
-            array_push($steps, $gStep);
+        for ($step=0; $step < count( $request->steptitle) ; $step++) { 
+           $gStep = new MGuideStep();
+           
+           $file = $request->step_file[$step][0];
+        //    $guidephoto = $file->storePublicly("Guide", ['disk' => 'public']);
+           $guidephoto = env("DO_URL")."/".Storage::disk('digitalocean')->put('guides', $file, 'public');
+        //    dd($guidephoto);
+           $gStep->step =  $step+1;
+           $gStep->step_title =   $request->steptitle[$step];
+           $gStep->step_description = $request->description[$step];
+           $gStep->step_photo = $guidephoto;
+           array_push($steps, $gStep);
         }
         $addguide->guideStep()->saveMany($steps);
         return Redirect::route('guideTool.index');
