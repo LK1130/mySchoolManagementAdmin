@@ -47,9 +47,9 @@ class BlogToolController extends Controller
             'blog_file' => 'required'
         ]);
 
-        $file = $request->blog_file;
-        // $blog_image = $file->store("Blog", ['disk' => 'do']);
-        $blog_image = Storage::disk('do')->put("Blog",$file);
+        $file = $request->file("blog_file");
+         $blog_image = env("DO_URL")."/".Storage::disk('digitalocean')->put('blogs', $file, 'public');
+ 
 
         $blogs = new MBlog();
         $blogs->insertData($request, $blog_image);
