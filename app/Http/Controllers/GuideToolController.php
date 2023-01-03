@@ -110,15 +110,15 @@ class GuideToolController extends Controller
     {
         $update = MGuide::find($id);
         $update->g_title = $request->guidetitle;
-        // $update->save();
-        // MGuideStep::where("guide_id", $id)->delete();
-        dd($request);
+        $update->save();
+        MGuideStep::where("guide_id", $id)->delete();
+        // dd($request);
         $steps = [];
         for ($step = 0; $step < count($request->steptitle); $step++) {
             $gStep = new MGuideStep();
             $file = $request->step_file[$step][0];
             $guidephoto = $file->storePublicly("Guide", ['disk' => 'public']);
-            dd($guidephoto);
+            // dd($guidephoto);
             $gStep->step =  $step + 1;
             $gStep->step_title =   $request->steptitle[$step];
             $gStep->step_description = $request->description[$step];
