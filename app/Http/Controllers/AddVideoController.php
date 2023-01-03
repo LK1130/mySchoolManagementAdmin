@@ -7,6 +7,7 @@ use App\Models\MVideo;
 use App\Models\TLectureNote;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use Mockery\Undefined;
 
 class AddVideoController extends Controller
 {
@@ -61,15 +62,16 @@ class AddVideoController extends Controller
         for ($i = 0; $i < count($request->lecturename); $i++) {
             $ledb = new TLectureNote();
             $ledb->l_name = $request->lecturename[$i];
-            if ($request->lecturefile[$i] && $request->astoragelink[$i] == null) {
-
-                $file = $request->lecturefile[$i][0];
+            if ($request->alecturefile[$i] != null && $request->astoragelink[$i] == null) {
+                echo "<pre>";
+                var_dump($request->alecturefile[$i]);
+                $file = $request->alecturefile[$i][0];
                 // dd($file);
                 $fileupload = $file->storePublicly("Leacture", ['disk' => 'public']);
                 $ledb->l_storage_link = $fileupload;
 
                 // dd($fileupload);
-            } else if ($request->astoragelink[$i] && !$request->lecturefile[$i]) {
+            } else if ($request->astoragelink[$i] != null && $request->alecturefile[$i] == null) {
                 $ledb->l_storage_link = $request->astoragelink[$i];
                 $ledb->l_storage_location = $request->lecturelocation[$i];
             }
@@ -100,7 +102,11 @@ class AddVideoController extends Controller
      */
     public function edit($id)
     {
-        //
+
+        $video = MVideo::find($id);
+        $video->TLectureNote;
+        dd($video);
+        return inertia('EditVideo', ["videoData" => $video]);
     }
 
     /**
