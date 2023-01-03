@@ -16,13 +16,16 @@ const props = defineProps({
     sorttype : {
         type : Object
     },
-      categories : {
+    categories : {
+        type : Object
+    },
+    checkedcategories : {
         type : Object
     },
 })
 console.log(props);
-let selectedItem = ref();
-var sorting=ref();
+let selectedItem = ref(props.checkedcategories);
+var sorting=ref(props.sorttype);
 const datesplit = (data) => {
   const fullday = [];
   var arrycount = 0;
@@ -196,7 +199,7 @@ watch(
         <td class="text-center">{{data.i_name}}</td>
         <td class="text-center" >{{datesplit(data.c_day)}}</td>
         <td class="text-center">{{data.c_start_time}} - {{data.c_end_time}} </td>
-        <td class="text-center">25</td>
+        <td class="text-center">{{data.StudenyCount}}</td>
         <td class="text-center" :class="bafcolor(data.c_start_time,data.c_end_time)">{{beforeaftercalculate(data.c_start_time,data.c_end_time)}}</td>
         <td class="text-center">{{ Number(data.c_fees).toLocaleString() }} Ks</td>
         <td class="text-center customtextcolor7 underline"> <a :href="route('class.view',data.id)">Edit</a></td>

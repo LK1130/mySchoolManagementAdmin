@@ -3,6 +3,8 @@ import { Head, Link, useForm } from '@inertiajs/inertia-vue3';
 import NavBar from "../Components/NavBar.vue";
 import Header from "../Components/Header.vue";
 import { ref } from '@vue/reactivity';
+import throttle from "lodash/throttle";
+import { Inertia } from "@inertiajs/inertia";
 
 var studentid = ref([]);
 defineProps({
@@ -14,6 +16,7 @@ defineProps({
     category: Object,
     student:Object,
 });
+let searchstdname="";
 const form = useForm({
     classnames: null,
     classimage: null,
@@ -59,6 +62,8 @@ const submit = () => {
   form.students=studentid;
   form.post(route('class.store',form));
   console.log(form)
+};
+const search = () => {
 };
 
 
@@ -160,11 +165,11 @@ const submit = () => {
   </div>
 </div>
 
-<form  class="flex flex-row mb-3">
+<div  class="flex flex-row mb-3">
 <h3 class="text-white pt-1 ">Student Name : </h3>
-<input type="text" class="customnavcolor sm:ml-3 ml-2  text-white sm:text-sm text-xs rounded-lg sm:w-1/4 w-24 customborder1" placeholder="name">
-<button type="submit" class=" w-20 bg-blue-600 hover:bg-blue-700 active:bg-blue-900 rounded-lg p-1 ml-3 text-white sm:text-sm text-xs">Search</button>
-</form>
+<input type="text" v-model="searchstdname" class="customnavcolor sm:ml-3 ml-2  text-white sm:text-sm text-xs rounded-lg sm:w-1/4 w-24 customborder1" placeholder="name">
+<button type="button" @click="search()"  class=" w-20 bg-blue-600 hover:bg-blue-700 active:bg-blue-900 rounded-lg p-1 ml-3 text-white sm:text-sm text-xs">Search</button>
+</div>
 
 <div class="sm:w-2/4 w-4/4">
 <div class="custombackgroundcolor h-48   rounded-lg  mt-3 px-3 py-4 overflow-y-scroll my-5">

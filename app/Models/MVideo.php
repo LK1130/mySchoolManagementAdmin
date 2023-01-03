@@ -10,6 +10,6 @@ class MVideo extends Model
     use HasFactory;
     public function TLectureNote()
     {
-        return $this->hasMany(TLectureNote::class);
+        return $this->hasMany(TLectureNote::class, "video_id");
     }
 }
