@@ -15,7 +15,7 @@ const props = defineProps({
     }
 })
 
-let imageFile = ref("/storage/" + props.blogsInfo.b_photo);
+let imageFile = ref(props.blogsInfo.b_photo);
 let input = null
 
 const form = useForm({
