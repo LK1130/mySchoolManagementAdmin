@@ -36,54 +36,32 @@ class MClass extends Model
             ->select('*')
             ->get();
     }
-    public function get_class($selectedItem = [], $sorting = "")
+    public function get_class($selectedItem = [])
     {
-        $data = DB::table('m_classes')
+        $query = DB::table('m_classes')
             ->join('m_instructors', 'm_classes.instructor_id', '=', 'm_instructors.id')
-            ->leftjoin('t_student_classes', 'm_classes.id', '=', 't_student_classes.class_id')
-            ->selectRaw("COUNT('t_student_classes.class_id') AS StudenyCount,m_classes.id, m_classes.c_name, m_classes.c_day, m_classes.c_start_time, m_classes.c_end_time, m_classes.c_fees, m_instructors.i_name")
-            ->where('m_classes.del_flg', 0)
-            ->groupBy("m_classes.id")
-            ->get();
-        return $data;
-        //     $data->when(empty($selectedItem) && empty($sorting),function($data){
-        //          return $data->selectRaw("COUNT('t_student_classes.class_id') AS Class,m_classes.id, m_classes.c_name, m_classes.c_day, m_classes.c_start_time, m_classes.c_end_time, m_classes.c_fees, m_instructors.i_name");
-        //     });
-        // if(empty($selectedItem) && empty($sorting)){
-        //     return DB::table('m_classes')
-        //     ->join('m_instructors', 'm_classes.instructor_id', '=', 'm_instructors.id')
-        //     ->selectRaw('m_classes.id, m_classes.c_name, m_classes.c_day, m_classes.c_start_time, m_classes.c_end_time, m_classes.c_fees, m_instructors.i_name')
-        //     ->orderBy('m_classes.c_start_time', 'desc')
-        //     ->where('m_classes.del_flg',0)
-        //     ->get();
-        // }
-        // if(!empty($selectedItem)){
-        //     return DB::table('m_classes')
-        //     ->join('m_instructors', 'm_classes.instructor_id', '=', 'm_instructors.id')
-        //     ->selectRaw('m_classes.id,m_classes.category_id, m_classes.c_name, m_classes.c_day, m_classes.c_start_time, m_classes.c_end_time, m_classes.c_fees, m_instructors.i_name')
-        //     ->whereIn('m_classes.category_id',$selectedItem)
-        //     ->where('m_classes.del_flg',0)
-        //     ->get();
-        // }
-        // if(!empty($sorting)){
-        //     switch ($sorting) {
-        //         case 'status':
-        //             return DB::table('m_classes')
-        //             ->join('m_instructors', 'm_classes.instructor_id', '=', 'm_instructors.id')
-        //             ->selectRaw('m_classes.id,m_classes.category_id, m_classes.c_name, m_classes.c_day, m_classes.c_start_time, m_classes.c_end_time, m_classes.c_fees, m_instructors.i_name')
-        //             ->orderBy('m_classes.c_start_time', 'desc')
-        //             ->where('m_classes.del_flg',0)
-        //             ->get();
-        //             break;                 
-        //         case 'name':
-        //             return DB::table('m_classes')
-        //             ->join('m_instructors', 'm_classes.instructor_id', '=', 'm_instructors.id')
-        //             ->selectRaw('m_classes.id,m_classes.category_id, m_classes.c_name, m_classes.c_day, m_classes.c_start_time, m_classes.c_end_time, m_classes.c_fees, m_instructors.i_name')
-        //             ->orderBy('m_classes.c_name', 'asc')
-        //             ->where('m_classes.del_flg',0)
-        //             ->get();
-        //             break;
-        //     }
+            ->join('t_student_classes', 'm_classes.id', '=', 't_student_classes.class_id')
+            ->groupBy("m_classes.id");
+        // ->selectRaw("COUNT('t_student_classes.class_id') AS StudentCount,m_classes.id, m_classes.c_name, m_classes.c_day, m_classes.c_start_time, m_classes.c_end_time, m_classes.c_fees, m_instructors.i_name")
+        // ->where('m_classes.del_flg', 0);
+        // ->get();
+        // return $data;
+        // dd($selectedItem);
+        $query->when(empty($selectedItem), function ($query) {
+            // dd($query);
+            return $query->selectRaw("COUNT('t_student_classes.class_id') AS StudentCount,m_classes.id, m_classes.c_name, m_classes.c_day, m_classes.c_start_time, m_classes.c_end_time, m_classes.c_fees, m_instructors.i_name")
+                ->where('m_classes.del_flg', 0);
+        });
+        $query->when($selectedItem, function ($query, $selectedItem) {
+            // dd($query);
+            return $query->selectRaw("COUNT('t_student_classes.class_id') AS StudentCount,m_classes.id, m_classes.c_name, m_classes.c_day, m_classes.c_start_time, m_classes.c_end_time, m_classes.c_fees, m_instructors.i_name")
+                ->where('m_classes.del_flg', 0)
+                ->whereIn('m_classes.category_id', $selectedItem);
+        });
+
+        $messages = $query->get();
+
+        return $messages;
     }
 
     public function get_classdetail($id)

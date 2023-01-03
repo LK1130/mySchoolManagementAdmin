@@ -18,20 +18,16 @@ class ClassController extends Controller
     public function index(Request $request)
     {
         $checked = $request->selectedItem;
-        $sorting = $request->sorting;
-        if($sorting==""){
-            $sorting="status";
+        // dd($checked);
+        $class = new MClass();
+        $classdata = ($request->selectedItem) ? $class->get_class(explode("-", $checked)) : $class->get_class("");
+        $category = $class->category();
+        // dd($checked);
+        $checkedcat = [];
+        foreach ($category as $key => $value) {
+            array_push($checkedcat, $value->id);
         }
-        $class=new MClass();
-        $classdata = ($request->selectedItem) ?
-        $class->get_class(explode("-", $checked))
-        : $class->get_class("",$sorting );
-       $category=$class->category();
-       $checkedcat=[];
-       foreach ($category as $key => $value) {
-           array_push($checkedcat, $value->id);
-       }
-       return inertia("Class",['dclass' => $classdata,'sorttype'=>$sorting,'categories'=>$category,'checkedcategories'=>($checked == "") ? $checkedcat : explode("-", $checked),]);
+        return inertia("Class", ['dclass' => $classdata, 'categories' => $category, 'checkedcategories' => ($checked == "") ? $checkedcat : explode("-", $checked),]);
     }
 
     /**
@@ -42,11 +38,11 @@ class ClassController extends Controller
     public function create()
     {
         $class = new MClass();
-        $instructors= $class->get_instructors();
-        $categories= $class->get_category();
-        $students= $class->get_student();
-    
-        return inertia("AddClass",['instructor' => $instructors,'category' => $categories,'student' => $students ]);
+        $instructors = $class->get_instructors();
+        $categories = $class->get_category();
+        $students = $class->get_student();
+
+        return inertia("AddClass", ['instructor' => $instructors, 'category' => $categories, 'student' => $students]);
     }
 
     /**
@@ -58,15 +54,15 @@ class ClassController extends Controller
     public function store(Request $request)
     {
         $class = new MClass();
-        $date1=$request->input('day1');
-        $date2=$request->input('day2');
-        $date3=$request->input('day3');
-        $date4=$request->input('day4');
-        $date5=$request->input('day5');
-        $date6=$request->input('day6');
-        $date7=$request->input('day7');
-        $studentids=$request->input('students');
-        $img=$request->file('classimage');
+        $date1 = $request->input('day1');
+        $date2 = $request->input('day2');
+        $date3 = $request->input('day3');
+        $date4 = $request->input('day4');
+        $date5 = $request->input('day5');
+        $date6 = $request->input('day6');
+        $date7 = $request->input('day7');
+        $studentids = $request->input('students');
+        $img = $request->file('classimage');
         $saveimg = $img->store('Classphoto');
         settype($date1, "string");
         settype($date2, "string");
@@ -75,8 +71,8 @@ class ClassController extends Controller
         settype($date5, "string");
         settype($date6, "string");
         settype($date7, "string");
-        $date=$date1.$date2.$date3.$date4.$date5.$date6.$date7;
-        $addclass=$class->addclass($request,$date,$saveimg,$studentids);
+        $date = $date1 . $date2 . $date3 . $date4 . $date5 . $date6 . $date7;
+        $addclass = $class->addclass($request, $date, $saveimg, $studentids);
         return redirect('class');
     }
 
@@ -100,33 +96,35 @@ class ClassController extends Controller
     public function edit($id)
     {
         $class = new MClass();
-        $classdetail=$class->get_classdetail($id);
-        $instructors= $class->get_instructors();
-        $categories= $class->get_category();
-        $students= $class->get_student();
-        $studentsid=$class->get_studentid($id);
-        $date=$class->get_classdate($id);
-        $day=$date->c_day;
-        $day1=substr($day,0,1);
-        $day2=substr($day,1,1);
-        $day3=substr($day,2,1);
-        $day4=substr($day,3,1);
-        $day5=substr($day,4,1);
-        $day6=substr($day,5,1);
-        $day7=substr($day,6,1);
-        return inertia("EditClass",['classdata' => $classdetail,
-        'instructor' => $instructors,
-        'category' => $categories,
-        'student' => $students ,
-        "day"=>$day,
-        "date1"=>$day1,
-        "date2"=>$day2,
-        "date3"=>$day3,
-        "date4"=>$day4,
-        "date5"=>$day5,
-        "date6"=>$day6,
-        "date7"=>$day7,
-        "studentsids"=>$studentsid]);
+        $classdetail = $class->get_classdetail($id);
+        $instructors = $class->get_instructors();
+        $categories = $class->get_category();
+        $students = $class->get_student();
+        $studentsid = $class->get_studentid($id);
+        $date = $class->get_classdate($id);
+        $day = $date->c_day;
+        $day1 = substr($day, 0, 1);
+        $day2 = substr($day, 1, 1);
+        $day3 = substr($day, 2, 1);
+        $day4 = substr($day, 3, 1);
+        $day5 = substr($day, 4, 1);
+        $day6 = substr($day, 5, 1);
+        $day7 = substr($day, 6, 1);
+        return inertia("EditClass", [
+            'classdata' => $classdetail,
+            'instructor' => $instructors,
+            'category' => $categories,
+            'student' => $students,
+            "day" => $day,
+            "date1" => $day1,
+            "date2" => $day2,
+            "date3" => $day3,
+            "date4" => $day4,
+            "date5" => $day5,
+            "date6" => $day6,
+            "date7" => $day7,
+            "studentsids" => $studentsid
+        ]);
     }
 
     /**
@@ -139,15 +137,15 @@ class ClassController extends Controller
     public function update(Request $request, $id)
     {
         $class = new MClass();
-        $date1=$request->input('day1');
-        $date2=$request->input('day2');
-        $date3=$request->input('day3');
-        $date4=$request->input('day4');
-        $date5=$request->input('day5');
-        $date6=$request->input('day6');
-        $date7=$request->input('day7');
-        $studentids=$request->input('students');
-        $img=$request->file('classimage');
+        $date1 = $request->input('day1');
+        $date2 = $request->input('day2');
+        $date3 = $request->input('day3');
+        $date4 = $request->input('day4');
+        $date5 = $request->input('day5');
+        $date6 = $request->input('day6');
+        $date7 = $request->input('day7');
+        $studentids = $request->input('students');
+        $img = $request->file('classimage');
         $saveimg = $img->store('Classphoto');
         settype($date1, "string");
         settype($date2, "string");
@@ -156,8 +154,8 @@ class ClassController extends Controller
         settype($date5, "string");
         settype($date6, "string");
         settype($date7, "string");
-        $date=$date1.$date2.$date3.$date4.$date5.$date6.$date7;
-        $editclass=$class->editclass($request,$date,$saveimg,$studentids,$id);
+        $date = $date1 . $date2 . $date3 . $date4 . $date5 . $date6 . $date7;
+        $editclass = $class->editclass($request, $date, $saveimg, $studentids, $id);
         return redirect('class');
     }
 

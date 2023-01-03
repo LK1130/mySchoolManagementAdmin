@@ -54,7 +54,7 @@ console.log(props.blogs);
                             </td>
                             <td class="flex justify-center py-3">
                                 <img
-                                    :src="/storage/ + result.b_photo"
+                                    :src="result.b_photo"
                                     class="w-32"
                                     alt=""
                                 />

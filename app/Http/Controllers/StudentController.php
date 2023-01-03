@@ -160,7 +160,6 @@ class StudentController extends Controller
         // dd($id);
         $examRank = array_filter($allUserRank, function ($rank) use ($id) {
             return ($rank->id == $id);
-
         });
 
         //filter for get only current login user id
@@ -193,7 +192,7 @@ class StudentController extends Controller
         $userRanks = $exam->getUserRank();
 
         //filter for get only current login user id
-        $userRank = array_filter($userRanks, function ($ranking) use ($id){
+        $userRank = array_filter($userRanks, function ($ranking) use ($id) {
             return ($ranking->id == $id);
         });
 
