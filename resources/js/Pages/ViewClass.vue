@@ -68,6 +68,7 @@ const porps = defineProps({
     classdata: Object,
     students: Object,
 });
+console.log(porps.classdata[0].id);
 </script>
 
 <template>
@@ -254,7 +255,7 @@ const porps = defineProps({
             </div>
             <div class="cuswidth sm:mt-0 mt-5">
                 <h3 class="text-white">Recording Video List</h3>
-                <RecordingVideoListTableBox />
+                <RecordingVideoListTableBox :classdata=classdata[0].id />
             </div>
         </div>
     </div>

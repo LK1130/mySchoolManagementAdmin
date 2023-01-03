@@ -11,6 +11,7 @@ use App\Http\Controllers\ClassController;
 use App\Http\Controllers\ClassesController;
 use App\Http\Controllers\ClasssController;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GuideToolController;
 use App\Http\Controllers\Instructor;
 use App\Http\Controllers\InstructorController;
@@ -35,18 +36,19 @@ use Inertia\Inertia;
 | contains the "web" middleware group. Now create something great!
 |
 */
-// Route::get('/addInstructor', function () {
-//     return inertia("addInstructor");
-// })->name("addInstructor.view");
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified',
-])->group(function () {
-    Route::get('/dashboard', function () {
-        return Inertia::render('Dashboard');
-    })->name('dashboard');
-});
+// Route::get('/dashboard', function () {
+//     return inertia("Welcome");
+// });
+Route::get('/dashboard', [DashboardController::class, "getdashboard"]);
+// Route::middleware([
+//     'auth:sanctum',
+//     config('jetstream.auth_session'),
+//     'verified',
+// ])->group(function () {
+//     Route::get('/dashboard', function () {
+//         return Inertia::render('Dashboard');
+//     })->name('dashboard');
+// });
 
 Route::get('/login', function () {
     return inertia("Admin/AdLogin");
@@ -72,7 +74,7 @@ Route::resource('/class', ClassController::class);
 
 
 Route::resource('/students', StudentController::class);
-Route::resource('/addvideo',AddVideoController::class);
+Route::resource('/addvideo', AddVideoController::class);
 
 
 Route::resource('/instructors', InstructorController::class);

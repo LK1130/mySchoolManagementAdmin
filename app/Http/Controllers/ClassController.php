@@ -19,12 +19,19 @@ class ClassController extends Controller
     {
         $checked = $request->selectedItem;
         $sorting = $request->sorting;
+        if($sorting==""){
+            $sorting="status";
+        }
         $class=new MClass();
         $classdata = ($request->selectedItem) ?
         $class->get_class(explode("-", $checked))
         : $class->get_class("",$sorting );
        $category=$class->category();
-       return inertia("Class",['dclass' => $classdata,'sorttype'=>"status",'categories'=>$category]);
+       $checkedcat=[];
+       foreach ($category as $key => $value) {
+           array_push($checkedcat, $value->id);
+       }
+       return inertia("Class",['dclass' => $classdata,'sorttype'=>$sorting,'categories'=>$category,'checkedcategories'=>($checked == "") ? $checkedcat : explode("-", $checked),]);
     }
 
     /**
@@ -100,7 +107,26 @@ class ClassController extends Controller
         $studentsid=$class->get_studentid($id);
         $date=$class->get_classdate($id);
         $day=$date->c_day;
-        return inertia("EditClass",['classdata' => $classdetail,'instructor' => $instructors,'category' => $categories,'student' => $students ,"day"=>$day,"studentsids"=>$studentsid]);
+        $day1=substr($day,0,1);
+        $day2=substr($day,1,1);
+        $day3=substr($day,2,1);
+        $day4=substr($day,3,1);
+        $day5=substr($day,4,1);
+        $day6=substr($day,5,1);
+        $day7=substr($day,6,1);
+        return inertia("EditClass",['classdata' => $classdetail,
+        'instructor' => $instructors,
+        'category' => $categories,
+        'student' => $students ,
+        "day"=>$day,
+        "date1"=>$day1,
+        "date2"=>$day2,
+        "date3"=>$day3,
+        "date4"=>$day4,
+        "date5"=>$day5,
+        "date6"=>$day6,
+        "date7"=>$day7,
+        "studentsids"=>$studentsid]);
     }
 
     /**
