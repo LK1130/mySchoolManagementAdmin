@@ -100,7 +100,11 @@ class AddVideoController extends Controller
      */
     public function edit($id)
     {
-        //
+
+        $video = MVideo::find($id);
+        $video->TLectureNote;
+        dd($video);
+        return inertia('EditVideo', ["videoData" => $video]);
     }
 
     /**
