@@ -35,14 +35,23 @@ const form = useForm({
     astoragelink: [],
     lecturelocation: [],
     lecturefile: [],
+    alecturefile: [],
     input: inputs,
 });
 const submit = () => {
+    form.astoragelink = [];
+    form.alecturefile = [];
     for (let i = 0; i < form.lecturename.length; i++) {
         if (form.storagelink[i]) {
             form.astoragelink.push(form.storagelink[i]);
         } else {
             form.astoragelink.push(null);
+        }
+
+        if (form.lecturefile[i]) {
+            form.alecturefile.push(form.lecturefile[i]);
+        } else {
+            form.alecturefile.push(null);
         }
     }
     console.log(form);
