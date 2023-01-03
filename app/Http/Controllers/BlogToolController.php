@@ -17,7 +17,7 @@ class BlogToolController extends Controller
     public function index()
     {
         $blogs = MBlog::where("del_flg", 0)
-            ->orderBy('updated_at','desc')
+            ->orderBy('updated_at', 'desc')
             ->paginate(5);
         return inertia('BlogTool', ['blogs' => $blogs]);
     }
@@ -47,9 +47,9 @@ class BlogToolController extends Controller
             'blog_file' => 'required'
         ]);
 
-        $file = $request->blog_file;
-        // $blog_image = $file->store("Blog", ['disk' => 'do']);
-        $blog_image = Storage::disk('do')->put("Blog",$file);
+        $file = $request->file("blog_file");
+        $blog_image = env("DO_URL") . "/" . Storage::disk('digitalocean')->put('blogs', $file, 'public');
+
 
         $blogs = new MBlog();
         $blogs->insertData($request, $blog_image);
@@ -97,9 +97,8 @@ class BlogToolController extends Controller
             'blog_file' => 'required'
         ]);
 
-        $file = $request->blog_file;
-        $blog_image = $file->storePublicly("Blog", ['disk' => 'public']);
-
+        $file = $request->file("blog_file");
+        $blog_image = env("DO_URL") . "/" . Storage::disk('digitalocean')->put('blogs', $file, 'public');
         $blogs = new MBlog();
         $blogs->updateData($request, $blog_image, $id);
 
