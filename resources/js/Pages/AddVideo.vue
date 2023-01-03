@@ -38,6 +38,7 @@ const form = useForm({
     input: inputs,
 });
 const submit = () => {
+    form.astoragelink = [];
     for (let i = 0; i < form.lecturename.length; i++) {
         if (form.storagelink[i]) {
             form.astoragelink.push(form.storagelink[i]);

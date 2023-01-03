@@ -15,8 +15,10 @@ class AddVideoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
+        
+        // 
     }
 
     /**
@@ -36,7 +38,7 @@ class AddVideoController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
+        // dd($request);
 
         $request->validate([
             'videoName' => "required",
@@ -62,6 +64,7 @@ class AddVideoController extends Controller
             $ledb = new TLectureNote();
             $ledb->l_name = $request->lecturename[$i];
             if ($request->lecturefile[$i] && $request->astoragelink[$i] == null) {
+                // dd($request);
 
                 $file = $request->lecturefile[$i][0];
                 // dd($file);
@@ -72,6 +75,7 @@ class AddVideoController extends Controller
             } else if ($request->astoragelink[$i] && !$request->lecturefile[$i]) {
                 $ledb->l_storage_link = $request->astoragelink[$i];
                 $ledb->l_storage_location = $request->lecturelocation[$i];
+                // dd( $request->astoragelink[$i]);
             }
             array_push($lectureUpload, $ledb);
         }
@@ -100,7 +104,9 @@ class AddVideoController extends Controller
      */
     public function edit($id)
     {
-        //
+        $video = MVideo::find($id);
+        $video->TLectureNote;
+        return inertia("EditVideo", ["videodata" => $video]);
     }
 
     /**

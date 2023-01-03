@@ -6,9 +6,9 @@ import { ref } from "@vue/reactivity";
 import { Inertia } from "@inertiajs/inertia";
 
 const props = defineProps({
-    classDdata: Object,
+    videodata : Object,
 });
-// console.log(props.classDdata);
+console.log(props.videodata);
 
 const inputs = ref(1);
 const addInput = () => {
@@ -23,8 +23,8 @@ const removeInput = (index) => {
 };
 
 const form = useForm({
-    className: props.classDdata[0].c_name,
-    classId: props.classDdata[0].id,
+    className: props.videodata,
+    classId: props.classDdata,
     videoName: null,
     description: null,
     date: null,
@@ -69,7 +69,7 @@ function inputOn(obj){
 <template>
     <!-------------------- Navbar&header -------------------->
     <NavBar />
-    <Header headername="Add Video" />
+    <Header headername="Edit Video" />
 
     <!---------------- body ----------------------->
     <div class="absolute h-full w-5/6 p-5 headercustomleft top-32 customblack">
@@ -280,7 +280,7 @@ function inputOn(obj){
                                     >Storage location</label
                                 >
                                 <select
-                                    
+
                                     name=""
                                     :id="`storagelocation${input}`"
                                     class="focus:ring-white focus:border-white border-white text-white text-sm rounded-xl block w-5/6 bg-elementBackground p-2 "
