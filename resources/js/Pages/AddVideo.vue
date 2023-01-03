@@ -35,15 +35,23 @@ const form = useForm({
     astoragelink: [],
     lecturelocation: [],
     lecturefile: [],
+    alecturefile: [],
     input: inputs,
 });
 const submit = () => {
     form.astoragelink = [];
+    form.alecturefile = [];
     for (let i = 0; i < form.lecturename.length; i++) {
         if (form.storagelink[i]) {
             form.astoragelink.push(form.storagelink[i]);
         } else {
             form.astoragelink.push(null);
+        }
+
+        if (form.lecturefile[i]) {
+            form.alecturefile.push(form.lecturefile[i]);
+        } else {
+            form.alecturefile.push(null);
         }
     }
     console.log(form);
@@ -53,17 +61,16 @@ const submit = () => {
         },
     });
 };
-function fileOn(obj){
-    document.getElementById("rfile"+obj).disabled = true
-    document.getElementById("stlink"+obj).disabled = false;
-    document.getElementById("storagelocation"+obj).disabled = false;
-
+function fileOn(obj) {
+    document.getElementById("rfile" + obj).disabled = true;
+    document.getElementById("stlink" + obj).disabled = false;
+    document.getElementById("storagelocation" + obj).disabled = false;
 }
-function inputOn(obj){
-    document.getElementById("stlink"+obj).disabled = true;
-    document.getElementById("storagelocation"+obj).disabled = true;
-     document.getElementById("rfile"+obj).disabled = false;
-     console.log("a");
+function inputOn(obj) {
+    document.getElementById("stlink" + obj).disabled = true;
+    document.getElementById("storagelocation" + obj).disabled = true;
+    document.getElementById("rfile" + obj).disabled = false;
+    console.log("a");
 }
 </script>
 
@@ -240,7 +247,7 @@ function inputOn(obj){
                                 >
                                 <div class="flex flex-row">
                                     <input
-                                        v-bind:class="{ disabled: dis==1}"
+                                        v-bind:class="{ disabled: dis == 1 }"
                                         @input="
                                             form.lecturefile[input - 1] =
                                                 $event.target.files
@@ -248,9 +255,15 @@ function inputOn(obj){
                                         :id="`rfile${input}`"
                                         disabled
                                         type="file"
-                                        class="block w-5/6 h-9 border rounded-xl cursor-pointer file:h-full file:rounded-l-sm file:border-0 file:mr-1.5 "
+                                        class="block w-5/6 h-9 border rounded-xl cursor-pointer file:h-full file:rounded-l-sm file:border-0 file:mr-1.5"
                                     />
-                                    <input type="radio" id="default-radio-1" class="ml-4 mt-2" :name="input" @click="inputOn(input)"/>
+                                    <input
+                                        type="radio"
+                                        id="default-radio-1"
+                                        class="ml-4 mt-2"
+                                        :name="input"
+                                        @click="inputOn(input)"
+                                    />
                                 </div>
                             </div>
                             <div class="flex mt-5 justify-center">
@@ -269,12 +282,19 @@ function inputOn(obj){
                                     v-model="form.storagelink[input - 1]"
                                     type="text"
                                     :id="`stlink${input}`"
-                                    class="focus:ring-white focus:border-white border-white text-white text-sm rounded-xl block w-5/6 bg-elementBackground p-2 "
+                                    class="focus:ring-white focus:border-white border-white text-white text-sm rounded-xl block w-5/6 bg-elementBackground p-2"
                                     placeholder=""
                                 />
                             </div>
                             <div class="float-right pr-8">
-                                <input checked type="radio" id="default-radio-1" class="ml-4 mt-2" :name="input" @click="fileOn(input)"/>
+                                <input
+                                    checked
+                                    type="radio"
+                                    id="default-radio-1"
+                                    class="ml-4 mt-2"
+                                    :name="input"
+                                    @click="fileOn(input)"
+                                />
                             </div>
                             <!-- Storage Location -->
                             <div class="pl-7 sm:w-full sm:ml-4 mt-5">
@@ -287,7 +307,7 @@ function inputOn(obj){
                                     v-model="form.lecturelocation[input - 1]"
                                     name=""
                                     :id="`storagelocation${input}`"
-                                    class="focus:ring-white focus:border-white border-white text-white text-sm rounded-xl block w-5/6 bg-elementBackground p-2 "
+                                    class="focus:ring-white focus:border-white border-white text-white text-sm rounded-xl block w-5/6 bg-elementBackground p-2"
                                 >
                                     <option value="Local Database" d>
                                         Local Database
