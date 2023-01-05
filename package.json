@@ -25,6 +25,7 @@
         "moment": "^2.29.4",
         "numeral": "^2.0.6",
         "swiper": "^8.4.5",
+        "vee-validate": "^4.7.3",
         "vue-apexcharts": "^1.6.2",
         "vue3-apexcharts": "^1.4.1"
     }

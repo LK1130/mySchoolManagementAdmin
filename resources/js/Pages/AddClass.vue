@@ -5,17 +5,31 @@ import Header from "../Components/Header.vue";
 import { ref } from '@vue/reactivity';
 import throttle from "lodash/throttle";
 import { Inertia } from "@inertiajs/inertia";
+import { Field, Form, ErrorMessage } from 'vee-validate';
+import axios from 'axios';
 
 var studentid = ref([]);
-defineProps({
-    canLogin: Boolean,
-    canRegister: Boolean,
-    laravelVersion: String,
-    phpVersion: String,
-    instructor: Object,
-    category: Object,
-    student:Object,
-});
+const props = defineProps({
+    instructor : {
+        type : Object
+    },
+    category : {
+        type : Object
+    },
+    student : {
+        type : Object
+    },
+    
+})
+// defineProps({
+//     canLogin: Boolean,
+//     canRegister: Boolean,
+//     laravelVersion: String,
+//     phpVersion: String,
+//     instructor: Object,
+//     category: Object,
+//     student:Object,
+// });
 let searchstdname="";
 const form = useForm({
     classnames: null,
@@ -62,10 +76,34 @@ const submit = () => {
   form.students=studentid;
   form.post(route('class.store',form));
   console.log(form)
-};
+} 
 const search = () => {
+  var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            console.log("oki")
+       }
+    };
+xhttp.open("GET", "/searchstd?name"+searchstdname);
+xhttp.send();
 };
+function classnameValidation(value) {
+  if (!value) {
+    return 'Class name is required';
+    }
+  return true; 
+}
 
+function isRequired(value) {
+  if (!value) {
+    return 'This is required';
+    }
+    if (value!=Number) {
+    return 'This is not Number';
+    }
+  return true;
+  
+}
 
 </script>
 
@@ -76,12 +114,12 @@ const search = () => {
 
 <!---------------- body ----------------------->
 <div class="absolute w-5/6 headercustomleft  top-32 customblack px-5">
-<form @submit.prevent="submit">
+<Form @submit="submit" >
 <div class="flex flex-row mt-10 addclasscss fixed sm:top-4 top-10 z-50" >
-<input type="text"  class="classnameinput  sm:text-xl text-sm font-bold text-white"  v-model="form.classnames">
+<Field type="text"  class="classnameinput  sm:text-xl text-sm font-bold text-white"  v-model="form.classnames" :rules="classnameValidation" name="classname"/>
 <button type="button" class="mt-2 sm:w-7 w-4 sm:h-7 h-4 border-2 sm:text-sm text-xs rounded-full border-solid border-white text-white " @click="form.classnames=''"> &#9587</button>
 </div>
-
+<ErrorMessage name="classname" class="text-red-800 ml-5"/>
 <div class="my-5">
     <div class="customnavcolor w-full text-white p-4 rounded-lg">
    <h3 class="sm:text-lg text-base">Class Information</h3>
@@ -165,11 +203,11 @@ const search = () => {
   </div>
 </div>
 
-<div  class="flex flex-row mb-3">
+<form @submit.prevent="search()"  class="flex flex-row mb-3">
 <h3 class="text-white pt-1 ">Student Name : </h3>
 <input type="text" v-model="searchstdname" class="customnavcolor sm:ml-3 ml-2  text-white sm:text-sm text-xs rounded-lg sm:w-1/4 w-24 customborder1" placeholder="name">
-<button type="button" @click="search()"  class=" w-20 bg-blue-600 hover:bg-blue-700 active:bg-blue-900 rounded-lg p-1 ml-3 text-white sm:text-sm text-xs">Search</button>
-</div>
+<button type="submit"   class=" w-20 bg-blue-600 hover:bg-blue-700 active:bg-blue-900 rounded-lg p-1 ml-3 text-white sm:text-sm text-xs">Search</button>
+</form>
 
 <div class="sm:w-2/4 w-4/4">
 <div class="custombackgroundcolor h-48   rounded-lg  mt-3 px-3 py-4 overflow-y-scroll my-5">
@@ -199,7 +237,7 @@ const search = () => {
 <img src="../../../public/img/bx_save.png" alt="" class="w-5 h-5 pt-0.5">
 <span class="ml-2 sm:text-base text-xs sm:pt-0 pt-1" >Save</span>
 </button>
-</form>
+</Form>
 </div>
 </template>
 <style scoped>

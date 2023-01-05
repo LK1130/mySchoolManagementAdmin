@@ -31,4 +31,7 @@ class viewclassController extends Controller
         return inertia("AddVideo",['dclass' => $id]);
 
     }
+    public function searchstudent($name){
+    return $name;
+    }
 }

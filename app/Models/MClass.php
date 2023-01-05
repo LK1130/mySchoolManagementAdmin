@@ -38,7 +38,6 @@ class MClass extends Model
     }
     public function get_class($selectedItem = [], $sorting = "")
     {
-<<<<<<< HEAD
         $data= DB::table('m_classes')
             ->join('m_instructors', 'm_classes.instructor_id', '=', 'm_instructors.id')
             ->leftjoin('t_student_classes', 'm_classes.id', '=', 't_student_classes.class_id')
@@ -86,18 +85,6 @@ class MClass extends Model
             //             break;
             //     }
         }
-=======
-    
-            if(empty($selectedItem) && empty($sorting)){
-                return DB::table('m_classes')
-                ->join('m_instructors', 'm_classes.instructor_id', '=', 'm_instructors.id')
-                ->selectRaw('m_classes.id, m_classes.c_name, m_classes.c_day, m_classes.c_start_time, m_classes.c_end_time, m_classes.c_fees, m_instructors.i_name')
-                ->orderBy('m_classes.c_start_time', 'desc')
-                ->where('m_classes.del_flg',0)
-                ->get();
-            }
-    }
->>>>>>> origin/main
 
     public function get_classdetail($id)
     {
@@ -189,7 +176,6 @@ class MClass extends Model
             'updated_by'=>"0"
         ]);
 
-<<<<<<< HEAD
         DB::table('t_student_classes')
         ->where('class_id',$id)
         ->delete();
@@ -206,10 +192,7 @@ class MClass extends Model
                 'created_by'=>"0"
             ]);
         };
-=======
     }
->>>>>>> origin/main
-
     public function getClasses($id)
     {
         return DB::table('m_classes')

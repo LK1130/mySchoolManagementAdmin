@@ -36,4 +36,14 @@ class Mdashboard extends Model
           ->where('m_classes.category_id',3)
           ->get();
       }
+      public function get_dashboardclass(){
+       return  DB::table('m_classes')
+        ->join('m_instructors', 'm_classes.instructor_id', '=', 'm_instructors.id')
+        ->leftjoin('t_student_classes', 'm_classes.id', '=', 't_student_classes.class_id')
+        ->selectRaw("COUNT('t_student_classes.class_id') AS StudenyCount,m_classes.id, m_classes.c_name, m_classes.c_day, m_classes.c_start_time, m_classes.c_end_time, m_classes.c_fees, m_instructors.i_name,m_classes.created_at")
+        ->orderBy('m_classes.created_at', 'desc')
+        ->where('m_classes.del_flg',0)
+        ->groupBy("m_classes.id")
+        ->get();
+      }
 }
