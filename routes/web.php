@@ -55,15 +55,15 @@ Route::get('/login', function () {
 Route::post('/login', [LoginController::class, 'store'])->name('login.store');
 Route::get('/searchstd/{name?}', [viewclassController::class, 'searchstudent']);
 
-// Route::middleware([checkRole::class])->group(function(){
-// Route::get('/home', function () {
-//     return Inertia::render('Welcome', [
-//         'canLogin' => Route::has('login'),
-//         'canRegister' => Route::has('register'),
-//         'laravelVersion' => Application::VERSION,
-//         'phpVersion' => PHP_VERSION,
-//     ]);
-// });
+Route::middleware([checkRole::class])->group(function(){
+Route::get('/home', function () {
+    return Inertia::render('Welcome', [
+        'canLogin' => Route::has('login'),
+        'canRegister' => Route::has('register'),
+        'laravelVersion' => Application::VERSION,
+        'phpVersion' => PHP_VERSION,
+    ]);
+});
 
 Route::get('/classview/{id?}', [viewclassController::class, "getclassdata"])->name("class.view");
 // Route::get('/classsorting/{name?}', [viewclassController::class, "classsorting"])->name("class.sorting");
@@ -111,7 +111,7 @@ Route::resource('adminPermission', AdminPermissionController::class);
 Route::resource('addRole', AddRoleController::class);
 Route::resource('pageList', AddPageController::class);
 // End Admin Permission
-// });
+});
 
 Route::resource('admin', AdminController::class);
 

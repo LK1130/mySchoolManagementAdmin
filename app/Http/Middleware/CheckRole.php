@@ -20,7 +20,9 @@ class CheckRole
     public function handle(Request $request, Closure $next)
     {
         if ($request->session()->has('adminId') && $request->session()->has('roleId')) {
-            $page = MPage::where('p_route', $request->path())->first();
+            $path = explode("/",$request->path());
+
+            $page = MPage::where('p_route', $path[0])->first();
             $rolepage = MRolePage::where('m_page_id', $page->id)
                 ->where('m_role_id', session()->get('roleId'))->get();
 
