@@ -105,7 +105,7 @@ const classes = computed(() => {
                     class="w-7 h-7"
                 />
                 <span class="text-lg ml-6 pt-1 lg:block hidden">
-                    <Link href="/admin">Admins</Link>
+                    <Link href="/admin">Admin</Link>
                 </span>
             </div>
             <div
@@ -118,7 +118,7 @@ const classes = computed(() => {
                         class="w-7 h-7"
                     />
                     <span class="text-lg ml-6 pt-1 lg:block hidden"
-                        >Admin Permission</span
+                        >Permission</span
                     >
                 </Link>
             </div>

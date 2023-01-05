@@ -1,8 +1,8 @@
 <template>
-    <div class="fixed headercustomleft min-w-full h-32 customblack z-10">
-        <div class="grid grid-cols-2">
+    <div class="fixed headercustomleft w-4/5 h-32 customblack z-10">
+        <div class="flex justify-between py-8 px-6">
             <div class="ml-5">
-                <div class="text-white mt-3 sm:text-base text-xs flex flex-row">
+                <div class="text-white text-xl flex flex-row">
                     <span>{{ year }}/{{ month }}/{{ date }}</span>
                     <span class="ml-1"
                         >{{ hour }}:{{ minute }}:{{ seconds }}</span
@@ -18,11 +18,12 @@
                     </div>
                 </div>
             </div>
+
             <div
-                class="flex flex-row text-white 2xl:ml-80 xl:ml-60 lg:ml-40 md:ml-20 ml-0 sm:mt-7 mt-10"
+                class="flex text-white"
             >
-                <div class="mt-1.5 sm:mr-3 mr-1 sm:ml-5 ml-0">
-                    <div class="sm:text-base text-xs">{{ $page.props.auth.username }}</div>
+                <div class="">
+                    <div class="text-xl">{{ $page.props.auth.username }}</div>
                     <div class="opacity-80 text-right sm:text-base text-xs">
                         {{ $page.props.auth.userrole }}
                     </div>
