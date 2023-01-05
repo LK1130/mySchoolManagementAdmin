@@ -4,6 +4,8 @@ import NavBar from "../Components/NavBar.vue";
 import Header from "../Components/Header.vue";
 import { ref } from '@vue/reactivity';
 import { Inertia } from '@inertiajs/inertia';
+import { watch } from '@vue/runtime-core';
+import throttle from "lodash/throttle";
 
 const props = defineProps({
     classdata : {
@@ -47,7 +49,7 @@ const props = defineProps({
     },
 })
 
-
+let searchstdname=ref();
 const form = useForm({
     _method : "PUT",
     classnames:props.classdata[0].c_name,
@@ -134,6 +136,17 @@ const submit = () => {
   console.log(form);
     form.post(route('class.update',props.classdata[0].id));
 };
+watch(
+    searchstdname,
+    throttle(function (value) {
+        console.log(value);
+        Inertia.get(
+            "/class/"+props.classdata[0].id+"/edit",
+            { searchstdname: value },
+            { preserveState: true, replace: true }
+        );
+    }, 200)
+);
 
 </script>
 
@@ -234,8 +247,7 @@ const submit = () => {
 </div>
 <div class="flex flex-row mb-3">
 <h3 class="text-white pt-1 ">Student Name : </h3>
-<input type="text" class="customnavcolor sm:ml-3 ml-2  text-white sm:text-sm text-xs rounded-lg sm:w-1/4 w-24 customborder1" placeholder="name">
-<button type="button" class=" w-20 bg-blue-600 hover:bg-blue-700 active:bg-blue-900 rounded-lg p-1 ml-3 text-white sm:text-sm text-xs">Search</button>
+<input type="text" class="customnavcolor sm:ml-3 ml-2  text-white sm:text-sm text-xs rounded-lg sm:w-1/4 w-24 customborder1" placeholder="name" v-model="searchstdname">
 </div>
 <div class="sm:w-2/4 w-4/4">
 <div class="custombackgroundcolor h-48   rounded-lg  mt-3 px-3 py-4 overflow-y-scroll my-5">
@@ -256,7 +268,7 @@ const submit = () => {
        {{user.name}}</td>
         <td  class="text-center ">{{user.phone}}</td>
         <td class="text-center ">{{user.address}}</td>
-        <td  class="text-center">{{user.Age}}</td>
+        <td  class="text-center">{{user.age}}</td>
         <td  class="text-center customtextcolor7 underline">View</td>
     </tr>
     </tbody>
@@ -268,14 +280,6 @@ const submit = () => {
 <span class="ml-2 sm:text-base text-xs sm:pt-0 pt-1" >Save</span>
 </button>
 </form>
-<div class="text-white">{{props.day}}</div>
-<div class="text-white">{{props.date1}}</div>
-<div class="text-white">{{props.date2}}</div>
-<div class="text-white">{{props.date3}}</div>
-<div class="text-white">{{props.date4}}</div>
-<div class="text-white">{{props.date5}}</div>
-<div class="text-white">{{props.date6}}</div>
-<div class="text-white">{{props.date7}}</div>
 </div>
 </template>
 <style scoped>

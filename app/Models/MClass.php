@@ -15,78 +15,36 @@ class MClass extends Model
     public function get_instructors()
     {
         return DB::table('m_instructors')
+            ->where('del_flg', 0)
             ->get();
     }
 
     public function get_category()
     {
         return DB::table('m_categories')
+            ->where('del_flg', 0)
             ->get();
     }
 
-    public function get_student()
-    {
+    public function get_student( $srcname="")
+    { 
+        if(empty($srcname)){
         return DB::table('users')
+            ->where('del_flg', 0)
             ->get();
+        }else{
+            return DB::table('users')
+            ->where('del_flg', 0)
+            ->where('name', 'like', '%' . $srcname . '%')
+            ->get();
+        }
     }
 
     public function category()
     {
         return  DB::table("m_categories")
+            ->where('del_flg', 0)
             ->select('*')
-<<<<<<< HEAD
-            ->get();    
-    }
-    public function get_class($selectedItem = [], $sorting = "")
-    {
-        $data= DB::table('m_classes')
-            ->join('m_instructors', 'm_classes.instructor_id', '=', 'm_instructors.id')
-            ->leftjoin('t_student_classes', 'm_classes.id', '=', 't_student_classes.class_id')
-            ->selectRaw("COUNT('t_student_classes.class_id') AS StudenyCount,m_classes.id, m_classes.c_name, m_classes.c_day, m_classes.c_start_time, m_classes.c_end_time, m_classes.c_fees, m_instructors.i_name")
-            ->where('m_classes.del_flg',0)
-            ->groupBy("m_classes.id")
-            ->get();
-            return $data;
-        //     $data->when(empty($selectedItem) && empty($sorting),function($data){
-        //          return $data->selectRaw("COUNT('t_student_classes.class_id') AS Class,m_classes.id, m_classes.c_name, m_classes.c_day, m_classes.c_start_time, m_classes.c_end_time, m_classes.c_fees, m_instructors.i_name");
-        //     });
-            // if(empty($selectedItem) && empty($sorting)){
-            //     return DB::table('m_classes')
-            //     ->join('m_instructors', 'm_classes.instructor_id', '=', 'm_instructors.id')
-            //     ->selectRaw('m_classes.id, m_classes.c_name, m_classes.c_day, m_classes.c_start_time, m_classes.c_end_time, m_classes.c_fees, m_instructors.i_name')
-            //     ->orderBy('m_classes.c_start_time', 'desc')
-            //     ->where('m_classes.del_flg',0)
-            //     ->get();
-            // }
-            // if(!empty($selectedItem)){
-            //     return DB::table('m_classes')
-            //     ->join('m_instructors', 'm_classes.instructor_id', '=', 'm_instructors.id')
-            //     ->selectRaw('m_classes.id,m_classes.category_id, m_classes.c_name, m_classes.c_day, m_classes.c_start_time, m_classes.c_end_time, m_classes.c_fees, m_instructors.i_name')
-            //     ->whereIn('m_classes.category_id',$selectedItem)
-            //     ->where('m_classes.del_flg',0)
-            //     ->get();
-            // }
-            // if(!empty($sorting)){
-            //     switch ($sorting) {
-            //         case 'status':
-            //             return DB::table('m_classes')
-            //             ->join('m_instructors', 'm_classes.instructor_id', '=', 'm_instructors.id')
-            //             ->selectRaw('m_classes.id,m_classes.category_id, m_classes.c_name, m_classes.c_day, m_classes.c_start_time, m_classes.c_end_time, m_classes.c_fees, m_instructors.i_name')
-            //             ->orderBy('m_classes.c_start_time', 'desc')
-            //             ->where('m_classes.del_flg',0)
-            //             ->get();
-            //             break;                 
-            //         case 'name':
-            //             return DB::table('m_classes')
-            //             ->join('m_instructors', 'm_classes.instructor_id', '=', 'm_instructors.id')
-            //             ->selectRaw('m_classes.id,m_classes.category_id, m_classes.c_name, m_classes.c_day, m_classes.c_start_time, m_classes.c_end_time, m_classes.c_fees, m_instructors.i_name')
-            //             ->orderBy('m_classes.c_name', 'asc')
-            //             ->where('m_classes.del_flg',0)
-            //             ->get();
-            //             break;
-            //     }
-        }
-=======
             ->get();
     }
     public function get_class($selectedItem = [])
@@ -116,7 +74,6 @@ class MClass extends Model
 
         return $messages;
     }
->>>>>>> origin/main
 
     public function get_classdetail($id)
     {
@@ -144,7 +101,7 @@ class MClass extends Model
     {
         return DB::table('t_student_classes')
             ->join('users', 't_student_classes.user_id', '=', 'users.id')
-            ->select('t_student_classes.start_join', 'users.name', 't_student_classes.paid_fees', 't_student_classes.remain_fees')
+            ->select('t_student_classes.start_join', 'users.name','users.id', 't_student_classes.paid_fees', 't_student_classes.remain_fees')
             ->where('t_student_classes.class_id', $id)
             ->get();
     }
@@ -225,10 +182,6 @@ class MClass extends Model
                 ]);
         };
     }
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/main
     public function getClasses($id)
     {
         return DB::table('m_classes')

@@ -11,6 +11,7 @@ class Mdashboard extends Model
     use HasFactory;
     public function get_allsudent(){
      return   DB::table('users')
+        ->where('del_flg', 0)
         ->select('id')
         ->get();
         

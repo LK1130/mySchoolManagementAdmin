@@ -24,7 +24,10 @@ class AdminValidation extends FormRequest
     public function rules()
     {
         return [
-            'classnames' => ['required'],
+            'classimage' => ['required'],
+            'classdetail' =>['required'],
+            'teacher'=>['required'],
+            'categories'=>['required'],
         ];
     }
 }
