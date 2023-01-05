@@ -12,21 +12,24 @@ const props = defineProps({
     guideInfo: {
         type: Object,
     },
+    errors: {
+        type: Object,
+    },
 });
 // console.log(props.guideInfo);
 // console.log(props.guideInfo.guide_step.map(item => item.step_photo));
 
-let imageFile = ref(props.guideInfo.guide_step.map(item => "/storage/"+item.step_photo))
-// let input = null;
+let imageFile = ref(props.guideInfo.guide_step.map(item => item.step_photo))
+let input = null;
 // console.log(imageFile.value);
-// const showImagePreview = (event) => {
-//     input = event.target;
-//     if (input.files && input.files[0]) {
-//         const file = event.target.files[0];
-//         imageFile.value = URL.createObjectURL(file);
-//     }
-//     console.log(imageF);
-// };
+const showImagePreview = (event) => {
+    input = event.target;
+    if (input.files && input.files[0]) {
+        const file = event.target.files[0];
+        imageFile.value[event.target.id] = URL.createObjectURL(file);
+    }
+   
+};
 console.log(imageFile);
 const inputs = ref(props.guideInfo.guide_step.length);
 const addInput = () => {
@@ -49,13 +52,14 @@ const form = useForm({
     ),
     step_file: props.guideInfo.guide_step.map(item => item.step_photo),
     input: inputs,
+    _method: "put"
 });
 
 console.log(form);
 
 const submit = () => {
     console.log(form);
-    Inertia.put(route("guideTool.update", form.id), form, {
+    Inertia.post(route("guideTool.update", form.id), form, {
         onError: (data) => {
             console.log(data);
         },
@@ -84,6 +88,9 @@ const submit = () => {
                         v-model="form.guidetitle"
                         class="focus:ring-white focus:border-white border-white text-white text-sm rounded-xl block w-11/12 bg-elementBackground p-2"
                     />
+                    <div v-if="errors.guidetitle" class="text-red-500">
+                            {{ errors.guidetitle }}
+                        </div>
                 </div>
 
                 <!-- Step  -->
@@ -120,6 +127,7 @@ const submit = () => {
                                 type="text"
                                 id="steptitle"
                                 class="focus:ring-white focus:border-white border-white text-white text-sm rounded-xl block w-11/12 bg-elementBackground p-2"
+                                required
                             />
                         </div>
                         <!-- textarea  -->
@@ -133,6 +141,7 @@ const submit = () => {
                                 name=""
                                 v-model="form.description[input - 1]"
                                 id="Description"
+                                required
                                 class="h-48 w-11/12 resize-none rounded-xl bg-secondaryBackground text-whiteTextColor focus:outline-0 focus:ring-white focus:border-white border-white"
                             >
                             </textarea>
@@ -147,7 +156,7 @@ const submit = () => {
                             class="flex items-center justify-center w-11/12 mt-5"
                         >
                             <label
-                                :for="`dropzone-file${input - 1}`"
+                                :for="input-1"
                                 class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
                             >
                                 <div
@@ -189,15 +198,17 @@ const submit = () => {
                                     </p>
                                 </div>
                                 <input
-                                    :id="`dropzone-file${input - 1}`"
+                                    :id="input - 1"
+                                    :fileid="input-1"
                                     type="file"
                                     @input="
                                         form.step_file[input - 1] =
                                             $event.target.files
                                     "
-                                   
+                                   @change="showImagePreview($event)"
                                     accept="image/*"
                                     class="hidden"
+                                    required
                                 />
                             </label>
                         </div>

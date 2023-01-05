@@ -7,11 +7,15 @@ import { Inertia } from "@inertiajs/inertia";
 
 const props = defineProps({
     videoData: Object,
-    classDdata:Object
+    classDdata: Object,
+    errors: {
+        type: Object,
+    },
 });
-console.log(props.classDdata);
-console.log(props.videoData.t_lecture_note.map((item) => item.l_storage_link));
-console.log(props.videoData.v_date);
+console.log(props.videoData);
+
+// console.log(props.videoData.t_lecture_note.map((item) => item.l_storage_link));
+// console.log(props.videoData.v_date);
 
 const inputs = ref(props.videoData.t_lecture_note.length);
 const File = ref(
@@ -50,6 +54,7 @@ const form = useForm({
     lecturefile: [],
     alecturefile: [],
     input: inputs,
+    _method: "put"
 });
 const submit = () => {
     form.astoragelink = [];
@@ -68,7 +73,7 @@ const submit = () => {
         }
     }
     console.log(form);
-    Inertia.put(route("addvideo.update", form.id), form, {
+    Inertia.post(route("addvideo.update", form.id), form, {
         onError: (data) => {
             console.log(data);
         },
@@ -116,7 +121,7 @@ function inputOn(obj) {
                                 >Class Name</label
                             >
                             <input
-                            v-model="form.className"
+                                v-model="form.className"
                                 type="text"
                                 id="classname"
                                 class="focus:ring-white focus:border-white border-white text-white text-sm rounded-xl block w-5/6 bg-elementBackground p-2"
@@ -138,6 +143,9 @@ function inputOn(obj) {
                                 class="focus:ring-white focus:border-white border-white text-white text-sm rounded-xl block w-5/6 bg-elementBackground p-2"
                                 placeholder=""
                             />
+                            <div v-if="errors.videoName" class="text-red-500">
+                            {{ errors.videoName }}
+                        </div>
                         </div>
                         <!-- Description -->
                         <div class="ml-10 sm:w-full sm:ml-4 mt-5">
@@ -152,6 +160,9 @@ function inputOn(obj) {
                                 id="description"
                                 class="resize-none focus:ring-white focus:border-white border-white text-white text-sm rounded-xl block w-5/6 bg-elementBackground p-2 h-40"
                             ></textarea>
+                            <div v-if="errors.description" class="text-red-500">
+                            {{ errors.description }}
+                        </div>
                         </div>
                         <!-- Date -->
                         <div class="ml-10 sm:w-full sm:ml-4 mt-5">
@@ -167,6 +178,9 @@ function inputOn(obj) {
                                 class="focus:ring-white focus:border-white border-white text-white text-sm rounded-xl block w-5/6 bg-elementBackground p-2"
                                 placeholder=""
                             />
+                            <div v-if="errors.date" class="text-red-500">
+                            {{ errors.date }}
+                        </div>
                         </div>
                         <!-- Storage Link -->
                         <div class="ml-10 sm:w-full sm:ml-4 mt-5">
@@ -182,6 +196,9 @@ function inputOn(obj) {
                                 class="focus:ring-white focus:border-white border-white text-white text-sm rounded-xl block w-5/6 bg-elementBackground p-2"
                                 placeholder=""
                             />
+                            <div v-if="errors.storage" class="text-red-500">
+                            {{ errors.storage }}
+                        </div>
                         </div>
                         <!-- Storage Location -->
                         <div class="ml-10 sm:w-full sm:ml-4 mt-5">
@@ -205,6 +222,9 @@ function inputOn(obj) {
                                 </option>
                                 <option value="Vimeo">Vimeo</option>
                             </select>
+                            <div v-if="errors.storagelocation" class="text-red-500">
+                            {{ errors.storagelocation }}
+                        </div>
                         </div>
                     </div>
                     <!-- whiteline -->
@@ -244,6 +264,7 @@ function inputOn(obj) {
                             </div>
                             <div class="sm:w-full sm:ml-4 mt-5 pl-7">
                                 <label
+                                    
                                     for="Lecturename"
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                                     >Lecture Name</label
@@ -254,7 +275,9 @@ function inputOn(obj) {
                                     id="Lecturename"
                                     class="focus:ring-white focus:border-white border-white text-white text-sm rounded-xl block w-5/6 bg-elementBackground p-2"
                                     placeholder=""
+                                    :required="input - 1"
                                 />
+                                
                             </div>
 
                             <!-- FILE -->
@@ -267,6 +290,10 @@ function inputOn(obj) {
                                 <div class="flex flex-row">
                                     <input
                                         :id="`rfile${input}`"
+                                        @input="
+                                            form.lecturefile[input - 1] =
+                                                $event.target.files
+                                        "
                                         disabled
                                         type="file"
                                         class="block w-5/6 h-9 border rounded-xl cursor-pointer file:h-full file:rounded-l-sm file:border-0 file:mr-1.5"
@@ -292,25 +319,26 @@ function inputOn(obj) {
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                                     >Storage Link</label
                                 >
-                                <div class="flex flex-row" >
-                                <input
-                                    v-model="form.storagelink[input - 1]"
-                                    type="text"
-                                    :id="`stlink${input}`"
-                                    class="focus:ring-white focus:border-white border-white text-white text-sm rounded-xl block w-5/6 bg-elementBackground p-2"
-                                    placeholder=""
-                                />
+                                <div class="flex flex-row">
                                     <input
-                                    checked
-                                    type="radio"
-                                    id="default-radio-1"
-                                    class="ml-4 mt-2"
-                                    :name="input"
-                                    @click="fileOn(input)"
-                                />
+                                        v-model="form.storagelink[input - 1]"
+                                        type="text"
+                                        :id="`stlink${input}`"
+                                        class="focus:ring-white focus:border-white border-white text-white text-sm rounded-xl block w-5/6 bg-elementBackground p-2"
+                                        placeholder=""
+                                        required
+                                    />
+                                    <input
+                                        checked
+                                        type="radio"
+                                        id="default-radio-1"
+                                        class="ml-4 mt-2"
+                                        :name="input"
+                                        @click="fileOn(input)"
+                                    />
                                 </div>
                             </div>
-                            
+
                             <!-- Storage Location -->
                             <div class="pl-7 sm:w-full sm:ml-4 mt-5">
                                 <label
@@ -342,7 +370,6 @@ function inputOn(obj) {
                     </div>
                 </div>
                 <div class="flex justify-between py-8">
-                    
                     <Link
                         :href="route('addvideo.destroy', form.id)"
                         method="delete"
@@ -358,8 +385,7 @@ function inputOn(obj) {
                             <span class="mx-2">Delete</span>
                         </button>
                     </Link>
-                
-                
+
                     <button
                         class="py-2 px-5 text-whiteTextColor text-md bg-blueTextColor rounded-xl flex items-center"
                     >
@@ -370,9 +396,7 @@ function inputOn(obj) {
                         />
                         <span class="mx-2">Save</span>
                     </button>
-                
                 </div>
-                
             </form>
         </div>
     </div>
