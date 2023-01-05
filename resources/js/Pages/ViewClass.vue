@@ -67,6 +67,7 @@ const porps = defineProps({
     phpVersion: String,
     classdata: Object,
     students: Object,
+    videos: Object,
 });
 console.log(porps.classdata[0].id);
 </script>
@@ -195,67 +196,47 @@ console.log(porps.classdata[0].id);
                                 <td class="text-center">
                                     {{ student.remain_fees }}
                                 </td>
-                                <td
-                                    class="text-center customtextcolor7 underline"
-                                >
-                                    View
-                                </td>
-                            </tr>
-                            <!--  <tr class="customborder">
-        <td class="text-start sm:pl-3 pl-0 py-1 customtextcolor7 underline">Thazin Aung</td>
-        <td  class="text-center ">2022/09/10</td>
-        <td  class="text-center">1</td>
-        <td  class="text-center">200,000</td>
-        <td  class="text-center">90,000</td>
-        <td  class="text-center customtextcolor7 underline">View</td>
-    </tr>
-    <tr class="customborder">
-        <td class="text-start sm:pl-3 pl-0 py-1 customtextcolor7 underline">Thazin Aung</td>
-        <td  class="text-center ">2022/09/10</td>
-        <td  class="text-center">1</td>
-        <td  class="text-center">200,000</td>
-        <td  class="text-center">90,000</td>
-        <td  class="text-center customtextcolor7 underline">View</td>
-    </tr>
-    <tr class="customborder">
-        <td class="text-start sm:pl-3 pl-0 py-1 customtextcolor7 underline">Thazin Aung</td>
-        <td  class="text-center ">2022/09/10</td>
-        <td  class="text-center">1</td>
-        <td  class="text-center">200,000</td>
-        <td  class="text-center">90,000</td>
-        <td  class="text-center customtextcolor7 underline">View</td>
-    </tr>
-    <tr class="customborder">
-        <td class="text-start sm:pl-3 pl-0 py-1 customtextcolor7 underline">Thazin Aung</td>
-        <td  class="text-center ">2022/09/10</td>
-        <td  class="text-center">1</td>
-        <td  class="text-center">200,000</td>
-        <td  class="text-center">90,000</td>
-        <td  class="text-center customtextcolor7 underline">View</td>
-    </tr>
-    <tr class="customborder">
-        <td class="text-start sm:pl-3 pl-0 py-1 customtextcolor7 underline">Thazin Aung</td>
-        <td  class="text-center ">2022/09/10</td>
-        <td  class="text-center">1</td>
-        <td  class="text-center">200,000</td>
-        <td  class="text-center">90,000</td>
-        <td  class="text-center customtextcolor7 underline">View</td>
-    </tr>
-    <tr class="customborder">
-        <td class="text-start sm:pl-3 pl-0 py-1 customtextcolor7 underline">Thazin Aung</td>
-        <td  class="text-center ">2022/09/10</td>
-        <td  class="text-center">1</td>
-        <td  class="text-center">200,000</td>
-        <td  class="text-center">90,000</td>
-        <td  class="text-center customtextcolor7 underline">View</td>
-    </tr> -->
+        <td class="text-center text-yellowTextColor underline">
+            <Link :href="route('students.show', student.id)"
+            >View</Link
+            >
+        </td>
+        </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
             <div class="cuswidth sm:mt-0 mt-5">
                 <h3 class="text-white">Recording Video List</h3>
-                <RecordingVideoListTableBox :classdata=classdata[0].id />
+                <div class="custombackgroundcolor h-48   rounded-lg  mt-3 px-3 py-4 overflow-y-scroll">
+  <table  class="text-white w-full ">
+    <thead class="">
+    <tr class="opacity-70 sm:text-sm customfontsize ">
+        <th class="text-start sm:pl-4 pl-0 ">NAME</th>
+        <th class="">Date</th>
+        <th >Attach File</th>
+        <th >Detail</th>
+    </tr>
+    </thead>
+    <tbody class="lg:text-sm text-xs customfontsize overflow-y-scroll">
+    <tr class="customborder" v-for="video in videos">
+        <td class="text-start sm:pl-4 pl-0 py-1">{{video.v_name}}</td>
+        <td  class="text-center ">{{video.v_date}}</td>
+        <td  class="text-center">3</td>
+        <a :href="route('addvideo.edit',video.id)"><td  class="text-center customtextcolor7 underline pl-4">
+           
+            edit</td></a>
+    </tr>
+    </tbody>
+  </table>
+
+  </div>
+  <a :href="route('addvideo.show', classdata[0].id)">
+<button class="float-right pt-0.5 custommb sm:w-2/6 w-24 h-7 mt-5  text-white rounded-lg flex justify-center bg-blue-600 hover:bg-blue-700 active:bg-blue-900 cusmargin">
+<img src="../../../public/img/bxs_video-plus.png" alt="" class="w-5 h-5 pt-0.5">
+<span class="ml-2 sm:text-base text-xs sm:pt-0 pt-1">Add Video</span>
+</button>
+</a>
             </div>
         </div>
     </div>
@@ -269,10 +250,12 @@ console.log(porps.classdata[0].id);
 }
 
 @media screen and (max-width: 640px) {
-    .cuswidth {
-        width: 80%;
-
+    .cuswidth{
+        width:80% ;
+      }
+          .customfontsize{
         font-size: 0.6em;
+      }
     }
-}
+
 </style>

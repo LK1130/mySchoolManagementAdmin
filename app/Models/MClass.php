@@ -15,24 +15,35 @@ class MClass extends Model
     public function get_instructors()
     {
         return DB::table('m_instructors')
+            ->where('del_flg', 0)
             ->get();
     }
 
     public function get_category()
     {
         return DB::table('m_categories')
+            ->where('del_flg', 0)
             ->get();
     }
 
-    public function get_student()
-    {
+    public function get_student( $srcname="")
+    { 
+        if(empty($srcname)){
         return DB::table('users')
+            ->where('del_flg', 0)
             ->get();
+        }else{
+            return DB::table('users')
+            ->where('del_flg', 0)
+            ->where('name', 'like', '%' . $srcname . '%')
+            ->get();
+        }
     }
 
     public function category()
     {
         return  DB::table("m_categories")
+            ->where('del_flg', 0)
             ->select('*')
             ->get();
     }
@@ -90,7 +101,7 @@ class MClass extends Model
     {
         return DB::table('t_student_classes')
             ->join('users', 't_student_classes.user_id', '=', 'users.id')
-            ->select('t_student_classes.start_join', 'users.name', 't_student_classes.paid_fees', 't_student_classes.remain_fees')
+            ->select('t_student_classes.start_join', 'users.name','users.id', 't_student_classes.paid_fees', 't_student_classes.remain_fees')
             ->where('t_student_classes.class_id', $id)
             ->get();
     }
@@ -171,7 +182,6 @@ class MClass extends Model
                 ]);
         };
     }
-
     public function getClasses($id)
     {
         return DB::table('m_classes')

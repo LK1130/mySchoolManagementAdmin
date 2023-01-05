@@ -3,6 +3,8 @@ import AppLayout from "@/Layouts/AppLayout.vue";
 import { Head, Link } from "@inertiajs/inertia-vue3";
 import NavBar from "../Components/NavBar.vue";
 import Header from "../Components/Header.vue";
+import RecentAction from "../Components/RecentAction.vue";
+import OnlineStudentCard from "../Components/OnlineStudendCard.vue";
 const props=defineProps({
         allstudent : {
         type : Object
@@ -19,7 +21,97 @@ const props=defineProps({
         classdata: {
         type : Object
     },
-})
+});
+const datesplit = (data) => {
+  const fullday = [];
+  var arrycount = 0;
+  for (let index = 0; index < 7; index++) {
+    var day = data.charAt(index);
+    var output = dateshow(day, index);
+    if (output != null) {
+      fullday[arrycount++] = output;
+    }
+  }
+  return fullday.toString();
+};
+const dateshow = (data, count) => {
+  switch (count) {
+    case 0:
+      if (data == 1) {
+        return "Sun";
+      }
+      break;
+    case 1:
+      if (data == 1) {
+        return "Mon";
+      }
+      break;
+    case 2:
+      if (data == 1) {
+        return "Tue";
+      }
+      break;
+    case 3:
+      if (data == 1) {
+        return "Wed";
+      }
+      break;
+    case 4:
+      if (data == 1) {
+        return "Thu";
+      }
+      break;
+    case 5:
+      if (data == 1) {
+        return "Fri";
+      }
+      break;
+    case 6:
+      if (data == 1) {
+        return "Sat";
+      }
+      break;
+  }
+};
+const beforeaftercalculate = (starttime, endtime) => {
+  var today = new Date();
+  var hour = today.getHours();
+  var starthour = starttime.slice(0, 2);
+  var endhour = endtime.slice(0, 2);
+  if (hour < starthour) {
+    if (starthour - hour <= 3) {
+      return "Before " + (starthour - hour) + " hours";
+    }
+  }
+  if (hour >= starthour && hour <= endhour) {
+    return "Live";
+  }
+  if (hour > endhour) {
+    if (hour - endhour <= 3) {
+      return "After " + (hour - endhour) + " hours";
+    }
+  }
+};
+
+const bafcolor = (start, end) => {
+  var bafcd = beforeaftercalculate(start, end);
+  if (bafcd != null) {
+    var bafcondintion = bafcd.slice(0, 1);
+    switch (bafcondintion) {
+      case "B":
+        return "beforecolor";
+        break;
+
+      case "L":
+        return "livecolor";
+        break;
+
+      case "A":
+        return "aftercolor";
+        break;
+    }
+  }
+};
 </script>
 
 <template>
@@ -197,40 +289,12 @@ const props=defineProps({
     </tr>
     </thead>
     <tbody class="lg:text-sm text-xs customfontsize">
-    <tr class="customborder">
-        <td class="text-start sm:pl-7 pl-0 py-1">JP Batch 8</td>
-        <td  class="text-center py-1">Tue,Thur,Sat</td>
-        <td  class="text-center py-1">18:00 - 20:00</td>
-        <td  class="text-center py-1">25</td>
-        <td  class="text-center py-1 customtextcolor5">Class Time</td>
-    </tr>
-    <tr class="customborder">
-        <td class="text-start sm:pl-7 pl-0 py-1">JP Batch 8</td>
-        <td  class="text-center py-1">Tue,Thur,Sat</td>
-        <td  class="text-center py-1">18:00 - 20:00</td>
-        <td  class="text-center py-1">25</td>
-        <td  class="text-center py-1 customtextcolor6">After 3 hours</td>
-    </tr>
-   <tr class="customborder">
-        <td class="text-start sm:pl-7 pl-0 py-1">JP Batch 8</td>
-        <td  class="text-center py-1">Tue,Thur,Sat</td>
-        <td  class="text-center py-1">18:00 - 20:00</td>
-        <td  class="text-center py-1">25</td>
-        <td  class="text-center py-1 customtextcolor7">Before 3 mins</td>
-    </tr>
-   <tr class="customborder">
-        <td class="text-start sm:pl-7 pl-0 py-1">JP Batch 8</td>
-        <td  class="text-center py-1">Tue,Thur,Sat</td>
-        <td  class="text-center py-1">18:00 - 20:00</td>
-        <td  class="text-center py-1">25</td>
-        <td  class="text-center py-1 customtextcolor5">class time</td>
-    </tr>
-   <tr class="customborder">
-        <td class="text-start sm:pl-7 pl-0 py-1">JP Batch 8</td>
-        <td  class="text-center py-1">Tue,Thur,Sat</td>
-        <td  class="text-center py-1">18:00 - 20:00</td>
-        <td  class="text-center py-1">25</td>
-        <td  class="text-center py-1 customtextcolor6">After 1 hours</td>
+    <tr class="customborder" v-for="(data,index) in classdata" :key="index" >
+        <td class="text-start sm:pl-7 pl-0 py-1" v-if="index<5">{{data.c_name}}</td>
+        <td  class="text-center py-1" v-if="index<5">{{datesplit(data.c_day)}}</td>
+        <td  class="text-center py-1" v-if="index<5">{{data.c_start_time}} - {{data.c_end_time}} </td>
+        <td  class="text-center py-1" v-if="index<5">{{data.StudenyCount}}</td>
+        <td  class="text-center py-1" v-if="index<5" :class="bafcolor(data.c_start_time,data.c_end_time)">{{beforeaftercalculate(data.c_start_time,data.c_end_time)}}</td>
     </tr>
     </tbody>
   </table>
@@ -288,6 +352,15 @@ const props=defineProps({
 <style scoped>
 .customalign {
   margin-bottom: 1.3em;
+}
+.beforecolor {
+  color: #ffc652;
+}
+.livecolor {
+  color: #33a02c;
+}
+.aftercolor {
+  color: #ff6551;
 }
 @media screen and (max-width: 640px) {
     .customfontsize{

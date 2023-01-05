@@ -7,6 +7,7 @@ import { ref } from "@vue/reactivity";
 import { watch } from "@vue/runtime-core";
 import throttle from "lodash/throttle";
 import { Inertia } from "@inertiajs/inertia";
+import Pagination from "../Components/Pagination.vue";
 var categoryid = ref([]);
 
 const props = defineProps({

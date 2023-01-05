@@ -5,18 +5,24 @@ import Header from "../Components/Header.vue";
 import { ref } from '@vue/reactivity';
 import throttle from "lodash/throttle";
 import { Inertia } from "@inertiajs/inertia";
+import { Field, Form, ErrorMessage } from 'vee-validate';
+import axios from 'axios';
+import { watch } from '@vue/runtime-core';
 
 var studentid = ref([]);
-defineProps({
-    canLogin: Boolean,
-    canRegister: Boolean,
-    laravelVersion: String,
-    phpVersion: String,
-    instructor: Object,
-    category: Object,
-    student:Object,
-});
-let searchstdname="";
+const props = defineProps({
+    instructor : {
+        type : Object
+    },
+    category : {
+        type : Object
+    },
+    student : {
+        type : Object
+    },
+    
+})
+let searchstdname=ref();
 const form = useForm({
     classnames: null,
     classimage: null,
@@ -62,11 +68,60 @@ const submit = () => {
   form.students=studentid;
   form.post(route('class.store',form));
   console.log(form)
-};
-const search = () => {
-};
+} 
 
+function classnameValidation(value) {
+  if (!value) {
+    return 'Class name is required';
+    }
+  return true; 
+}
+function startdateValidation(value) {
+  if (!value) {
+    return 'Start Date is required';
+    }
+  return true; 
+}
+function enddateValidation(value) {
+  if (!value) {
+    return 'End Date is required';
+    }
+  return true; 
+}
+function starttimeValidation(value) {
+  if (!value) {
+    return 'Start Time is required';
+    }
+  return true; 
+}
+function endtimeValidation(value) {
+  if (!value) {
+    return 'End Time is required';
+    }
+  return true; 
+}
 
+function isRequired(value) {
+  if (!value) {
+    return 'Fees is required';
+    }
+    // if (value!=Number) {
+    // return 'Fees must be Number';
+    // }
+  return true;
+  
+}
+watch(
+    searchstdname,
+    throttle(function (value) {
+        console.log(value);
+        Inertia.get(
+            "/class/create",
+            { searchstdname: value },
+            { preserveState: true, replace: true }
+        );
+    }, 200)
+);
 </script>
 
 <template >
@@ -76,12 +131,12 @@ const search = () => {
 
 <!---------------- body ----------------------->
 <div class="absolute w-5/6 headercustomleft  top-32 customblack px-5">
-<form @submit.prevent="submit">
+<Form @submit="submit" >
 <div class="flex flex-row mt-10 addclasscss fixed sm:top-4 top-10 z-50" >
-<input type="text"  class="classnameinput  sm:text-xl text-sm font-bold text-white"  v-model="form.classnames">
+<Field type="text"  class="classnameinput  sm:text-xl text-sm font-bold text-white"  v-model="form.classnames" :rules="classnameValidation" name="classname"/>
 <button type="button" class="mt-2 sm:w-7 w-4 sm:h-7 h-4 border-2 sm:text-sm text-xs rounded-full border-solid border-white text-white " @click="form.classnames=''"> &#9587</button>
 </div>
-
+<ErrorMessage name="classname" class="text-red-800 ml-5"/>
 <div class="my-5">
     <div class="customnavcolor w-full text-white p-4 rounded-lg">
    <h3 class="sm:text-lg text-base">Class Information</h3>
@@ -100,13 +155,16 @@ const search = () => {
         <div>Date :
             
             <span>
-            <input type="text" v-model="form.startdate" class="customnavcolor text-white sm:text-sm text-xs rounded-lg sm:w-1/4 w-16 customborder1">
+            <Field type="date" v-model="form.startdate" class="customnavcolor text-white sm:text-sm text-xs rounded-lg sm:w-1/3 w-16 customborder1" :rules="startdateValidation" name="startdate"/>
             </span>
             -
             <span>
-            <input type="text" v-model="form.enddate" class="customnavcolor text-white sm:text-sm text-xs rounded-lg sm:w-1/4 w-16 customborder1">
-        </span> 
+            <Field type="date" v-model="form.enddate" class="customnavcolor text-white sm:text-sm text-xs rounded-lg sm:w-1/3 w-16 customborder1" :rules="enddateValidation" name="enddate"/>
+            </span> 
         </div>
+        <ErrorMessage name="startdate" class="text-red-800 ml-12 mt-2"/>
+        <br>
+        <ErrorMessage name="enddate" class="text-red-800 ml-12 mt-2"/>
       <div class="mt-3  flex flex-row ">Day: 
        <span class="flex flex-wrap mt-0.5 sm:text-sm text-xs">  
        <input type="checkbox" name="checkbox" v-model="form.day1" value="1" class="daycheckbox mt-0.5 ml-3"/>
@@ -135,13 +193,16 @@ const search = () => {
         </div>
         <div class="mt-3">Time : 
            <span>
-            <input type="text" v-model="form.starttime" class="customnavcolor text-white sm:text-sm text-xs rounded-lg sm:w-1/4 w-16 customborder1">
+            <Field type="text" v-model="form.starttime" class="customnavcolor text-white sm:text-sm text-xs rounded-lg sm:w-1/3 w-16 customborder1" placeholder="00:00" :rules="starttimeValidation" name="starttime"/>
             </span>
             -
             <span>
-            <input type="text" v-model="form.endtime" class="customnavcolor text-white sm:text-sm text-xs rounded-lg sm:w-1/4 w-16 customborder1">
+            <Field type="text" v-model="form.endtime" class="customnavcolor text-white sm:text-sm text-xs rounded-lg sm:w-1/3 w-16 customborder1" placeholder="00:00" :rules="endtimeValidation" name="endtime"/>
             </span>
         </div>
+        <ErrorMessage name="starttime" class="text-red-800 ml-12 mt-2"/>
+        <br>
+        <ErrorMessage name="endtime" class="text-red-800 ml-12 mt-2"/>
         <div class="mt-3">Person : <span>{{studentid.length}}</span></div>
     </div>
     <div>
@@ -159,7 +220,8 @@ const search = () => {
         </select>
         </span>
         </div>
-        <div class="mt-3">Fees : <span class="pl-7"><input type="text" v-model="form.fees" class="customnavcolor text-white sm:text-sm text-xs rounded-lg sm:w-52 w-32 customborder1"></span></div>
+        <div class="mt-3">Fees : <span class="pl-7"><Field type="text" v-model="form.fees" class="customnavcolor text-white sm:text-sm text-xs rounded-lg sm:w-52 w-32 customborder1" :rules="isRequired" name="fee"/></span></div>
+        <ErrorMessage name="fee" class="text-red-800 ml-20"/>
     </div>
    </div>
   </div>
@@ -168,14 +230,13 @@ const search = () => {
 <div  class="flex flex-row mb-3">
 <h3 class="text-white pt-1 ">Student Name : </h3>
 <input type="text" v-model="searchstdname" class="customnavcolor sm:ml-3 ml-2  text-white sm:text-sm text-xs rounded-lg sm:w-1/4 w-24 customborder1" placeholder="name">
-<button type="button" @click="search()"  class=" w-20 bg-blue-600 hover:bg-blue-700 active:bg-blue-900 rounded-lg p-1 ml-3 text-white sm:text-sm text-xs">Search</button>
 </div>
 
 <div class="sm:w-2/4 w-4/4">
-<div class="custombackgroundcolor h-48   rounded-lg  mt-3 px-3 py-4 overflow-y-scroll my-5">
+<div class="custombackgroundcolor h-48   rounded-lg  mt-3 px-3 py-4  my-5 overflow-y-scroll">
   <table  class="text-white w-full">
     <thead class="">
-    <tr class="opacity-70 sm:text-sm customfontsize ">
+    <tr class="opacity-70 sm:text-sm customfontsize">
         <th class="text-start pl-8">NAME</th>
         <th class="">Phone</th>
         <th >Address</th>
@@ -183,13 +244,17 @@ const search = () => {
         <th >Detail</th>
     </tr>
     </thead>
-    <tbody class="lg:text-sm text-xs customfontsize overflow-y-scroll">
+    <tbody class="lg:text-sm text-xs customfontsize ">
     <tr class="customborder" v-for="user in student">
         <td class="text-start  py-1"><input type="checkbox" name="checkbox" :value="user.id" v-model="studentid" class="cuscheckbox"/> {{user.name}}</td>
         <td  class="text-center ">{{user.phone}}</td>
         <td class="text-center ">{{user.address}}</td>
-        <td  class="text-center">{{user.Age}}</td>
-        <td  class="text-center customtextcolor7 underline">View</td>
+        <td  class="text-center">{{user.age}}</td>
+        <td class="text-center text-yellowTextColor underline">
+            <Link :href="route('students.show', user.id)"
+            >View</Link
+            >
+        </td>
     </tr>
     </tbody>
   </table>
@@ -199,7 +264,7 @@ const search = () => {
 <img src="../../../public/img/bx_save.png" alt="" class="w-5 h-5 pt-0.5">
 <span class="ml-2 sm:text-base text-xs sm:pt-0 pt-1" >Save</span>
 </button>
-</form>
+</Form>
 </div>
 </template>
 <style scoped>

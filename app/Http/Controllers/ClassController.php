@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AdminValidation;
 use App\Models\MClass;
 use Illuminate\Http\Client\Request as ClientRequest;
 use Illuminate\Http\Request;
@@ -35,12 +36,13 @@ class ClassController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
+        $srcname = $request->searchstdname;
         $class = new MClass();
         $instructors = $class->get_instructors();
         $categories = $class->get_category();
-        $students = $class->get_student();
+        $students=($request->searchstdname) ? $class->get_student($srcname) : $class->get_student("");
 
         return inertia("AddClass", ['instructor' => $instructors, 'category' => $categories, 'student' => $students]);
     }
@@ -51,7 +53,7 @@ class ClassController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(AdminValidation $request)
     {
         $class = new MClass();
         $date1 = $request->input('day1');
@@ -93,13 +95,14 @@ class ClassController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request,$id)
     {
+        $srcname = $request->searchstdname;
         $class = new MClass();
         $classdetail = $class->get_classdetail($id);
         $instructors = $class->get_instructors();
         $categories = $class->get_category();
-        $students = $class->get_student();
+        $students=($request->searchstdname) ? $class->get_student($srcname) : $class->get_student("");
         $studentsid = $class->get_studentid($id);
         $date = $class->get_classdate($id);
         $day = $date->c_day;

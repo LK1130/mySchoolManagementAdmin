@@ -36,10 +36,9 @@ use Inertia\Inertia;
 | contains the "web" middleware group. Now create something great!
 |
 */
-// Route::get('/dashboard', function () {
-//     return inertia("Welcome");
-// });
-Route::get('/dashboard', [DashboardController::class, "getdashboard"]);
+// Route::get('/addInstructor', function () {
+//     return inertia("addInstructor");
+// })->name("addInstructor.view");
 // Route::middleware([
 //     'auth:sanctum',
 //     config('jetstream.auth_session'),
@@ -49,13 +48,14 @@ Route::get('/dashboard', [DashboardController::class, "getdashboard"]);
 //         return Inertia::render('Dashboard');
 //     })->name('dashboard');
 // });
-
+Route::get('/dashboard', [DashboardController::class, "getdashboard"]);
 Route::get('/login', function () {
     return inertia("Admin/AdLogin");
 });
 Route::post('/login', [LoginController::class, 'store'])->name('login.store');
+Route::get('/searchstd/{name?}', [viewclassController::class, 'searchstudent']);
 
-// Route::middleware([checkRole::class])->group(function(){
+Route::middleware([checkRole::class])->group(function(){
 Route::get('/home', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
@@ -111,7 +111,7 @@ Route::resource('adminPermission', AdminPermissionController::class);
 Route::resource('addRole', AddRoleController::class);
 Route::resource('pageList', AddPageController::class);
 // End Admin Permission
-// });
+});
 
 Route::resource('admin', AdminController::class);
 
