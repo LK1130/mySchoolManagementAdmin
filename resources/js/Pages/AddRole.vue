@@ -6,6 +6,12 @@ import { Inertia } from "@inertiajs/inertia";
 import { ref } from "vue";
 import { useForm } from "@inertiajs/inertia-vue3";
 
+const props = defineProps({
+    errors: {
+        type: Object,
+    },
+});
+
 const form = useForm({
     role_name: null,
 });
@@ -39,6 +45,12 @@ const submit = () => {
                         class="w-96 rounded-xl bg-secondaryBackground text-whiteTextColor border-whiteTextColor focus:outline-0"
                         v-model="form.role_name"
                     />
+                    <div
+                        v-if="errors.role_name"
+                        class="text-red-500 font-bold text-md mt-5"
+                    >
+                        {{ errors.role_name }}
+                    </div>
                 </div>
 
                 <div class="flex justify-end mt-5">

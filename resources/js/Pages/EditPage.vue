@@ -7,6 +7,9 @@ import { ref } from "vue";
 import { Link, useForm } from "@inertiajs/inertia-vue3";
 
 const props = defineProps({
+    errors: {
+        type: Object
+    },
     page: {
         type: Object,
     },
@@ -50,6 +53,12 @@ const submit = () => {
                                 v-model="form.page_name"
                             />
                         </div>
+                        <div
+                            v-if="errors.page_name"
+                            class="text-red-500 font-bold text-md"
+                        >
+                            {{ errors.page_name }}
+                        </div>
 
                         <div class="flex items-center">
                             <label for="" class="text-whiteTextColor mr-5"
@@ -60,6 +69,12 @@ const submit = () => {
                                 class="w-96 rounded-xl bg-secondaryBackground text-whiteTextColor border-whiteTextColor focus:outline-0"
                                 v-model="form.page_route"
                             />
+                        </div>
+                        <div
+                            v-if="errors.page_route"
+                            class="text-red-500 font-bold text-md"
+                        >
+                            {{ errors.page_route }}
                         </div>
                     </div>
                 </div>
