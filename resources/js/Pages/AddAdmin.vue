@@ -117,7 +117,7 @@ const submit = () => {
                         <span
                             ><select
                             v-model="form.role"
-                             name="" id=""
+                            name="" id=""
                             class="focus:ring-white focus:border-white bg-elementBackground text-sm rounded-xl ml-16 pl-5 text-white w-64">
                                 <option v-for="role in roles" :key="role.id" :value="role.id">{{ role.r_name }}</option>
                                 

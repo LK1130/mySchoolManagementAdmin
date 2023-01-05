@@ -36,9 +36,16 @@ use Inertia\Inertia;
 | contains the "web" middleware group. Now create something great!
 |
 */
+<<<<<<< HEAD
 // Route::get('/addInstructor', function () {
 //     return inertia("addInstructor");
 // })->name("addInstructor.view");
+=======
+// Route::get('/dashboard', function () {
+//     return inertia("Welcome");
+// });
+Route::get('/dashboard', [DashboardController::class, "getdashboard"]);
+>>>>>>> origin/main
 // Route::middleware([
 //     'auth:sanctum',
 //     config('jetstream.auth_session'),
@@ -48,7 +55,11 @@ use Inertia\Inertia;
 //         return Inertia::render('Dashboard');
 //     })->name('dashboard');
 // });
+<<<<<<< HEAD
 Route::get('/dashboard', [DashboardController::class, "getdashboard"]);
+=======
+
+>>>>>>> origin/main
 Route::get('/login', function () {
     return inertia("Admin/AdLogin");
 });
@@ -56,6 +67,7 @@ Route::post('/login', [LoginController::class, 'store'])->name('login.store');
 Route::get('/searchstd/{name?}', [viewclassController::class, 'searchstudent']);
 
 // Route::middleware([checkRole::class])->group(function(){
+<<<<<<< HEAD
 // Route::get('/home', function () {
 //     return Inertia::render('Welcome', [
 //         'canLogin' => Route::has('login'),
@@ -64,6 +76,16 @@ Route::get('/searchstd/{name?}', [viewclassController::class, 'searchstudent']);
 //         'phpVersion' => PHP_VERSION,
 //     ]);
 // });
+=======
+Route::get('/home', function () {
+    return Inertia::render('Welcome', [
+        'canLogin' => Route::has('login'),
+        'canRegister' => Route::has('register'),
+        'laravelVersion' => Application::VERSION,
+        'phpVersion' => PHP_VERSION,
+    ]);
+});
+>>>>>>> origin/main
 
 Route::get('/classview/{id?}', [viewclassController::class, "getclassdata"])->name("class.view");
 // Route::get('/classsorting/{name?}', [viewclassController::class, "classsorting"])->name("class.sorting");
@@ -74,7 +96,7 @@ Route::resource('/class', ClassController::class);
 
 
 Route::resource('/students', StudentController::class);
-Route::resource('/addvideo',AddVideoController::class);
+Route::resource('/addvideo', AddVideoController::class);
 
 
 Route::resource('/instructors', InstructorController::class);

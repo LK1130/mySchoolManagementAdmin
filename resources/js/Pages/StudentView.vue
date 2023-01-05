@@ -380,12 +380,12 @@ const series = ref([
                 v-for="data in studenProfile"
                 :key="studenProfile"
             >
-                <div class="items-center justify-center flex px-4 md:w-3/6">
+                <div class="items-center justify-center flex mr-4 rounded-full overflow-hidden">
                     <img
                         :src="data.profile_photo_path"
                         alt="Profile photo is not uploaded"
                         srcset=""
-                        class="w-32 rounded-full"
+                        class="h-36"
                     />
                 </div>
                 <div class="bg-white md:w-0.5 md:h-5/6 w-5/6 h-0.5 mt-6"></div>
@@ -401,7 +401,7 @@ const series = ref([
                         </div>
 
                         <div
-                            class="w-4/6 flex flex-col jstify-center text-sm underline-offset-4 underline text-yellowTextColor"
+                            class="w-4/6 flex flex-col jstify-center text-sm text-yellowTextColor"
                         >
                             <ul v-for="classi in stuClass" :key="stuClass">
                                 <li>{{ classi }}</li>
