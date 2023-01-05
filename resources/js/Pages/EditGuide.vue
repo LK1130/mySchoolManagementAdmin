@@ -16,7 +16,7 @@ const props = defineProps({
 // console.log(props.guideInfo);
 // console.log(props.guideInfo.guide_step.map(item => item.step_photo));
 
-let imageFile = ref(props.guideInfo.guide_step.map(item => "/storage/"+item.step_photo))
+let imageFile = ref(props.guideInfo.guide_step.map(item => item.step_photo))
 let input = null;
 // console.log(imageFile.value);
 const showImagePreview = (event) => {

@@ -39,7 +39,7 @@ class AddVideoController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request);
+        dd($request);
 
         $request->validate([
             'videoName' => "required",
@@ -123,7 +123,7 @@ class AddVideoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // dd($request);
+        dd($request);
         $request->validate([
             'videoName' => "required",
             'description' => 'required',
@@ -141,7 +141,7 @@ class AddVideoController extends Controller
         $videoUpload->v_storage_location = $request->storagelocation;
         // $videoUpload->class_id = $request->classId;
         $videoUpload->save();
-        dd($request);
+        // dd($request);
         TLectureNote::where("video_id", $id)
             ->delete();
 

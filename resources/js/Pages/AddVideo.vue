@@ -62,21 +62,20 @@ const submit = () => {
     });
 };
 function fileOn(obj) {
-   document.getElementById("rfile"+obj).disabled = true
-    document.getElementById("stlink"+obj).disabled = false;
-    document.getElementById("storagelocation"+obj).disabled = false;
-    document.getElementById("rfile"+obj).value ="";
-    document.getElementById("stlink"+obj).required =true;
-    document.getElementById("storagelocation"+obj).required =true;
+    document.getElementById("rfile" + obj).disabled = true;
+    document.getElementById("stlink" + obj).disabled = false;
+    document.getElementById("storagelocation" + obj).disabled = false;
+    document.getElementById("rfile" + obj).value = "";
+    document.getElementById("stlink" + obj).required = true;
+    document.getElementById("storagelocation" + obj).required = true;
 }
 function inputOn(obj) {
-    document.getElementById("rfile"+obj).disabled = true
-    document.getElementById("stlink"+obj).disabled = false;
-    document.getElementById("storagelocation"+obj).disabled = false;
-    document.getElementById("rfile"+obj).value ="";
-    document.getElementById("stlink"+obj).required =true;
-    document.getElementById("storagelocation"+obj).required =true;
-    console.log("a");
+    document.getElementById("stlink" + obj).disabled = true;
+    document.getElementById("storagelocation" + obj).disabled = true;
+    document.getElementById("rfile" + obj).disabled = false;
+    document.getElementById("stlink" + obj).value = "";
+    document.getElementById("storagelocation" + obj).value = "";
+    document.getElementById("rfile" + obj).required = true;
 }
 </script>
 
@@ -260,8 +259,8 @@ function inputOn(obj) {
                                                 $event.target.files
                                         "
                                         :id="`rfile${input}`"
-                                        disabled
                                         type="file"
+                                        disabled
                                         class="block w-5/6 h-9 border rounded-xl cursor-pointer file:h-full file:rounded-l-sm file:border-0 file:mr-1.5"
                                     />
                                     <input

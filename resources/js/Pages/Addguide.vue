@@ -17,6 +17,18 @@ const addInput = () => {
     inputs.value += 1;
 };
 
+
+// let imageFile = ref(1);
+// let input = null;
+// console.log(imageFile);
+// const showImagePreview = (event) => {
+//     input = event.target;
+//     if (input.files && input.files[0]) {
+//         const file = event.target.files[0];
+//         imageFile.value[event.target.id] = URL.createObjectURL(file);
+//     }
+   
+// };
 const removeInput = (index) => {
     form.steptitle.splice(index, 1);
     form.description.splice(index, 1);
@@ -235,7 +247,7 @@ export default {
     data() {
         return {
             imageFile: [],
-            input: null,
+            input: [],
             isImageUploading: false,
         };
     },
