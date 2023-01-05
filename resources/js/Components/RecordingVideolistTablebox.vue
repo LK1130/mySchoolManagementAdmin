@@ -23,37 +23,40 @@ console.log(porps.classdata);
         <td class="text-start sm:pl-4 pl-0 py-1">Web Developer day 1</td>
         <td  class="text-center ">2022/09/10</td>
         <td  class="text-center">3</td>
-        <td  class="text-center customtextcolor7 underline">View</td>
+        <a :href="route('addvideo.edit',48)"><td  class="text-center customtextcolor7 underline">
+           
+            edita</td></a>
     </tr>
     <tr class="customborder">
         <td class="text-start sm:pl-4 pl-0 py-1">Web Developer day 1</td>
         <td  class="text-center ">2022/09/10</td>
         <td  class="text-center">3</td>
-        <td  class="text-center customtextcolor7 underline">View</td>
+        <td  class="text-center customtextcolor7 underline">edit</td>
     </tr>
     <tr class="customborder">
         <td class="text-start sm:pl-4 pl-0 py-1">Web Developer day 1</td>
         <td  class="text-center ">2022/09/10</td>
         <td  class="text-center">3</td>
-        <td  class="text-center customtextcolor7 underline">View</td>
+        <td  class="text-center customtextcolor7 underline">edit</td>
     </tr>
     <tr class="customborder">
         <td class="text-start sm:pl-4 pl-0 py-1">Web Developer day 1</td>
         <td  class="text-center ">2022/09/10</td>
         <td  class="text-center">3</td>
-        <td  class="text-center customtextcolor7 underline">View</td>
+        <td  class="text-center customtextcolor7 underline">edit</td>
     </tr>
     <tr class="customborder">
         <td class="text-start sm:pl-4 pl-0 py-1">Web Developer day 1</td>
         <td  class="text-center ">2022/09/10</td>
         <td  class="text-center">3</td>
-        <td  class="text-center customtextcolor7 underline">View</td>
+        <td  class="text-center customtextcolor7 underline">edit</td>
     </tr>
     <tr class="customborder">
         <td class="text-start sm:pl-4 pl-0 py-1">Web Developer day 1</td>
         <td  class="text-center ">2022/09/10</td>
         <td  class="text-center">3</td>
-        <td  class="text-center customtextcolor7 underline">View</td>
+        <td  class="text-center customtextcolor7 underline">
+            edit</td>
     </tr>
     </tbody>
   </table>

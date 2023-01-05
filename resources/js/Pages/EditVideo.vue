@@ -6,11 +6,19 @@ import { ref } from "@vue/reactivity";
 import { Inertia } from "@inertiajs/inertia";
 
 const props = defineProps({
-    classDdata: Object,
+    videoData: Object,
+    classDdata:Object
 });
 console.log(props.classDdata);
+console.log(props.videoData.t_lecture_note.map((item) => item.l_storage_link));
+console.log(props.videoData.v_date);
 
-const inputs = ref(1);
+const inputs = ref(props.videoData.t_lecture_note.length);
+const File = ref(
+    "/storage/" +
+        props.videoData.t_lecture_note.map((item) => item.l_storage_link)
+);
+console.log(File);
 const addInput = () => {
     inputs.value += 1;
 };
@@ -21,19 +29,24 @@ const removeInput = (index) => {
     form.lecturefile.splice(index, 1);
     inputs.value -= 1;
 };
-const dis = ref(1);
+
 const form = useForm({
-    className: props.classDdata[0].c_name,
-    classId: props.classDdata[0].id,
-    videoName: null,
-    description: null,
-    date: null,
-    storage: null,
-    storagelocation: null,
-    lecturename: [],
-    storagelink: [],
+    id: props.videoData.id,
+    className: props.classDdata.c_name,
+    classId: props.videoData,
+    videoName: props.videoData.v_name,
+    description: props.videoData.v_description,
+    date: props.videoData.v_date,
+    storage: props.videoData.v_storage_link,
+    storagelocation: props.videoData.v_storage_location,
+    lecturename: props.videoData.t_lecture_note.map((item) => item.l_name),
+    storagelink: props.videoData.t_lecture_note.map(
+        (item) => item.l_storage_link
+    ),
     astoragelink: [],
-    lecturelocation: [],
+    lecturelocation: props.videoData.t_lecture_note.map(
+        (item) => item.l_storage_location
+    ),
     lecturefile: [],
     alecturefile: [],
     input: inputs,
@@ -55,38 +68,37 @@ const submit = () => {
         }
     }
     console.log(form);
-    Inertia.post(route("addvideo.store"), form, {
+    Inertia.put(route("addvideo.update", form.id), form, {
         onError: (data) => {
             console.log(data);
         },
     });
 };
 function fileOn(obj) {
-   document.getElementById("rfile"+obj).disabled = true
-    document.getElementById("stlink"+obj).disabled = false;
-    document.getElementById("storagelocation"+obj).disabled = false;
-    document.getElementById("rfile"+obj).value ="";
-    document.getElementById("stlink"+obj).required =true;
-    document.getElementById("storagelocation"+obj).required =true;
+    document.getElementById("rfile" + obj).disabled = true;
+    document.getElementById("stlink" + obj).disabled = false;
+    document.getElementById("storagelocation" + obj).disabled = false;
+    document.getElementById("rfile" + obj).value = "";
+    document.getElementById("stlink" + obj).required = true;
+    document.getElementById("storagelocation" + obj).required = true;
 }
 function inputOn(obj) {
-    document.getElementById("rfile"+obj).disabled = true
-    document.getElementById("stlink"+obj).disabled = false;
-    document.getElementById("storagelocation"+obj).disabled = false;
-    document.getElementById("rfile"+obj).value ="";
-    document.getElementById("stlink"+obj).required =true;
-    document.getElementById("storagelocation"+obj).required =true;
-    console.log("a");
+    document.getElementById("stlink" + obj).disabled = true;
+    document.getElementById("storagelocation" + obj).disabled = true;
+    document.getElementById("rfile" + obj).disabled = false;
+    document.getElementById("stlink" + obj).value = "";
+    document.getElementById("storagelocation" + obj).value = "";
+    document.getElementById("rfile" + obj).required = true;
 }
 </script>
 
 <template>
     <!-------------------- Navbar&header -------------------->
     <NavBar />
-    <Header headername="Add Video" />
+    <Header headername="Edit Video" />
 
     <!---------------- body ----------------------->
-    <div class="absolute h-full w-5/6 p-5 headercustomleft top-32 customblack">
+    <div class="absolute h-auto w-5/6 p-5 headercustomleft top-32 customblack">
         <Toolsbar active="5" />
         <div
             class="w-full h-auto p-8 relative bg-secondaryBackground rounded-xl flex flex-col items-center"
@@ -104,7 +116,7 @@ function inputOn(obj) {
                                 >Class Name</label
                             >
                             <input
-                                v-model="form.className"
+                            v-model="form.className"
                                 type="text"
                                 id="classname"
                                 class="focus:ring-white focus:border-white border-white text-white text-sm rounded-xl block w-5/6 bg-elementBackground p-2"
@@ -254,11 +266,6 @@ function inputOn(obj) {
                                 >
                                 <div class="flex flex-row">
                                     <input
-                                        v-bind:class="{ disabled: dis == 1 }"
-                                        @input="
-                                            form.lecturefile[input - 1] =
-                                                $event.target.files
-                                        "
                                         :id="`rfile${input}`"
                                         disabled
                                         type="file"
@@ -285,7 +292,7 @@ function inputOn(obj) {
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                                     >Storage Link</label
                                 >
-                                <div class="flex flex-row">
+                                <div class="flex flex-row" >
                                 <input
                                     v-model="form.storagelink[input - 1]"
                                     type="text"
@@ -293,7 +300,7 @@ function inputOn(obj) {
                                     class="focus:ring-white focus:border-white border-white text-white text-sm rounded-xl block w-5/6 bg-elementBackground p-2"
                                     placeholder=""
                                 />
-                                <input
+                                    <input
                                     checked
                                     type="radio"
                                     id="default-radio-1"
@@ -334,7 +341,25 @@ function inputOn(obj) {
                         </div>
                     </div>
                 </div>
-                <div class="flex float-right py-8">
+                <div class="flex justify-between py-8">
+                    
+                    <Link
+                        :href="route('addvideo.destroy', form.id)"
+                        method="delete"
+                    >
+                        <button
+                            class="py-2 px-5 text-whiteTextColor text-md bg-redTextColor rounded-xl flex items-center"
+                        >
+                            <img
+                                src="../../../public/img/delete.png"
+                                alt=""
+                                class="w-5 h-5 pt-0.5"
+                            />
+                            <span class="mx-2">Delete</span>
+                        </button>
+                    </Link>
+                
+                
                     <button
                         class="py-2 px-5 text-whiteTextColor text-md bg-blueTextColor rounded-xl flex items-center"
                     >
@@ -345,7 +370,9 @@ function inputOn(obj) {
                         />
                         <span class="mx-2">Save</span>
                     </button>
+                
                 </div>
+                
             </form>
         </div>
     </div>
