@@ -24,8 +24,10 @@ const form = useForm({
     youtube3: props.mysch[0].youtube_link3,
     messenger: props.mysch[0].messanger_link1,
 });
+console.log(form);
 const submit_mysc = () => {
     Inertia.post("setting/upload", form, {
+        
         onError: (data) => {
             console.log(data);
             // inputField.value.focus();
@@ -105,7 +107,7 @@ let showNoti = ref(false);
             <div
                 class="w-4/6 items-center text-center rounded-tr-xl bg-primaryBackground hover:bg-elementBackground text-white p-4 cursor-pointer tab"
                 id="tab-2"
-                @click="openTab = 2"
+                @click="openTab = 2" 
                 v-bind:class="{
                     'bg-primaryBackground': openTab != 2,
                     'bg-elementBackground': openTab == 2,

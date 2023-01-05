@@ -12,6 +12,9 @@ const props = defineProps({
     guideInfo: {
         type: Object,
     },
+    errors: {
+        type: Object,
+    },
 });
 // console.log(props.guideInfo);
 // console.log(props.guideInfo.guide_step.map(item => item.step_photo));
@@ -85,6 +88,9 @@ const submit = () => {
                         v-model="form.guidetitle"
                         class="focus:ring-white focus:border-white border-white text-white text-sm rounded-xl block w-11/12 bg-elementBackground p-2"
                     />
+                    <div v-if="errors.guidetitle" class="text-red-500">
+                            {{ errors.guidetitle }}
+                        </div>
                 </div>
 
                 <!-- Step  -->
@@ -121,6 +127,7 @@ const submit = () => {
                                 type="text"
                                 id="steptitle"
                                 class="focus:ring-white focus:border-white border-white text-white text-sm rounded-xl block w-11/12 bg-elementBackground p-2"
+                                required
                             />
                         </div>
                         <!-- textarea  -->
@@ -134,6 +141,7 @@ const submit = () => {
                                 name=""
                                 v-model="form.description[input - 1]"
                                 id="Description"
+                                required
                                 class="h-48 w-11/12 resize-none rounded-xl bg-secondaryBackground text-whiteTextColor focus:outline-0 focus:ring-white focus:border-white border-white"
                             >
                             </textarea>
@@ -200,6 +208,7 @@ const submit = () => {
                                    @change="showImagePreview($event)"
                                     accept="image/*"
                                     class="hidden"
+                                    required
                                 />
                             </label>
                         </div>

@@ -39,7 +39,7 @@ class AddVideoController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
+        
 
         $request->validate([
             'videoName' => "required",
@@ -47,9 +47,9 @@ class AddVideoController extends Controller
             'date' => 'required',
             'storage' => 'required',
             'storagelocation' => 'required',
-            'lecturename' => 'required'
+            
         ]);
-
+        dd($request);
         $videoUpload = new MVideo();
         $videoUpload->v_name = $request->videoName;
         $videoUpload->v_description = $request->description;
@@ -123,7 +123,7 @@ class AddVideoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        dd($request);
+        // dd($request);
         $request->validate([
             'videoName' => "required",
             'description' => 'required',

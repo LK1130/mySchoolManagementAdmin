@@ -8,9 +8,11 @@ import { useForm } from "@inertiajs/inertia-vue3";
 import { Link } from "@inertiajs/inertia-vue3";
 import Toolsbar from "../Components/Toolsbar.vue";
 
-// const props = defineProps({
-//     guide : type
-// });
+const props = defineProps({
+    errors: {
+        type: Object,
+    },
+});
 
 const inputs = ref(1);
 const addInput = () => {
@@ -76,6 +78,9 @@ const submit = () => {
                         v-model="form.guidetitle"
                         class="focus:ring-white focus:border-white border-white text-white text-sm rounded-xl block w-11/12 bg-elementBackground p-2"
                     />
+                    <div v-if="errors.guidetitle" class="text-red-500">
+                            {{ errors.guidetitle }}
+                        </div>
                 </div>
 
                 <!-- Step  -->
@@ -109,6 +114,7 @@ const submit = () => {
                             >
                             <input
                                 v-model="form.steptitle[input - 1]"
+                                required
                                 type="text"
                                 id="steptitle"
                                 class="focus:ring-white focus:border-white border-white text-white text-sm rounded-xl block w-11/12 bg-elementBackground p-2"
@@ -124,6 +130,7 @@ const submit = () => {
                             ><textarea
                                 name=""
                                 v-model="form.description[input - 1]"
+                                required
                                 id="Description"
                                 class="h-48 w-11/12 resize-none rounded-xl bg-secondaryBackground text-whiteTextColor focus:outline-0 focus:ring-white focus:border-white border-white"
                             >
@@ -191,6 +198,7 @@ const submit = () => {
                                     @change="showImagePreview($event)"
                                     accept="image/*"
                                     class="hidden"
+                                    required
                                 />
                             </label>
                         </div>

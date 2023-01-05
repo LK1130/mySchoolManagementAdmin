@@ -37,7 +37,7 @@ const classes = computed(() => {
             >
                 <Link href="home" class="flex">
                     <img
-                        src="../../../public/img/dashboardicon.png"
+                        src="../../../public/img/Dashboard.png"
                         alt=""
                         class="w-7 h-7"
                     />
@@ -51,7 +51,7 @@ const classes = computed(() => {
             >
                 <Link href="class" class="flex">
                     <img
-                        src="../../../public/img/courseicon.png"
+                        src="../../../public/img/class.png"
                         alt=""
                         class="w-7 h-7"
                     />
@@ -63,7 +63,7 @@ const classes = computed(() => {
             >
                 <Link :href="route('students.index')" class="flex">
                     <img
-                        src="../../../public/img/studenticon.png"
+                        src="../../../public/img/Students.png"
                         alt=""
                         class="w-7 h-7"
                     />
@@ -76,7 +76,7 @@ const classes = computed(() => {
                 class="flex flex-row text-white mt-4 lg:justify-start justify-center"
             >
                 <img
-                    src="../../../public/img/financeicon.png"
+                    src="../../../public/img/finance.png"
                     alt=""
                     class="w-7 h-7"
                 />
@@ -87,7 +87,7 @@ const classes = computed(() => {
             >
                 <Link :href="route('instructors.index')" class="flex">
                     <img
-                        src="../../../public/img/instructoricon.png"
+                        src="../../../public/img/instructor.png"
                         alt=""
                         class="w-7 h-7"
                     />
@@ -100,7 +100,7 @@ const classes = computed(() => {
                 class="flex flex-row text-white mt-4 lg:justify-start justify-center"
             >
                 <img
-                    src="../../../public/img/wpf_administrator.png"
+                    src="../../../public/img/Admin.png"
                     alt=""
                     class="w-7 h-7"
                 />
@@ -113,12 +113,12 @@ const classes = computed(() => {
             >
                 <Link :href="route('adminPermission.index')" class="flex">
                     <img
-                        src="../../../public/img/instructoricon.png"
+                        src="../../../public/img/permission.png"
                         alt=""
                         class="w-7 h-7"
                     />
                     <span class="text-lg ml-6 pt-1 lg:block hidden"
-                        >Admin Permission</span
+                        >Permission</span
                     >
                 </Link>
             </div>
@@ -127,7 +127,7 @@ const classes = computed(() => {
                 class="flex flex-row text-white mt-10 lg:justify-start justify-center"
             >
                 <img
-                    src="../../../public/img/settingsicon.png"
+                    src="../../../public/img/Settings.png"
                     alt=""
                     class="w-7 h-7"
                 />
@@ -139,7 +139,7 @@ const classes = computed(() => {
                 class="flex flex-row text-white mt-4 lg:justify-start justify-center"
             >
                 <img
-                    src="../../../public/img/toolicon.png"
+                    src="../../../public/img/Tools.png"
                     alt=""
                     class="w-7 h-7"
                 />
@@ -152,7 +152,7 @@ const classes = computed(() => {
             >
                 <Link href="/logout" class="flex">
                     <img
-                        src="../../../public/img/toolicon.png"
+                        src="../../../public/img/Logout.png"
                         alt=""
                         class="w-7 h-7"
                     />

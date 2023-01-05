@@ -7,6 +7,9 @@ import { Inertia } from "@inertiajs/inertia";
 
 const props = defineProps({
     classDdata: Object,
+    errors: {
+        type: Object,
+    },
 });
 console.log(props.classDdata);
 
@@ -124,7 +127,11 @@ function inputOn(obj) {
                                 id="Name"
                                 class="focus:ring-white focus:border-white border-white text-white text-sm rounded-xl block w-5/6 bg-elementBackground p-2"
                                 placeholder=""
+                                
                             />
+                            <div v-if="errors.videoName" class="text-red-500">
+                            {{ errors.videoName }}
+                        </div>
                         </div>
                         <!-- Description -->
                         <div class="ml-10 sm:w-full sm:ml-4 mt-5">
@@ -139,6 +146,9 @@ function inputOn(obj) {
                                 id="description"
                                 class="resize-none focus:ring-white focus:border-white border-white text-white text-sm rounded-xl block w-5/6 bg-elementBackground p-2 h-40"
                             ></textarea>
+                            <div v-if="errors.description" class="text-red-500">
+                            {{ errors.description }}
+                        </div>
                         </div>
                         <!-- Date -->
                         <div class="ml-10 sm:w-full sm:ml-4 mt-5">
@@ -169,6 +179,9 @@ function inputOn(obj) {
                                 class="focus:ring-white focus:border-white border-white text-white text-sm rounded-xl block w-5/6 bg-elementBackground p-2"
                                 placeholder=""
                             />
+                            <div v-if="errors.storage" class="text-red-500">
+                            {{ errors.storage }}
+                        </div>
                         </div>
                         <!-- Storage Location -->
                         <div class="ml-10 sm:w-full sm:ml-4 mt-5">
@@ -192,6 +205,9 @@ function inputOn(obj) {
                                 </option>
                                 <option value="Vimeo">Vimeo</option>
                             </select>
+                            <div v-if="errors.storagelocation" class="text-red-500">
+                            {{ errors.storagelocation }}
+                        </div>
                         </div>
                     </div>
                     <!-- whiteline -->
@@ -241,7 +257,9 @@ function inputOn(obj) {
                                     id="Lecturename"
                                     class="focus:ring-white focus:border-white border-white text-white text-sm rounded-xl block w-5/6 bg-elementBackground p-2"
                                     placeholder=""
+                                    :required="input - 1"
                                 />
+                               
                             </div>
 
                             <!-- FILE -->
@@ -291,6 +309,7 @@ function inputOn(obj) {
                                     :id="`stlink${input}`"
                                     class="focus:ring-white focus:border-white border-white text-white text-sm rounded-xl block w-5/6 bg-elementBackground p-2"
                                     placeholder=""
+                                    :required="input - 1"
                                 />
                                 <input
                                     checked
@@ -314,6 +333,7 @@ function inputOn(obj) {
                                     v-model="form.lecturelocation[input - 1]"
                                     name=""
                                     :id="`storagelocation${input}`"
+                                    required
                                     class="focus:ring-white focus:border-white border-white text-white text-sm rounded-xl block w-5/6 bg-elementBackground p-2"
                                 >
                                     <option value="Local Database" d>
