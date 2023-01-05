@@ -4,8 +4,12 @@ import NavBar from "../Components/NavBar.vue";
 import Header from "../Components/Header.vue";
 import Toolsbar from "../Components/Toolsbar.vue";
 import { Inertia } from "@inertiajs/inertia";
+import { ref } from "vue";
 
 const props = defineProps({
+    errors: {
+        type: Object,
+    },
     students: {
         type: Object,
     },
@@ -17,20 +21,29 @@ const props = defineProps({
 const form = useForm({
     student: null,
     class: null,
-    category: null,
+    category: 1,
     title: null,
     description: null,
 });
 
+let stuClassErr = ref("");
+
 const submit = () => {
-    Inertia.post(route("mailTool.store"), form, {
-        onError: (data) => {
-            console.log(data);
-        },
-        onSuccess: (data) => {
-            console.log(data);
-        },
-    });
+    if (
+        (form.student == null && form.class == null) ||
+        (form.student != null && form.class != null)
+    ) {
+        stuClassErr.value = "You need to choose where you want to send your mail.";
+    } else {
+        Inertia.post(route("mailTool.store"), form, {
+            onError: (errors) => {
+                console.log(errors.student);
+            },
+            onSuccess: (data) => {
+                console.log(data);
+            },
+        });
+    }
 };
 
 function studentOn() {
@@ -149,6 +162,7 @@ function alert() {
                         />
                     </div>
                 </div>
+                <label for="" class="text-red-700">{{ stuClassErr }}</label>
                 <div class="flex my-10">
                     <div class="flex flex-col items-center mx-10">
                         <input
@@ -156,6 +170,7 @@ function alert() {
                             name="category"
                             v-model="form.information"
                             @click="information"
+                            :checked="true"
                         />
                         <label for="" class="mt-3 text-blueTextColor"
                             >Information</label
@@ -167,6 +182,7 @@ function alert() {
                             name="category"
                             v-model="form.directMessage"
                             @click="directMessage"
+                            :checked="false"
                         />
                         <label for="" class="mt-3 text-yellowTextColor"
                             >Direct Message</label
@@ -178,6 +194,7 @@ function alert() {
                             name="category"
                             v-model="form.alert"
                             @click="alert"
+                            :checked="false"
                         />
                         <label for="" class="mt-3 text-tertiaryBackground"
                             >Alert</label
@@ -192,6 +209,12 @@ function alert() {
                             v-model="form.title"
                             class="w-96 mt-2 rounded-xl bg-secondaryBackground text-whiteTextColor border-whiteTextColor"
                         />
+                        <div
+                            v-if="errors.title"
+                            class="text-red-500 font-bold text-md"
+                        >
+                            {{ errors.title }}
+                        </div>
                     </div>
 
                     <div class="flex flex-col">
@@ -202,6 +225,12 @@ function alert() {
                             v-model="form.description"
                             class="w-96 h-32 mt-2 rounded-xl bg-secondaryBackground text-whiteTextColor border-whiteTextColor resize-none"
                         ></textarea>
+                        <div
+                            v-if="errors.description"
+                            class="text-red-500 font-bold text-md"
+                        >
+                            {{ errors.description }}
+                        </div>
                     </div>
                 </div>
                 <div class="flex w-2/3 mt-3 flex-row-reverse">

@@ -59,6 +59,12 @@ class MailToolController extends Controller
     {
         $mail = new TMail();
 
+        $request->validate([
+            'title' => 'required',
+            'description' => 'required',
+            
+        ]);
+
         $data = [
             'title' => $request->title,
             'description' => $request->description

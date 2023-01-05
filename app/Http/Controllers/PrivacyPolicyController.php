@@ -49,6 +49,7 @@ class PrivacyPolicyController extends Controller
         $request->validate([
             'privacypolicys_title' => 'required',
             'privacypolicys_description' => 'required',
+            'category' => 'required'
         ]);
 
         $privacypolicys = new MPrivacyPolicy();
@@ -99,6 +100,7 @@ class PrivacyPolicyController extends Controller
         $request->validate([
             'privacypolicys_title' => 'required',
             'privacypolicys_description' => 'required',
+            'category' => 'required'
         ]);
         
         $privacypolicys = new MPrivacyPolicy();
