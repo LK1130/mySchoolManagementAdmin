@@ -116,7 +116,7 @@ const bafcolor = (start, end) => {
 
 <template>
   <!-------------------- Navbar&header -------------------->
-  <NavBar />
+  <NavBar active=1> </NavBar>
   <Header headername="Student" />
   <!---------------- body ----------------------->
   <div
@@ -124,7 +124,7 @@ const bafcolor = (start, end) => {
       absolute
       flex flex-col
       h-full
-      w-5/6
+      w-auto
       headercustomleft
       top-32
       customblack

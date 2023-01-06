@@ -17,7 +17,7 @@ defineProps({
 
 <template>
     <!-------------------- Navbar&header -------------------->
-    <NavBar />
+    <NavBar active=1> </NavBar>
     <Header headername="Student" />
     <!---------------- body ----------------------->
     <div class="absolute flex flex-col h-full w-5/6 headercustomleft top-32 customblack">

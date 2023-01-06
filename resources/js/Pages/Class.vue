@@ -176,7 +176,7 @@ watch(
 
 <template>
     <!-------------------- Navbar&header -------------------->
-    <NavBar />
+    <NavBar active=2> </NavBar>
     <Header headername="Class" />
     <!---------------- body ----------------------->
     <div class="absolute h-full w-5/6 p-3 headercustomleft top-32 customblack">

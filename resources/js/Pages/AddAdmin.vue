@@ -42,7 +42,7 @@ const submit = () => {
 
 
 <template>
-    <NavBar />
+    <NavBar active=5> </NavBar>
     <Header headername="Add Admin" />
     <div
         class="absolute h-5/6 w-5/6 headercustomleft top-32 bg-primaryBackground flex justify-center items-center flex-col"

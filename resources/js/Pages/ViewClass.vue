@@ -74,7 +74,7 @@ console.log(porps.classdata[0].id);
 
 <template>
     <!-------------------- Navbar&header -------------------->
-    <NavBar />
+    <NavBar active=2> </NavBar>
     <Header classaddmode="true" />
 
     <!---------------- body ----------------------->

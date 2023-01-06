@@ -68,7 +68,7 @@ const submit = () => {
 </script>
 
 <template>
-    <NavBar />
+    <NavBar active=8> </NavBar>
     <Header headername="Edit Guide" />
 
     <div class="absolute h-full w-5/6 p-5 headercustomleft top-32 customblack">

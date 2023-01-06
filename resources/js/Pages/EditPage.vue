@@ -31,7 +31,7 @@ const submit = () => {
 </script>
 
 <template>
-    <NavBar />
+    <NavBar active=6> </NavBar>
     <Header headername="Edit Page" />
 
     <div

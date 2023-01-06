@@ -14,7 +14,7 @@ const props = defineProps({
 </script>
 
 <template>
-    <NavBar />
+    <NavBar active=8> </NavBar>
     <Header headername="Tools" />
 
     <div class="absolute h-full w-5/6 p-5 headercustomleft top-32 customblack">

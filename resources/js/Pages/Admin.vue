@@ -15,7 +15,7 @@ const props = defineProps({
 </script>
 
 <template>
-    <NavBar />
+    <NavBar active=5> </NavBar>
     <Header headername="Admin" />
 
     <div

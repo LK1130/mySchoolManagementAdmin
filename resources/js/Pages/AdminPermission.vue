@@ -81,7 +81,7 @@ form.lists = checkList;
 </script>
 
 <template>
-    <NavBar />
+    <NavBar active=6> </NavBar>
     <Header headername="Admin Permission" />
 
     <div class="absolute h-auto w-5/6 p-5 headercustomleft top-32 customblack">

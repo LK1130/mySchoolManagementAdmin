@@ -45,7 +45,7 @@ console.log(props.errors);
 
 <template>
     <!-------------------- Navbar&header -------------------->
-    <NavBar />
+    <NavBar active=3> </NavBar>
     <Head title="Student List"></Head>
     <Header headername="Add Student" />
     <!---------------- body ----------------------->

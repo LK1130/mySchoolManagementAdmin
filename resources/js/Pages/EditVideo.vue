@@ -99,7 +99,7 @@ function inputOn(obj) {
 
 <template>
     <!-------------------- Navbar&header -------------------->
-    <NavBar />
+    <NavBar active=2> </NavBar>
     <Header headername="Edit Video" />
 
     <!---------------- body ----------------------->

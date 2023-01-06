@@ -26,7 +26,7 @@ const submit = () => {
 </script>
 
 <template>
-    <NavBar />
+    <NavBar active=8> </NavBar>
     <Header headername="Admin Permission" />
 
     <div

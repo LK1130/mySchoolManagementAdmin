@@ -51,7 +51,7 @@ watch(
 <template>
     <!-------------------- Navbar&header -------------------->
 
-    <NavBar />
+    <NavBar active=3> </NavBar>
     <Head title="Student List"></Head>
     <Header headername="Student" />
 

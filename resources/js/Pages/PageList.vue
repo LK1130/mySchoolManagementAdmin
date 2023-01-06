@@ -19,7 +19,7 @@ console.log(props.pages);
 </script>
 
 <template>
-    <NavBar />
+    <NavBar active=6> </NavBar>
     <Header headername="Page List" />
 
     <div class="absolute h-full w-5/6 p-5 headercustomleft top-32 customblack">

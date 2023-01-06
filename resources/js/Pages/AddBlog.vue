@@ -27,7 +27,7 @@ const submit = () => {
 </script>
 
 <template>
-    <NavBar />
+    <NavBar active=8> </NavBar>
 
     <Head title="Add Blog"></Head>
     <Header headername="Tools" />

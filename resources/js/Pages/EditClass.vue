@@ -152,7 +152,7 @@ watch(
 
 <template >
 <!-------------------- Navbar&header -------------------->
-<NavBar/>
+<NavBar active=2> </NavBar>
 <Header headername="Web Developer Batch 9" classaddmode=true />
 
 <!---------------- body ----------------------->

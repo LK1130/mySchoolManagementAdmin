@@ -366,7 +366,7 @@ const series = ref([
 
 <template>
     <!-------------------- Navbar&header -------------------->
-    <NavBar />
+    <NavBar active=3> </NavBar>
     <Head title="Student View"></Head>
     <Header />
     <!---------------- body ----------------------->
