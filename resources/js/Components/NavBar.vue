@@ -46,7 +46,7 @@ let showMenu = ref(true);
             <div
                 class="flex flex-row ml-1 h-8 text-white mt-7 lg:justify-start justify-center"
             >
-                <Link href="home" class="flex">
+                <Link href="dashboard" class="flex">
                     <img
                         src="../../../public/img/Dashboard.png"
                         alt=""
