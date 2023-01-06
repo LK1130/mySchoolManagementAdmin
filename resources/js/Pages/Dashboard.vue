@@ -124,7 +124,7 @@ const bafcolor = (start, end) => {
       absolute
       flex flex-col
       h-full
-      w-auto
+      w-5/6
       headercustomleft
       top-32
       customblack

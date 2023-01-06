@@ -79,7 +79,7 @@ let showNoti = ref(false);
 <template>
     <Head title="Setting" />
     <!-------------------- Navbar&header -------------------->
-    <NavBar active=7> </NavBar>
+    <NavBar active=7></NavBar>
     <Header headername="Settings" />
 
     <div
