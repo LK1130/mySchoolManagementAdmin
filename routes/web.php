@@ -55,7 +55,7 @@ Route::get('/login', function () {
 Route::post('/login', [LoginController::class, 'store'])->name('login.store');
 Route::get('/searchstd/{name?}', [viewclassController::class, 'searchstudent']);
 
-// Route::middleware([checkRole::class])->group(function(){
+Route::middleware([checkRole::class])->group(function(){
 Route::get('/home', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
@@ -111,7 +111,7 @@ Route::resource('adminPermission', AdminPermissionController::class);
 Route::resource('addRole', AddRoleController::class);
 Route::resource('pageList', AddPageController::class);
 // End Admin Permission
-// });
+});
 
 Route::resource('admin', AdminController::class);
 

@@ -32,7 +32,7 @@ const props = defineProps({
                 <tbody class="text-sm customfontsize">
                     <tr class="cusborder  " v-for="admin in props.admins.data" :key="admin">
                         <td class="text-start pl-10 py-2">{{admin.name}}</td>
-                        <td class="text-center">{{ admin.email }}</td>
+                        <td class="text-center text-yellowTextColor">{{ admin.email }}</td>
                         <td class="text-center" >{{ admin.r_name}}</td>
                         
                         <td class="text-center text-yellowTextColor underline">

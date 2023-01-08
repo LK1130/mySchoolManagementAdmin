@@ -94,7 +94,7 @@ function alert() {
                         class="flex flex-col items-end justify-around text-whiteTextColor"
                     >
                         <label for="">Students :</label>
-                        <label for="">Class :</label>
+                        <label for="">Classes :</label>
                     </div>
                     <div class="flex flex-col items-center justify-around">
                         <select

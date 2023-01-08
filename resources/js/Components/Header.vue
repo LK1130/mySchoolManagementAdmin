@@ -24,7 +24,7 @@
             >
                 <div class="">
                     <div class="text-xl">{{ $page.props.auth.username }}</div>
-                    <div class="opacity-80 text-right sm:text-base text-xs">
+                    <div class="opacity-80 text-right font-semibold sm:text-base md:text-lg  text-yellowTextColor">
                         {{ $page.props.auth.userrole }}
                     </div>
                 </div>
@@ -88,7 +88,7 @@ export default {
                         this.day = "SAT";
                         break;
                 }
-            }, 10);
+            }, 1000);
         },
         show() {
             console.log("text");
