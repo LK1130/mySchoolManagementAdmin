@@ -26,17 +26,17 @@ class MClass extends Model
             ->get();
     }
 
-    public function get_student( $srcname="")
-    { 
-        if(empty($srcname)){
-        return DB::table('users')
-            ->where('del_flg', 0)
-            ->get();
-        }else{
+    public function get_student($srcname = "")
+    {
+        if (empty($srcname)) {
             return DB::table('users')
-            ->where('del_flg', 0)
-            ->where('name', 'like', '%' . $srcname . '%')
-            ->get();
+                ->where('del_flg', 0)
+                ->get();
+        } else {
+            return DB::table('users')
+                ->where('del_flg', 0)
+                ->where('name', 'like', '%' . $srcname . '%')
+                ->get();
         }
     }
 
@@ -70,7 +70,7 @@ class MClass extends Model
                 ->whereIn('m_classes.category_id', $selectedItem);
         });
 
-        $messages = $query->get();
+        $messages = $query->paginate(10);
 
         return $messages;
     }
@@ -101,7 +101,7 @@ class MClass extends Model
     {
         return DB::table('t_student_classes')
             ->join('users', 't_student_classes.user_id', '=', 'users.id')
-            ->select('t_student_classes.start_join', 'users.name','users.id', 't_student_classes.paid_fees', 't_student_classes.remain_fees')
+            ->select('t_student_classes.start_join', 'users.name', 'users.id', 't_student_classes.paid_fees', 't_student_classes.remain_fees')
             ->where('t_student_classes.class_id', $id)
             ->get();
     }
