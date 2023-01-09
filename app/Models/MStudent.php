@@ -51,7 +51,7 @@ class MStudent extends Model
         });
         // dd($search);
 
-        $messages = $query->paginate(15)->withQueryString();
+        $messages = $query->paginate(10)->withQueryString();
         // dd($messages);
 
 
