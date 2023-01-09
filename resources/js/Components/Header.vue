@@ -1,7 +1,9 @@
 <template>
-    <div class="fixed headercustomleft w-4/5 h-32 customblack z-10">
-        <div class="flex justify-between py-8 px-6">
-            <div class="ml-5">
+    <div
+        class="relative headercustomleft w-5/6 h-32 bg-primarybackground pt-5 px-5"
+    >
+        <div class="flex justify-between">
+            <div class="">
                 <div class="text-white text-xl flex flex-row">
                     <span>{{ year }}/{{ month }}/{{ date }}</span>
                     <span class="ml-1"
@@ -19,12 +21,12 @@
                 </div>
             </div>
 
-            <div
-                class="flex text-white"
-            >
+            <div class="flex text-white">
                 <div class="">
                     <div class="text-xl">{{ $page.props.auth.username }}</div>
-                    <div class="opacity-80 text-right font-semibold sm:text-base md:text-lg  text-yellowTextColor">
+                    <div
+                        class="opacity-80 text-right font-semibold sm:text-base md:text-lg text-yellowTextColor"
+                    >
                         {{ $page.props.auth.userrole }}
                     </div>
                 </div>

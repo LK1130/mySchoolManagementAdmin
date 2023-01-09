@@ -30,6 +30,7 @@ var sorting = ref(0);
 const datesplit = (data) => {
     const fullday = [];
     var arrycount = 0;
+    console.log();
     for (let index = 0; index < 7; index++) {
         var day = data.charAt(index);
         var output = dateshow(day, index);
@@ -176,10 +177,10 @@ watch(
 
 <template>
     <!-------------------- Navbar&header -------------------->
-    <NavBar active=2> </NavBar>
+    <NavBar active="2"> </NavBar>
     <Header headername="Class" />
     <!---------------- body ----------------------->
-    <div class="absolute h-full w-5/6 p-3 headercustomleft top-32 customblack">
+    <div class="absolute h-auto w-5/6 pt-9 headercustomleft top-32 customblack">
         <div
             class="text-white sm:text-sm text-xs popfont flex justify-between px-4"
         >
@@ -210,11 +211,11 @@ watch(
                     <select
                         @change="sortingF"
                         id="sorttype"
-                        class="bg-black text-white border-white rounded-xl customfontsize1"
+                        class="bg-black border-white focus:ring-white text-white rounded-xl customfontsize1"
                         v-model="sorting"
                     >
                         <option value="0" class="customfontsize1">
-                            By status
+                            By Status
                         </option>
                         <option value="1" class="customfontsize1">
                             By Name
@@ -241,7 +242,11 @@ watch(
                     <th class="pt-4">Setting</th>
                 </tr>
                 <tbody class="text-sm customfontsize">
-                    <tr class="cusborder" v-for="data in dclass" :key="data.id">
+                    <tr
+                        class="cusborder"
+                        v-for="data in dclass.data"
+                        :key="data.id"
+                    >
                         <td class="text-start pl-4 py-2">{{ data.c_name }}</td>
                         <td class="text-center">{{ data.i_name }}</td>
                         <td class="text-center">{{ datesplit(data.c_day) }}</td>
@@ -271,6 +276,9 @@ watch(
                     </tr>
                 </tbody>
             </table>
+            <div class="flex justify-center items-center mb-10">
+                <Pagination :links="dclass.links"></Pagination>
+            </div>
             <a href="/class/create"
                 ><button
                     class="pt-0.5 sm:w-1/12 w-20 h-7 text-white rounded-lg flex justify-center bg-blue-600 hover:bg-blue-700 active:bg-blue-900 cusmargin"

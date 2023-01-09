@@ -15,7 +15,7 @@ let props = defineProps({
     checkBox: Object,
 });
 
-console.log(props);
+console.log(props.allStudents);
 
 let search = ref(props.filter);
 // console.log(props.checkBox);
@@ -51,13 +51,13 @@ watch(
 <template>
     <!-------------------- Navbar&header -------------------->
 
-    <NavBar active=3> </NavBar>
+    <NavBar active="3"> </NavBar>
     <Head title="Student List"></Head>
     <Header headername="Student" />
 
     <!---------------- body ----------------------->
     <div
-        class="absolute h-auto w-full md:w-5/6 headercustomleft top-32 customblack"
+        class="absolute h-auto w-full md:w-5/6 headercustomleft top-32 customblack pt-5 px-5"
     >
         <!-- Radio and Search Box Div -->
         <div
