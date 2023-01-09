@@ -17,7 +17,7 @@ const props = defineProps({
 
 let imageFile = ref(props.blogsInfo.b_photo);
 let input = null
-
+console.log(imageFile);
 const form = useForm({
     id: props.blogsInfo.id,
     blog_title: props.blogsInfo.b_title,

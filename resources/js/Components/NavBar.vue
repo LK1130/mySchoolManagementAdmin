@@ -25,20 +25,17 @@ let showMenu = ref(true);
     <div
         class="customnavcolor min-h-full fixed z-10 transition-all duration-500"
         :class="showMenu ? 'w-1/6' : 'w-24'"
+        @mouseover="showMenu = true"
+        @mouseout="showMenu = false"
     >
         <!-------- Logo ---------->
-        <img
-            src="../../../public/img/icon1.png"
-            alt=""
-            class="h-6 ml-auto mr-5 mt-3 sm:block hidden"
-            @click="showMenu = !showMenu"
-        />
         <div class="pt-5 w-full text-center">
             <img
                 src="../../../public/img/logo.png"
                 alt=""
-                class="sm:w-16 md:w-20 mx-auto"
+                class="sm:w-12 md:w-16 mx-auto"
             />
+            <p class="text-white font-semibold pt-2"> Ex;braiN </p>
         </div>
 
         <!--  -->
@@ -54,7 +51,7 @@ let showMenu = ref(true);
                         :class="active == 1 ? 'opacity-100':'opacity-30'"
                     />
                     <span
-                        class="text-lg ml-5 pb-1 lg:block hidden transition-all duration-1000 "
+                        class="text-lg ml-5 pb-1 lg:block hidden transition-all duration-100 hover:opacity-100"
                         :class="showMenu ? (active == 1 ? 'opacity-100':'opacity-30' ): 'opacity-0'"
                         
                         >Dashboard</span
@@ -68,11 +65,11 @@ let showMenu = ref(true);
                     <img
                         src="../../../public/img/class.png"
                         alt=""
-                        class="w-7 h-7 "
+                        class="w-7 h-7 hover:opacity-100"
                         :class="active == 2 ? 'opacity-100':'opacity-30'"
                     />
                     <span
-                        class="text-lg ml-6 pt-1 lg:block hidden transition-all duration-1000"
+                        class="text-lg ml-6 pt-1 lg:block hidden transition-all duration-100 hover:opacity-100"
                         :class="showMenu ? (active == 2 ? 'opacity-100':'opacity-30' ): 'opacity-0'"
                         >Class</span
                     >
@@ -85,11 +82,11 @@ let showMenu = ref(true);
                     <img
                         src="../../../public/img/Students.png"
                         alt=""
-                        class="w-7 h-7 "
+                        class="w-7 h-7 hover:opacity-100"
                         :class="active == 3 ? 'opacity-100':'opacity-30'"
                     />
                     <span
-                        class="text-lg ml-6 pt-1 lg:block hidden transition-all duration-1000 "
+                        class="text-lg ml-6 pt-1 lg:block hidden transition-all duration-100 hover:opacity-100"
                         :class="showMenu ? (active == 3 ? 'opacity-100':'opacity-30' ): 'opacity-0'"
                     >
                         Student
@@ -113,11 +110,11 @@ let showMenu = ref(true);
                     <img
                         src="../../../public/img/instructor.png"
                         alt=""
-                        class="w-7 h-7 "
+                        class="w-7 h-7 hover:opacity-100"
                         :class="active == 4 ? 'opacity-100':'opacity-30'"
                     />
                     <span
-                        class="text-lg ml-6 pt-1 lg:block hidden transition-all duration-1000"
+                        class="text-lg ml-6 pt-1 lg:block hidden transition-all duration-100 hover:opacity-100"
                         :class="showMenu ? (active == 4 ? 'opacity-100':'opacity-30' ): 'opacity-0'"
                         >Instructor</span
                     >
@@ -129,14 +126,14 @@ let showMenu = ref(true);
                 <img
                     src="../../../public/img/Admin.png"
                     alt=""
-                    class="w-7 h-7 "
+                    class="w-7 h-7 hover:opacity-100"
                     :class="active == 5 ? 'opacity-100':'opacity-30'"
                 />
                 <span
-                    class="text-lg ml-6 pt-1 lg:block hidden transition-all duration-1000 "
+                    class="text-lg ml-6 pt-1 lg:block hidden transition-all duration-100 hover:opacity-100 "
                     :class="showMenu ? (active == 5 ? 'opacity-100':'opacity-30' ): 'opacity-0'"
                 >
-                    <Link href="/admin">Admins</Link>
+                    <Link href="/admin">Admin</Link>
                 </span>
             </div>
             <div
@@ -146,11 +143,11 @@ let showMenu = ref(true);
                     <img
                         src="../../../public/img/permission.png"
                         alt=""
-                        class="w-7 h-7"
+                        class="w-7 h-7 hover:opacity-100"
                         :class="active == 6 ? 'opacity-100':'opacity-30'"
                     />
                     <span
-                        class="text-lg ml-6 pt-1 lg:block hidden transition-all duration-1000 "
+                        class="text-lg ml-6 pt-1 lg:block hidden transition-all duration-100 hover:opacity-100"
                         :class="showMenu ? (active == 6 ? 'opacity-100':'opacity-30' ): 'opacity-0'"
                         >Permission</span
                     >
@@ -164,13 +161,13 @@ let showMenu = ref(true);
                     <img
                         src="../../../public/img/Settings.png"
                         alt=""
-                        class="w-7 h-7"
+                        class="w-7 h-7 hover:opacity-100"
                         :class="active == 7 ? 'opacity-100':'opacity-30'"
                     />
                     <span
-                        class="text-lg ml-6 lg:block hidden transition-all duration-1000 "
+                        class="text-lg ml-6 lg:block hidden transition-all duration-100 hover:opacity-100"
                         :class="showMenu ? (active == 7 ? 'opacity-100':'opacity-30' ): 'opacity-0'"
-                        ><Link href="/setting">Setting</Link></span
+                        ><Link href="/setting">Settings</Link></span
                     >
                 </div>
                 <div
@@ -179,12 +176,12 @@ let showMenu = ref(true);
                     <img
                         src="../../../public/img/Tools.png"
                         alt=""
-                        class="w-7 h-7 "
+                        class="w-7 h-7 hover:opacity-100"
                         :class="active == 8 ? 'opacity-100':'opacity-30'"
                        
                     />
                     <span
-                        class="text-lg ml-6 lg:block hidden transition-all duration-1000 "
+                        class="text-lg ml-6 lg:block hidden transition-all duration-100 hover:opacity-100"
                         :class="showMenu ? (active == 8 ? 'opacity-100':'opacity-30' ): 'opacity-0'"
                         ><Link :href="route('mailTool.index')"
                             >Tools</Link
@@ -198,11 +195,11 @@ let showMenu = ref(true);
                         <img
                             src="../../../public/img/Logout.png"
                             alt=""
-                            class="w-7 h-7 opacity-100"
+                            class="w-7 h-7 opacity-100 hover:opacity-100"
                             
                         />
                         <span
-                            class="text-lg ml-6 lg:block hidden transition-all duration-1000"
+                            class="text-lg ml-6 lg:block hidden transition-all duration-100 "
                             :class="showMenu ? 'opacity-100' : 'opacity-0'"
                             >Logout</span
                         >
