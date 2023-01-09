@@ -257,7 +257,7 @@ function inputOn(obj) {
                                     id="Lecturename"
                                     class="focus:ring-white focus:border-white border-white text-white text-sm rounded-xl block w-5/6 bg-elementBackground p-2"
                                     placeholder=""
-                                    :required="input - 1"
+                                    required
                                 />
                                
                             </div>
@@ -287,6 +287,7 @@ function inputOn(obj) {
                                         class="ml-4 mt-2"
                                         :name="input"
                                         @click="inputOn(input)"
+                                        required
                                     />
                                 </div>
                             </div>
@@ -309,7 +310,7 @@ function inputOn(obj) {
                                     :id="`stlink${input}`"
                                     class="focus:ring-white focus:border-white border-white text-white text-sm rounded-xl block w-5/6 bg-elementBackground p-2"
                                     placeholder=""
-                                    :required="input - 1"
+                                    required
                                 />
                                 <input
                                     checked

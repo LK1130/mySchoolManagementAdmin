@@ -49,7 +49,7 @@ class AddVideoController extends Controller
             'storagelocation' => 'required',
             
         ]);
-        dd($request);
+        // dd($request);
         $videoUpload = new MVideo();
         $videoUpload->v_name = $request->videoName;
         $videoUpload->v_description = $request->description;
