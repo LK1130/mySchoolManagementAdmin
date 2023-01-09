@@ -44,7 +44,7 @@ class ClassController extends Controller
         $categories = $class->get_category();
         $students=($request->searchstdname) ? $class->get_student($srcname) : $class->get_student("");
 
-        return inertia("AddClass", ['instructor' => $instructors, 'category' => $categories, 'student' => $students]);
+        return inertia("AddClass", ['instructors' => $instructors, 'category' => $categories, 'student' => $students]);
     }
 
     /**
@@ -115,7 +115,7 @@ class ClassController extends Controller
         $day7 = substr($day, 6, 1);
         return inertia("EditClass", [
             'classdata' => $classdetail,
-            'instructor' => $instructors,
+            'instructors' => $instructors,
             'category' => $categories,
             'student' => $students,
             "day" => $day,
@@ -137,7 +137,7 @@ class ClassController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(AdminValidation $request, $id)
     {
         $class = new MClass();
         $date1 = $request->input('day1');

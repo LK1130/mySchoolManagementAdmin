@@ -128,7 +128,7 @@ console.log(porps.classdata[0].id);
                         >
                     </div>
                     <div class="mt-1">
-                        Person : <br class="sm:hidden block" /><span>{{
+                        Persons : <br class="sm:hidden block" /><span>{{
                             students.length
                         }}</span>
                     </div>

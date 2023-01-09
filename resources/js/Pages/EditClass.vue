@@ -11,7 +11,7 @@ const props = defineProps({
     classdata : {
         type : Object
     },
-    instructor : {
+    instructors : {
         type : Object
     },
     category : {
@@ -47,6 +47,9 @@ const props = defineProps({
             date7: {
         type : Object
     },
+            errors : {
+        type : Object
+    },
 })
 
 let searchstdname=ref();
@@ -54,7 +57,7 @@ const form = useForm({
     _method : "PUT",
     classnames:props.classdata[0].c_name,
     classimage: null,
-    classdetail: props.classdata[0].c_description,
+    classinformation : props.classdata[0].c_description,
     startdate: props.classdata[0].c_start_date ,
     enddate:props.classdata[0].c_end_date ,
     day1 : 0 ,
@@ -64,9 +67,12 @@ const form = useForm({
     day5 : 0 ,
     day6 : 0 ,
     day7 : 0 ,
+    classday:null,
+    datecheck:null,
+    timecheck:null,
     starttime : props.classdata[0].c_start_time ,
     endtime : props.classdata[0].c_end_time ,
-    teacher: props.classdata[0].instructor_id ,
+    instructor: props.classdata[0].instructor_id ,
     categories:props.classdata[0].category_id ,
     fees: props.classdata[0].c_fees ,
     students: null ,
@@ -133,6 +139,9 @@ const onFile = (e) => {
 
 const submit = () => {
   form.students=studentid;
+   form.classday=form.day1+form.day2+form.day3+form.day4+form.day5+form.day6+form.day7;
+  form.datecheck=form.startdate+form.enddate;
+  form.timecheck=form.starttime+form.endtime;
   console.log(form);
     form.post(route('class.update',props.classdata[0].id));
 };
@@ -162,7 +171,7 @@ watch(
 <input type="text"  class="classnameinput  sm:text-xl text-sm font-bold text-white"  v-model="form.classnames">
 <button type="button" class="mt-2 sm:w-7 w-4 sm:h-7 h-4 border-2 sm:text-sm text-xs rounded-full border-solid border-white text-white " @click="form.classnames=''"> &#9587</button>
 </div>
-
+<div v-if="errors.classnames" class="text-red-900">{{errors.classnames}}</div>
 <div class="my-5">
     <div class="customnavcolor w-full text-white p-4 rounded-lg">
    <h3 class="sm:text-lg text-base">Class Information</h3>
@@ -172,21 +181,26 @@ watch(
     Upload
 </label>
 <input id="file-upload" type="file" accept="image/*" @change="onFile"/>
+<div v-if="errors.classimage" class="text-red-900 w-32 mt-1">{{errors.classimage}}</div>
    </div>
    <div class="sm:text-2xl text-lg font-bold mt-2" >{{ form.classnames }}</div>
-   <textarea name="" id=""  v-model="form.classdetail"  class="text-white w-10/12 mt-2 sm:text-sm text-xs customnavcolor rounded-xl customborder1"></textarea>
+   <textarea name="" id=""  v-model="form.classinformation"  class="text-white w-10/12 h-40 mt-2 sm:text-sm text-xs customnavcolor rounded-xl customborder1"></textarea>
+   <div v-if="errors.classinformation" class="text-red-900 mt-1 ml-3">{{errors.classinformation}}</div>
    <div class="flex sm:flex-row flex-col justify-between w-10/12 text-sm mt-3">
   
     <div>
         <div>Date :
             
             <span>
-            <input type="text" v-model="form.startdate" class="customnavcolor text-white sm:text-sm text-xs rounded-lg sm:w-1/4 w-16 customborder1">
+            <input type="date" v-model="form.startdate" class="customnavcolor text-white sm:text-sm text-xs rounded-lg sm:w-1/4 w-16 customborder1">
             </span>
             -
             <span>
-            <input type="text" v-model="form.enddate" class="customnavcolor text-white sm:text-sm text-xs rounded-lg sm:w-1/4 w-16 customborder1">
+            <input type="date" v-model="form.enddate" class="customnavcolor text-white sm:text-sm text-xs rounded-lg sm:w-1/4 w-16 customborder1">
         </span> 
+        <div v-if="errors.startdate" class="text-red-900 mt-1 ml-12">{{errors.startdate}}</div>
+            <div v-if="errors.enddate" class="text-red-900 mt-1 ml-12">{{errors.enddate}}</div>
+             <div v-if="errors.datecheck" class="text-red-900 mt-1 ml-12">{{errors.datecheck}}</div>
         </div>
       <div class="mt-3  flex flex-row ">Day: 
        <span class="flex flex-wrap mt-0.5 sm:text-sm text-xs">  
@@ -214,24 +228,29 @@ watch(
        </span>
 
         </div>
+        <div v-if="errors.classday" class="text-red-900 mt-1 ml-12">{{errors.classday}}</div>
         <div class="mt-3">Time : 
            <span>
-            <input type="text" v-model="form.starttime" class="customnavcolor text-white sm:text-sm text-xs rounded-lg sm:w-1/4 w-16 customborder1">
+            <input type="time" v-model="form.starttime" class="customnavcolor text-white sm:text-sm text-xs rounded-lg sm:w-1/4 w-16 customborder1">
             </span>
             -
             <span>
-            <input type="text" v-model="form.endtime" class="customnavcolor text-white sm:text-sm text-xs rounded-lg sm:w-1/4 w-16 customborder1">
+            <input type="time" v-model="form.endtime" class="customnavcolor text-white sm:text-sm text-xs rounded-lg sm:w-1/4 w-16 customborder1">
             </span>
+            <div v-if="errors.starttime" class="text-red-900 mt-1 ml-12">{{errors.starttime}}</div>
+            <div v-if="errors.endtime" class="text-red-900 mt-1 ml-12">{{errors.endtime}}</div>
+            <div v-if="errors.timecheck" class="text-red-900 mt-1 ml-12">{{errors.timecheck}}</div>
         </div>
-        <div class="mt-3">Person : <span>{{studentid.length}}</span></div>
+        <div class="mt-3">Persons : <span>{{studentid.length}}</span></div>
     </div>
     <div>
         <div class="sm:mt-0 mt-3">Instructor : 
         <span class="" >
-        <select id="sorttype"  v-model="form.teacher" name="status" class="customnavcolor sm:text-sm text-xs sm:w-52 w-32 text-white border-white rounded-xl">
-        <option v-for="item in instructor" :value="item.id" class="sm:text-sm text-xs">{{item.i_name}}</option>
+        <select id="sorttype"  v-model="form.instructor" name="status" class="customnavcolor sm:text-sm text-xs sm:w-52 w-32 text-white border-white rounded-xl">
+        <option v-for="item in instructors" :value="item.id" class="sm:text-sm text-xs">{{item.i_name}}</option>
         </select>
         </span>
+        <div v-if="errors.instructor" class="text-red-900 mt-1 ml-20">{{errors.instructor}}</div>
         </div>
         <div class="mt-3">Category :
         <span class="">
@@ -239,8 +258,10 @@ watch(
         <option v-for="data in category" :value="data.id" class="sm:text-sm text-xs">{{data.c_name}}</option>
         </select>
         </span>
+        <div v-if="errors.categories" class="text-red-900 mt-1 ml-20">{{errors.categories}}</div>
         </div>
         <div class="mt-3">Fees : <span class="pl-7"><input type="text" v-model="form.fees" class="customnavcolor text-white sm:text-sm text-xs rounded-lg sm:w-52 w-32 customborder1"></span></div>
+        <div v-if="errors.fees" class="text-red-900 mt-1 ml-20">{{errors.fees}}</div>
     </div>
    </div>
   </div>
