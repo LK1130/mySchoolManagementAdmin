@@ -13,7 +13,7 @@ const props = defineProps({
     },
 });
 
-console.log(props.pages);
+// console.log(props.pages);
 
 
 </script>
@@ -33,6 +33,7 @@ console.log(props.pages);
                         <th class="text-center py-4">PAGE NAME</th>
                         <th class="py-4">PAGE ROUTE</th>
                         <th class="py-4">PERMISSION</th>
+                        <th class="py-4">PUBLISH</th>
                         <th class="py-4">SETTING</th>
                     </tr>
                     <tbody class="text-sm mt-3">
@@ -47,6 +48,11 @@ console.log(props.pages);
                             </td>
                             <td class="text-center py-4 customtextcolor7 font-bold text-md">
                                 {{ result.role.length >0 ? result.role.map(item => item.r_name).join(" / ") : "Not Set" }}
+                            </td>
+                            <td
+                                class="text-center py-4 customtextcolor7"
+                            >
+                                {{ result.publish == 1 ? 'Publish' : 'Unpublish'}}
                             </td>
                             <td
                                 class="text-center py-4 customtextcolor7 underline"
@@ -82,7 +88,7 @@ console.log(props.pages);
                         />
 
                         <button type="button">
-                            <span>Add</span>
+                            <span>Add Page</span>
                         </button>
                     </Link>
                 </div>

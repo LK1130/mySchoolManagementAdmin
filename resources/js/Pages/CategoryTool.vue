@@ -18,7 +18,7 @@ const props = defineProps({
     <Header headername="Tools" />
 
     <div class="absolute h-full w-5/6 p-5 headercustomleft top-32 customblack">
-        <Toolsbar active="4"/>
+        <Toolsbar active="4" />
         <div class="w-full h-auto p-8 relative bg-secondaryBackground rounded-b-xl flex flex-col items-center">
             <!-- Table Section -->
             <div class="p-4 w-full  rounded-xl">
@@ -33,14 +33,31 @@ const props = defineProps({
 
                         <tr class="border-b" v-for="result in props.categories.data" :key="result">
                             <td class="text-left py-3 text-base">{{ result.c_name }}</td>
-                            <td class="text-center py-3 text-base">{{ result.c_description.substring(0, 10) + "..." }}</td>
-                            <td class="text-center py-3 text-base">{{  moment(result.created_at).calendar() }}</td>
+                            <td class="text-center py-3 text-base">{{ result.c_description.substring(0, 10) + "..." }}
+                            </td>
+                            <td class="text-center py-3 text-base">{{ moment(result.created_at).calendar() }}</td>
                             <td class="text-center customtextcolor7 underline text-base">
                                 <Link :href="route('categoryTool.edit', result.id)" :id="result.id">Edit</Link>
                             </td>
                         </tr>
                     </tbody>
                 </table>
+            </div>
+            <div class="flex flex-col mt-10 md:flex-row w-full px-5 items-center justify-center text-white">
+                <!-- <Pagination/> -->
+
+                <div
+                    class="absolute text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-xl text-sm px-5 py-2.5 mr-2 mb-2 bottom-5 right-3 focus:outline-none">
+                    <Link :href="route('categoryTool.create')" class="flex flex-row justify-center items-center space-x-3">
+                    <img src="../../../public/img/addlogo.png" alt="" class="w-5 h-5 pt-0.5" />
+
+                    <button type="button">
+                        <span class="mx-1 font-bold text-base">Add</span>
+                    </button>
+                    </Link>
+                </div>
+
+                <!-- Hello                 -->
             </div>
         </div>
     </div>

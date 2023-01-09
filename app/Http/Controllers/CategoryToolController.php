@@ -15,9 +15,9 @@ class CategoryToolController extends Controller
      */
     public function index()
     {
-        $categories = MCategory::where("del_flg",0)
-        ->paginate(5);
-        return inertia('CategoryTool',['categories'=> $categories]);
+        $categories = MCategory::where("del_flg", 0)
+            ->paginate(5);
+        return inertia('CategoryTool', ['categories' => $categories]);
     }
 
     /**
@@ -27,7 +27,7 @@ class CategoryToolController extends Controller
      */
     public function create()
     {
-        //
+        return inertia('AddCategory');
     }
 
     /**
@@ -38,7 +38,17 @@ class CategoryToolController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'category_name' => 'required',
+            'category_description' => 'required'
+        ]);
+
+        $categories = new MCategory();
+        $categories->c_name = $request->category_name;
+        $categories->c_description = $request->category_description;
+        $categories->save();
+
+        return Redirect::route('categoryTool.index');
     }
 
     /**
@@ -63,7 +73,12 @@ class CategoryToolController extends Controller
         $categories = new MCategory();
         $categoriesInfo = $categories->searchById($id);
 
-        return inertia('EditCategory',['categoriesInfo' => $categoriesInfo]);
+        if ($categoriesInfo == null) {
+            return Redirect::route('categoryTool.index');
+        } else {
+
+            return inertia('EditCategory', ['categoriesInfo' => $categoriesInfo]);
+        }
     }
 
     /**
@@ -76,9 +91,10 @@ class CategoryToolController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'category_name' => 'required'
+            'category_name' => 'required',
+            'category_description' => 'required'
         ]);
-        
+
         $categories = new MCategory();
         $categories->updateData($request, $id);
 
@@ -94,8 +110,8 @@ class CategoryToolController extends Controller
     public function destroy($id)
     {
         $categories = new MCategory();
-       $categories->deleteData($id);
+        $categories->deleteData($id);
 
-       return Redirect::route('categoryTool.index');
+        return Redirect::route('categoryTool.index');
     }
 }

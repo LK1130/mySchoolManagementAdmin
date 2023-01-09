@@ -13,14 +13,14 @@ console.log(props.active);
 <template>
     <div class="flex justify-between text-whiteTextColor">
         <div class="py-3 w-1/6 flex justify-center rounded-tl-xl" 
-        :class="{'bg-secondaryBackground' : active == 1}"><Link href="/mailTool" class="text-lg">Mail</Link></div>
+        :class="{'bg-secondaryBackground' : active == 1}"><Link href="/mailTool" class="text-lg">MAIL</Link></div>
         <div class="py-3 w-1/6 flex justify-center"
-        :class="{'bg-secondaryBackground' : active == 2}"><Link href="/privacypolicyTool" class="text-lg">Privacy Policy</Link></div>
+        :class="{'bg-secondaryBackground' : active == 2}"><Link href="/privacypolicyTool" class="text-lg">PRIVACY POLICY</Link></div>
         <div class="py-3 w-1/6 flex justify-center"
-        :class="{'bg-secondaryBackground' : active == 3}"><Link href="/blogTool" class="text-lg">Blog</Link></div>
+        :class="{'bg-secondaryBackground' : active == 3}"><Link href="/blogTool" class="text-lg">BLOG</Link></div>
         <div class="py-3 w-1/6 flex justify-center"
-        :class="{'bg-secondaryBackground' : active == 4}"><Link href="/categoryTool" class="text-lg">Category</Link></div>
+        :class="{'bg-secondaryBackground' : active == 4}"><Link href="/categoryTool" class="text-lg">CATEGORY</Link></div>
         <div class="py-2 w-1/6 flex justify-center rounded-tr-xl"
-        :class="{'bg-secondaryBackground' : active == 5}"><Link href="/guideTool" class="text-lg">Guide</Link></div>
+        :class="{'bg-secondaryBackground' : active == 5}"><Link href="/guideTool" class="text-lg">GUIDE</Link></div>
     </div>
 </template>
