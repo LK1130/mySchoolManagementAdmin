@@ -1,15 +1,7 @@
 <template>
-<<<<<<< HEAD
     <div class="fixed headercustomleft w-full h-32 customblack z-10">
         <div class="flex justify-between py-8 px-6">
             <div class="ml-5">
-=======
-    <div
-        class="relative headercustomleft w-5/6 h-32 bg-primarybackground pt-5 px-5"
-    >
-        <div class="flex justify-between">
-            <div class="">
->>>>>>> origin/main
                 <div class="text-white text-xl flex flex-row">
                     <span>{{ year }}/{{ month }}/{{ date }}</span>
                     <span class="ml-1"
