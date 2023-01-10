@@ -16,7 +16,7 @@ const props = defineProps({
         type: Object,
     },
 });
-// console.log(props.guideInfo);
+console.log(props.guideInfo);
 // console.log(props.guideInfo.guide_step.map(item => item.step_photo));
 
 let imageFile = ref(props.guideInfo.guide_step.map(item => item.step_photo))
@@ -225,6 +225,10 @@ const submit = () => {
                 <div
                     class="text-white bg-blue-700 w-1/6 rounded-xl text-sm px-5 py-2.5 mt-9 flex flex-row justify-center items-center space-x-3"
                     @click="addInput"
+                     :class="{
+                                'block' : inputs < 10,
+                                'hidden' : inputs == 10
+                               }"
                 >
                     <img
                         src="../../../public/img/addlogo.png"
