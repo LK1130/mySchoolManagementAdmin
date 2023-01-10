@@ -152,14 +152,14 @@ class MClass extends Model
             ->where('id', $id)
             ->update([
                 'c_name' => $request->input('classnames'),
-                'c_description' => $request->input('classdetail'),
+                'c_description' => $request->input('classinformation'),
                 'c_start_date' => $request->input('startdate'),
                 'c_end_date' => $request->input('enddate'),
                 'c_day' => $date,
                 'c_start_time' => $request->input('starttime'),
                 'c_end_time' => $request->input('endtime'),
                 'c_fees' => $request->input('fees'),
-                'instructor_id' => $request->input('teacher'),
+                'instructor_id' => $request->input('instructor'),
                 'c_profile' => $img,
                 'category_id' => $request->input('categories'),
                 'updated_at' => Date('Y-m-d h:i:s'),

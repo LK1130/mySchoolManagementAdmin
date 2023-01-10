@@ -168,7 +168,7 @@ watch(
 <div class="absolute w-5/6 headercustomleft  top-32 customblack px-5">
 <form @submit.prevent="submit">
 <div class="flex flex-row mt-10 addclasscss fixed sm:top-4 top-10 z-50" >
-<input type="text"  class="classnameinput  sm:text-xl text-sm font-bold text-white"  v-model="form.classnames">
+<input type="text"  class="classnameinput  sm:text-xl text-sm font-bold text-white"  v-model="form.classnames" placeholder="Class Name">
 <button type="button" class="mt-2 sm:w-7 w-4 sm:h-7 h-4 border-2 sm:text-sm text-xs rounded-full border-solid border-white text-white " @click="form.classnames=''"> &#9587</button>
 </div>
 <div v-if="errors.classnames" class="text-red-900">{{errors.classnames}}</div>
@@ -184,7 +184,7 @@ watch(
 <div v-if="errors.classimage" class="text-red-900 w-32 mt-1">{{errors.classimage}}</div>
    </div>
    <div class="sm:text-2xl text-lg font-bold mt-2" >{{ form.classnames }}</div>
-   <textarea name="" id=""  v-model="form.classinformation"  class="text-white w-10/12 h-40 mt-2 sm:text-sm text-xs customnavcolor rounded-xl customborder1"></textarea>
+   <textarea name="" id=""  v-model="form.classinformation"  class="text-white w-10/12 h-40 mt-2 sm:text-sm text-xs customnavcolor rounded-xl customborder1" placeholder="Class Detail"></textarea>
    <div v-if="errors.classinformation" class="text-red-900 mt-1 ml-3">{{errors.classinformation}}</div>
    <div class="flex sm:flex-row flex-col justify-between w-10/12 text-sm mt-3">
   
@@ -192,11 +192,11 @@ watch(
         <div>Date :
             
             <span>
-            <input type="date" v-model="form.startdate" class="customnavcolor text-white sm:text-sm text-xs rounded-lg sm:w-1/4 w-16 customborder1">
+            <input type="date" v-model="form.startdate" class="customnavcolor text-white sm:text-sm text-xs rounded-lg sm:w-1/3 w-16 customborder1">
             </span>
             -
             <span>
-            <input type="date" v-model="form.enddate" class="customnavcolor text-white sm:text-sm text-xs rounded-lg sm:w-1/4 w-16 customborder1">
+            <input type="date" v-model="form.enddate" class="customnavcolor text-white sm:text-sm text-xs rounded-lg sm:w-1/3 w-16 customborder1">
         </span> 
         <div v-if="errors.startdate" class="text-red-900 mt-1 ml-12">{{errors.startdate}}</div>
             <div v-if="errors.enddate" class="text-red-900 mt-1 ml-12">{{errors.enddate}}</div>
@@ -231,11 +231,11 @@ watch(
         <div v-if="errors.classday" class="text-red-900 mt-1 ml-12">{{errors.classday}}</div>
         <div class="mt-3">Time : 
            <span>
-            <input type="time" v-model="form.starttime" class="customnavcolor text-white sm:text-sm text-xs rounded-lg sm:w-1/4 w-16 customborder1">
+            <input type="time" v-model="form.starttime" class="customnavcolor text-white sm:text-sm text-xs rounded-lg sm:w-1/3 w-16 customborder1">
             </span>
             -
             <span>
-            <input type="time" v-model="form.endtime" class="customnavcolor text-white sm:text-sm text-xs rounded-lg sm:w-1/4 w-16 customborder1">
+            <input type="time" v-model="form.endtime" class="customnavcolor text-white sm:text-sm text-xs rounded-lg sm:w-1/3 w-16 customborder1">
             </span>
             <div v-if="errors.starttime" class="text-red-900 mt-1 ml-12">{{errors.starttime}}</div>
             <div v-if="errors.endtime" class="text-red-900 mt-1 ml-12">{{errors.endtime}}</div>
@@ -260,7 +260,7 @@ watch(
         </span>
         <div v-if="errors.categories" class="text-red-900 mt-1 ml-20">{{errors.categories}}</div>
         </div>
-        <div class="mt-3">Fees : <span class="pl-7"><input type="text" v-model="form.fees" class="customnavcolor text-white sm:text-sm text-xs rounded-lg sm:w-52 w-32 customborder1"></span></div>
+        <div class="mt-3">Fees : <span class="pl-7"><input type="text" v-model="form.fees" class="customnavcolor text-white sm:text-sm text-xs rounded-lg sm:w-52 w-32 customborder1" placeholder="Class Fees"></span></div>
         <div v-if="errors.fees" class="text-red-900 mt-1 ml-20">{{errors.fees}}</div>
     </div>
    </div>
@@ -270,10 +270,9 @@ watch(
 <h3 class="text-white pt-1 ">Student Name : </h3>
 <input type="text" class="customnavcolor sm:ml-3 ml-2  text-white sm:text-sm text-xs rounded-lg sm:w-1/4 w-24 customborder1" placeholder="name" v-model="searchstdname">
 </div>
-<div class="sm:w-2/4 w-4/4">
-<div class="custombackgroundcolor h-48   rounded-lg  mt-3 px-3 py-4 overflow-y-scroll my-5">
-  <table  class="text-white w-full">
-    <thead class="">
+<div class=" sm:w-2/4 w-4/4 h-48  rounded-lg  mt-3  overflow-y-scroll">
+  <table  class="text-white custombackgroundcolor w-full relative">
+    <thead class="sticky top-0 custombackgroundcolor w-full z-50">
     <tr class="opacity-70 sm:text-sm customfontsize ">
         <th class="text-start pl-8">NAME</th>
         <th class="">Phone</th>
@@ -284,9 +283,12 @@ watch(
     </thead>
     <tbody class="lg:text-sm text-xs customfontsize overflow-y-scroll">
     <tr class="customborder" v-for="user in student">
-        <td class="text-start  py-1" >
-       <input  type="checkbox" v-model="studentid" name="checkbox" :value="user.id"  class="cuscheckbox"/>
-       {{user.name}}</td>
+        <td class="text-start  py-1 pl-1" >
+        <label >
+       <input  type="checkbox" aria-label="an appropriate label" v-model="studentid" name="checkbox" :value="user.id"  class="cuscheckbox"/>
+       {{user.name}}
+       </label>
+       </td>
         <td  class="text-center ">{{user.phone}}</td>
         <td class="text-center ">{{user.address}}</td>
         <td  class="text-center">{{user.age}}</td>
@@ -295,7 +297,6 @@ watch(
     </tbody>
   </table>
   </div>
-</div>
 <button type="submit" class=" pt-0.5 float-right  mb-3  w-28 h-7 mt-5  text-white rounded-lg flex justify-center bg-blue-600 hover:bg-blue-700 active:bg-blue-900 cusmargin">
 <img src="../../../public/img/bx_save.png" alt="" class="w-5 h-5 pt-0.5">
 <span class="ml-2 sm:text-base text-xs sm:pt-0 pt-1" >Save</span>

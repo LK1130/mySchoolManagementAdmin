@@ -279,9 +279,9 @@ watch(
             <div class="flex justify-center items-center mb-10">
                 <Pagination :links="dclass.links"></Pagination>
             </div>
-            <a href="/class/create"
+            <a href="/class/create" class=""
                 ><button
-                    class="pt-0.5 sm:w-1/12 w-20 h-7 text-white rounded-lg flex justify-center bg-blue-600 hover:bg-blue-700 active:bg-blue-900 cusmargin"
+                    class="pt-0.5 sm:w-1/12 w-20 h-7  text-white rounded-lg flex justify-center bg-blue-600 hover:bg-blue-700 active:bg-blue-900 cusmargin"
                 >
                     <img
                         src="../../../public/img/addlogo.png"
