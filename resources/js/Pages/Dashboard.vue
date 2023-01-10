@@ -22,6 +22,7 @@ const props=defineProps({
         type : Object
     },
 });
+console.log(props.jpstudent);
 const datesplit = (data) => {
   const fullday = [];
   var arrycount = 0;
@@ -167,7 +168,7 @@ const bafcolor = (start, end) => {
             customtextcolor1
           "
         >
-          {{ props.allstudent.length }}
+          {{ props.jpstudent.length + props.wbstudent.length + props.jvstudent.length }}
         </div>
         <div class="text-white opacity-30 sm:text-base text-xs">
           All Students
@@ -275,7 +276,8 @@ const bafcolor = (start, end) => {
       <div class="md:w-6/12 w-11/12 overflow-hidden">
   <div class="flex flex-row justify-between ">
      <h3 class="text-white ">Active Class</h3>
-     <div class="text-white text-xs ml-1 pt-1">SEE ALL</div>
+     <Link href="./class" class="text-white text-xs ml-1 pt-1">SEE ALL</Link>
+     <!-- <div class="text-white text-xs ml-1 pt-1">SEE ALL</div> -->
   </div>
   <div class="custombackgroundcolor w-full max-h-max rounded-lg ml-0.5 mt-3  pl-3 py-4">
   <table  class="text-white w-11/12 ">

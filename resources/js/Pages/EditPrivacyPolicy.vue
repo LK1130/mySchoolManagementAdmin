@@ -24,6 +24,7 @@ const form = useForm({
     privacypolicys_title: props.privacypolicysInfo.p_title,
     privacypolicys_description: props.privacypolicysInfo.p_description,
     category: props.privacypolicysInfo.category_id,
+    publish: props.privacypolicysInfo.publish
 });
 
 // console.log(props.privacypolicysInfo.p_title);
@@ -102,7 +103,7 @@ const submit = () => {
                     </div>
 
                     <div class="flex justify-between py-8">
-                        <Link
+                        <Link v-if="form.publish == 1"
                             :href="route('privacypolicyTool.destroy', form.id)"
                             method="delete"
                             class="py-2 px-5 text-whiteTextColor text-sm bg-redTextColor rounded-xl flex items-center"
@@ -112,7 +113,19 @@ const submit = () => {
                                 alt=""
                                 class="w-5 h-5 pt-0.5"
                             />
-                            <span class="mx-2">Delete</span>
+                            <span class="mx-2">Unpublish</span>
+                        </Link>
+                        <Link v-else
+                            :href="route('privacypolicyTool.destroy', form.id)"
+                            method="delete"
+                            class="py-2 px-5 text-whiteTextColor text-sm bg-redTextColor rounded-xl flex items-center"
+                        >
+                            <img
+                                src="../../../public/img/delete.png"
+                                alt=""
+                                class="w-5 h-5 pt-0.5"
+                            />
+                            <span class="mx-2">Publish</span>
                         </Link>
                         <button
                             type="submit"

@@ -405,3 +405,8 @@ function inputOn(obj) {
         </div>
     </div>
 </template>
+<style scoped>
+#Date{
+    color-scheme: dark;
+}
+</style>

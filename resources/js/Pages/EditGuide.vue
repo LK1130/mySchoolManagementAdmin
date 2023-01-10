@@ -162,11 +162,11 @@ const submit = () => {
                                 <div
                                     class="relative flex flex-col items-center justify-center pt-5 pb-6 overflow-hidden"
                                 >
-                                    <div class="flex absolute w-full">
+                                    <div class="flex absolute w-full h-full">
                                         <img
                                             :src="imageFile[input-1]"
                                             alt=""
-                                            class="w-full items-center"
+                                            class="w-full h-full items-center"
                                         />
                                     </div>
                                     <svg
@@ -208,9 +208,12 @@ const submit = () => {
                                    @change="showImagePreview($event)"
                                     accept="image/*"
                                     class="hidden"
-                                    required
+                                    
                                 />
                             </label>
+                            <div v-if="errors.step_file" class="text-red-500">
+                            {{ errors.step_file }}
+                        </div>
                         </div>
 
 

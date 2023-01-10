@@ -20,6 +20,7 @@ class MCategory extends Model
     {
         $mcategory = MCategory::find($id);
         $mcategory->c_name = $request->category_name;
+        $mcategory->c_description = $request->category_description;
         $mcategory->save();
     }
 

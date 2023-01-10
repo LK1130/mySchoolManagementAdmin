@@ -18,31 +18,33 @@ console.log(props.admins);
 <template>
     <NavBar active="5"> </NavBar>
     <Header headername="Admin" />
-
     <div
-        class="absolute top-32 headercustomleft w-5/6 h-auto bg-elementBackground items-center flex flex-col rounded-lg"
+        class="absolute h-auto w-4/5 headercustomleft top-32 bg-elementBackground rounded-lg mt-16 ml-5"
     >
-        <div class="px-4 w-5/6">
-            <table class="text-white w-full bg-elementBackground rounded-lg">
+        
+        <div class="px-4 w-full">
+            <table class="text-white w-full bg-elementBackground rounded-lg mt-5">
                 <tr class="opacity-70 customfontsize">
                     <th class="text-start pt-4 pl-10">NAME</th>
                     <th class="pt-4">EMAIL</th>
                     <th class="pt-4">ROLE</th>
+                    <th class="pt-4">STATUS</th>
                     <th class="pt-4">SETTING</th>
                 </tr>
-                <tbody class="text-sm customfontsize">
+                <tbody class="text-sm customfontsize mt-3">
                     <tr
-                        class="cusborder"
+                        class="border-b"
                         v-for="admin in props.admins.data"
                         :key="admin"
                     >
-                        <td class="text-start pl-10 py-2">{{ admin.name }}</td>
-                        <td class="text-center text-yellowTextColor">
+                        <td class="text-start pl-10 py-4">{{ admin.name }}</td>
+                        <td class="text-center text-yellowTextColor py-4">
                             {{ admin.email }}
                         </td>
-                        <td class="text-center">{{ admin.r_name }}</td>
-
-                        <td class="text-center text-yellowTextColor underline">
+                        <td class="text-center py-4">{{ admin.r_name }}</td>
+                        <td class="text-center py-4 text-green-600" v-if="admin.del_flg == 0">Active</td>
+                        <td class="text-center py-4 text-redTextColor" v-else>Suspended</td>
+                        <td class="text-center text-yellowTextColor underline py-4">
                             <Link :href="route('admin.edit', admin.id)">
                                 Edit
                             </Link>

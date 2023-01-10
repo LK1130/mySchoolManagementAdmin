@@ -48,7 +48,7 @@ use Inertia\Inertia;
 //         return Inertia::render('Dashboard');
 //     })->name('dashboard');
 // });
-Route::get('/dashboard', [DashboardController::class, "getdashboard"]);
+
 Route::get('/login', function () {
     return inertia("Admin/AdLogin");
 });
@@ -64,6 +64,8 @@ Route::get('/home', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 });
+
+Route::get('/dashboard', [DashboardController::class, "getdashboard"]);
 
 Route::get('/classview/{id?}', [viewclassController::class, "getclassdata"])->name("class.view");
 // Route::get('/classsorting/{name?}', [viewclassController::class, "classsorting"])->name("class.sorting");

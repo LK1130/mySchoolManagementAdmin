@@ -84,7 +84,7 @@ class GuideToolController extends Controller
      */
     public function show($id)
     {
-        //
+        return Redirect::route('guideTool.index');
     }
 
     /**
@@ -96,15 +96,25 @@ class GuideToolController extends Controller
     public function edit($id)
     {
         $guides = MGuide::find($id);
-        $guides->guideStep;
-        return inertia("EditGuide", ["guideInfo" => $guides]);
+
+       
+
+        if ($guides == null) {
+            return Redirect::route('guideTool.index');
+        } else {
+            $guides->guideStep;
+            return inertia("EditGuide", ["guideInfo" => $guides]);
+        }
+        
+
+       
         // return $privacypolicysInfo;
         // return inertia('EditGuide',['guideInfo' => $guidesInfo]);
     }
 
     /**
      * Update the specified resource in storage.
-     *
+     *  
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response

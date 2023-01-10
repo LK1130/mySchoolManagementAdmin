@@ -60,6 +60,10 @@ const checkpage = (roleid, pageid) => {
     }
 };
 
+
+
+let showNoti = ref(false);
+
 const submit = () => {
     Inertia.post(route("adminPermission.store"), form, {
         onError: (data) => {
@@ -74,8 +78,6 @@ const submit = () => {
         },
     });
 };
-
-let showNoti = ref(false);
 
 form.lists = checkList;
 </script>
@@ -149,12 +151,23 @@ form.lists = checkList;
                             href="/pageList"
                             class="py-2 px-5 text-whiteTextColor text-sm bg-blueTextColor rounded-xl flex items-center"
                         >
-                            <!-- <img
-                                src="../../../public/img/plus.png"
+                            <img
+                                src="../../../public/img/list.png"
                                 alt=""
                                 class="w-5 h-5 pt-0.5"
-                            /> -->
+                            />
                             <span class="mx-2">Page List</span>
+                        </Link>
+                        <Link
+                            href="/admin"
+                            class="py-2 px-5 text-whiteTextColor text-sm bg-blueTextColor rounded-xl flex items-center"
+                        >
+                            <img
+                                src="../../../public/img/list.png"
+                                alt=""
+                                class="w-5 h-5 pt-0.5"
+                            />
+                            <span class="mx-2">Admin List</span>
                         </Link>
                         <Link
                             href="/addRole"
@@ -183,7 +196,7 @@ form.lists = checkList;
             </div>
         </form>
 
-        <div class="fixed left-42 bottom-5">
+        <!-- <div class="fixed left-42 bottom-5">
             <button>
                 <a
                     href="/adminPermission"
@@ -191,7 +204,7 @@ form.lists = checkList;
                     >BACK</a
                 >
             </button>
-        </div>
+        </div> -->
     </div>
 </template>
 

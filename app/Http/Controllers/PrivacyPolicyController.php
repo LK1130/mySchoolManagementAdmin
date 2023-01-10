@@ -66,7 +66,7 @@ class PrivacyPolicyController extends Controller
      */
     public function show($id)
     {
-        //
+        return Redirect::route('privacypolicyTool.index');
     }
 
     /**
@@ -80,12 +80,17 @@ class PrivacyPolicyController extends Controller
         $privacypolicys = new MPrivacyPolicy();
         $privacypolicysInfo = $privacypolicys->searchById($id);
 
-        $categories = MCategory::where("del_flg", 0)->get();
+        if ($privacypolicysInfo == null) {
+            return Redirect::route('privacypolicyTool.index');
+        } else {
 
-        return inertia('EditPrivacyPolicy', [
-            'privacypolicysInfo' => $privacypolicysInfo,
-            'categories' => $categories
-        ]);
+            $categories = MCategory::where("del_flg", 0)->get();
+
+            return inertia('EditPrivacyPolicy', [
+                'privacypolicysInfo' => $privacypolicysInfo,
+                'categories' => $categories
+            ]);
+        }
     }
 
     /**
@@ -102,7 +107,7 @@ class PrivacyPolicyController extends Controller
             'privacypolicys_description' => 'required',
             'category' => 'required'
         ]);
-        
+
         $privacypolicys = new MPrivacyPolicy();
         $privacypolicys->updateData($request, $id);
 
@@ -117,9 +122,9 @@ class PrivacyPolicyController extends Controller
      */
     public function destroy($id)
     {
-       $privacypolicys = new MPrivacyPolicy();
-       $privacypolicys->deleteData($id);
+        $privacypolicys = new MPrivacyPolicy();
+        $privacypolicys->deleteData($id);
 
-       return Redirect::route('privacypolicyTool.index');
+        return Redirect::route('privacypolicyTool.index');
     }
 }

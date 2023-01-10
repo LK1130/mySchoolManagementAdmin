@@ -65,7 +65,7 @@ class BlogToolController extends Controller
      */
     public function show($id)
     {
-        //
+        return Redirect::route('blogTool.index');
     }
 
     /**
@@ -79,7 +79,11 @@ class BlogToolController extends Controller
         $blogs = new MBlog();
         $blogsInfo = $blogs->searchById($id);
 
-        return inertia('EditBlog', ['blogsInfo' => $blogsInfo]);
+        if ($blogsInfo == null) {
+            return Redirect::route('blogTool.index');
+        } else {
+            return inertia('EditBlog', ['blogsInfo' => $blogsInfo]);
+        }
     }
 
     /**

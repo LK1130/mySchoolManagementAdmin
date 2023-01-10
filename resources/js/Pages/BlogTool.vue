@@ -32,6 +32,7 @@ console.log(props.blogs);
                         <th class="py-3">DESCRIPTION</th>
                         <th class="py-3">DATE</th>
                         <th class="py-3">PHOTO</th>
+                        <th class="py-3">PUBLISH</th>
                         <th class="py-3">SETTINGS</th>
                     </tr>
                     <tbody class="text-sm mt-3">
@@ -45,7 +46,7 @@ console.log(props.blogs);
                             </td>
                             <td class="text-left py-3 text-base">
                                 {{
-                                    result.b_description.substring(0, 50) +
+                                    result.b_description.substring(0, 40) +
                                     "..."
                                 }}
                             </td>
@@ -58,6 +59,9 @@ console.log(props.blogs);
                                     class="w-32"
                                     alt=""
                                 />
+                            </td>
+                            <td class="text-center py-3 text-base customtextcolor7">
+                                {{ result.publish == 1 ? 'publish' : 'unpublish' }}
                             </td>
                             <td
                                 class="text-center customtextcolor7 underline text-base"

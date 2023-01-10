@@ -18,6 +18,8 @@ const props = defineProps({
         type: Object,
     },
 });
+
+console.log(props.adminInfo.del_flg);
 const form = useForm({
     id: props.adminInfo.id,
     name: props.adminInfo.name,
@@ -36,7 +38,7 @@ const submit = () => {
 </script>
 
 <template>
-    <NavBar active=5> </NavBar>
+    <NavBar active="5"> </NavBar>
     <Header headername="Edit Admin" />
     <div
         class="absolute h-5/6 w-5/6 headercustomleft top-32 bg-primaryBackground flex justify-center items-center flex-col"
@@ -94,6 +96,9 @@ const submit = () => {
                                 type="password"
                                 class="focus:ring-white focus:border-white bg-elementBackground text-md rounded-xl ml-8 p-2 text-white w-64"
                         /></span>
+                        <div v-if="errors.password" class="text-red-500">
+                            {{ errors.password }}
+                        </div>
                     </div>
                 </div>
                 <div class="flex items-center flex-col w-full mt-5">
@@ -122,22 +127,44 @@ const submit = () => {
                     </div>
                 </div>
                 <div class="flex justify-between py-8">
-                    <Link :href="route('admin.destroy',form.id)"  method="delete"> 
-                                        <button
+                    <!-- Delete -->
+                    <button
                         class="py-2 px-5 text-whiteTextColor text-md bg-redTextColor rounded-xl flex items-center"
+                        v-if="props.adminInfo.del_flg == 0"
                     >
-                        <img
-                            src="../../../public/img/delete.png"
-                            alt=""
-                            class="w-5 h-5 pt-0.5"
-                        />
-                        <span class="mx-2">Delete</span>
+                        <Link
+                            :href="route('admin.destroy', form.id)"
+                            method="delete"
+                            class="flex"
+                        >
+                            <img
+                                src="../../../public/img/delete.png"
+                                alt=""
+                                class="w-5 h-5 pt-0.5"
+                            />
+                            <span class="mx-2">Delete</span>
+                        </Link>
                     </button>
-                    
-                    </Link>
+
+                    <!-- restore -->
+                    <button
+                        type="button"
+                        class="py-2 px-5 text-whiteTextColor text-md bg-green-600 rounded-xl flex items-center"
+                        v-else
+                    >
+                        
+                            <img
+                                src="../../../public/img/restore-line.png"
+                                alt=""
+                                class="w-5 h-5 pt-0.5"
+                            />
+                            <span class="mx-2">Restore</span>
+                        
+                    </button>
 
                     <button
                         class="py-2 px-5 text-whiteTextColor text-md bg-blueTextColor rounded-xl flex items-center"
+                        
                     >
                         <img
                             src="../../../public/img/save.png"
@@ -155,7 +182,7 @@ const submit = () => {
                     <a
                         href="/admin"
                         class="underline underline-offset-4 hidden md:block text-white text-xl"
-                        >BACK</a
+                        >back</a
                     >
                 </button>
             </div>

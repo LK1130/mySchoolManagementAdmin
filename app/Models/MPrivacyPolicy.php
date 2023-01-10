@@ -35,7 +35,7 @@ class MPrivacyPolicy extends Model
 
     public function deleteData($id){
         $mprivacypolicy = MPrivacyPolicy::find($id);
-        $mprivacypolicy->del_flg = 1;
+        $mprivacypolicy->publish == 1 ? $mprivacypolicy->publish = 0 : $mprivacypolicy->publish = 1;
         $mprivacypolicy->save();
     }
 }
