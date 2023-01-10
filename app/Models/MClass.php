@@ -49,29 +49,22 @@ class MClass extends Model
     }
     public function get_class($selectedItem = [])
     {
+
         $query = DB::table('m_classes')
             ->join('m_instructors', 'm_classes.instructor_id', '=', 'm_instructors.id')
             ->join('t_student_classes', 'm_classes.id', '=', 't_student_classes.class_id')
             ->groupBy("m_classes.id");
-        // ->selectRaw("COUNT('t_student_classes.class_id') AS StudentCount,m_classes.id, m_classes.c_name, m_classes.c_day, m_classes.c_start_time, m_classes.c_end_time, m_classes.c_fees, m_instructors.i_name")
-        // ->where('m_classes.del_flg', 0);
-        // ->get();
-        // return $data;
-        // dd($selectedItem);
         $query->when(empty($selectedItem), function ($query) {
-            // dd($query);
+
             return $query->selectRaw("COUNT('t_student_classes.class_id') AS StudentCount,m_classes.id, m_classes.c_name, m_classes.c_day, m_classes.c_start_time, m_classes.c_end_time, m_classes.c_fees, m_instructors.i_name")
                 ->where('m_classes.del_flg', 0);
         });
         $query->when($selectedItem, function ($query, $selectedItem) {
-            // dd($query);
             return $query->selectRaw("COUNT('t_student_classes.class_id') AS StudentCount,m_classes.id, m_classes.c_name, m_classes.c_day, m_classes.c_start_time, m_classes.c_end_time, m_classes.c_fees, m_instructors.i_name")
                 ->where('m_classes.del_flg', 0)
                 ->whereIn('m_classes.category_id', $selectedItem);
         });
-
         $messages = $query->paginate(10);
-
         return $messages;
     }
 
@@ -97,12 +90,23 @@ class MClass extends Model
             ->where('m_classes.id', $id)
             ->get();
     }
-    public function get_eachclassstudents($id)
+    // public function get_eachclassstudents($id)
+    // {
+    //     return DB::table('t_student_classes')
+    //         ->join('users', 't_student_classes.user_id', '=', 'users.id')
+    //         ->select('t_student_classes.start_join', 'users.name', 'users.id', 't_student_classes.paid_fees', 't_student_classes.remain_fees')
+    //         ->where('t_student_classes.class_id', $id)
+    //         ->get();
+    // }
+
+    public function forStudentList($classid)
     {
         return DB::table('t_student_classes')
-            ->join('users', 't_student_classes.user_id', '=', 'users.id')
-            ->select('t_student_classes.start_join', 'users.name', 'users.id', 't_student_classes.paid_fees', 't_student_classes.remain_fees')
-            ->where('t_student_classes.class_id', $id)
+            ->join('users', 't_student_classes.user_id', '=', 'users.id',)
+            ->leftjoin('t_student_exams', 't_student_exams.user_id', '=', 'users.id')
+            ->where('t_student_classes.class_id', $classid)
+            ->selectRaw("users.name,t_student_classes.start_join,t_student_exams.mark,t_student_classes.paid_fees,t_student_classes.remain_fees,users.id")
+            ->orderBy('t_student_exams.mark', 'desc')
             ->get();
     }
     public function get_studentid($id)

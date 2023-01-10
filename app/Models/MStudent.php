@@ -30,11 +30,13 @@ class MStudent extends Model
             ->join("m_classes", "m_classes.id", "=", "t_student_classes.class_id")
             ->groupBy("t_student_classes.user_id");
 
-        // dd($selectedItem);
+        // dd($selectedItem[0]);
         $query->when(empty($selectedItem) && empty($search), function ($query) {
 
             return $query->selectRaw("COUNT('t_student_classes.class_id') AS Class,users.age,users.email,users.phone,users.address,users.name,users.id");
         });
+
+
 
         $query->when($search, function ($query) use ($search) {
             return  $query
@@ -42,6 +44,12 @@ class MStudent extends Model
                 ->where('name', 'like', '%' . $search . '%')
                 ->orWhere('address', 'like', '%' . $search . '%');
         });
+
+        // $query->when($selectedItem == 0, function ($query) use ($selectedItem) {
+        //     return $query
+        //         ->selectRaw("COUNT('t_student_classes.class_id') AS Class,users.age,users.email,users.phone,users.address,users.name,users.id")
+        //         ->whereNotIn('users.id', 't_student_classes . user_id');
+        // });
 
         $query->when($selectedItem, function ($query) use ($selectedItem) {
             // dd(implode(",", $selectedItem));
@@ -74,26 +82,6 @@ class MStudent extends Model
 
         return $query;
     }
-    // $query = DB::table("t_student_attendances")
-    //     ->join("m_classes", "m_classes.id", "=", "t_student_attendances.class_id")
-    //     ->join("users", "users.id", "=", "t_student_attendances.user_id")
-    //     // ->join("t_student_exams", "t_student_exams.user_id", "=", "users.id")
-    //     ->selectRaw("AVG(t_student_attendances.attendance) AS attendance,users.name,users.id,t_student_attendances.class_id")
-    //     // ->select("*")
-    //     ->where('t_student_attendances.user_id', $id)
-    //     ->groupBy("t_student_attendances.class_id")
-    //     ->get();
-    // dd($query);
-    // echo "<pre>";
-    // print_r($query);
-    // return $query;
-    // public function studentExam($id){
-    //     $query = DB::table("users")
-    //         -// ->leftJoin("t_student_exams", "t_student_exams.user_id", "=", "users.id")
-    //         ->select("name","")
-
-    // }
-
 
     public function studentAccount($request, $password)
     {

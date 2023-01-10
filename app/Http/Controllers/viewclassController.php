@@ -8,13 +8,23 @@ use Illuminate\Http\Request;
 
 class viewclassController extends Controller
 {
-    public function getclassdata($id){
-        $class= new MClass();
-        $video=new MVideo();
-        $videodata=$video->get_videos($id);
-        $classdata=$class->get_classdata($id);
-        $students= $class->get_eachclassstudents($id);
-        return inertia("ViewClass",['classdata' => $classdata,'students' => $students,'videos'=>$videodata]);
-    }
+    public function getclassdata($id)
+    {
+        $class = new MClass();
+        // $video = new MVideo();
+        // $videodata = $video->get_videos($id);
+        $videodata = MVideo::where("class_id", $id)->get();
+        // dd($videodata);
+        if (count($videodata) == 0) abort(404);
 
+        foreach ($videodata as $value) {
+            $value->TLectureNote;
+        }
+
+        $classdata = $class->get_classdata($id);
+
+        $studentlistData = $class->forStudentList($id);
+
+        return inertia("ViewClass", ['classdata' => $classdata, 'studentList' => $studentlistData, 'videos' => $videodata]);
+    }
 }

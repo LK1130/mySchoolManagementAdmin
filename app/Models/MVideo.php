@@ -14,10 +14,11 @@ class MVideo extends Model
     {
         return $this->hasMany(TLectureNote::class, "video_id");
     }
-    public function get_videos($id){
-     return  DB::table('m_videos')
-       ->where('del_flg',0)
-       ->where('class_id',$id)
-       ->get();
+    public function get_videos($id)
+    {
+        return  DB::table('m_videos')
+            ->join('t_lecture_notes', 'm_videos.id', '=', 't_lecture_notes.video_id')
+            // ->selectRaw("COUNT('t_lecture_notes.id') AS Lecture,m_videos.id,m_videos.v_name,m_videos.v_date")
+            ->get();
     }
 }

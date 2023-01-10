@@ -51,9 +51,11 @@ class StudentController extends Controller
             array_push($tmpCheck, $value->id);
         }
 
-        $data = ($request->selectedItem) ?
-            $model1->allStuents(explode("-", $checked))
-            : $model1->allStuents("", $search);
+        if ($checked == "0")
+            $data = $model1->allStuents([0]);
+        else
+            $data = ($request->selectedItem) ? $model1->allStuents(explode("-", $checked)) : $model1->allStuents("", $search);
+
 
         // dd($data);
         // typeOf($checked);
@@ -113,6 +115,8 @@ class StudentController extends Controller
     {
         $model = new MStudent();
         $studenProfile = $model->studnetDetailandClasses($id);
+        // dd($studenProfile);
+        // if ($studenProfile[0]->Class == null) abort(404);
 
         $classes = new TStudentClass();
         $exam   = new TStudentExam();
@@ -210,6 +214,7 @@ class StudentController extends Controller
         $classid =  join(',', $allClass);
 
         $eachClass =   $classes->totalStudents($classid);
+
 
         return inertia('StudentView', [
             'studenProfile' => $studenProfile,

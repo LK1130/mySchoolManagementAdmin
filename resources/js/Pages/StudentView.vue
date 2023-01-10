@@ -41,7 +41,7 @@ let stuClass = props.studenProfile[0].Class.split(",");
 let days = [];
 
 const forceRerender = (activeIndex) => {
-    console.log(activeIndex);
+    // console.log(activeIndex);
     examMark = [];
     examName = [];
 
@@ -118,12 +118,12 @@ const props = defineProps({
         type: Array,
     },
 });
-console.log(props.attendance);
+// console.log(props.attendance);
 
 for (let index = 0; index < props.classes.length; index++) {
     allId.push(props.classes[index].id);
 }
-console.log(allId);
+// console.log(allId);
 
 for (let index = 0; index < props.exam_percent.length; index++) {
     activeExamClassId.push(props.exam_percent[index].id);
@@ -137,16 +137,16 @@ for (let index = 0; index < props.exam_percent.length; index++) {
 for (let index = 0; index < props.attendance.length; index++) {
     attendClassId.push(props.attendance[index].class_id);
     attendancePercentage.push(props.attendance[index]);
-    console.log(props.attendance[index]);
+    // console.log(props.attendance[index]);
 }
 
-console.log(attendancePercentage);
+// console.log(attendancePercentage);
 
 // push extra array room in exam perctange
 //main function
 
-console.log(allId);
-console.log(attendClassId);
+// console.log(allId);
+// console.log(attendClassId);
 
 for (let index = 0; index < allId.length; index++) {
     if (allId.length != attendClassId.length) {
@@ -223,24 +223,6 @@ attendancePercentage = Object.entries(attendancePercentage).sort(
 count = props.classes.length;
 examCount = Object.values(props.examRanks).length;
 
-//get exam mark percentage
-// percentage = Math.floor(Object.values(props.rank_mark)[0].sumMark / examCount * 10);
-// get all user exam mark percentage
-console.log(props.all_ranks);
-// for (let index = 0; index < props.all_ranks.length; index++) {
-//     allRank = {
-//         name: props.all_ranks.value[index].name,
-//         percent: Math.floor(
-//             (Object.values(props.all_ranks)[index].sumMark / examCount) * 10
-//         ),
-//     };
-
-//     allRankPercentage.push(allRank);
-// }
-
-// console.log(allRankPercentage);
-// console.log(props.all_ranks);
-
 if (oneClasExamRank[activeIndex.value][1].length > 1) {
     // result in oneClasExamRank[activeIndex][1]
 
@@ -257,7 +239,6 @@ if (oneClasExamRank[activeIndex.value][1].length > 1) {
     examName.push(oneClasExamRank[activeIndex.value][1][0].e_name);
 }
 
-// console.log(examName);
 const chartOptions = ref({
     chart: {
         toolbar: {
@@ -360,13 +341,12 @@ const series = ref([
     },
 ]);
 
-// console.log(activeIndex);
-// console.log(allRank);
+// console.log(oneClasExamRank[2]);
 </script>
 
 <template>
     <!-------------------- Navbar&header -------------------->
-    <NavBar active=3> </NavBar>
+    <NavBar active="3"> </NavBar>
     <Head title="Student View"></Head>
     <Header />
     <!---------------- body ----------------------->
@@ -376,16 +356,24 @@ const series = ref([
         <div class="flex flex-col items-center">
             <!-- Student Card Start -->
             <div
-                class="bg-elementBackground flex md:flex-row flex-col justify-center items-center md:justify-around p-5 w-full lg:w-3/6 mb-16 h-full md:h-96 text-whiteTextColor rounded-3xl border-2 border-slate-300"
+                class="bg-elementBackground flex md:flex-row flex-col justify-center items-center md:justify-around p-5 w-full lg:w-3/6 mb-16 h-auto md:h-auto text-whiteTextColor rounded-3xl"
                 v-for="data in studenProfile"
                 :key="studenProfile"
             >
-                <div class="items-center justify-center flex mr-4 rounded-full overflow-hidden">
+                <div
+                    class="items-center justify-center flex mr-4 rounded-full overflow-hidden"
+                >
                     <img
+                        v-show="data.profile_photo_path"
                         :src="data.profile_photo_path"
-                        alt="Profile photo is not uploaded"
                         srcset=""
                         class="h-36"
+                    />
+                    <img
+                        v-show="data.profile_photo_path == null"
+                        src="../../../public/img/error/avatars-000437232558-yuo0mv-t500x500.jpg"
+                        srcset=""
+                        class="h-36 w-52"
                     />
                 </div>
                 <div class="bg-white md:w-0.5 md:h-5/6 w-5/6 h-0.5 mt-6"></div>
@@ -408,7 +396,10 @@ const series = ref([
                             </ul>
                         </div>
                     </div>
-                    <div class="items-center flex flex-row mb-2 md:gap-8">
+                    <div
+                        class="items-center flex flex-row mb-2 md:gap-8"
+                        v-show="data.address"
+                    >
                         <div class="w-2/6 md:justify-end justify-start flex">
                             <p class="md:text-base text-sm font-semibold">
                                 Address
@@ -419,7 +410,10 @@ const series = ref([
                             <p>{{ data.address }}</p>
                         </div>
                     </div>
-                    <div class="items-center flex flex-row mb-2 md:gap-8">
+                    <div
+                        class="items-center flex flex-row mb-2 md:gap-8"
+                        v-show="data.phone"
+                    >
                         <div class="w-2/6 md:justify-end justify-start flex">
                             <p class="md:text-base text-sm font-semibold">
                                 Ph No.
@@ -430,7 +424,10 @@ const series = ref([
                             <p>{{ data.phone }}</p>
                         </div>
                     </div>
-                    <div class="items-center flex flex-row mb-2 md:gap-8">
+                    <div
+                        class="items-center flex flex-row mb-2 md:gap-8"
+                        v-show="data.age"
+                    >
                         <div class="w-2/6 md:justify-end justify-start flex">
                             <p class="md:text-base text-sm font-semibold">
                                 Age
@@ -441,7 +438,10 @@ const series = ref([
                             <p>{{ data.age }}</p>
                         </div>
                     </div>
-                    <div class="items-center flex flex-row mb-2 md:gap-8">
+                    <div
+                        class="items-center flex flex-row mb-2 md:gap-8"
+                        v-show="data.email"
+                    >
                         <div class="w-2/6 md:justify-end justify-start flex">
                             <p class="md:text-base text-sm font-semibold">
                                 Email
@@ -457,7 +457,7 @@ const series = ref([
 
             <!-- Student Card End -->
             <div class="text-white w-11/12 text-4xl border-white border-t pt-6">
-                <h2>{{ stuClass.length }} Classes Joined</h2>
+                <h2>{{ stuClass.length }} Class(es) Joined</h2>
             </div>
             <!-- Student Swiper Slide Start -->
             <swiper
@@ -480,7 +480,7 @@ const series = ref([
                         class="p-4 md:p-8 lg:w-10/12 xl:w-8/12 md:w-5/6 w-5/6 mx-auto h-auto"
                     >
                         <div
-                            class="flex flex-col bg-elementBackground rounded-3xl border-2 border-slate-300 lg:space-y-14 space-y-10 text-white md:p-8 p-5 w-full mb-4 md:mb-0 overflow-hidden card"
+                            class="flex flex-col bg-elementBackground rounded-3xl lg:space-y-14 space-y-10 text-white md:p-8 p-5 w-full mb-4 md:mb-0 overflow-hidden card"
                         >
                             <div
                                 class="flex flex-col justify-between items-center"
@@ -499,7 +499,32 @@ const series = ref([
                                         class="md:flex flex-col items-center justify-center hidden"
                                     >
                                         <p
-                                            class="text-yellowTextColor font-bold text-xl md:text-4xl"
+                                            class="font-bold text-xl md:text-4xl"
+                                            :class="{
+                                                'text-green-500':
+                                                    Math.floor(
+                                                        attendancePercentage[
+                                                            activeIndex
+                                                        ][1].attend * 100
+                                                    ) == 100,
+                                                'text-yellow-500':
+                                                    Math.floor(
+                                                        attendancePercentage[
+                                                            activeIndex
+                                                        ][1].attend * 100
+                                                    ) < 99 &&
+                                                    Math.floor(
+                                                        attendancePercentage[
+                                                            activeIndex
+                                                        ][1].attend * 100
+                                                    ) > 75,
+                                                'text-red-500':
+                                                    Math.floor(
+                                                        attendancePercentage[
+                                                            activeIndex
+                                                        ][1].attend * 100
+                                                    ) < 75,
+                                            }"
                                         >
                                             {{
                                                 attendancePercentage.length == 0
@@ -535,14 +560,45 @@ const series = ref([
                                         <p
                                             class="text-4xl font-bold rank absolute text-blackTextColor"
                                         >
-                                            10
+                                            {{
+                                                currentOverall.length == 0
+                                                    ? 0
+                                                    : currentOverall[
+                                                          activeIndex
+                                                      ][1].ranks
+                                            }}
                                         </p>
                                     </div>
                                     <div
                                         class="flex flex-col items-center justify-center md:hidden"
                                     >
                                         <p
-                                            class="text-yellowTextColor font-bold text-xl md:text-4xl"
+                                            class="font-bold text-xl md:text-4xl"
+                                            :class="{
+                                                'text-green-500':
+                                                    Math.floor(
+                                                        attendancePercentage[
+                                                            activeIndex
+                                                        ][1].attend * 100
+                                                    ) == 100,
+                                                'text-yellow-500':
+                                                    Math.floor(
+                                                        attendancePercentage[
+                                                            activeIndex
+                                                        ][1].attend * 100
+                                                    ) < 99 &&
+                                                    Math.floor(
+                                                        attendancePercentage[
+                                                            activeIndex
+                                                        ][1].attend * 100
+                                                    ) > 75,
+                                                'text-red-500':
+                                                    Math.floor(
+                                                        attendancePercentage[
+                                                            activeIndex
+                                                        ][1].attend * 100
+                                                    ) < 75,
+                                            }"
                                         >
                                             {{
                                                 attendancePercentage.length == 0
@@ -564,7 +620,32 @@ const series = ref([
                                         class="flex flex-col items-center justify-center"
                                     >
                                         <p
-                                            class="text-yellowTextColor font-bold text-xl md:text-4xl"
+                                            class="font-bold text-xl md:text-4xl"
+                                            :class="{
+                                                'text-green-500':
+                                                    Math.floor(
+                                                        examPercentage[
+                                                            activeIndex
+                                                        ][1].exam
+                                                    ) == 100,
+                                                'text-yellow-500':
+                                                    Math.floor(
+                                                        examPercentage[
+                                                            activeIndex
+                                                        ][1].exam
+                                                    ) < 99 &&
+                                                    Math.floor(
+                                                        examPercentage[
+                                                            activeIndex
+                                                        ][1].exam
+                                                    ) > 75,
+                                                'text-red-500':
+                                                    Math.floor(
+                                                        examPercentage[
+                                                            activeIndex
+                                                        ][1].exam
+                                                    ) < 75,
+                                            }"
                                         >
                                             {{
                                                 examPercentage.length == 0
@@ -598,7 +679,11 @@ const series = ref([
 
             <!-- Student Swiper Slide End -->
             <!-- Student Table Start -->
-            <div class="md:w-4/6 w-full flex flex-col h-5/6 mt-10">
+
+            <div
+                class="md:w-4/6 w-full flex flex-col h-5/6 mt-10"
+                v-show="oneClasExamRank[activeIndex][1].length > 0"
+            >
                 <div class="w-full h-full flex flex-row text-white text-center">
                     <!-- <button @click="hello()">Tabe change</button> -->
                     <div
@@ -631,9 +716,7 @@ const series = ref([
                                 <th scope="col" class="py-3 px-6">Rank</th>
                             </tr>
                         </thead>
-                        <tbody
-                            v-if="oneClasExamRank[activeIndex][1].length > 1"
-                        >
+                        <tbody>
                             <tr
                                 class="bg-elementBackground"
                                 v-for="result in oneClasExamRank[
@@ -662,7 +745,7 @@ const series = ref([
                                 <td class="py-4 px-6">{{ result.rank }}</td>
                             </tr>
                         </tbody>
-                        <tbody
+                        <!-- <tbody
                             v-else-if="
                                 oneClasExamRank[activeIndex][1].length == 1
                             "
@@ -701,17 +784,7 @@ const series = ref([
                                     {{ result.rank }}
                                 </td>
                             </tr>
-                        </tbody>
-                        <tbody v-else>
-                            <tr class="display-flex justify-center item-center">
-                                <td
-                                    colspan="4"
-                                    class="display-flex justify-center item-center"
-                                >
-                                    No Exam Result Yet!!
-                                </td>
-                            </tr>
-                        </tbody>
+                        </tbody> -->
                     </table>
                 </div>
             </div>
@@ -719,9 +792,16 @@ const series = ref([
             <!-- Student Self Rank Chart Start-->
             <div
                 v-if="segment == 2"
+                v-show="oneClasExamRank[activeIndex][1].length > 0"
                 class="md:w-4/6 w-full flex flex-col h-96 bg-elementBackground justify-center items-center"
             >
                 <Chart :options="chartOptions" :series="series" class="chart" />
+            </div>
+            <div
+                class="flex justify-center item-center text-white w-5/6 h-4/6 text-xl mt-9"
+                v-show="examPercentage[activeIndex][1].exam == 0"
+            >
+                No Exam Result !!
             </div>
             <!-- Student Self Rank Chart end-->
             <div class="w-4/6 text-white justify-start mt-5 mb-10">

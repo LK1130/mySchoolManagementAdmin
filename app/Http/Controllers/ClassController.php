@@ -18,16 +18,21 @@ class ClassController extends Controller
      */
     public function index(Request $request)
     {
+
         $checked = $request->selectedItem;
-        // dd($checked);
         $class = new MClass();
-        $classdata = ($request->selectedItem) ? $class->get_class(explode("-", $checked)) : $class->get_class("");
         $category = $class->category();
-        // dd($checked);
+
         $checkedcat = [];
         foreach ($category as $key => $value) {
             array_push($checkedcat, $value->id);
         }
+
+        if ($checked == "0")
+            $classdata = $class->get_class([0]);
+        else
+            $classdata = ($request->selectedItem) ? $class->get_class(explode("-", $checked)) : $class->get_class("");
+
         return inertia("Class", ['dclass' => $classdata, 'categories' => $category, 'checkedcategories' => ($checked == "") ? $checkedcat : explode("-", $checked),]);
     }
 
@@ -42,7 +47,7 @@ class ClassController extends Controller
         $class = new MClass();
         $instructors = $class->get_instructors();
         $categories = $class->get_category();
-        $students=($request->searchstdname) ? $class->get_student($srcname) : $class->get_student("");
+        $students = ($request->searchstdname) ? $class->get_student($srcname) : $class->get_student("");
 
         return inertia("AddClass", ['instructor' => $instructors, 'category' => $categories, 'student' => $students]);
     }
@@ -95,14 +100,14 @@ class ClassController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Request $request,$id)
+    public function edit(Request $request, $id)
     {
         $srcname = $request->searchstdname;
         $class = new MClass();
         $classdetail = $class->get_classdetail($id);
         $instructors = $class->get_instructors();
         $categories = $class->get_category();
-        $students=($request->searchstdname) ? $class->get_student($srcname) : $class->get_student("");
+        $students = ($request->searchstdname) ? $class->get_student($srcname) : $class->get_student("");
         $studentsid = $class->get_studentid($id);
         $date = $class->get_classdate($id);
         $day = $date->c_day;
@@ -139,26 +144,19 @@ class ClassController extends Controller
      */
     public function update(Request $request, $id)
     {
+
+        $cdyas = "";
+
+        $cdyas = (int)$request->day1 . (int)$request->day2 . (int)$request->day3 . (int)$request->day4 . (int)$request->day5 . (int)$request->day6 . (int)$request->day7;
+
+
         $class = new MClass();
-        $date1 = $request->input('day1');
-        $date2 = $request->input('day2');
-        $date3 = $request->input('day3');
-        $date4 = $request->input('day4');
-        $date5 = $request->input('day5');
-        $date6 = $request->input('day6');
-        $date7 = $request->input('day7');
-        $studentids = $request->input('students');
-        $img = $request->file('classimage');
-        $saveimg = $img->store('Classphoto');
-        settype($date1, "string");
-        settype($date2, "string");
-        settype($date3, "string");
-        settype($date4, "string");
-        settype($date5, "string");
-        settype($date6, "string");
-        settype($date7, "string");
-        $date = $date1 . $date2 . $date3 . $date4 . $date5 . $date6 . $date7;
-        $editclass = $class->editclass($request, $date, $saveimg, $studentids, $id);
+        $class->c_name = $request->classnames;
+        $class->c_description = $request->classdetail;
+        $class->c_start_date = $request->startdate;
+        $class->c_end_date = $request->enddate;
+        $class->c_day = $cdyas;
+
         return redirect('class');
     }
 

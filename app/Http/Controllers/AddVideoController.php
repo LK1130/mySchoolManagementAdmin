@@ -39,7 +39,7 @@ class AddVideoController extends Controller
      */
     public function store(Request $request)
     {
-        
+
 
         $request->validate([
             'videoName' => "required",
@@ -47,9 +47,9 @@ class AddVideoController extends Controller
             'date' => 'required',
             'storage' => 'required',
             'storagelocation' => 'required',
-            
+
         ]);
-   
+
         $videoUpload = new MVideo();
         $videoUpload->v_name = $request->videoName;
         $videoUpload->v_description = $request->description;
@@ -68,7 +68,7 @@ class AddVideoController extends Controller
                 echo "<pre>";
                 var_dump($request->alecturefile[$i]);
                 $file = $request->alecturefile[$i][0];
-                // dd($file);
+                dd($file);
                 $fileupload = $file->storePublicly("Leacture", ['disk' => 'public']);
                 $ledb->l_storage_link = $fileupload;
 

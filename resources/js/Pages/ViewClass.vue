@@ -8,7 +8,6 @@ import RecordingVideoListTableBox from "../Components/RecordingVideolistTablebox
 import { ref } from "vue";
 
 const datesplit = (data) => {
-    console.log(data);
     const fullday = [];
     var arrycount = 0;
     for (let index = 0; index < 7; index++) {
@@ -66,15 +65,15 @@ const porps = defineProps({
     laravelVersion: String,
     phpVersion: String,
     classdata: Object,
-    students: Object,
     videos: Object,
+    studentList: Object,
 });
-console.log(porps.classdata[0].id);
+console.log(porps.classdata);
 </script>
 
 <template>
     <!-------------------- Navbar&header -------------------->
-    <NavBar active=2> </NavBar>
+    <NavBar active="2"> </NavBar>
     <Header classaddmode="true" />
 
     <!---------------- body ----------------------->
@@ -96,9 +95,15 @@ console.log(porps.classdata[0].id);
         <div class="custombackgroundcolor w-full text-white p-4 rounded-lg">
             <h3 class="sm:text-lg text-base">Class Information</h3>
             <img
-                :src="'/storage/' + classdata[0].c_profile"
+                v-show="classdata[0].c_profile"
+                :src="classdata[0].c_profile"
                 alt=""
                 class="rounded-full sm:w-20 w-14 sm:h-20 h-14 float-right"
+            />
+            <img
+                v-show="classdata[0].c_profile == null"
+                alt=""
+                class="rounded-full sm:w-20 w-14 sm:h-20 h-14 float-right border-2 border-white"
             />
             <div class="sm:text-2xl text-lg font-bold mt-2">
                 {{ classdata[0].cname }}
@@ -128,8 +133,8 @@ console.log(porps.classdata[0].id);
                         >
                     </div>
                     <div class="mt-1">
-                        Person : <br class="sm:hidden block" /><span>{{
-                            students.length
+                        Total Students : <br class="sm:hidden block" /><span>{{
+                            studentList.length
                         }}</span>
                     </div>
                 </div>
@@ -179,7 +184,7 @@ console.log(porps.classdata[0].id);
                         >
                             <tr
                                 class="customborder"
-                                v-for="student in students"
+                                v-for="(student, index) in studentList"
                             >
                                 <td
                                     class="text-start sm:pl-3 pl-0 py-1 customtextcolor7 underline"
@@ -189,54 +194,78 @@ console.log(porps.classdata[0].id);
                                 <td class="text-center">
                                     {{ student.start_join }}
                                 </td>
-                                <td class="text-center">1</td>
+                                <td class="text-center">{{ index + 1 }}</td>
                                 <td class="text-center">
                                     {{ student.paid_fees }}
                                 </td>
                                 <td class="text-center">
                                     {{ student.remain_fees }}
                                 </td>
-        <td class="text-center text-yellowTextColor underline">
-            <Link :href="route('students.show', student.id)"
-            >View</Link
-            >
-        </td>
-        </tr>
+                                <td
+                                    class="text-center text-yellowTextColor underline"
+                                >
+                                    <Link
+                                        :href="
+                                            route('students.show', student.id)
+                                        "
+                                        >View</Link
+                                    >
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
             <div class="cuswidth sm:mt-0 mt-5">
                 <h3 class="text-white">Recording Video List</h3>
-                <div class="custombackgroundcolor h-48   rounded-lg  mt-3 px-3 py-4 overflow-y-scroll">
-  <table  class="text-white w-full ">
-    <thead class="">
-    <tr class="opacity-70 sm:text-sm customfontsize ">
-        <th class="text-start sm:pl-4 pl-0 ">NAME</th>
-        <th class="">Date</th>
-        <th >Attach File</th>
-        <th >Detail</th>
-    </tr>
-    </thead>
-    <tbody class="lg:text-sm text-xs customfontsize overflow-y-scroll">
-    <tr class="customborder" v-for="video in videos">
-        <td class="text-start sm:pl-4 pl-0 py-1">{{video.v_name}}</td>
-        <td  class="text-center ">{{video.v_date}}</td>
-        <td  class="text-center">3</td>
-        <a :href="route('addvideo.edit',video.id)"><td  class="text-center customtextcolor7 underline pl-4">
-           
-            edit</td></a>
-    </tr>
-    </tbody>
-  </table>
-
-  </div>
-  <a :href="route('addvideo.show', classdata[0].id)">
-<button class="float-right pt-0.5 custommb sm:w-2/6 w-24 h-7 mt-5  text-white rounded-lg flex justify-center bg-blue-600 hover:bg-blue-700 active:bg-blue-900 cusmargin">
-<img src="../../../public/img/bxs_video-plus.png" alt="" class="w-5 h-5 pt-0.5">
-<span class="ml-2 sm:text-base text-xs sm:pt-0 pt-1">Add Video</span>
-</button>
-</a>
+                <div
+                    class="custombackgroundcolor h-48 rounded-lg mt-3 px-3 py-4 overflow-y-scroll"
+                >
+                    <table class="text-white w-full">
+                        <thead class="">
+                            <tr class="opacity-70 sm:text-sm customfontsize">
+                                <th class="text-start sm:pl-4 pl-0">NAME</th>
+                                <th class="">Date</th>
+                                <th>Attach File</th>
+                                <th>Detail</th>
+                            </tr>
+                        </thead>
+                        <tbody
+                            class="lg:text-sm text-xs customfontsize overflow-y-scroll"
+                        >
+                            <tr class="customborder" v-for="video in videos">
+                                <td class="text-start sm:pl-4 pl-0 py-1">
+                                    {{ video.v_name }}
+                                </td>
+                                <td class="text-center">{{ video.v_date }}</td>
+                                <td class="text-center">
+                                    {{ video.t_lecture_note.length }}
+                                </td>
+                                <a :href="route('addvideo.edit', video.id)"
+                                    ><td
+                                        class="text-center customtextcolor7 underline pl-4"
+                                    >
+                                        Edit
+                                    </td></a
+                                >
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <a :href="route('addvideo.show', classdata[0].id)">
+                    <button
+                        class="float-right pt-0.5 custommb sm:w-2/6 w-24 h-7 mt-5 text-white rounded-lg flex justify-center bg-blue-600 hover:bg-blue-700 active:bg-blue-900 cusmargin"
+                    >
+                        <img
+                            src="../../../public/img/bxs_video-plus.png"
+                            alt=""
+                            class="w-5 h-5 pt-0.5"
+                        />
+                        <span class="ml-2 sm:text-base text-xs sm:pt-0 pt-1"
+                            >Add Video</span
+                        >
+                    </button>
+                </a>
             </div>
         </div>
     </div>
@@ -250,12 +279,11 @@ console.log(porps.classdata[0].id);
 }
 
 @media screen and (max-width: 640px) {
-    .cuswidth{
-        width:80% ;
-      }
-          .customfontsize{
-        font-size: 0.6em;
-      }
+    .cuswidth {
+        width: 80%;
     }
-
+    .customfontsize {
+        font-size: 0.6em;
+    }
+}
 </style>

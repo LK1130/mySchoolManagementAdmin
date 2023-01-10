@@ -41,7 +41,10 @@ watch(
         console.log(value);
         Inertia.get(
             "/students",
-            { selectedItem: value.join("-") },
+            {
+                selectedItem:
+                    selectedItem.value.length == 0 ? "0" : value.join("-"),
+            },
             { preserveState: true, replace: true }
         );
     }, 200)
@@ -81,7 +84,7 @@ watch(
                 </span>
             </div>
             <!-- Search Input Box Section -->
-            <div class="flex items-center">
+            <div class="flex items-center" v-show="allStudents.data.length > 0">
                 <label for="simple-search" class="sr-only">Search</label>
                 <div class="relative w-full">
                     <div
@@ -112,9 +115,14 @@ watch(
                 </div>
             </div>
         </div>
-
+        <!-- <div
+            v-show="allStudents.data.length == 0"
+            class="w-full flex justify-center text-xl text-white mt-10"
+        >
+            There is No Class Data
+        </div> -->
         <!-- Table Section -->
-        <div class="px-4 my-6 w-full">
+        <div class="px-4 my-6 w-full" v-show="allStudents.data.length > 0">
             <table
                 class="text-white w-full bg-elementBackground rounded-lg mb-5"
             >
@@ -152,13 +160,6 @@ watch(
         <div
             class="flex flex-col space-y-7 md:flex-row w-full md:justify-between px-5 items-start md:items-center text-white"
         >
-            <div class="w-14">
-                <button>
-                    <a class="underline underline-offset-4 hidden md:block"
-                        >BACK</a
-                    >
-                </button>
-            </div>
             <div class="flex justify-center items-center mb-10">
                 <Pagination :links="allStudents.links"></Pagination>
             </div>

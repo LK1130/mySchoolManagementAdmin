@@ -24,7 +24,8 @@ const props = defineProps({
         type: Object,
     },
 });
-console.log(props.dclass);
+
+// console.log(props.dclass);
 let selectedItem = ref(props.checkedcategories);
 var sorting = ref(0);
 const datesplit = (data) => {
@@ -120,7 +121,7 @@ const bafcolor = (start, end) => {
 };
 
 const sortingF = () => {
-    let sortData = props.dclass;
+    let sortData = props.dclass.data;
     let result;
     if (event.target.value == 0) {
         result = sortData.sort((a, b) => {
@@ -151,24 +152,16 @@ const sortingF = () => {
 
     props.dclass = result;
 };
-// watch(
-//     sorting,
-//     throttle(function (value) {
-//         console.log(value);
-//         Inertia.get(
-//             "/class",
-//             { sorting: value},
-//             { preserveState: true, replace: true }
-//         );
-//     }, 200)
-// );
+
 watch(
     selectedItem,
     throttle(function (value) {
-        console.log(value);
         Inertia.get(
             "/class",
-            { selectedItem: value.join("-") },
+            {
+                selectedItem:
+                    selectedItem.value.length == 0 ? "0" : value.join("-"),
+            },
             { preserveState: true, replace: true }
         );
     }, 200)
@@ -182,7 +175,7 @@ watch(
     <!---------------- body ----------------------->
     <div class="absolute h-auto w-5/6 pt-9 headercustomleft top-32 customblack">
         <div
-            class="text-white sm:text-sm text-xs popfont flex justify-between px-4"
+            class="text-white sm:text-sm text-xs popfont flex justify-between px-4 items-center"
         >
             <div>
                 <span
@@ -206,7 +199,7 @@ watch(
                 </span>
             </div>
 
-            <div class="dopd">
+            <div class="dopd" v-show="dclass.data.length > 0">
                 <form>
                     <select
                         @change="sortingF"
@@ -227,20 +220,30 @@ watch(
                 </form>
             </div>
         </div>
+        <div
+            v-show="dclass.data.length == 0"
+            class="w-full flex justify-center text-xl text-white mt-10"
+        >
+            There is No Class Data
+        </div>
         <div class="px-4 my-6">
             <table
                 class="text-white w-full rounded-lg custombackgroundcolor mb-5"
             >
-                <tr class="opacity-70 customfontsize">
+                <tr
+                    v-show="dclass.data.length > 0"
+                    class="opacity-70 customfontsize"
+                >
                     <th class="text-start pl-5 pt-4">NAME</th>
-                    <th class="pt-4">Instructor</th>
+                    <th class="pt-4">INSTRUCTOR</th>
                     <th class="pt-4">DAY</th>
                     <th class="pt-4">TIME</th>
                     <th class="pt-4">PERSON</th>
                     <th class="pt-4">STATUS</th>
-                    <th class="pt-4">Fees</th>
+                    <th class="pt-4">FEES</th>
                     <th class="pt-4">Setting</th>
                 </tr>
+
                 <tbody class="text-sm customfontsize">
                     <tr
                         class="cusborder"
@@ -276,21 +279,31 @@ watch(
                     </tr>
                 </tbody>
             </table>
-            <div class="flex justify-center items-center mb-10">
-                <Pagination :links="dclass.links"></Pagination>
-            </div>
-            <a href="/class/create"
-                ><button
-                    class="pt-0.5 sm:w-1/12 w-20 h-7 text-white rounded-lg flex justify-center bg-blue-600 hover:bg-blue-700 active:bg-blue-900 cusmargin"
+            <div
+                class="flex flex-col space-y-7 md:flex-row w-full md:justify-between items-start md:items-center text-white"
+            >
+                <div class="flex justify-center items-center mb-10">
+                    <Pagination :links="dclass.links"></Pagination>
+                </div>
+                <div
+                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-xl text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
                 >
-                    <img
-                        src="../../../public/img/addlogo.png"
-                        alt=""
-                        class="w-5 h-5 pt-0.5"
-                    />
-                    <span class="ml-1">ADD</span>
-                </button>
-            </a>
+                    <Link
+                        :href="route('class.create')"
+                        class="flex flex-row justify-center items-center space-x-3"
+                    >
+                        <img
+                            src="../../../public/img/addlogo.png"
+                            alt=""
+                            class="w-5 h-5 pt-0.5"
+                        />
+
+                        <button type="button" id="createBtn">
+                            <span>Add Class</span>
+                        </button>
+                    </Link>
+                </div>
+            </div>
             <!-- <div class="text-white">{{ props.dclass }}</div> -->
         </div>
     </div>
