@@ -239,6 +239,10 @@ function inputOn(obj) {
                                 class="py-2 px-5 text-whiteTextColor text-md bg-blueTextColor rounded-xl flex items-center"
                                 @click="addInput"
                                 type="button"
+                                 :class="{
+                                'block' : inputs < 5,
+                                'hidden' : inputs == 5
+                               }"
                             >
                                 <img
                                     src="../../../public/img/addlogo.png"
@@ -253,7 +257,6 @@ function inputOn(obj) {
                                 <button
                                     type="button"
                                     @click="removeInput(input - 1)"
-                                    v-show="input > 1"
                                 >
                                     <img
                                         src="../../../public/img/minus-circle.svg"
@@ -275,8 +278,9 @@ function inputOn(obj) {
                                     id="Lecturename"
                                     class="focus:ring-white focus:border-white border-white text-white text-sm rounded-xl block w-5/6 bg-elementBackground p-2"
                                     placeholder=""
-                                    :required="input - 1"
+                                    required
                                 />
+                                
                                 
                             </div>
 
@@ -401,3 +405,8 @@ function inputOn(obj) {
         </div>
     </div>
 </template>
+<style scoped>
+#Date{
+    color-scheme: dark;
+}
+</style>

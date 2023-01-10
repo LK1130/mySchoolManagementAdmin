@@ -16,6 +16,7 @@ console.log(props.guides);
 </script>
 
 <template>
+<Head title="Guide Tools" />
     <NavBar active=8> </NavBar>
     <Header headername="Tools" />
 

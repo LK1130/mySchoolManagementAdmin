@@ -4,13 +4,13 @@ import { Link } from "@inertiajs/inertia-vue3";
 
 const props = defineProps({
     href: String,
-
     active: {
         props : Number,
         default : 0
     },
 });
 console.log(props.active);
+console.log(props.mysch);
 let showMenu = ref(true);
 
 // const classes = computed(() => {
@@ -31,11 +31,11 @@ let showMenu = ref(true);
         <!-------- Logo ---------->
         <div class="pt-5 w-full text-center">
             <img
-                src="../../../public/img/logo.png"
+                :src="$page.props.setting.logo"
                 alt=""
                 class="sm:w-12 md:w-16 mx-auto"
             />
-            <p class="text-white font-semibold pt-2"> Ex;braiN </p>
+            <p class="text-white font-semibold pt-2"> {{ $page.props.setting.sitename }} </p>
         </div>
 
         <!--  -->

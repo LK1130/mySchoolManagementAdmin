@@ -114,11 +114,14 @@ const submit = () => {
                             >
                             <input
                                 v-model="form.steptitle[input - 1]"
-                                required
+                               
                                 type="text"
                                 id="steptitle"
                                 class="focus:ring-white focus:border-white border-white text-white text-sm rounded-xl block w-11/12 bg-elementBackground p-2"
                             />
+                            <div v-if="errors.steptitle" class="text-red-500">
+                            {{ errors.steptitle }}
+                        </div>
                         </div>
                         <!-- textarea  -->
                         <div class="pt-5 w-full">
@@ -130,11 +133,14 @@ const submit = () => {
                             ><textarea
                                 name=""
                                 v-model="form.description[input - 1]"
-                                required
+                                
                                 id="Description"
                                 class="h-48 w-11/12 resize-none rounded-xl bg-secondaryBackground text-whiteTextColor focus:outline-0 focus:ring-white focus:border-white border-white"
                             >
                             </textarea>
+                            <div v-if="errors.description" class="text-red-500">
+                            {{ errors.description }}
+                        </div>
                         </div>
                         <!-- Dropzone -->
                         <div class="mt-5">
@@ -189,6 +195,7 @@ const submit = () => {
                                     </p>
                                 </div>
                                 <input
+                                    
                                     :id="`dropzone-file${input - 1}`"
                                     type="file"
                                     @input="
@@ -198,9 +205,12 @@ const submit = () => {
                                     @change="showImagePreview($event)"
                                     accept="image/*"
                                     class="hidden"
-                                    required
+                                    
                                 />
                             </label>
+                        </div>
+                         <div v-if="errors.step_file" class="text-red-500">
+                            {{ errors.step_file}}
                         </div>
 
                         <!-- line -->
@@ -214,6 +224,10 @@ const submit = () => {
                 <div
                     class="text-white bg-blue-700 w-1/6 rounded-xl text-sm px-5 py-2.5 mt-9 flex flex-row justify-center items-center space-x-3"
                     @click="addInput"
+                     :class="{
+                                'block' : inputs < 10,
+                                'hidden' : inputs == 10
+                               }"
                 >
                     <img
                         src="../../../public/img/addlogo.png"

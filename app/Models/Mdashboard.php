@@ -19,7 +19,8 @@ class Mdashboard extends Model
     public function get_japanesestudent(){
       return  DB::table('t_student_classes')
         ->join('m_classes', 't_student_classes.class_id', '=', 'm_classes.id')
-        ->select('t_student_classes.user_id')
+        ->join('m_categories','m_classes.category_id','=','m_categories.id')
+        ->select('t_student_classes.user_id','m_categories.c_name')
         ->where('m_classes.category_id',2)
         ->get();
     }

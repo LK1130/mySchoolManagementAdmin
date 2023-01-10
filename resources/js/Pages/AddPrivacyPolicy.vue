@@ -21,7 +21,7 @@ const props = defineProps({
 const form = useForm({
     privacypolicys_title: null,
     privacypolicys_description: null,
-    category: null,
+    category: props.categories[0].id,
 });
 
 let categoryError = ref("");

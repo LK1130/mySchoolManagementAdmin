@@ -17,11 +17,12 @@ const props = defineProps({
 
 let imageFile = ref(props.blogsInfo.b_photo);
 let input = null
-
+console.log(imageFile);
 const form = useForm({
     id: props.blogsInfo.id,
     blog_title: props.blogsInfo.b_title,
     blog_description: props.blogsInfo.b_description,
+    publish: props.blogsInfo.publish,
     blog_file: null,
     _method: "put"
 })
@@ -98,10 +99,15 @@ const showImagePreview = (event) => {
                         {{ errors.blog_file }}
                     </div>
                     <div class="flex justify-between py-8">
-                        <Link :href="route('blogTool.destroy', form.id)" method="delete"
+                        <Link v-if="form.publish == 1" :href="route('blogTool.destroy', form.id)" method="delete"
                             class="py-2 px-5 text-whiteTextColor text-sm bg-redTextColor rounded-xl flex items-center">
                         <img src="../../../public/img/delete.png" alt="" class="w-5 h-5 pt-0.5" />
-                        <span class="mx-1 font-bold text-base">Delete</span>
+                        <span class="mx-1 font-bold text-base">Unpublish</span>
+                        </Link>
+                        <Link v-else :href="route('blogTool.destroy', form.id)" method="delete"
+                            class="py-2 px-5 text-whiteTextColor text-sm bg-redTextColor rounded-xl flex items-center">
+                        <img src="../../../public/img/delete.png" alt="" class="w-5 h-5 pt-0.5" />
+                        <span class="mx-1 font-bold text-base">Publish</span>
                         </Link>
                         <button type="submit"
                             class="py-2 px-5 text-whiteTextColor text-sm bg-blueTextColor rounded-xl flex items-center">

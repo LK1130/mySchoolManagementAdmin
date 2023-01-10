@@ -19,8 +19,8 @@ const props = defineProps({
 });
 
 const form = useForm({
-    student: null,
-    class: null,
+    student: props.students[0].id,
+    class: props.classes[0].id,
     category: 1,
     title: null,
     description: null,
@@ -37,7 +37,7 @@ const submit = () => {
     } else {
         Inertia.post(route("mailTool.store"), form, {
             onError: (errors) => {
-                console.log(errors.student);
+                console.log(errors);
             },
             onSuccess: (data) => {
                 console.log(data);
@@ -55,6 +55,8 @@ function studentOn() {
 
     form.class = null;
 }
+
+let load = ref(false);
 
 function classOn() {
     document.getElementById("student").style.display = "none";
@@ -77,167 +79,100 @@ function directMessage() {
 function alert() {
     form.category = 3;
 }
+
+function loadFun(){
+    console.log(props.errors);
+}
 </script>
 
 <template>
-   <NavBar active=8> </NavBar>
+    <NavBar active=8> </NavBar>
     <Header headername="Tools" />
 
     <div class="absolute h-full w-5/6 p-5 headercustomleft top-32 customblack">
         <Toolsbar active="1" />
         <form @submit.prevent="submit">
-            <div
-                class="w-full h-full py-8 bg-secondaryBackground rounded-b-xl flex flex-col items-center"
-            >
-                <div class="flex h-36 space-x-16">
-                    <div
-                        class="flex flex-col items-end justify-around text-whiteTextColor"
-                    >
-                        <label for="">Students :</label>
-                        <label for="">Classes :</label>
-                    </div>
-                    <div class="flex flex-col items-center justify-around">
-                        <select
-                            name=""
-                            id="student"
-                            v-model="form.student"
-                            style="display: none"
-                            class="w-72 rounded-xl bg-secondaryBackground text-whiteTextColor border-whiteTextColor focus:outline-0"
-                        >
-                            <option
-                                :value="student.id"
-                                v-for="student in students"
-                                :key="students"
-                            >
-                                {{ student.name }}
-                            </option>
-                        </select>
+            <div class="w-full h-full py-8 bg-secondaryBackground rounded-b-xl flex flex-col items-center">
+                <div class="flex flex-col md:flex-row space-x-10">
+                    <div>
+                        <div class="flex h-36 space-x-10">
+                            <div class="flex flex-col items-end justify-around text-whiteTextColor">
+                                <label for="">Students :</label>
+                                <label for="">Classes :</label>
+                            </div>
+                            <div class="flex flex-col items-center justify-around">
+                                <select name="" id="student" v-model="form.student" style="display: none"
+                                    class="w-72 rounded-xl bg-secondaryBackground text-whiteTextColor border-whiteTextColor focus:outline-0">
+                                    <option :value="student.id" v-for="student in students" :key="students">
+                                        {{ student.name }}
+                                    </option>
+                                </select>
 
-                        <select
-                            name=""
-                            id="studentBox"
-                            disabled
-                            class="w-72 rounded-xl bg-secondaryBackground text-whiteTextColor border-whiteTextColor focus:outline-0"
-                        >
-                            <option></option>
-                        </select>
+                                <select name="" id="studentBox" disabled
+                                    class="w-72 rounded-xl bg-secondaryBackground text-whiteTextColor border-whiteTextColor focus:outline-0">
+                                    <option></option>
+                                </select>
 
-                        <select
-                            name=""
-                            id="classroom"
-                            v-model="form.class"
-                            style="display: none"
-                            class="w-72 rounded-xl bg-secondaryBackground text-whiteTextColor border-whiteTextColor focus:outline-0"
-                        >
-                            <option
-                                :value="clas.id"
-                                v-for="clas in classes"
-                                :key="classes"
-                            >
-                                {{ clas.c_name }}
-                            </option>
-                        </select>
+                                <select name="" id="classroom" v-model="form.class" style="display: none"
+                                    class="w-72 rounded-xl bg-secondaryBackground text-whiteTextColor border-whiteTextColor focus:outline-0">
+                                    <option :value="clas.id" v-for="clas in classes" :key="classes">
+                                        {{ clas.c_name }}
+                                    </option>
+                                </select>
 
-                        <select
-                            name=""
-                            id="classroomBox"
-                            disabled
-                            class="w-72 rounded-xl bg-secondaryBackground text-whiteTextColor border-whiteTextColor focus:outline-0"
-                        >
-                            <option></option>
-                        </select>
-                    </div>
-                    <div class="flex flex-col items-center justify-around">
-                        <input
-                            type="radio"
-                            value="check"
-                            name="check"
-                            @click="studentOn"
-                        />
-                        <input
-                            type="radio"
-                            value="check"
-                            name="check"
-                            @click="classOn"
-                        />
-                    </div>
-                </div>
-                <label for="" class="text-red-700">{{ stuClassErr }}</label>
-                <div class="flex my-10">
-                    <div class="flex flex-col items-center mx-10">
-                        <input
-                            type="radio"
-                            name="category"
-                            v-model="form.information"
-                            @click="information"
-                            :checked="true"
-                        />
-                        <label for="" class="mt-3 text-blueTextColor"
-                            >Information</label
-                        >
-                    </div>
-                    <div class="flex flex-col items-center mx-10">
-                        <input
-                            type="radio"
-                            name="category"
-                            v-model="form.directMessage"
-                            @click="directMessage"
-                            :checked="false"
-                        />
-                        <label for="" class="mt-3 text-yellowTextColor"
-                            >Direct Message</label
-                        >
-                    </div>
-                    <div class="flex flex-col items-center mx-10">
-                        <input
-                            type="radio"
-                            name="category"
-                            v-model="form.alert"
-                            @click="alert"
-                            :checked="false"
-                        />
-                        <label for="" class="mt-3 text-tertiaryBackground"
-                            >Alert</label
-                        >
-                    </div>
-                </div>
-                <div class="flex flex-col space-y-3">
-                    <div class="flex flex-col">
-                        <label for="" class="text-whiteTextColor">Title</label>
-                        <input
-                            type="text"
-                            v-model="form.title"
-                            class="w-96 mt-2 rounded-xl bg-secondaryBackground text-whiteTextColor border-whiteTextColor"
-                        />
-                        <div
-                            v-if="errors.title"
-                            class="text-red-500 font-bold text-md"
-                        >
-                            {{ errors.title }}
+                                <select name="" id="classroomBox" disabled
+                                    class="w-72 rounded-xl bg-secondaryBackground text-whiteTextColor border-whiteTextColor focus:outline-0">
+                                    <option></option>
+                                </select>
+                            </div>
+                            <div class="flex flex-col items-center justify-around">
+                                <input type="radio" value="check" name="check" @click="studentOn" :disabled="load"/>
+                                <input type="radio" value="check" name="check" @click="classOn" :disabled="load"/>
+                            </div>
+                        </div>
+                        <label for="" class="text-red-700">{{ stuClassErr }}</label>
+                        <div class="flex my-10">
+                            <div class="flex flex-col items-center mx-10">
+                                <input type="radio" class="form-radio cursor-pointer" name="category" v-model="form.information" @click="information"
+                                    :checked="true" :disabled="load"/>
+                                <label for="" class="mt-3 text-blueTextColor">Information</label>
+                            </div>
+                            <div class="flex flex-col items-center mx-10">
+                                <input type="radio" class="form-radio cursor-pointer" name="category" v-model="form.directMessage" @click="directMessage"
+                                    :checked="false" :disabled="load"/>
+                                <label for="" class="mt-3 text-yellowTextColor">Direct Message</label>
+                            </div>
+                            <div class="flex flex-col items-center mx-10">
+                                <input type="radio" class="form-radio cursor-pointer" name="category" v-model="form.alert" @click="alert"
+                                    :checked="false" :disabled="load"/>
+                                <label for="" class="mt-3 text-tertiaryBackground">Alert</label>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="flex flex-col">
-                        <label for="" class="text-whiteTextColor"
-                            >Description</label
-                        >
-                        <textarea
-                            v-model="form.description"
-                            class="w-96 h-32 mt-2 rounded-xl bg-secondaryBackground text-whiteTextColor border-whiteTextColor resize-none"
-                        ></textarea>
-                        <div
-                            v-if="errors.description"
-                            class="text-red-500 font-bold text-md"
-                        >
-                            {{ errors.description }}
+                    <div class="flex flex-col space-y-3">
+                        <div class="flex flex-col">
+                            <label for="" class="text-whiteTextColor">Title</label>
+                            <input type="text" v-model="form.title"
+                                class="w-96 mt-2 rounded-xl bg-secondaryBackground text-whiteTextColor border-whiteTextColor" :disabled="load"/>
+                            <div v-if="errors.title" class="text-red-500 font-bold text-md">
+                                {{ errors.title }}
+                            </div>
                         </div>
+
+                        <div class="flex flex-col">
+                            <label for="" class="text-whiteTextColor">Description</label>
+                            <textarea v-model="form.description"
+                                class="w-96 h-32 mt-2 rounded-xl bg-secondaryBackground text-whiteTextColor border-whiteTextColor resize-none" :disabled="load"></textarea>
+                            <div v-if="errors.description" class="text-red-500 font-bold text-md">
+                                {{ errors.description }}
+                            </div>
+                        </div>
+
                     </div>
                 </div>
-                <div class="flex w-2/3 mt-3 flex-row-reverse">
-                    <button
-                        type="submit"
-                        class="py-2 px-8 bg-blueTextColor text-whiteTextColor rounded-xl"
-                    >
+                <div class="flex w-5/6 mt-3 flex-row-reverse">
+                    <button type="submit" class="py-2 px-8 bg-blueTextColor text-whiteTextColor rounded-xl" @click="loadFun" :disabled="load">
                         Send
                     </button>
                 </div>
@@ -246,11 +181,7 @@ function alert() {
 
         <div class="py-5">
             <button>
-                <a
-                    href="/mailTool"
-                    class="underline underline-offset-4 hidden md:block text-whiteTextColor"
-                    >BACK</a
-                >
+                <a href="/mailTool" class="underline underline-offset-4 hidden md:block text-whiteTextColor">BACK</a>
             </button>
         </div>
     </div>
