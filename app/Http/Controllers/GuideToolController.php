@@ -63,7 +63,7 @@ class GuideToolController extends Controller
             $gStep = new MGuideStep();
 
             $file = $request->step_file[$step][0];
-            $guidephoto = $file->storePublicly("Guide", ['disk' => 'public']);
+            // $guidephoto = $file->storePublicly("Guide", ['disk' => 'public']);
             $guidephoto = env("DO_URL") . "/" . Storage::disk('digitalocean')->put('guides', $file, 'public');
             //    dd($guidephoto);
             $gStep->step =  $step + 1;
@@ -84,7 +84,7 @@ class GuideToolController extends Controller
      */
     public function show($id)
     {
-        //
+        return Redirect::route('guideTool.index');
     }
 
     /**
@@ -96,15 +96,25 @@ class GuideToolController extends Controller
     public function edit($id)
     {
         $guides = MGuide::find($id);
-        $guides->guideStep;
-        return inertia("EditGuide", ["guideInfo" => $guides]);
+
+       
+
+        if ($guides == null) {
+            return Redirect::route('guideTool.index');
+        } else {
+            $guides->guideStep;
+            return inertia("EditGuide", ["guideInfo" => $guides]);
+        }
+        
+
+       
         // return $privacypolicysInfo;
         // return inertia('EditGuide',['guideInfo' => $guidesInfo]);
     }
 
     /**
      * Update the specified resource in storage.
-     *
+     *  
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -113,7 +123,7 @@ class GuideToolController extends Controller
     {
         // dd($request);
         $request->validate([
-            'guidetitle' => 'unique:m_guides,g_title|required',
+            'guidetitle' => 'required',
             'steptitle' => 'required',
             'description' => 'required',
             'step_file'=> 'required'
@@ -127,7 +137,8 @@ class GuideToolController extends Controller
         for ($step = 0; $step < count($request->steptitle); $step++) {
             $gStep = new MGuideStep();
             $file = $request->step_file[$step][0];
-            $guidephoto = $file->storePublicly("Guide", ['disk' => 'public']);
+            // $guidephoto = $file->storePublicly("Guide", ['disk' => 'public']);
+            $guidephoto = env("DO_URL") . "/" . Storage::disk('digitalocean')->put('guides', $file, 'public');
             // dd($guidephoto);
             $gStep->step =  $step + 1;
             $gStep->step_title =   $request->steptitle[$step];

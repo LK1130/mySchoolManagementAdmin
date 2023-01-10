@@ -4,13 +4,13 @@ import { Link } from "@inertiajs/inertia-vue3";
 
 const props = defineProps({
     href: String,
-
     active: {
-        props : Number,
-        default : 0
+        props: Number,
+        default: 0,
     },
 });
 console.log(props.active);
+console.log(props.mysch);
 let showMenu = ref(true);
 
 // const classes = computed(() => {
@@ -31,11 +31,13 @@ let showMenu = ref(true);
         <!-------- Logo ---------->
         <div class="pt-5 w-full text-center">
             <img
-                src="../../../public/img/logo.png"
+                :src="$page.props.setting.logo"
                 alt=""
                 class="sm:w-12 md:w-16 mx-auto"
             />
-            <p class="text-white font-semibold pt-2"> Ex;braiN </p>
+            <p class="text-white font-semibold pt-2">
+                {{ $page.props.setting.sitename }}
+            </p>
         </div>
 
         <!--  -->
@@ -43,17 +45,22 @@ let showMenu = ref(true);
             <div
                 class="flex flex-row ml-1 h-8 text-white mt-7 lg:justify-start justify-center"
             >
-                <Link href="home" class="flex">
+                <Link href="/dashboard" class="flex">
                     <img
                         src="../../../public/img/Dashboard.png"
                         alt=""
                         class="w-7 h-7"
-                        :class="active == 1 ? 'opacity-100':'opacity-30'"
+                        :class="active == 1 ? 'opacity-100' : 'opacity-30'"
                     />
                     <span
                         class="text-lg ml-5 pb-1 lg:block hidden transition-all duration-100 hover:opacity-100"
-                        :class="showMenu ? (active == 1 ? 'opacity-100':'opacity-30' ): 'opacity-0'"
-                        
+                        :class="
+                            showMenu
+                                ? active == 1
+                                    ? 'opacity-100'
+                                    : 'opacity-30'
+                                : 'opacity-0'
+                        "
                         >Dashboard</span
                     >
                 </Link>
@@ -66,11 +73,17 @@ let showMenu = ref(true);
                         src="../../../public/img/class.png"
                         alt=""
                         class="w-7 h-7 hover:opacity-100"
-                        :class="active == 2 ? 'opacity-100':'opacity-30'"
+                        :class="active == 2 ? 'opacity-100' : 'opacity-30'"
                     />
                     <span
                         class="text-lg ml-6 pt-1 lg:block hidden transition-all duration-100 hover:opacity-100"
-                        :class="showMenu ? (active == 2 ? 'opacity-100':'opacity-30' ): 'opacity-0'"
+                        :class="
+                            showMenu
+                                ? active == 2
+                                    ? 'opacity-100'
+                                    : 'opacity-30'
+                                : 'opacity-0'
+                        "
                         >Class</span
                     >
                 </Link>
@@ -83,11 +96,17 @@ let showMenu = ref(true);
                         src="../../../public/img/Students.png"
                         alt=""
                         class="w-7 h-7 hover:opacity-100"
-                        :class="active == 3 ? 'opacity-100':'opacity-30'"
+                        :class="active == 3 ? 'opacity-100' : 'opacity-30'"
                     />
                     <span
                         class="text-lg ml-6 pt-1 lg:block hidden transition-all duration-100 hover:opacity-100"
-                        :class="showMenu ? (active == 3 ? 'opacity-100':'opacity-30' ): 'opacity-0'"
+                        :class="
+                            showMenu
+                                ? active == 3
+                                    ? 'opacity-100'
+                                    : 'opacity-30'
+                                : 'opacity-0'
+                        "
                     >
                         Student
                     </span>
@@ -111,11 +130,17 @@ let showMenu = ref(true);
                         src="../../../public/img/instructor.png"
                         alt=""
                         class="w-7 h-7 hover:opacity-100"
-                        :class="active == 4 ? 'opacity-100':'opacity-30'"
+                        :class="active == 4 ? 'opacity-100' : 'opacity-30'"
                     />
                     <span
                         class="text-lg ml-6 pt-1 lg:block hidden transition-all duration-100 hover:opacity-100"
-                        :class="showMenu ? (active == 4 ? 'opacity-100':'opacity-30' ): 'opacity-0'"
+                        :class="
+                            showMenu
+                                ? active == 4
+                                    ? 'opacity-100'
+                                    : 'opacity-30'
+                                : 'opacity-0'
+                        "
                         >Instructor</span
                     >
                 </Link>
@@ -127,11 +152,17 @@ let showMenu = ref(true);
                     src="../../../public/img/Admin.png"
                     alt=""
                     class="w-7 h-7 hover:opacity-100"
-                    :class="active == 5 ? 'opacity-100':'opacity-30'"
+                    :class="active == 5 ? 'opacity-100' : 'opacity-30'"
                 />
                 <span
-                    class="text-lg ml-6 pt-1 lg:block hidden transition-all duration-100 hover:opacity-100 "
-                    :class="showMenu ? (active == 5 ? 'opacity-100':'opacity-30' ): 'opacity-0'"
+                    class="text-lg ml-6 pt-1 lg:block hidden transition-all duration-100 hover:opacity-100"
+                    :class="
+                        showMenu
+                            ? active == 5
+                                ? 'opacity-100'
+                                : 'opacity-30'
+                            : 'opacity-0'
+                    "
                 >
                     <Link href="/admin">Admin</Link>
                 </span>
@@ -144,11 +175,17 @@ let showMenu = ref(true);
                         src="../../../public/img/permission.png"
                         alt=""
                         class="w-7 h-7 hover:opacity-100"
-                        :class="active == 6 ? 'opacity-100':'opacity-30'"
+                        :class="active == 6 ? 'opacity-100' : 'opacity-30'"
                     />
                     <span
                         class="text-lg ml-6 pt-1 lg:block hidden transition-all duration-100 hover:opacity-100"
-                        :class="showMenu ? (active == 6 ? 'opacity-100':'opacity-30' ): 'opacity-0'"
+                        :class="
+                            showMenu
+                                ? active == 6
+                                    ? 'opacity-100'
+                                    : 'opacity-30'
+                                : 'opacity-0'
+                        "
                         >Permission</span
                     >
                 </Link>
@@ -162,11 +199,17 @@ let showMenu = ref(true);
                         src="../../../public/img/Settings.png"
                         alt=""
                         class="w-7 h-7 hover:opacity-100"
-                        :class="active == 7 ? 'opacity-100':'opacity-30'"
+                        :class="active == 7 ? 'opacity-100' : 'opacity-30'"
                     />
                     <span
                         class="text-lg ml-6 lg:block hidden transition-all duration-100 hover:opacity-100"
-                        :class="showMenu ? (active == 7 ? 'opacity-100':'opacity-30' ): 'opacity-0'"
+                        :class="
+                            showMenu
+                                ? active == 7
+                                    ? 'opacity-100'
+                                    : 'opacity-30'
+                                : 'opacity-0'
+                        "
                         ><Link href="/setting">Settings</Link></span
                     >
                 </div>
@@ -177,12 +220,17 @@ let showMenu = ref(true);
                         src="../../../public/img/Tools.png"
                         alt=""
                         class="w-7 h-7 hover:opacity-100"
-                        :class="active == 8 ? 'opacity-100':'opacity-30'"
-                       
+                        :class="active == 8 ? 'opacity-100' : 'opacity-30'"
                     />
                     <span
                         class="text-lg ml-6 lg:block hidden transition-all duration-100 hover:opacity-100"
-                        :class="showMenu ? (active == 8 ? 'opacity-100':'opacity-30' ): 'opacity-0'"
+                        :class="
+                            showMenu
+                                ? active == 8
+                                    ? 'opacity-100'
+                                    : 'opacity-30'
+                                : 'opacity-0'
+                        "
                         ><Link :href="route('mailTool.index')"
                             >Tools</Link
                         ></span
@@ -196,10 +244,9 @@ let showMenu = ref(true);
                             src="../../../public/img/Logout.png"
                             alt=""
                             class="w-7 h-7 opacity-100 hover:opacity-100"
-                            
                         />
                         <span
-                            class="text-lg ml-6 lg:block hidden transition-all duration-100 "
+                            class="text-lg ml-6 lg:block hidden transition-all duration-100"
                             :class="showMenu ? 'opacity-100' : 'opacity-0'"
                             >Logout</span
                         >

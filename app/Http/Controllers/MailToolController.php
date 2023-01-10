@@ -115,7 +115,7 @@ class MailToolController extends Controller
      */
     public function show($id)
     {
-        //
+        return Redirect::route('mailTool.index');
     }
 
     /**
@@ -126,7 +126,7 @@ class MailToolController extends Controller
      */
     public function edit($id)
     {
-        //
+        return Redirect::route('mailTool.index');
     }
 
     /**
@@ -138,7 +138,7 @@ class MailToolController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        return Redirect::route('mailTool.index');
     }
 
     /**
@@ -149,6 +149,6 @@ class MailToolController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return Redirect::route('mailTool.index');
     }
 }

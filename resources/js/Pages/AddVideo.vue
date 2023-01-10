@@ -11,11 +11,12 @@ const props = defineProps({
         type: Object,
     },
 });
-console.log(props.classDdata);
 
-const inputs = ref(1);
+const inputs = ref(0);
+
 const addInput = () => {
     inputs.value += 1;
+    console.log(inputs.value);
 };
 const removeInput = (index) => {
     form.lecturename.splice(index, 1);
@@ -24,7 +25,6 @@ const removeInput = (index) => {
     form.lecturefile.splice(index, 1);
     inputs.value -= 1;
 };
-const dis = ref(1);
 const form = useForm({
     className: props.classDdata[0].c_name,
     classId: props.classDdata[0].id,
@@ -164,6 +164,9 @@ function inputOn(obj) {
                                 class="focus:ring-white focus:border-white border-white text-white text-sm rounded-xl block w-5/6 bg-elementBackground p-2"
                                 placeholder=""
                             />
+                            <div v-if="errors.date" class="text-red-500">
+                            {{ errors.date }}
+                        </div>
                         </div>
                         <!-- Storage Link -->
                         <div class="ml-10 sm:w-full sm:ml-4 mt-5">
@@ -217,11 +220,15 @@ function inputOn(obj) {
                     <div>
                         <p class="text-white pl-6">Lecture Upload</p>
 
-                        <div class="pl-10 mt-5">
+                        <div class="pl-10 mt-5" id="create">
                             <button
                                 class="py-2 px-5 text-whiteTextColor text-md bg-blueTextColor rounded-xl flex items-center"
                                 @click="addInput"
                                 type="button"
+                               :class="{
+                                'block' : inputs < 5,
+                                'hidden' : inputs == 5
+                               }"
                             >
                                 <img
                                     src="../../../public/img/addlogo.png"
@@ -236,7 +243,6 @@ function inputOn(obj) {
                                 <button
                                     type="button"
                                     @click="removeInput(input - 1)"
-                                    v-show="input > 1"
                                 >
                                     <img
                                         src="../../../public/img/minus-circle.svg"
@@ -257,7 +263,7 @@ function inputOn(obj) {
                                     id="Lecturename"
                                     class="focus:ring-white focus:border-white border-white text-white text-sm rounded-xl block w-5/6 bg-elementBackground p-2"
                                     placeholder=""
-                                    :required="input - 1"
+                                    required
                                 />
                                
                             </div>
@@ -287,6 +293,7 @@ function inputOn(obj) {
                                         class="ml-4 mt-2"
                                         :name="input"
                                         @click="inputOn(input)"
+                                        required
                                     />
                                 </div>
                             </div>
@@ -309,7 +316,7 @@ function inputOn(obj) {
                                     :id="`stlink${input}`"
                                     class="focus:ring-white focus:border-white border-white text-white text-sm rounded-xl block w-5/6 bg-elementBackground p-2"
                                     placeholder=""
-                                    :required="input - 1"
+                                    required
                                 />
                                 <input
                                     checked
@@ -369,3 +376,9 @@ function inputOn(obj) {
         </div>
     </div>
 </template>
+<style scoped>
+#Date{
+    color-scheme: dark;
+}
+
+</style>

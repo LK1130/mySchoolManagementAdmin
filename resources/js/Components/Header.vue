@@ -1,9 +1,7 @@
 <template>
-    <div
-        class="relative headercustomleft w-5/6 h-32 bg-primarybackground pt-5 px-5"
-    >
-        <div class="flex justify-between">
-            <div class="">
+    <div class="fixed headercustomleft w-full h-32 customblack z-10">
+        <div class="flex justify-between py-8 px-6">
+            <div class="ml-5">
                 <div class="text-white text-xl flex flex-row">
                     <span>{{ year }}/{{ month }}/{{ date }}</span>
                     <span class="ml-1"
@@ -36,6 +34,7 @@
 </template>
 
 <script>
+import moment from "moment";
 export default {
     data() {
         return {
@@ -54,42 +53,42 @@ export default {
         gettime() {
             setInterval(() => {
                 var today = new Date();
-                this.seconds = today.getSeconds();
-                this.minute = today.getMinutes();
-                this.hour = today.getHours();
-                this.year = today.getFullYear();
-                this.month = today.getMonth() + 1;
-                this.date = today.getDate();
-                var days = today.getDay();
-                switch (days) {
-                    case 0:
-                        this.day = "SUN";
-                        break;
+                this.seconds = moment().format('ss');
+                this.minute = moment().format('mm');
+                this.hour = moment().format('hh');
+                this.year = moment().format('YYYY');
+                this.month = moment().format('MM');
+                this.date = moment().format('DD');
+                this.day = moment().format('ddd');
+                // switch (days) {
+                //     case 0:
+                //         this.day = "SUN";
+                //         break;
 
-                    case 1:
-                        this.day = "MON";
-                        break;
+                //     case 1:
+                //         this.day = "MON";
+                //         break;
 
-                    case 2:
-                        this.day = "TUE";
-                        break;
+                //     case 2:
+                //         this.day = "TUE";
+                //         break;
 
-                    case 3:
-                        this.day = "WED";
-                        break;
+                //     case 3:
+                //         this.day = "WED";
+                //         break;
 
-                    case 4:
-                        this.day = "THU";
-                        break;
+                //     case 4:
+                //         this.day = "THU";
+                //         break;
 
-                    case 5:
-                        this.day = "FRI";
-                        break;
+                //     case 5:
+                //         this.day = "FRI";
+                //         break;
 
-                    case 6:
-                        this.day = "SAT";
-                        break;
-                }
+                //     case 6:
+                //         this.day = "SAT";
+                //         break;
+                // }
             }, 1000);
         },
         show() {

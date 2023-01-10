@@ -8,20 +8,16 @@ import { Inertia } from "@inertiajs/inertia";
 const props = defineProps({
     errors: {
         type: Object,
-    },
-    categoriesInfo: {
-        type: Object,
-    },
+    }
 });
 
 const form = useForm({
-    id: props.categoriesInfo.id,
-    category_name: props.categoriesInfo.c_name,
-    category_description: props.categoriesInfo.c_description
+    category_name: null,
+    category_description: null
 });
 
 const submit = () => {
-    Inertia.put(route("categoryTool.update", props.categoriesInfo.id), form, {
+    Inertia.post(route("categoryTool.store"), form, {
         onError: (data) => {
             console.log(data);
         },

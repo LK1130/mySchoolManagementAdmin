@@ -22,9 +22,9 @@ class AdminPermissionController extends Controller
 
         // dd($routeList);
 
-        $pages = MPage::where('del_flg', 0)->get();
+        $pages = MPage::where('p_route','!=','adminpermission')->get();
 
-        $role_pages = MRole::all();
+        $role_pages = MRole::where('id','!=',session()->get('roleId'))->get();
 
         foreach ($role_pages as  $role_page) {
             $role_page->page;
@@ -43,7 +43,7 @@ class AdminPermissionController extends Controller
      */
     public function create()
     {
-        //
+        return Redirect::route('adminPermission.index');
     }
 
     /**
@@ -55,7 +55,7 @@ class AdminPermissionController extends Controller
     public function store(Request $request)
     {
         $rolePage = new MRolePage();
-        MRolePage::truncate();
+        MRolePage::where('m_role_id','!=',session()->get('roleId'))->delete();
 
         for ($i = 0; $i < count($request->lists); $i++) {
             $rolePage = new MRolePage();
@@ -63,6 +63,7 @@ class AdminPermissionController extends Controller
             $rolePage->m_role_id = $request->lists[$i]["roleId"];
             $rolePage->save();
         }
+
 
         return Redirect::route('adminPermission.index');
     }
@@ -75,7 +76,7 @@ class AdminPermissionController extends Controller
      */
     public function show($id)
     {
-        //
+        return Redirect::route('adminPermission.index');
     }
 
     /**
@@ -86,7 +87,7 @@ class AdminPermissionController extends Controller
      */
     public function edit($id)
     {
-        //
+        return Redirect::route('adminPermission.index');
     }
 
     /**
@@ -98,7 +99,7 @@ class AdminPermissionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        return Redirect::route('adminPermission.index');
     }
 
     /**
@@ -109,6 +110,6 @@ class AdminPermissionController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return Redirect::route('adminPermission.index');
     }
 }

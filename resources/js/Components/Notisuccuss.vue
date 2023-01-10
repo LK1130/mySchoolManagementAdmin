@@ -22,7 +22,7 @@
             </svg>
             <span class="sr-only">Check icon</span>
         </div>
-        <div class="ml-6 text-sm font-normal">Upload Successful.</div>
+        <div class="ml-6 text-sm font-normal">Save Successful.</div>
     </div>
 </template>
 

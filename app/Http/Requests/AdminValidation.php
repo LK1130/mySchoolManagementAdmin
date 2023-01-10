@@ -2,6 +2,10 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\classdatecheck;
+use App\Rules\classdaycheck;
+use App\Rules\classtimecheck;
+use App\Rules\feecheck;
 use Illuminate\Foundation\Http\FormRequest;
 
 class AdminValidation extends FormRequest
@@ -25,9 +29,18 @@ class AdminValidation extends FormRequest
     {
         return [
             'classimage' => ['required'],
-            'classdetail' =>['required'],
-            'teacher'=>['required'],
+            'classinformation' =>['required'],
+            'instructor'=>['required'],
             'categories'=>['required'],
+            'classnames'=>['required'],
+            'fees'=>['required',new feecheck()],
+            'startdate'=>['required'],
+            'enddate'=>['required'],
+            'starttime'=>['required'],
+            'endtime'=>['required'],
+            'classday'=>[new classdaycheck()],
+            'datecheck'=>[new classdatecheck()],
+            'timecheck'=>[new classtimecheck()],
         ];
     }
 }

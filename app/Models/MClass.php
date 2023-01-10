@@ -52,7 +52,7 @@ class MClass extends Model
 
         $query = DB::table('m_classes')
             ->join('m_instructors', 'm_classes.instructor_id', '=', 'm_instructors.id')
-            ->join('t_student_classes', 'm_classes.id', '=', 't_student_classes.class_id')
+            ->leftjoin('t_student_classes', 'm_classes.id', '=', 't_student_classes.class_id')
             ->groupBy("m_classes.id");
         $query->when(empty($selectedItem), function ($query) {
 
@@ -121,20 +121,20 @@ class MClass extends Model
         $id = DB::table('m_classes')
             ->insertGetId([
                 'c_name' => $request->input('classnames'),
-                'c_description' => $request->input('classdetail'),
+                'c_description' => $request->input('classinformation'),
                 'c_start_date' => $request->input('startdate'),
                 'c_end_date' => $request->input('enddate'),
                 'c_day' => $date,
                 'c_start_time' => $request->input('starttime'),
                 'c_end_time' => $request->input('endtime'),
                 'c_fees' => $request->input('fees'),
-                'instructor_id' => $request->input('teacher'),
+                'instructor_id' => $request->input('instructor'),
                 'c_profile' => $img,
                 'category_id' => $request->input('categories'),
                 'created_at' => Date('Y-m-d h:i:s'),
                 'created_by' => "0"
             ]);
-
+        if(!empty($studentids)){
         foreach ($studentids as $ids) {
             DB::table('t_student_classes')
                 ->insert([
@@ -148,6 +148,7 @@ class MClass extends Model
                 ]);
         };
     }
+    }
 
     public function editclass(Request $request, $date, $img, $studentids, $id)
     {
@@ -155,14 +156,14 @@ class MClass extends Model
             ->where('id', $id)
             ->update([
                 'c_name' => $request->input('classnames'),
-                'c_description' => $request->input('classdetail'),
+                'c_description' => $request->input('classinformation'),
                 'c_start_date' => $request->input('startdate'),
                 'c_end_date' => $request->input('enddate'),
                 'c_day' => $date,
                 'c_start_time' => $request->input('starttime'),
                 'c_end_time' => $request->input('endtime'),
                 'c_fees' => $request->input('fees'),
-                'instructor_id' => $request->input('teacher'),
+                'instructor_id' => $request->input('instructor'),
                 'c_profile' => $img,
                 'category_id' => $request->input('categories'),
                 'updated_at' => Date('Y-m-d h:i:s'),

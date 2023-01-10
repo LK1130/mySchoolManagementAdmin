@@ -4,6 +4,8 @@ namespace App\Http\Middleware;
 
 use App\Models\MAdmin;
 use App\Models\MRole;
+use App\Models\MSitemasterMyschool;
+use App\Models\MSitemasterPublic;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -57,6 +59,10 @@ class HandleInertiaRequests extends Middleware
             'auth' => [
                 'username' => ($request->path() == "login") ? "" : $admin,
                 'userrole' => ($request->path() == "login") ? "" : $role
+            ],
+            'setting'=>[
+                'logo'=>fn()=>MSitemasterMyschool::find(1)->logo,
+                'sitename'=>fn()=>MSitemasterMyschool::find(1)->sitename
             ]
         ]);
     }

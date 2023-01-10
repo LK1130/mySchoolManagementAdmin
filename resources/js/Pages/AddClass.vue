@@ -11,7 +11,7 @@ import { watch } from '@vue/runtime-core';
 
 var studentid = ref([]);
 const props = defineProps({
-    instructor : {
+    instructors : {
         type : Object
     },
     category : {
@@ -20,13 +20,16 @@ const props = defineProps({
     student : {
         type : Object
     },
+        errors : {
+        type : Object
+    },
     
 })
 let searchstdname=ref();
 const form = useForm({
     classnames: null,
     classimage: null,
-    classdetail: null,
+    classinformation: null,
     startdate: null ,
     enddate:null ,
     day1 : 0 ,
@@ -36,15 +39,19 @@ const form = useForm({
     day5 : 0 ,
     day6 : 0 ,
     day7 : 0 ,
+    classday:null,
+    datecheck:null,
+    timecheck:null,
     starttime : null ,
     endtime : null ,
-    teacher: null ,
+    instructor: null ,
     categories:null ,
     fees: null ,
     students: null ,
     
 });
 const imgSrc = ref("");
+
 var imgnoborder = true;
 const onFile = (e) => {
     const files = e.target.files
@@ -63,54 +70,29 @@ const pfimgborder=()=>
   return "profileimgnoborder"
  }
 }
-
 const submit = () => {
   form.students=studentid;
+  form.classday=form.day1+form.day2+form.day3+form.day4+form.day5+form.day6+form.day7;
+  form.datecheck=form.startdate+form.enddate;
+  form.timecheck=form.starttime+form.endtime;
   form.post(route('class.store',form));
   console.log(form)
 } 
 
-function classnameValidation(value) {
-  if (!value) {
-    return 'Class name is required';
-    }
-  return true; 
-}
-function startdateValidation(value) {
-  if (!value) {
-    return 'Start Date is required';
-    }
-  return true; 
-}
-function enddateValidation(value) {
-  if (!value) {
-    return 'End Date is required';
-    }
-  return true; 
-}
-function starttimeValidation(value) {
-  if (!value) {
-    return 'Start Time is required';
-    }
-  return true; 
-}
-function endtimeValidation(value) {
-  if (!value) {
-    return 'End Time is required';
-    }
-  return true; 
-}
 
-function isRequired(value) {
-  if (!value) {
-    return 'Fees is required';
-    }
-    // if (value!=Number) {
-    // return 'Fees must be Number';
-    // }
-  return true;
+// var timepicker = new timepicker('.field', {
+//   theme: 'dark',
+//   lang: 'pt',
+// });
+// timepicker.on('change', function(evt) {
   
-}
+//   var value = (evt.hour || '00') + ':' + (evt.minute || '00');
+//   evt.element.value = value;
+
+// });
+
+  
+
 watch(
     searchstdname,
     throttle(function (value) {
@@ -131,43 +113,45 @@ watch(
 
 <!---------------- body ----------------------->
 <div class="absolute w-5/6 headercustomleft  top-32 customblack px-5">
-<Form @submit="submit" >
+<form @submit.prevent="submit">
 <div class="flex flex-row mt-10 addclasscss fixed sm:top-4 top-10 z-50" >
-<Field type="text"  class="classnameinput  sm:text-xl text-sm font-bold text-white"  v-model="form.classnames" :rules="classnameValidation" name="classname"/>
+<input type="text"  class="classnameinput  sm:text-xl text-sm font-bold text-white"  v-model="form.classnames" placeholder="Class Name">
 <button type="button" class="mt-2 sm:w-7 w-4 sm:h-7 h-4 border-2 sm:text-sm text-xs rounded-full border-solid border-white text-white " @click="form.classnames=''"> &#9587</button>
 </div>
-<ErrorMessage name="classname" class="text-red-800 ml-5"/>
+<div v-if="errors.classnames" class="text-red-900">{{errors.classnames}}</div>
 <div class="my-5">
     <div class="customnavcolor w-full text-white p-4 rounded-lg">
    <h3 class="sm:text-lg text-base">Class Information</h3>
    <div class="float-right">
-   <img :src="imgSrc" alt="" class="rounded-full sm:w-20 sm:h-20 h-14 w-14" :class="pfimgborder()">
+   <img :src="imgSrc" alt=""  class="rounded-full sm:w-20 sm:h-20 h-14 w-14 classpp" :class="pfimgborder()" >
 <label for="file-upload" class="custom-file-upload sm:w-20 w-14 bg-blue-600 hover:bg-blue-700 active:bg-blue-900 sm:text-base text-xs rounded-lg p-1 mt-4">
     Upload
 </label>
 <input id="file-upload" type="file" accept="image/*" @change="onFile"/>
+<div v-if="errors.classimage" class="text-red-900 w-32 mt-1">{{errors.classimage}}</div>
    </div>
    <div class="sm:text-2xl text-lg font-bold mt-2" >{{ form.classnames }}</div>
-   <textarea name="" id=""  v-model="form.classdetail"  class="text-white w-10/12 mt-2 sm:text-sm text-xs customnavcolor rounded-xl customborder1"></textarea>
+   <textarea name="" id=""  v-model="form.classinformation"  class="text-white w-10/12 h-40 mt-2 sm:text-sm text-xs customnavcolor rounded-xl customborder1" placeholder="Class Detail"></textarea>
+   <div v-if="errors.classinformation" class="text-red-900 mt-1 ml-3">{{errors.classinformation}}</div>
    <div class="flex sm:flex-row flex-col justify-between w-10/12 text-sm mt-3">
   
     <div>
         <div>Date :
             
             <span>
-            <Field type="date" v-model="form.startdate" class="customnavcolor text-white sm:text-sm text-xs rounded-lg sm:w-1/3 w-16 customborder1" :rules="startdateValidation" name="startdate"/>
+            <input type="date" v-model="form.startdate" class="customnavcolor text-white sm:text-sm text-xs rounded-lg sm:w-1/3 w-16 customborder1">
             </span>
             -
             <span>
-            <Field type="date" v-model="form.enddate" class="customnavcolor text-white sm:text-sm text-xs rounded-lg sm:w-1/3 w-16 customborder1" :rules="enddateValidation" name="enddate"/>
+            <input type="date" v-model="form.enddate" class="customnavcolor text-white sm:text-sm text-xs rounded-lg sm:w-1/3 w-16 customborder1">
             </span> 
+            <div v-if="errors.startdate" class="text-red-900 mt-1 ml-12">{{errors.startdate}}</div>
+            <div v-if="errors.enddate" class="text-red-900 mt-1 ml-12">{{errors.enddate}}</div>
+             <div v-if="errors.datecheck" class="text-red-900 mt-1 ml-12">{{errors.datecheck}}</div>
         </div>
-        <ErrorMessage name="startdate" class="text-red-800 ml-12 mt-2"/>
-        <br>
-        <ErrorMessage name="enddate" class="text-red-800 ml-12 mt-2"/>
       <div class="mt-3  flex flex-row ">Day: 
        <span class="flex flex-wrap mt-0.5 sm:text-sm text-xs">  
-       <input type="checkbox" name="checkbox" v-model="form.day1" value="1" class="daycheckbox mt-0.5 ml-3"/>
+       <input type="checkbox" name="" v-model="form.day1" value="1" class="daycheckbox mt-0.5 ml-3"/>
        <label for="" class="ml-2">SUN</label>
        
        <input type="checkbox" name="checkbox" v-model="form.day2" value="1" class="daycheckbox mt-0.5 ml-3"/>
@@ -189,29 +173,31 @@ watch(
        <label for="" class="ml-2">SAT</label>
 
        </span>
-
+        
         </div>
+        <div v-if="errors.classday" class="text-red-900 mt-1 ml-12">{{errors.classday}}</div>
         <div class="mt-3">Time : 
            <span>
-            <Field type="text" v-model="form.starttime" class="customnavcolor text-white sm:text-sm text-xs rounded-lg sm:w-1/3 w-16 customborder1" placeholder="00:00" :rules="starttimeValidation" name="starttime"/>
+            <input type="time"  v-model="form.starttime" class="customnavcolor text-white sm:text-sm text-xs rounded-lg sm:w-1/3 w-16 customborder1" >
             </span>
             -
             <span>
-            <Field type="text" v-model="form.endtime" class="customnavcolor text-white sm:text-sm text-xs rounded-lg sm:w-1/3 w-16 customborder1" placeholder="00:00" :rules="endtimeValidation" name="endtime"/>
+            <input type="time" v-model="form.endtime" class="customnavcolor text-white sm:text-sm text-xs rounded-lg sm:w-1/3 w-16 customborder1">
             </span>
+            <div v-if="errors.starttime" class="text-red-900 mt-1 ml-12">{{errors.starttime}}</div>
+            <div v-if="errors.endtime" class="text-red-900 mt-1 ml-12">{{errors.endtime}}</div>
+            <div v-if="errors.timecheck" class="text-red-900 mt-1 ml-12">{{errors.timecheck}}</div>
         </div>
-        <ErrorMessage name="starttime" class="text-red-800 ml-12 mt-2"/>
-        <br>
-        <ErrorMessage name="endtime" class="text-red-800 ml-12 mt-2"/>
-        <div class="mt-3">Person : <span>{{studentid.length}}</span></div>
+        <div class="mt-3">Persons : <span>{{studentid.length}}</span></div>
     </div>
     <div>
         <div class="sm:mt-0 mt-3">Instructor : 
         <span class="" >
-        <select id="sorttype"  v-model="form.teacher" name="status" class="customnavcolor sm:text-sm text-xs sm:w-52 w-32 text-white border-white rounded-xl">
-        <option v-for="item in instructor" :value="item.id" class="sm:text-sm text-xs">{{item.i_name}}</option>
+        <select id="sorttype"  v-model="form.instructor" name="status" class="customnavcolor sm:text-sm text-xs sm:w-52 w-32 text-white border-white rounded-xl">
+        <option v-for="item in instructors" :value="item.id" class="sm:text-sm text-xs">{{item.i_name}}</option>
         </select>
         </span>
+        <div v-if="errors.instructor" class="text-red-900 mt-1 ml-20">{{errors.instructor}}</div>
         </div>
         <div class="mt-3">Category :
         <span class="">
@@ -219,9 +205,10 @@ watch(
         <option v-for="data in category" :value="data.id" class="sm:text-sm text-xs">{{data.c_name}}</option>
         </select>
         </span>
+        <div v-if="errors.categories" class="text-red-900 mt-1 ml-20">{{errors.categories}}</div>
         </div>
-        <div class="mt-3">Fees : <span class="pl-7"><Field type="text" v-model="form.fees" class="customnavcolor text-white sm:text-sm text-xs rounded-lg sm:w-52 w-32 customborder1" :rules="isRequired" name="fee"/></span></div>
-        <ErrorMessage name="fee" class="text-red-800 ml-20"/>
+        <div class="mt-3">Fees : <span class="pl-7"><input type="text" v-model="form.fees" class="customnavcolor text-white sm:text-sm text-xs rounded-lg sm:w-52 w-32 customborder1" placeholder="Class Fees"></span></div>
+        <div v-if="errors.fees" class="text-red-900 mt-1 ml-20">{{errors.fees}}</div>
     </div>
    </div>
   </div>
@@ -231,23 +218,22 @@ watch(
 <h3 class="text-white pt-1 ">Student Name : </h3>
 <input type="text" v-model="searchstdname" class="customnavcolor sm:ml-3 ml-2  text-white sm:text-sm text-xs rounded-lg sm:w-1/4 w-24 customborder1" placeholder="name">
 </div>
-
-<div class="sm:w-2/4 w-4/4">
-<div class="custombackgroundcolor h-48   rounded-lg  mt-3 px-3 py-4  my-5 overflow-y-scroll">
-  <table  class="text-white w-full">
-    <thead class="">
-    <tr class="opacity-70 sm:text-sm customfontsize">
+<div class="sm:w-2/4 w-4/4 h-48 mt-3  overflow-y-scroll rounded-lg">
+  <table  class="text-white w-full  custombackgroundcolor relative">
+    <thead class="sticky top-0 custombackgroundcolor w-full z-50">
+    <tr class="opacity-70  sm:text-sm customfontsize ">
         <th class="text-start pl-8">NAME</th>
-        <th class="">Phone</th>
+        <th >Phone</th>
         <th >Address</th>
         <th>Age</th>
         <th >Detail</th>
     </tr>
     </thead>
-    <tbody class="lg:text-sm text-xs customfontsize ">
+    <tbody class="lg:text-sm text-xs customfontsize">
     <tr class="customborder" v-for="user in student">
-        <td class="text-start  py-1"><input type="checkbox" name="checkbox" :value="user.id" v-model="studentid" class="cuscheckbox"/> {{user.name}}</td>
-        <td  class="text-center ">{{user.phone}}</td>
+
+        <td class="text-start  py-1 pl-1"><label ><input type="checkbox"  aria-label="an appropriate label" :value="user.id" v-model="studentid" class="cuscheckbox"/> {{user.name}}</label></td>
+        <td  class="text-center "> {{user.phone}}</td>
         <td class="text-center ">{{user.address}}</td>
         <td  class="text-center">{{user.age}}</td>
         <td class="text-center text-yellowTextColor underline">
@@ -258,13 +244,12 @@ watch(
     </tr>
     </tbody>
   </table>
-  </div>
 </div>
 <button type="submit" class=" pt-0.5 float-right  mb-3  w-28 h-7 mt-5  text-white rounded-lg flex justify-center bg-blue-600 hover:bg-blue-700 active:bg-blue-900 cusmargin">
 <img src="../../../public/img/bx_save.png" alt="" class="w-5 h-5 pt-0.5">
 <span class="ml-2 sm:text-base text-xs sm:pt-0 pt-1" >Save</span>
 </button>
-</Form>
+</form>
 </div>
 </template>
 <style scoped>
@@ -337,6 +322,25 @@ input[type="file"] {
 }
 .profileimgnoborder{
   border: white 2px solid;
+}
+img.classpp {  
+  position: relative;
+}
+
+/* style this to fit your needs */
+/* and remove [alt] to apply to all images*/
+img.classpp:after {  
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #333333;
+  content: attr(alt);
+}
+.tableheaderwidth{
+  width: 48.65%;
 }
 @media screen and (max-width: 640px) {
     .customfontsize{

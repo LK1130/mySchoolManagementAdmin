@@ -18,8 +18,7 @@ class AddVideoController extends Controller
      */
     public function index($id)
     {
-
-        // 
+        return Redirect::route('class.index');
     }
 
     /**
@@ -29,6 +28,7 @@ class AddVideoController extends Controller
      */
     public function create()
     {
+        return Redirect::route('class.index');
     }
 
     /**
@@ -94,7 +94,14 @@ class AddVideoController extends Controller
     {
         $model = new MClass();
         $classData = $model->getClasses($id)->where('del_flg', 0);
-        return inertia('AddVideo', ['classDdata' => $classData]);
+        // dd($classData[0]->id);
+        if (count($classData) == 0) {
+            return Redirect::route('class.index');
+        } else {
+            return inertia('AddVideo', ['classDdata' => $classData]);
+        }
+        
+        
     }
 
     /**
@@ -107,12 +114,19 @@ class AddVideoController extends Controller
     {
 
         $video = MVideo::find($id);
-        $class = MClass::find($video->class_id);
-        $video->TLectureNote;
+        
+        if ($video == null) {
+            return Redirect::route('class.index');
+        } else {
+            $class = MClass::find($video->class_id);
+            $video->TLectureNote;
 
         // dd($video);
         return inertia('EditVideo', ["videoData" => $video, 'classDdata' => $class]);
     }
+        }
+        
+        
 
     /**
      * Update the specified resource in storage.

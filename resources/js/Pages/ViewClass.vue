@@ -133,7 +133,7 @@ console.log(porps.classdata);
                         >
                     </div>
                     <div class="mt-1">
-                        Total Students : <br class="sm:hidden block" /><span>{{
+                        Total Student : <br class="sm:hidden block" /><span>{{
                             studentList.length
                         }}</span>
                     </div>
@@ -163,13 +163,15 @@ console.log(porps.classdata);
             </div>
         </div>
         <div class="flex flex-wrap mt-5 sm:justify-between justify-center">
-            <div class="sm:w-7/12 w-11/12">
+            <div class="sm:w-7/12 w-11/12 h-48">
                 <h3 class="text-white">Student List</h3>
-                <div
-                    class="custombackgroundcolor h-48 rounded-lg ml-0.5 mt-3 px-3 py-4 overflow-y-scroll"
-                >
-                    <table class="text-white w-full">
-                        <thead class="">
+                <div class="h-48 rounded-lg ml-0.5 mt-3 overflow-y-scroll">
+                    <table
+                        class="text-white w-full h-full custombackgroundcolor relative"
+                    >
+                        <thead
+                            class="sticky top-0 custombackgroundcolor w-full z-50"
+                        >
                             <tr class="opacity-70 sm:text-sm customfontsize">
                                 <th class="text-start sm:pl-4 pl-0">NAME</th>
                                 <th class="">Join Date</th>
@@ -218,14 +220,16 @@ console.log(porps.classdata);
             </div>
             <div class="cuswidth sm:mt-0 mt-5">
                 <h3 class="text-white">Recording Video List</h3>
-                <div
-                    class="custombackgroundcolor h-48 rounded-lg mt-3 px-3 py-4 overflow-y-scroll"
-                >
-                    <table class="text-white w-full">
-                        <thead class="">
+                <div class="h-48 rounded-lg mt-3 overflow-y-scroll">
+                    <table
+                        class="text-white custombackgroundcolor w-full relative"
+                    >
+                        <thead
+                            class="sticky top-0 custombackgroundcolor w-full z-50"
+                        >
                             <tr class="opacity-70 sm:text-sm customfontsize">
                                 <th class="text-start sm:pl-4 pl-0">NAME</th>
-                                <th class="">Date</th>
+                                <th>Date</th>
                                 <th>Attach File</th>
                                 <th>Detail</th>
                             </tr>
@@ -238,14 +242,12 @@ console.log(porps.classdata);
                                     {{ video.v_name }}
                                 </td>
                                 <td class="text-center">{{ video.v_date }}</td>
-                                <td class="text-center">
-                                    {{ video.t_lecture_note.length }}
-                                </td>
+                                <td class="text-center">3</td>
                                 <a :href="route('addvideo.edit', video.id)"
                                     ><td
                                         class="text-center customtextcolor7 underline pl-4"
                                     >
-                                        Edit
+                                        edit
                                     </td></a
                                 >
                             </tr>

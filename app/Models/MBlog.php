@@ -36,7 +36,7 @@ class MBlog extends Model
 
     public function deleteData($id){
         $mblog = MBlog::find($id);
-        $mblog->del_flg = 1;
+        $mblog->publish == 1 ? $mblog->publish = 0 : $mblog->publish = 1;
         $mblog->save();
     }
 }

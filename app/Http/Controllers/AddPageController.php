@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\MPage;
+use App\Models\MRolePage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
@@ -56,6 +57,13 @@ class AddPageController extends Controller
         $page->p_route = strtolower($request->page_route);
         $page->save();
 
+        $pages = MPage::where('p_route', $page->p_route)->first();
+        
+        $rolePage = new MRolePage();
+        $rolePage->m_page_id = $pages->id;
+        $rolePage->m_role_id = session()->get('roleId');
+        $rolePage->save();
+
         return Redirect::route('pageList.index');
     }
 
@@ -67,7 +75,7 @@ class AddPageController extends Controller
      */
     public function show($id)
     {
-        //
+        return Redirect::route('pageList.index');
     }
 
     /**
@@ -80,9 +88,13 @@ class AddPageController extends Controller
     {
         $page = MPage::find($id);
 
-        return inertia('EditPage', [
-            'page' => $page
-        ]);
+        if($page == null){
+            return Redirect::route('pageList.index');
+        }else{
+            return inertia('EditPage', [
+                'page' => $page
+            ]);
+        }
     }
 
     /**
@@ -116,7 +128,7 @@ class AddPageController extends Controller
     public function destroy($id)
     {
         $page = MPage::find($id);
-        $page->del_flg = 1;
+        $page->publish = 0;
         $page->save();
 
         return Redirect::route('pageList.index');

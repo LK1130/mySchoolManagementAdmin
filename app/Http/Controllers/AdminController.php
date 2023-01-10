@@ -20,9 +20,8 @@ class AdminController extends Controller
     public function index()
     {
 
-        $admin = MAdmin::where("m_admins.del_flg", 0)
-            ->join('m_roles','m_roles.id','=','m_admins.role_id')
-            ->selectRaw("m_admins.id,m_admins.name,m_admins.email,m_roles.r_name")
+        $admin = MAdmin::join('m_roles','m_roles.id','=','m_admins.role_id')
+            ->selectRaw("m_admins.id,m_admins.name,m_admins.email,m_roles.r_name,m_admins.del_flg")
             ->orderBy("m_admins.id")
             ->paginate(10);
 
@@ -78,7 +77,7 @@ class AdminController extends Controller
      */
     public function show($id)
     {
-        //
+        return Redirect::route('admin.index');
     }
 
     /**
@@ -92,10 +91,17 @@ class AdminController extends Controller
         $edadmin = new MAdmin();
         $adminInfo = $edadmin->searchAdmin($id);
 
-        $roles = MRole::where("del_flg", 0)
+        if ($adminInfo == null) {
+            return Redirect::route('admin.index');
+        } else {
+            $roles = MRole::where("del_flg", 0)
         ->get();
         // dd($adminInfo);
         return inertia('EditAdmin', ['adminInfo' => $adminInfo ,'roles'=> $roles]);
+        }
+        
+
+        
     }
 
     /**
@@ -107,7 +113,8 @@ class AdminController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // dd($request);
+        // dd($id);
+        // dd($request->email);
         $request->validate(
             [
                 'name' => 'required',
@@ -121,9 +128,17 @@ class AdminController extends Controller
             'password'=>$request->password
     ];
         $admin = new MAdmin();
+        $findadmin = $admin->searchAdmin($id);
+        // dd($findadmin->email);
         $admin->updateAdmin($request, $id);
-        Mail::to($request->email)->send(new EditAdmin($mail));
-        return Redirect::route('admin.index');
+        if ($request->email == $findadmin->email) {
+            return Redirect::route('admin.index');
+        } else {
+            Mail::to($request->email)->send(new EditAdmin($mail));
+            return Redirect::route('admin.index');
+        }
+        
+        
     }
 
     /**

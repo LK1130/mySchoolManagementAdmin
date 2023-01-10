@@ -48,14 +48,14 @@ use Inertia\Inertia;
 //         return Inertia::render('Dashboard');
 //     })->name('dashboard');
 // });
-Route::get('/dashboard', [DashboardController::class, "getdashboard"]);
+
 Route::get('/login', function () {
     return inertia("Admin/AdLogin");
 });
 Route::post('/login', [LoginController::class, 'store'])->name('login.store');
 Route::get('/searchstd/{name?}', [viewclassController::class, 'searchstudent']);
 
-Route::middleware([checkRole::class])->group(function(){
+// Route::middleware([checkRole::class])->group(function(){
 Route::get('/home', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
@@ -64,6 +64,8 @@ Route::get('/home', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 });
+
+Route::get('/dashboard', [DashboardController::class, "getdashboard"]);
 
 Route::get('/classview/{id?}', [viewclassController::class, "getclassdata"])->name("class.view");
 // Route::get('/classsorting/{name?}', [viewclassController::class, "classsorting"])->name("class.sorting");
@@ -111,7 +113,7 @@ Route::resource('adminPermission', AdminPermissionController::class);
 Route::resource('addRole', AddRoleController::class);
 Route::resource('pageList', AddPageController::class);
 // End Admin Permission
-});
+// });
 
 Route::resource('admin', AdminController::class);
 
