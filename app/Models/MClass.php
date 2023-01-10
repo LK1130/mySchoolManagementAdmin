@@ -169,6 +169,7 @@ class MClass extends Model
         DB::table('t_student_classes')
             ->where('class_id', $id)
             ->delete();
+            if(!empty($studentids)){
         foreach ($studentids as $ids) {
             DB::table('t_student_classes')
                 ->insert([
@@ -182,6 +183,7 @@ class MClass extends Model
                     'created_by' => "0"
                 ]);
         };
+    }
     }
     public function getClasses($id)
     {
